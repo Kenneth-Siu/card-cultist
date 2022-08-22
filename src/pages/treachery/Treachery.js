@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import treacheryFrame from "../../../public/cardFrames/treachery.png";
+import treacheryFrame from "../../../public/templates/treacheries/treachery.png";
 import testImage from "../../../public/alex rommel.jpg";
 import "./Treachery.scss";
 
