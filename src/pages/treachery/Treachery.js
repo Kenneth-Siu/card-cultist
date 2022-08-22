@@ -4,7 +4,29 @@ import treacheryFrame from "../../../public/cardFrames/treachery.png";
 import testImage from "../../../public/alex rommel.jpg";
 import "./Treachery.scss";
 
-const textBoxText = "Revelation – Test wil (3). For each point you fail by, take 1 horror.";
+const textBoxText = "Revelation – Test <wil> (3). For each point you fail by, take 1 horror.";
+
+const symbolMapping = {
+    "<guardian>": "a",
+    "<gua>": "a",
+    "<seeker>": "b",
+    "<see>": "b",
+    "<mystic>": "c",
+    "<mys>": "c",
+    "<rogue>": "d",
+    "<rog>": "d",
+    "<survivor>": "e",
+    "<sur>": "e",
+    "<willpower>": "f",
+    "<wil>": "f",
+    "<intellect>": "g",
+    "<int>": "g",
+    "<combat>": "h",
+    "<com>": "h",
+    "<agility>": "i",
+    "<agi>": "i",
+    "<wild>": "j",
+};
 
 export default function Treachery() {
     const canvas = useRef(null);
@@ -47,7 +69,9 @@ export default function Treachery() {
                     >
                         Add text box
                     </button>
-                    <a download="Rotting Remains" href={dataURL}>Download</a>
+                    <a download="Rotting Remains" href={dataURL}>
+                        Download
+                    </a>
                 </div>
                 <canvas ref={canvas} id="preview" width="750" height="1050"></canvas>
                 <div id="loaded-images">{loadedImages}</div>
@@ -84,26 +108,74 @@ export default function Treachery() {
 
     function addTextBox(text) {
         const context = canvas.current.getContext("2d");
-        context.font = "34px serif";
         context.textAlign = "start";
-        getLines(context, text, 650).forEach((line, lineNumber) => context.fillText(line, 62, 740 + lineNumber * 34));
+        const lines = getLines(context, text, 650);
+        context.font = "34px Mongolian Baiti";
+        lines.forEach((line, lineNumber) => {
+            let currentX = 62;
+            for (let i = 0; i < line.length; i++) {
+                if (symbolMapping[line[i]]) {
+                    context.font = "34px AHCardTextSymbols";
+                    context.fillText(symbolMapping[line[i]], currentX, 740 + lineNumber * 34);
+                    currentX += context.measureText(symbolMapping[line[i]]).width;
+                }
+                else {
+                    context.font = "34px Mongolian Baiti";
+                    context.fillText(line[i], currentX, 740 + lineNumber * 34);
+                    currentX += context.measureText(line[i]).width;
+                }
+            }
+        });
         setDataURL(canvas.current.toDataURL());
     }
 
+    // If first word is too long, this breaks too
     // TODO get hyphens to work
     function getLines(context, text, maxWidth) {
-        var words = text.split(" ");
-        var lines = [];
-        var currentLine = words[0];
+        const words = text.split(" ");
+        const lines = [];
+        let currentLine = [];
+        let currentWidth = 0;
 
-        for (var i = 1; i < words.length; i++) {
-            var word = words[i];
-            var width = context.measureText(currentLine + " " + word).width;
-            if (width < maxWidth) {
-                currentLine += " " + word;
+        context.font = "34px Mongolian Baiti";
+        const spaceWidth = context.measureText(" ").width;
+
+        for (let i = 0; i < words.length; i++) {
+            const word = words[i];
+            let wordWidth = 0;
+            if (symbolMapping[word]) {
+                context.font = "34px AHCardTextSymbols";
+                wordWidth = context.measureText(symbolMapping[word]).width;
+            } else {
+                context.font = "34px Mongolian Baiti";
+                wordWidth = context.measureText(word).width;
+            }
+            const newWidth = currentWidth + (i ? spaceWidth : 0) + wordWidth;
+            if (newWidth < maxWidth) {
+                if (i != 0) {
+                    if (symbolMapping[word]) {
+                        if (symbolMapping[currentLine[currentLine.length - 1]]) {
+                            currentLine.push(" ");
+                        } else {
+                            currentLine[currentLine.length - 1] += " ";
+                        }
+                        currentLine.push(word);
+                    } else {
+                        if (symbolMapping[currentLine[currentLine.length - 1]]) {
+                            currentLine.push(" ");
+                        } else {
+                            currentLine[currentLine.length - 1] += " ";
+                        }
+                        currentLine[currentLine.length - 1] += word;
+                    }
+                } else {
+                    currentLine.push(word);
+                }
+                currentWidth = newWidth;
             } else {
                 lines.push(currentLine);
-                currentLine = word;
+                currentLine = [word];
+                currentWidth = wordWidth;
             }
         }
         lines.push(currentLine);
