@@ -73,7 +73,7 @@ export default function Treachery() {
                         Download
                     </a>
                 </div>
-                <canvas ref={canvas} id="preview" width="750" height="1050"></canvas>
+                <canvas ref={canvas} id="preview" width="375" height="525"></canvas>
                 <div id="loaded-images">{loadedImages}</div>
             </main>
         </>
@@ -100,28 +100,28 @@ export default function Treachery() {
 
     function addTitle(text) {
         const context = canvas.current.getContext("2d");
-        context.font = "46px Teutonic";
+        context.font = "23px Teutonic";
         context.textAlign = "center";
-        context.fillText(text, 375, 652);
+        context.fillText(text, 187, 326);
         setDataURL(canvas.current.toDataURL());
     }
 
     function addTextBox(text) {
         const context = canvas.current.getContext("2d");
         context.textAlign = "start";
-        const lines = getLines(context, text, 650);
-        context.font = "34px Mongolian Baiti";
+        const lines = getLines(context, text, 325);
+        context.font = "17px Mongolian Baiti";
         lines.forEach((line, lineNumber) => {
-            let currentX = 62;
+            let currentX = 31;
             for (let i = 0; i < line.length; i++) {
                 if (symbolMapping[line[i]]) {
-                    context.font = "34px AHCardTextSymbols";
-                    context.fillText(symbolMapping[line[i]], currentX, 740 + lineNumber * 34);
+                    context.font = "17px AHCardTextSymbols";
+                    context.fillText(symbolMapping[line[i]], currentX, 370 + lineNumber * 17);
                     currentX += context.measureText(symbolMapping[line[i]]).width;
                 }
                 else {
-                    context.font = "34px Mongolian Baiti";
-                    context.fillText(line[i], currentX, 740 + lineNumber * 34);
+                    context.font = "17px Mongolian Baiti";
+                    context.fillText(line[i], currentX, 370 + lineNumber * 17);
                     currentX += context.measureText(line[i]).width;
                 }
             }
@@ -131,23 +131,24 @@ export default function Treachery() {
 
     // If first word is too long, this breaks too
     // TODO get hyphens to work
+    // TODO symbols when they're part of a larger word
     function getLines(context, text, maxWidth) {
         const words = text.split(" ");
         const lines = [];
         let currentLine = [];
         let currentWidth = 0;
 
-        context.font = "34px Mongolian Baiti";
+        context.font = "17px Mongolian Baiti";
         const spaceWidth = context.measureText(" ").width;
 
         for (let i = 0; i < words.length; i++) {
             const word = words[i];
             let wordWidth = 0;
             if (symbolMapping[word]) {
-                context.font = "34px AHCardTextSymbols";
+                context.font = "17px AHCardTextSymbols";
                 wordWidth = context.measureText(symbolMapping[word]).width;
             } else {
-                context.font = "34px Mongolian Baiti";
+                context.font = "17px Mongolian Baiti";
                 wordWidth = context.measureText(word).width;
             }
             const newWidth = currentWidth + (i ? spaceWidth : 0) + wordWidth;
