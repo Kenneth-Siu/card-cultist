@@ -1,5 +1,7 @@
 import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import JSZip from "jszip";
+import { saveAs } from "file-saver";
 import treacheryFrame from "../../../public/templates/treacheries/treachery.png";
 import testImage from "../../../public/alex rommel.jpg";
 import "./Treachery.scss";
@@ -30,8 +32,6 @@ const symbolMapping = {
 
 export default function Treachery() {
     const canvas = useRef(null);
-    // Stop having to manually update this every time canvas is updated
-    const [dataURL, setDataURL] = useState(null);
     const [loadedImages, setLoadedImages] = useState([]);
 
     return (
@@ -70,9 +70,8 @@ export default function Treachery() {
                     >
                         Add text box
                     </button>
-                    <a download="Rotting Remains" href={dataURL}>
-                        Download
-                    </a>
+                    <button onClick={() => downloadOne()}>Download one</button>
+                    <button onClick={() => downloadAll()}>Download all</button>
                 </div>
                 <canvas ref={canvas} id="preview" width="375" height="525"></canvas>
                 <div id="loaded-images">{loadedImages}</div>
@@ -93,7 +92,6 @@ export default function Treachery() {
                 onLoad={() => {
                     const context = canvas.current.getContext("2d");
                     context.drawImage(imageRef.current, 0, 0);
-                    setDataURL(canvas.current.toDataURL());
                 }}
             />,
         ]);
@@ -104,7 +102,6 @@ export default function Treachery() {
         context.font = "23px Teutonic";
         context.textAlign = "center";
         context.fillText(text, 187, 326);
-        setDataURL(canvas.current.toDataURL());
     }
 
     function addTextBox(text) {
@@ -119,15 +116,13 @@ export default function Treachery() {
                     context.font = "17px AHCardTextSymbols";
                     context.fillText(symbolMapping[line[i]], currentX, 370 + lineNumber * 17);
                     currentX += context.measureText(symbolMapping[line[i]]).width;
-                }
-                else {
+                } else {
                     context.font = "17px Mongolian Baiti";
                     context.fillText(line[i], currentX, 370 + lineNumber * 17);
                     currentX += context.measureText(line[i]).width;
                 }
             }
         });
-        setDataURL(canvas.current.toDataURL());
     }
 
     // If first word is too long, this breaks too
@@ -182,5 +177,33 @@ export default function Treachery() {
         }
         lines.push(currentLine);
         return lines;
+    }
+
+    function downloadOne() {
+        canvas.current.toBlob((canvasBlob) => {
+            saveAs(canvasBlob, "Rotting Remains.png");
+        });
+    }
+
+    function downloadAll() {
+        const zip = new JSZip();
+        const strikingFear = zip.folder("Striking Fear");
+        const promise1 = new Promise((resolve, reject) => {
+            canvas.current.toBlob((canvasBlob) => {
+                resolve(canvasBlob);
+            });
+        });
+        const promise2 = new Promise((resolve, reject) => {
+            canvas.current.toBlob((canvasBlob) => {
+                resolve(canvasBlob);
+            });
+        });
+        Promise.all([promise1, promise2]).then(([canvasBlob1, canvasBlob2]) => {
+            strikingFear.file("Rotting Remains.png", canvasBlob1);
+            strikingFear.file("Rotting Remains2.png", canvasBlob2);
+            zip.generateAsync({ type: "blob" }).then((zipBlob) => {
+                saveAs(zipBlob, "Darkham Horror.zip");
+            });
+        });
     }
 }
