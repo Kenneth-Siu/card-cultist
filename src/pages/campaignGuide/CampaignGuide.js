@@ -1,8 +1,8 @@
 import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import treacheryFrame from "../../../public/templates/treacheries/treachery.png";
-import testImage from "../../../public/alex rommel.jpg";
-import "./Treachery.scss";
+import { jsPDF } from "jspdf";
+import campaignGuideBackground from "../../../public/templates/campaignGuides/campaignGuideSquare.png";
+import "./CampaignGuide.scss";
 
 const textBoxText = "Revelation – Test <wil> (3). For each point you fail by, take 1 horror.";
 
@@ -28,33 +28,24 @@ const symbolMapping = {
     "<wild>": "j",
 };
 
-export default function Treachery() {
+export default function CampaignGuide() {
     const canvas = useRef(null);
-    // Stop having to manually update this every time canvas is updated
-    const [dataURL, setDataURL] = useState(null);
     const [loadedImages, setLoadedImages] = useState([]);
 
     return (
         <>
             <title>Card Cultist</title>
-            <main className="treachery-page">
+            <main className="campaign-guide-page">
                 <Link to="/">Home</Link>
-                <Link to="/campaign-guide">Campaign Guide</Link>
-                <p>Treachery here plz</p>
+                <Link to="/treachery">Treachery</Link>
+                <p>Campaign Guide here plz</p>
                 <div>
                     <button
                         onClick={() => {
-                            addImage(testImage);
+                            addImage(campaignGuideBackground);
                         }}
                     >
-                        Add image
-                    </button>
-                    <button
-                        onClick={() => {
-                            addImage(treacheryFrame, 750, 1050);
-                        }}
-                    >
-                        Add frame
+                        Add background
                     </button>
                     <button
                         onClick={() => {
@@ -70,11 +61,9 @@ export default function Treachery() {
                     >
                         Add text box
                     </button>
-                    <a download="Rotting Remains" href={dataURL}>
-                        Download
-                    </a>
+                    <button onClick={() => downloadPDF()}>Download PDF</button>
                 </div>
-                <canvas ref={canvas} id="preview" width="375" height="525"></canvas>
+                <canvas ref={canvas} id="preview" width="1125" height="1125"></canvas>
                 <div id="loaded-images">{loadedImages}</div>
             </main>
         </>
@@ -93,7 +82,6 @@ export default function Treachery() {
                 onLoad={() => {
                     const context = canvas.current.getContext("2d");
                     context.drawImage(imageRef.current, 0, 0);
-                    setDataURL(canvas.current.toDataURL());
                 }}
             />,
         ]);
@@ -101,33 +89,30 @@ export default function Treachery() {
 
     function addTitle(text) {
         const context = canvas.current.getContext("2d");
-        context.font = "23px Teutonic";
+        context.font = "46px Teutonic";
         context.textAlign = "center";
-        context.fillText(text, 187, 326);
-        setDataURL(canvas.current.toDataURL());
+        context.fillText(text, 375, 652);
     }
 
     function addTextBox(text) {
         const context = canvas.current.getContext("2d");
         context.textAlign = "start";
-        const lines = getLines(context, text, 325);
-        context.font = "17px Mongolian Baiti";
+        const lines = getLines(context, text, 650);
+        context.font = "34px Mongolian Baiti";
         lines.forEach((line, lineNumber) => {
-            let currentX = 31;
+            let currentX = 62;
             for (let i = 0; i < line.length; i++) {
                 if (symbolMapping[line[i]]) {
-                    context.font = "17px AHCardTextSymbols";
-                    context.fillText(symbolMapping[line[i]], currentX, 370 + lineNumber * 17);
+                    context.font = "34px AHCardTextSymbols";
+                    context.fillText(symbolMapping[line[i]], currentX, 740 + lineNumber * 34);
                     currentX += context.measureText(symbolMapping[line[i]]).width;
-                }
-                else {
-                    context.font = "17px Mongolian Baiti";
-                    context.fillText(line[i], currentX, 370 + lineNumber * 17);
+                } else {
+                    context.font = "34px Mongolian Baiti";
+                    context.fillText(line[i], currentX, 740 + lineNumber * 34);
                     currentX += context.measureText(line[i]).width;
                 }
             }
         });
-        setDataURL(canvas.current.toDataURL());
     }
 
     // If first word is too long, this breaks too
@@ -139,17 +124,17 @@ export default function Treachery() {
         let currentLine = [];
         let currentWidth = 0;
 
-        context.font = "17px Mongolian Baiti";
+        context.font = "34px Mongolian Baiti";
         const spaceWidth = context.measureText(" ").width;
 
         for (let i = 0; i < words.length; i++) {
             const word = words[i];
             let wordWidth = 0;
             if (symbolMapping[word]) {
-                context.font = "17px AHCardTextSymbols";
+                context.font = "34px AHCardTextSymbols";
                 wordWidth = context.measureText(symbolMapping[word]).width;
             } else {
-                context.font = "17px Mongolian Baiti";
+                context.font = "34px Mongolian Baiti";
                 wordWidth = context.measureText(word).width;
             }
             const newWidth = currentWidth + (i ? spaceWidth : 0) + wordWidth;
@@ -182,5 +167,15 @@ export default function Treachery() {
         }
         lines.push(currentLine);
         return lines;
+    }
+
+    function downloadPDF() {
+        const document = new jsPDF({
+            unit: "px",
+            hotfixes: ["px_scaling"],
+            format: [1125, 1125],
+        });
+        document.addImage(canvas.current, "PNG", 0, 0, 1125, 1125)
+        document.save("campaignGuide.pdf");
     }
 }
