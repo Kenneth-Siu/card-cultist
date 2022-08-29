@@ -7,4 +7,7 @@ contextBridge.exposeInMainWorld("fs", {
     saveProject: (project) => {
         return ipcRenderer.invoke("fs:saveProject", project);
     },
+    loadImage: () => {
+        return ipcRenderer.invoke("fs:openImage");
+    }
 });

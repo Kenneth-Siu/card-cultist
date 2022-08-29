@@ -24,10 +24,10 @@ async function saveProject(event, project) {
 
 const createWindow = () => {
     const win = new BrowserWindow({
-        width: 800,
-        height: 600,
+        width: 1280,
+        height: 1024,
         webPreferences: {
-            preload: path.join(app.getAppPath(), "preload.js"),
+            preload: path.join(app.getAppPath(), "src", "preload", "preload.js"),
         },
     });
 
