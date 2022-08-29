@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import JSZip from "jszip";
 import { saveAs } from "file-saver";
 import treacheryFrame from "../../../public/templates/treacheries/treachery.png";
-import testImage from "../../../public/alex rommel.jpg";
 import "./Treachery.scss";
 
 const textBoxText = "Revelation – Test <wil> (3). For each point you fail by, take 1 horror.";
@@ -44,7 +43,7 @@ export default function Treachery() {
                 <div>
                     <button
                         onClick={() => {
-                            addImage(testImage);
+                            addImage();
                         }}
                     >
                         Add image
@@ -79,7 +78,11 @@ export default function Treachery() {
         </>
     );
 
-    function addImage(src, width, height) {
+    async function addImage(src, width, height) {
+        if (!src) {
+            const { data } = await window.fs.loadImage();
+            src = URL.createObjectURL(new Blob([data]));
+        }
         const imageRef = React.createRef();
 
         setLoadedImages((loadedImages) => [
