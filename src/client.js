@@ -1,12 +1,12 @@
 import App from "./pages/App";
-import { BrowserRouter } from "react-router-dom";
+import { MemoryRouter } from "react-router-dom";
 import React from "react";
 import { hydrate } from "react-dom";
 
 hydrate(
-    <BrowserRouter>
+    <MemoryRouter>
         <App />
-    </BrowserRouter>,
+    </MemoryRouter>,
     document.getElementById("root")
 );
 

@@ -12,6 +12,7 @@ const createWindow = () => {
     });
 
     win.loadURL("http://localhost:3000");
+    // win.loadFile(path.join(app.getAppPath(), "build", "public", "index.html"));
 };
 
 app.whenReady().then(() => {
