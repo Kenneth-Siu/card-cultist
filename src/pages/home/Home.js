@@ -1,30 +1,43 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import Project from "../../models/Project";
 import "./Home.scss";
 
 export default function Home() {
-    const [project, setProject] = useState({});
+    const [project, setProject] = useState(null);
 
     return (
         <>
             <title>Card Cultist</title>
             <main className="home-page">
-                <Link to="/treachery">Treachery</Link>
-                <Link to="/campaign-guide">Campaign Guide</Link>
-                <button
-                    onClick={async () => {
-                        setProject(await window.fs.loadProject());
-                    }}
-                >
-                    Choose project
-                </button>
-                <button
-                    onClick={async () => {
-                        await window.fs.saveProject(project);
-                    }}
-                >
-                    Save project
-                </button>
+                {project ? (
+                    <div>
+                        <button
+                            onClick={async () => {
+                                await window.fs.saveProject(project);
+                            }}
+                        >
+                            Save project
+                        </button>
+                    </div>
+                ) : (
+                    <div>
+                        <button
+                            onClick={async () => {
+                                setProject(new Project());
+                            }}
+                        >
+                            New project
+                        </button>
+                        <button
+                            onClick={async () => {
+                                // TODO Error checking
+                                setProject(await window.fs.loadProject());
+                            }}
+                        >
+                            Choose project
+                        </button>
+                    </div>
+                )}
                 <p>{JSON.stringify(project)}</p>
             </main>
         </>
