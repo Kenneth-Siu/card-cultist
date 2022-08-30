@@ -1,11 +1,11 @@
 const { contextBridge, ipcRenderer } = require("electron");
 
 contextBridge.exposeInMainWorld("fs", {
-    loadProject: () => {
-        return ipcRenderer.invoke("fs:openProject");
+    loadCampaign: () => {
+        return ipcRenderer.invoke("fs:openCampaign");
     },
-    saveProject: (project) => {
-        return ipcRenderer.invoke("fs:saveProject", project);
+    saveCampaign: (campaign) => {
+        return ipcRenderer.invoke("fs:saveCampaign", campaign);
     },
     loadImage: () => {
         return ipcRenderer.invoke("fs:openImage");

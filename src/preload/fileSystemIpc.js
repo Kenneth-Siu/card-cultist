@@ -1,9 +1,9 @@
 const { ipcMain, dialog } = require("electron");
 const { readFile, writeFile } = require("node:fs/promises");
 
-async function openProject() {
+async function openCampaign() {
     const { cancelled, filePaths } = await dialog.showOpenDialog({
-        filters: [{ name: "Card Cultist Projects", extensions: ["cardcultist"] }],
+        filters: [{ name: "Card Cultist Campaigns", extensions: ["cardcultist"] }],
     });
     if (cancelled) {
         return;
@@ -16,9 +16,8 @@ async function openProject() {
     }
 }
 
-async function saveProject(event, project) {
-    console.log(project);
-    await writeFile(project.path, JSON.stringify(project.data), { encoding: "utf-8" });
+async function saveCampaign(event, campaign) {
+    await writeFile(campaign.path, JSON.stringify(campaign.data), { encoding: "utf-8" });
 }
 
 async function openImage() {
@@ -37,8 +36,8 @@ async function openImage() {
 }
 
 function initFileSystemIpc() {
-    ipcMain.handle("fs:openProject", openProject);
-    ipcMain.handle("fs:saveProject", saveProject);
+    ipcMain.handle("fs:openCampaign", openCampaign);
+    ipcMain.handle("fs:saveCampaign", saveCampaign);
     ipcMain.handle("fs:openImage", openImage);
 }
 
