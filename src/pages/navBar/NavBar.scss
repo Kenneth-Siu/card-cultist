@@ -1,6 +1,8 @@
 @import "../../components/colors.scss";
 
 #nav-bar {
+    flex-grow: 0;
+    
     a {
         color: $color-1;
     }
