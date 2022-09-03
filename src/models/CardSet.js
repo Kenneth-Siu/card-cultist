@@ -1,6 +1,6 @@
 export default class CardSet {
-    constructor() {
-        this.id = null;
+    constructor(id) {
+        this.id = id;
         this.title = "";
         this.symbol = null;
         this.cards = [];

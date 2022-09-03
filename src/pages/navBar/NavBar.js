@@ -1,8 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import "./NavBar.scss";
 
-export default function NavBar({ campaign }) {
+export default function NavBar({ campaign, setCampaign }) {
+    const history = useHistory();
+
     return (
         <nav id="nav-bar">
             <ol>
@@ -13,20 +15,32 @@ export default function NavBar({ campaign }) {
                     <Link to="/campaign-guide">Campaign Guide</Link>
                 </li>
                 {campaign.cardSets.map((cardSet) => (
-                    <li>
-                        <Link to={`/card-set/${cardSet.id}`}>{cardSet.title}</Link>
-                        {cardSet.cards.map((card) => (
-                            <ul>
-                                <Link to={`/card/${card.id}`}>{card.title}</Link>
-                            </ul>
-                        ))}
-                        <Link to="/card">+ Card</Link>
+                    <li key={cardSet.id}>
+                        <Link to={`/card-set/${cardSet.id}`}>
+                            {cardSet.title ? cardSet.title : `(No title – ID ${cardSet.id})`}
+                        </Link>
+                        <ul>
+                            {cardSet.cards.map((card) => (
+                                <li key={card.id}>
+                                    <Link to={`/card/${card.id}`}>{card.title}</Link>
+                                </li>
+                            ))}
+                            <Link to="/card">+ Card</Link>
+                        </ul>
                     </li>
                 ))}
                 <li>
-                    <Link to="/card-set">+ Set</Link>
+                    <a href="#" onClick={() => addCardSet()}>
+                        + Set
+                    </a>
                 </li>
             </ol>
         </nav>
     );
+
+    function addCardSet() {
+        const cardSetId = campaign.addCardSet();
+        setCampaign(campaign.clone());
+        history.push(`/card-set/${cardSetId}`);
+    }
 }
