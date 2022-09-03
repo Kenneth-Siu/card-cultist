@@ -1,7 +1,7 @@
 export default class Card {
-    constructor() {
-        this.id = null;
-        this.title = null;
+    constructor(id) {
+        this.id = id;
+        this.title = "";
         this.frontFace = null;
         this.backFace = null;
     }

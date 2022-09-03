@@ -1,3 +1,4 @@
+import generateId from "../helpers/generateId";
 import CardSet from "./CardSet";
 
 export default class Campaign {
@@ -22,15 +23,13 @@ export default class Campaign {
     }
 
     addCardSet() {
-        const id = this.cardSets.length
-            ? 1 + this.cardSets.reduce((maxId, cardSet) => (cardSet.id > maxId ? cardSet.id : maxId), 0)
-            : 1;
+        const id = generateId(this.cardSets);
         const cardSet = new CardSet(id);
         this.cardSets.push(cardSet);
         return id;
     }
 
     getCardSet(id) {
-        return this.cardSets.find(cardSet => cardSet.id === id);
+        return this.cardSets.find((cardSet) => cardSet.id === id);
     }
 }

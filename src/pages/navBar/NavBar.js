@@ -22,10 +22,14 @@ export default function NavBar({ campaign, setCampaign }) {
                         <ul>
                             {cardSet.cards.map((card) => (
                                 <li key={card.id}>
-                                    <Link to={`/card/${card.id}`}>{card.title}</Link>
+                                    <Link to={`/card-set/${cardSet.id}/card/${card.id}`}>
+                                        {card.title ? card.title : `(No title – ID ${card.id})`}
+                                    </Link>
                                 </li>
                             ))}
-                            <Link to="/card">+ Card</Link>
+                            <a href="#" onClick={() => addCard(cardSet)}>
+                                + Card
+                            </a>
                         </ul>
                     </li>
                 ))}
@@ -37,6 +41,12 @@ export default function NavBar({ campaign, setCampaign }) {
             </ol>
         </nav>
     );
+
+    function addCard(cardSet) {
+        const cardId = cardSet.addCard();
+        setCampaign(campaign.clone());
+        history.push(`/card-set/${cardSet.id}/card/${cardId}`);
+    }
 
     function addCardSet() {
         const cardSetId = campaign.addCardSet();

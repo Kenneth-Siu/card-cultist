@@ -5,6 +5,7 @@ import Treachery from "./treachery/Treachery";
 import CampaignGuide from "./campaignGuide/CampaignGuide";
 import NavBar from "./navBar/NavBar";
 import CardSet from "./cardSet/CardSet";
+import Card from "./card/Card";
 import "./cssreset.css";
 import "./App.scss";
 
@@ -27,6 +28,9 @@ export default function App() {
                 </Route>
                 <Route exact={true} path="/card-set/:id">
                     <CardSet campaign={campaign} setCampaign={setCampaign} />
+                </Route>
+                <Route exact={true} path="/card-set/:cardSetId/card/:id">
+                    <Card campaign={campaign} setCampaign={setCampaign} />
                 </Route>
             </Switch>
         </>
