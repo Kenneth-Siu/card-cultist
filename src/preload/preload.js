@@ -7,6 +7,9 @@ contextBridge.exposeInMainWorld("fs", {
     saveCampaign: (campaign) => {
         return ipcRenderer.invoke("fs:saveCampaign", campaign);
     },
+    saveAsCampaign: (campaign) => {
+        return ipcRenderer.invoke("fs:saveAsCampaign", campaign);
+    },
     loadImage: () => {
         return ipcRenderer.invoke("fs:openImage");
     }

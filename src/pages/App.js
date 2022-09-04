@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Route, Switch } from "react-router-dom";
 import Home from "./home/Home";
 import Treachery from "./treachery/Treachery";
@@ -11,6 +11,31 @@ import "./App.scss";
 
 export default function App() {
     const [campaign, setCampaign] = useState(null);
+    const campaignRef = useRef();
+    const setCampaignRef = useRef();
+    campaignRef.current = campaign;
+    setCampaignRef.current = setCampaign;
+
+    useEffect(() => {
+        const callback = async (event) => {
+            if (campaignRef.current) {
+                if ((event.metaKey || event.ctrlKey) && event.code === "KeyS") {
+                    if (event.shiftKey || !campaignRef.current.path) {
+                        const path = await window.fs.saveAsCampaign(campaignRef.current);
+                        campaignRef.current.path = path;
+                        setCampaignRef.current(campaignRef.current.clone());
+                    } else {
+                        window.fs.saveCampaign(campaignRef.current);
+                    }
+                    console.log(campaignRef.current);
+                }
+            }
+        };
+        document.addEventListener("keydown", callback);
+        return () => {
+            document.removeEventListener("keydown", callback);
+        };
+    }, []);
 
     return (
         <>
