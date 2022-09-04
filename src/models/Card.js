@@ -1,8 +1,11 @@
 export default class Card {
-    constructor(id) {
-        this.id = id;
-        this.title = "";
-        this.frontFace = null;
-        this.backFace = null;
+    constructor(idOrCard) {
+        if (typeof idOrCard === "number") {
+            this.id = idOrCard;
+            this.title = "";
+            this.frontFace = null;
+            this.backFace = null;
+        }
+        Object.assign(this, idOrCard);
     }
 }

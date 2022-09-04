@@ -11,11 +11,8 @@ export default class Campaign {
             this.cardSets = [];
             return;
         }
-        this.path = campaign.path;
-        this.title = campaign.title;
-        this.icon = campaign.icon;
-        this.campaignGuide = campaign.campaignGuide;
-        this.cardSets = campaign.cardSets;
+        Object.assign(this, campaign);
+        this.cardSets = campaign.cardSets.map(cardSet => new CardSet(cardSet));
     }
 
     clone() {

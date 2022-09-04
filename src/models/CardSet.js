@@ -2,11 +2,15 @@ import generateId from "../helpers/generateId";
 import Card from "./card";
 
 export default class CardSet {
-    constructor(id) {
-        this.id = id;
-        this.title = "";
-        this.symbol = null;
-        this.cards = [];
+    constructor(idOrCardSet) {
+        if (typeof idOrCardSet === "number") {
+            this.id = id;
+            this.title = "";
+            this.symbol = null;
+            this.cards = [];
+        }
+        Object.assign(this, idOrCardSet);
+        this.cards = idOrCardSet.cards.map(card => new Card(card));
     }
 
     addCard() {
