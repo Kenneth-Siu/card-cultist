@@ -1,6 +1,16 @@
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, Menu } = require("electron");
 const path = require("path");
 const { initFileSystemIpc } = require("./preload/fileSystemIpc");
+
+const isMac = process.platform === "darwin";
+
+const menuTemplate = [
+    ...(isMac ? [{ role: "appMenu" }] : []),
+    { role: "viewMenu" },
+];
+
+const menu = Menu.buildFromTemplate(menuTemplate);
+Menu.setApplicationMenu(menu);
 
 const createWindow = () => {
     const win = new BrowserWindow({
