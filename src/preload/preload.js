@@ -16,7 +16,7 @@ contextBridge.exposeInMainWorld("fs", {
     saveLastOpened: (path) => {
         return ipcRenderer.invoke("fs:saveLastOpened", path);
     },
-    loadImage: () => {
+    openImage: () => {
         return ipcRenderer.invoke("fs:openImage");
     },
 });

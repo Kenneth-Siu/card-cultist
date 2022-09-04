@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Route, Switch } from "react-router-dom";
 import Home from "./home/Home";
-import Treachery from "./treachery/Treachery";
 import CampaignGuide from "./campaignGuide/CampaignGuide";
 import NavBar from "./navBar/NavBar";
 import CardSet from "./cardSet/CardSet";
@@ -33,9 +32,6 @@ export default function App() {
             <Switch>
                 <Route exact={true} path="/">
                     <Home campaign={campaign} setCampaign={setCampaign} />
-                </Route>
-                <Route exact={true} path="/treachery">
-                    <Treachery />
                 </Route>
                 <Route exact={true} path="/campaign-guide">
                     <CampaignGuide />
