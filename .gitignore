@@ -13,3 +13,4 @@ cache
 .env.production.local
 
 out/
+.lastopened

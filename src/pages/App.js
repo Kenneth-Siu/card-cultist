@@ -8,6 +8,7 @@ import CardSet from "./cardSet/CardSet";
 import Card from "./card/Card";
 import "./cssreset.css";
 import "./App.scss";
+import Campaign from "../models/Campaign";
 
 export default function App() {
     const [campaign, setCampaign] = useState(null);
@@ -16,25 +17,13 @@ export default function App() {
     campaignRef.current = campaign;
     setCampaignRef.current = setCampaign;
 
-    useEffect(() => {
-        const callback = async (event) => {
-            if (campaignRef.current) {
-                if ((event.metaKey || event.ctrlKey) && event.code === "KeyS") {
-                    if (event.shiftKey || !campaignRef.current.path) {
-                        const path = await window.fs.saveAsCampaign(campaignRef.current);
-                        campaignRef.current.path = path;
-                        setCampaignRef.current(campaignRef.current.clone());
-                    } else {
-                        window.fs.saveCampaign(campaignRef.current);
-                    }
-                    console.log(campaignRef.current);
-                }
-            }
-        };
-        document.addEventListener("keydown", callback);
-        return () => {
-            document.removeEventListener("keydown", callback);
-        };
+    useEffect(() => initEffectSaveKeyboardShortcut(), []);
+    useEffect(async () => {
+        // TODO Failure handling
+        const openedCampaign = await window.fs.openLastOpened();
+        if (openedCampaign) {
+            setCampaign(new Campaign(openedCampaign));
+        }
     }, []);
 
     return (
@@ -60,4 +49,24 @@ export default function App() {
             </Switch>
         </>
     );
+
+    function initEffectSaveKeyboardShortcut() {
+        const callback = async (event) => {
+            if (campaignRef.current) {
+                if ((event.metaKey || event.ctrlKey) && event.code === "KeyS") {
+                    if (event.shiftKey || !campaignRef.current.path) {
+                        const path = await window.fs.saveAsCampaign(campaignRef.current);
+                        campaignRef.current.path = path;
+                        setCampaignRef.current(campaignRef.current.clone());
+                    } else {
+                        window.fs.saveCampaign(campaignRef.current);
+                    }
+                }
+            }
+        };
+        document.addEventListener("keydown", callback);
+        return () => {
+            document.removeEventListener("keydown", callback);
+        };
+    }
 }

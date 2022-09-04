@@ -27,8 +27,11 @@ export default function Home({ campaign, setCampaign }) {
                     </button>
                     <button
                         onClick={async () => {
-                            // TODO Error checking
-                            setCampaign(await window.fs.loadCampaign());
+                            // TODO Failure handling
+                            const openedCampaign = await window.fs.openCampaign();
+                            if (openedCampaign) {
+                                setCampaign(new Campaign(openedCampaign));
+                            }
                         }}
                     >
                         Choose campaign

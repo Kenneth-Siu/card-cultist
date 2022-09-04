@@ -80,7 +80,7 @@ export default function Treachery() {
 
     async function addImage(src, width, height) {
         if (!src) {
-            const { data } = await window.fs.loadImage();
+            const { data } = await window.fs.openImage();
             src = URL.createObjectURL(new Blob([data]));
         }
         const imageRef = React.createRef();
