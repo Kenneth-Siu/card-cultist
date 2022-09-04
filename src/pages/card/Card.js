@@ -1,7 +1,9 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import treacheryFrame from "../../../public/templates/treacheries/treachery.png";
-import { writeCenteredLine, writeText } from "../../helpers/canvasTextWriter";
+import CanvasImageLayer from "../../models/canvasLayers/CanvasImageLayer";
+import CanvasTextLayer from "../../models/canvasLayers/CanvasTextLayer";
+import CanvasTextConfig from "../../models/CanvasTextConfig";
 import "./Card.scss";
 
 const textBoxText = "Revelation – Test <wil> (3). For each point you fail by, take 1 horror.";
@@ -9,6 +11,7 @@ const textBoxText = "Revelation – Test <wil> (3). For each point you fail by, 
 export default function Card({ campaign, setCampaign }) {
     const canvas = useRef(null);
     const [loadedImages, setLoadedImages] = useState([]);
+    const [canvasLayers, setCanvasLayers] = useState([]);
 
     const params = useParams();
 
@@ -17,6 +20,12 @@ export default function Card({ campaign, setCampaign }) {
 
     const cardSet = campaign.getCardSet(cardSetId);
     const card = cardSet.getCard(id);
+
+    useEffect(() => {
+        if (canvas.current) {
+            refreshCanvas();
+        }
+    }, [canvasLayers]);
 
     if (!card) {
         return (
@@ -46,26 +55,30 @@ export default function Card({ campaign, setCampaign }) {
                 </button>
                 <button
                     onClick={() => {
-                        writeCenteredLine(canvas.current.getContext("2d"), "Rotting Remains", {
-                            x: 187,
-                            y: 326,
-                            fontSize: 23,
-                            fontFamily: "Teutonic",
-                        });
+                        setCanvasLayers((canvasLayers) => [
+                            ...canvasLayers,
+                            new CanvasTextLayer(
+                                new CanvasTextConfig()
+                                    .withText("Rotting Remains")
+                                    .withX(187)
+                                    .withY(326)
+                                    .withFontSize(23)
+                                    .withFontFamily("Teutonic")
+                                    .withAlign("center")
+                            ),
+                        ]);
                     }}
                 >
                     Add title
                 </button>
                 <button
                     onClick={() => {
-                        writeText(canvas.current.getContext("2d"), textBoxText, {
-                            x: 31,
-                            y: 370,
-                            width: 325,
-                            height: 0,
-                            fontSize: 17,
-                            fontFamily: "Mongolian Baiti",
-                        });
+                        setCanvasLayers((canvasLayers) => [
+                            ...canvasLayers,
+                            new CanvasTextLayer(
+                                new CanvasTextConfig().withText(textBoxText).withX(31).withY(370).withWidth(325)
+                            ),
+                        ]);
                     }}
                 >
                     Add text box
@@ -73,10 +86,18 @@ export default function Card({ campaign, setCampaign }) {
                 <button onClick={() => downloadOne()}>Download one</button>
                 <button onClick={() => downloadAll()}>Download all</button>
             </div>
-            <canvas ref={canvas} id="preview" width="375" height="525"></canvas>
+            <canvas ref={canvas} id="preview" width="375" height="525" onLoad={() => refreshCanvas()}></canvas>
             <div id="loaded-images">{loadedImages}</div>
         </main>
     );
+
+    function refreshCanvas() {
+        const context = canvas.current.getContext("2d");
+        context.clearRect(0, 0, canvas.current.width, canvas.current.height);
+        canvasLayers.forEach((canvasLayer) => {
+            canvasLayer.draw(context);
+        });
+    }
 
     function changeTitle(title) {
         card.title = title;
@@ -93,13 +114,13 @@ export default function Card({ campaign, setCampaign }) {
         setLoadedImages((loadedImages) => [
             ...loadedImages,
             <img
+                key={loadedImages.length}
                 ref={imageRef}
                 src={src}
                 width={width !== undefined ? `${width}` : ""}
                 height={height !== undefined ? `${height}` : ""}
                 onLoad={() => {
-                    const context = canvas.current.getContext("2d");
-                    context.drawImage(imageRef.current, 0, 0);
+                    setCanvasLayers((canvasLayers) => [...canvasLayers, new CanvasImageLayer(imageRef.current, 0, 0)]);
                 }}
             />,
         ]);

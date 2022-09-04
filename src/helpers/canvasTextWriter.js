@@ -21,55 +21,42 @@ const symbolMapping = {
 };
 
 // TODO some way to detect bottom of rect, for use with campaign guide
-
-/*
-Config:
-x
-y
-width
-height
-fontSize
-fontFamily
- */
-
-export function writeText(canvasContext, text, config) {
+// TODO make symbols work with center/right align (probably just have to manually determine gaps left or something)
+export function writeText(canvasContext, canvasTextConfig) {
+    if (canvasTextConfig.align === "center") {
+        writeCenteredLine(canvasContext, canvasTextConfig);
+        return;
+    }
     canvasContext.textAlign = "start";
-    const lines = getLines(canvasContext, text, config);
-    canvasContext.font = `${config.fontSize}px ${config.fontFamily}`;
+    const lines = getLines(canvasContext, canvasTextConfig);
+    canvasContext.font = `${canvasTextConfig.fontSize}px ${canvasTextConfig.fontFamily}`;
     lines.forEach((line, lineNumber) => {
-        let currentX = config.x;
+        let currentX = canvasTextConfig.x;
         for (let i = 0; i < line.length; i++) {
             if (symbolMapping[line[i]]) {
-                canvasContext.font = `${config.fontSize}px AHCardTextSymbols`;
-                canvasContext.fillText(symbolMapping[line[i]], currentX, config.y + lineNumber * config.fontSize);
+                canvasContext.font = `${canvasTextConfig.fontSize}px AHCardTextSymbols`;
+                canvasContext.fillText(symbolMapping[line[i]], currentX, canvasTextConfig.y + lineNumber * canvasTextConfig.fontSize);
                 currentX += canvasContext.measureText(symbolMapping[line[i]]).width;
             } else {
-                canvasContext.font = `${config.fontSize}px ${config.fontFamily}`;
-                canvasContext.fillText(line[i], currentX, config.y + lineNumber * config.fontSize);
+                canvasContext.font = `${canvasTextConfig.fontSize}px ${canvasTextConfig.fontFamily}`;
+                canvasContext.fillText(line[i], currentX, canvasTextConfig.y + lineNumber * canvasTextConfig.fontSize);
                 currentX += canvasContext.measureText(line[i]).width;
             }
         }
     });
 }
 
-/*
-Config:
-x
-y
-fontSize
-fontFamily
- */
-export function writeCenteredLine(canvasContext, text, config) {
+export function writeCenteredLine(canvasContext, config) {
     canvasContext.font = `${config.fontSize}px ${config.fontFamily}`;
     canvasContext.textAlign = "center";
-    canvasContext.fillText(text, config.x, config.y);
+    canvasContext.fillText(config.text, config.x, config.y);
 }
 
-// If first word is too long, this breaks too
+// TODO If first word is too long, this breaks too
 // TODO get hyphens to work
 // TODO symbols when they're part of a larger word
-function getLines(context, text, config) {
-    const words = text.split(" ");
+function getLines(context, config) {
+    const words = config.text.split(" ");
     const lines = [];
     let currentLine = [];
     let currentWidth = 0;
