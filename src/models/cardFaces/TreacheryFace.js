@@ -4,18 +4,22 @@ import treachery from "../../../public/templates/treacheries/treachery.png";
 import TreacheryFaceView from "../../pages/card/cardFaceViews/TreacheryFaceView";
 
 export default class TreacheryFace extends CardFace {
-    constructor() {
+    constructor(face) {
         super("treachery", treachery);
-        this.campaignSymbol = null;
-        this.encounterSetSymbol = null;
-        this.illustration = null;
-        this.title = "";
-        this.text = "";
-        this.illustrator = "";
-        this.copyrightInformation = "";
-        this.encounterSetId = null;
-        this.encounterSetMaxId = null;
-        this.campaignSetId = null;
+        if (!face) {
+            this.campaignSymbol = null;
+            this.encounterSetSymbol = null;
+            this.illustration = null;
+            this.title = "";
+            this.text = "";
+            this.illustrator = "";
+            this.copyrightInformation = "";
+            this.encounterSetId = null;
+            this.encounterSetMaxId = null;
+            this.campaignSetId = null;
+            return;
+        }
+        Object.assign(this, face);
     }
 
     getView(face, campaign, setCampaign) {
