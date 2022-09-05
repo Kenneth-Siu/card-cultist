@@ -23,7 +23,7 @@ export default function NavBar({ campaign, setCampaign }) {
                             {cardSet.cards.map((card) => (
                                 <li key={card.id}>
                                     <Link to={`/card-set/${cardSet.id}/card/${card.id}`}>
-                                        {card.title ? card.title : `(No title – ID ${card.id})`}
+                                        {card.getTitle() ? card.getTitle() : `(No title – ID ${card.id})`}
                                     </Link>
                                 </li>
                             ))}

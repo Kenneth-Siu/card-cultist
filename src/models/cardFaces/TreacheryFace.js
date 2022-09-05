@@ -1,9 +1,11 @@
+import React from "react";
 import CardFace from "./CardFace";
 import treachery from "../../../public/templates/treacheries/treachery.png";
+import TreacheryFaceView from "../../pages/card/cardFaceViews/TreacheryFaceView";
 
 export default class TreacheryFace extends CardFace {
     constructor() {
-        super(treachery);
+        super("treachery", treachery);
         this.campaignSymbol = null;
         this.encounterSetSymbol = null;
         this.illustration = null;
@@ -14,5 +16,9 @@ export default class TreacheryFace extends CardFace {
         this.encounterSetId = null;
         this.encounterSetMaxId = null;
         this.campaignSetId = null;
+    }
+
+    getView(face, campaign, setCampaign) {
+        return <TreacheryFaceView face={face} campaign={campaign} setCampaign={setCampaign} />;
     }
 }
