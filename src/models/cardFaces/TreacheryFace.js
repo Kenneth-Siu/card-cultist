@@ -4,8 +4,10 @@ import treachery from "../../../public/templates/treacheries/treachery.png";
 import TreacheryFaceView from "../../pages/card/cardFaceViews/TreacheryFaceView";
 
 export default class TreacheryFace extends CardFace {
+    static type = "Treachery";
+
     constructor(face) {
-        super("treachery", treachery);
+        super(TreacheryFace.type, treachery);
         if (!face) {
             this.campaignSymbol = null;
             this.encounterSetSymbol = null;

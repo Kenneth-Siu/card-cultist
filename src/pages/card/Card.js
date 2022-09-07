@@ -1,5 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
+import cardFaces from "../../models/cardFaces/cardFaces";
+import getCardFaceClassInstance from "../../models/cardFaces/getCardFaceClassInstance";
 import "./Card.scss";
 
 export default function Card({ campaign, setCampaign }) {
@@ -21,8 +23,26 @@ export default function Card({ campaign, setCampaign }) {
 
     return (
         <main className="card-page">
-            {card.frontFace ? card.frontFace.getView(card.frontFace, campaign, setCampaign) : <div>Pick a face</div>}
-            {card.backFace ? card.backFace.getView(card.backFace, campaign, setCampaign) : <div>Pick a face</div>}
+            <div>
+                <select value={card.frontFace.type} onChange={(event) => changeFrontFaceType(event.target.value)}>
+                    {cardFaces.map((cardFace) => (
+                        <option key={cardFace.type} value={cardFace.type}>
+                            {cardFace.type}
+                        </option>
+                    ))}
+                </select>
+                {card.frontFace.getView(card.frontFace, campaign, setCampaign)}
+            </div>
+            <div>
+                <select value={card.backFace.type} onChange={(event) => changeBackFaceType(event.target.value)}>
+                    {cardFaces.map((cardFace) => (
+                        <option key={cardFace.type} value={cardFace.type}>
+                            {cardFace.type}
+                        </option>
+                    ))}
+                </select>
+                {card.backFace.getView(card.backFace, campaign, setCampaign)}
+            </div>
 
             <div>
                 <button onClick={() => downloadOne()}>Download one</button>
@@ -30,6 +50,17 @@ export default function Card({ campaign, setCampaign }) {
             </div>
         </main>
     );
+
+    function changeFrontFaceType(faceType) {
+        card.frontFace.type = faceType;
+        card.frontFace = getCardFaceClassInstance(card.frontFace);
+        setCampaign(campaign.clone());
+    }
+    function changeBackFaceType(faceType) {
+        card.backFace.type = faceType;
+        card.backFace = getCardFaceClassInstance(card.backFace);
+        setCampaign(campaign.clone());
+    }
 
     function downloadOne() {
         canvas.current.toBlob((canvasBlob) => {

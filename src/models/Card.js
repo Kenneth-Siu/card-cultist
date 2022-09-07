@@ -1,4 +1,4 @@
-import getCardFace from "./cardFaces/getCardFace";
+import getCardFaceClassInstance from "./cardFaces/getCardFaceClassInstance";
 
 export default class Card {
     constructor(idOrCard) {
@@ -8,8 +8,8 @@ export default class Card {
             this.backFace = null;
         }
         Object.assign(this, idOrCard);
-        this.frontFace = getCardFace(idOrCard.frontFace);
-        this.backFace = getCardFace(idOrCard.backFace);
+        this.frontFace = getCardFaceClassInstance(idOrCard.frontFace);
+        this.backFace = getCardFaceClassInstance(idOrCard.backFace);
     }
 
     getTitle() {

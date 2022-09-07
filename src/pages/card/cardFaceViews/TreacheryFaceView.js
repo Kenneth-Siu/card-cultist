@@ -1,12 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import CanvasTextLayer from "../../../models/canvasLayers/CanvasTextLayer";
 import CanvasTextConfig from "../../../models/CanvasTextConfig";
-import treacheryFrame from "../../../../public/templates/treacheries/treachery.png";
 import CanvasImageLayer from "../../../models/canvasLayers/CanvasImageLayer";
+import useLoadedImages from "../../../helpers/useLoadedImages";
+import treacheryFrame from "../../../../public/templates/treacheries/treachery.png";
+import CardCanvas from "./CardCanvas";
 
 export default function TreacheryFaceView({ face, campaign, setCampaign }) {
-    const canvas = useRef(null);
-    const [loadedImages, setLoadedImages] = useState([]);
+    const [loadedImages, loadImage] = useLoadedImages();
 
     const [illustrationLayer, setIllustrationLayer] = useState(null);
     const [frameLayer, setFrameLayer] = useState(null);
@@ -15,14 +16,8 @@ export default function TreacheryFaceView({ face, campaign, setCampaign }) {
 
     const canvasLayers = [illustrationLayer, frameLayer, titleLayer, textLayer];
 
-    useEffect(() => {
-        if (canvas.current) {
-            refreshCanvas();
-        }
-    }, canvasLayers);
-
-    useEffect(() => {
-        addImage((image) => setFrameLayer(new CanvasImageLayer(image, 0, 0)), treacheryFrame, 750, 1050);
+    useEffect(async () => {
+        setFrameLayer(new CanvasImageLayer(await loadImage(treacheryFrame, 750, 1050), 0, 0));
     }, []);
 
     useEffect(() => {
@@ -47,22 +42,13 @@ export default function TreacheryFaceView({ face, campaign, setCampaign }) {
             <input type="text" value={face.title} onChange={(event) => changeTitle(event.target.value)} />
             <input type="textarea" value={face.text} onChange={(event) => changeText(event.target.value)} />
             <div>
-                <button onClick={() => addImage((image) => setIllustrationLayer(new CanvasImageLayer(image, 0, 0)))}>
+                <button onClick={async () => setIllustrationLayer(new CanvasImageLayer(await loadImage(), 0, 0))}>
                     Add illustration
                 </button>
             </div>
-            <canvas ref={canvas} id="preview" width="375" height="525" onLoad={() => refreshCanvas()}></canvas>
-            <div className="loaded-images">{loadedImages}</div>
+            <CardCanvas loadedImages={loadedImages} canvasLayers={canvasLayers} />
         </div>
     );
-
-    function refreshCanvas() {
-        const context = canvas.current.getContext("2d");
-        context.clearRect(0, 0, canvas.current.width, canvas.current.height);
-        canvasLayers.forEach((canvasLayer) => {
-            canvasLayer && canvasLayer.draw(context);
-        });
-    }
 
     function changeTitle(title) {
         face.title = title;
@@ -72,25 +58,5 @@ export default function TreacheryFaceView({ face, campaign, setCampaign }) {
     function changeText(text) {
         face.text = text;
         setCampaign(campaign.clone());
-    }
-
-    async function addImage(callback, src, width, height) {
-        if (!src) {
-            const { data } = await window.fs.openImage();
-            src = URL.createObjectURL(new Blob([data]));
-        }
-        const imageRef = React.createRef();
-
-        setLoadedImages((loadedImages) => [
-            ...loadedImages,
-            <img
-                key={loadedImages.length}
-                ref={imageRef}
-                src={src}
-                width={width !== undefined ? `${width}` : ""}
-                height={height !== undefined ? `${height}` : ""}
-                onLoad={() => callback(imageRef.current)}
-            />,
-        ]);
     }
 }
