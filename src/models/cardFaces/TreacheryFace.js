@@ -5,9 +5,10 @@ import TreacheryFaceView from "../../pages/card/cardFaceViews/TreacheryFaceView"
 
 export default class TreacheryFace extends CardFace {
     static type = "Treachery";
+    static frame = treachery;
 
     constructor(face) {
-        super(TreacheryFace.type, treachery);
+        super(TreacheryFace.type);
         if (!face) {
             this.campaignSymbol = null;
             this.encounterSetSymbol = null;

@@ -3,11 +3,11 @@ import CanvasTextLayer from "../../../models/canvasLayers/CanvasTextLayer";
 import CanvasTextConfig from "../../../models/CanvasTextConfig";
 import CanvasImageLayer from "../../../models/canvasLayers/CanvasImageLayer";
 import useLoadedImages from "../../../helpers/useLoadedImages";
-import treacheryFrame from "../../../../public/templates/treacheries/treachery.png";
+import TreacheryFace from "../../../models/cardFaces/TreacheryFace";
 import CardCanvas from "./CardCanvas";
 
 export default function TreacheryFaceView({ face, campaign, setCampaign }) {
-    const [loadedImages, loadImage] = useLoadedImages();
+    const [loadedImages, loadPublicImage, loadFileSystemImage] = useLoadedImages();
 
     const [illustrationLayer, setIllustrationLayer] = useState(null);
     const [frameLayer, setFrameLayer] = useState(null);
@@ -17,7 +17,12 @@ export default function TreacheryFaceView({ face, campaign, setCampaign }) {
     const canvasLayers = [illustrationLayer, frameLayer, titleLayer, textLayer];
 
     useEffect(async () => {
-        setFrameLayer(new CanvasImageLayer(await loadImage(treacheryFrame, 750, 1050), 0, 0));
+        const image = await loadFileSystemImage(face.illustration);
+        setIllustrationLayer(image ? new CanvasImageLayer(image, 0, 0) : null);
+    }, [face.illustration]);
+
+    useEffect(async () => {
+        setFrameLayer(new CanvasImageLayer(await loadPublicImage(TreacheryFace.frame, 750, 1050), 0, 0));
     }, []);
 
     useEffect(() => {
@@ -32,19 +37,20 @@ export default function TreacheryFaceView({ face, campaign, setCampaign }) {
                     .withAlign("center")
             )
         );
+    }, [face.title]);
+
+    useEffect(() => {
         setTextLayer(
             new CanvasTextLayer(new CanvasTextConfig().withText(face.text).withX(31).withY(370).withWidth(325))
         );
-    }, [campaign]);
+    }, [face.text]);
 
     return (
         <div>
             <input type="text" value={face.title} onChange={(event) => changeTitle(event.target.value)} />
             <input type="textarea" value={face.text} onChange={(event) => changeText(event.target.value)} />
             <div>
-                <button onClick={async () => setIllustrationLayer(new CanvasImageLayer(await loadImage(), 0, 0))}>
-                    Add illustration
-                </button>
+                <button onClick={() => addIllustration()}>Add illustration</button>
             </div>
             <CardCanvas loadedImages={loadedImages} canvasLayers={canvasLayers} />
         </div>
@@ -57,6 +63,12 @@ export default function TreacheryFaceView({ face, campaign, setCampaign }) {
 
     function changeText(text) {
         face.text = text;
+        setCampaign(campaign.clone());
+    }
+
+    async function addIllustration() {
+        const path = await window.fs.chooseImage();
+        face.illustration = path;
         setCampaign(campaign.clone());
     }
 }

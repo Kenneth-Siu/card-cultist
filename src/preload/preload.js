@@ -16,7 +16,10 @@ contextBridge.exposeInMainWorld("fs", {
     saveLastOpened: (path) => {
         return ipcRenderer.invoke("fs:saveLastOpened", path);
     },
-    openImage: () => {
-        return ipcRenderer.invoke("fs:openImage");
+    chooseImage: () => {
+        return ipcRenderer.invoke("fs:chooseImage");
+    },
+    openImage: (path) => {
+        return ipcRenderer.invoke("fs:openImage", path);
     },
 });

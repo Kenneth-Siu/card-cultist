@@ -15,14 +15,14 @@ async function openCampaign() {
             ...JSON.parse(await readFile(path, { encoding: "utf-8" })),
             path,
         };
-        await saveLastOpened(path);
+        await saveLastOpened(undefined, path);
         return campaign;
     }
 }
 
 async function saveCampaign(event, campaign) {
     await writeFile(campaign.path, JSON.stringify(campaign), { encoding: "utf-8" });
-    await saveLastOpened(campaign.path);
+    await saveLastOpened(undefined, campaign.path);
 }
 
 async function saveAsCampaign(event, campaign) {
@@ -33,7 +33,7 @@ async function saveAsCampaign(event, campaign) {
         return;
     } else {
         await writeFile(filePath, JSON.stringify({ ...campaign, path: filePath }), { encoding: "utf-8" });
-        await saveLastOpened(filePath);
+        await saveLastOpened(undefined, filePath);
         return filePath;
     }
 }
@@ -52,23 +52,22 @@ async function openLastOpened() {
     }
 }
 
-async function saveLastOpened(path) {
+async function saveLastOpened(event, path) {
     await writeFile("./.lastopened", path, { encoding: "utf-8" });
 }
 
-async function openImage() {
+async function chooseImage() {
     const { cancelled, filePaths } = await dialog.showOpenDialog({
         filters: [{ name: "Images", extensions: ["jpg", "png"] }],
     });
     if (cancelled) {
         return;
-    } else {
-        const path = filePaths[0];
-        return {
-            path,
-            data: await readFile(path),
-        };
     }
+    return filePaths[0];
+}
+
+async function openImage(event, path) {
+    return await readFile(path);
 }
 
 function initFileSystemIpc() {
@@ -77,6 +76,7 @@ function initFileSystemIpc() {
     ipcMain.handle("fs:saveAsCampaign", saveAsCampaign);
     ipcMain.handle("fs:openLastOpened", openLastOpened);
     ipcMain.handle("fs:saveLastOpened", saveLastOpened);
+    ipcMain.handle("fs:chooseImage", chooseImage);
     ipcMain.handle("fs:openImage", openImage);
 }
 

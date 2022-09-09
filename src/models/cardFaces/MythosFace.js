@@ -5,9 +5,10 @@ import MythosFaceView from "../../pages/card/cardFaceViews/MythosFaceView";
 
 export default class MythosFace extends CardFace {
     static type = "Mythos";
+    static frame = mythosBack;
 
     constructor() {
-        super(MythosFace.type, mythosBack);
+        super(MythosFace.type);
     }
 
     getView() {
