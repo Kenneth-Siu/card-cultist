@@ -25,7 +25,7 @@ export default class TreacheryFace extends CardFace {
         Object.assign(this, face);
     }
 
-    getView(face, campaign, setCampaign) {
-        return <TreacheryFaceView face={face} campaign={campaign} setCampaign={setCampaign} />;
+    getView(face, cardSet, campaign, setCampaign) {
+        return <TreacheryFaceView face={face} cardSet={cardSet} campaign={campaign} setCampaign={setCampaign} />;
     }
 }

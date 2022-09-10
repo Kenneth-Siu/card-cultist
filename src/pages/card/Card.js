@@ -31,7 +31,7 @@ export default function Card({ campaign, setCampaign }) {
                         </option>
                     ))}
                 </select>
-                {card.frontFace.getView(card.frontFace, campaign, setCampaign)}
+                {card.frontFace.getView(card.frontFace, cardSet, campaign, setCampaign)}
             </div>
             <div>
                 <select value={card.backFace.type} onChange={(event) => changeBackFaceType(event.target.value)}>
@@ -41,7 +41,7 @@ export default function Card({ campaign, setCampaign }) {
                         </option>
                     ))}
                 </select>
-                {card.backFace.getView(card.backFace, campaign, setCampaign)}
+                {card.backFace.getView(card.backFace, cardSet, campaign, setCampaign)}
             </div>
 
             <div>

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 export default function useLoadedImages() {
     const [loadedImages, setLoadedImages] = useState([]);
 
-    function loadPublicImage(src, width, height) {
+    function loadPublicImage(src) {
         return new Promise((resolve) => {
             const imageRef = React.createRef();
             setLoadedImages((loadedImages) => [
@@ -12,8 +12,6 @@ export default function useLoadedImages() {
                     ref={imageRef}
                     key={src}
                     src={src}
-                    width={width !== undefined ? `${width}` : ""}
-                    height={height !== undefined ? `${height}` : ""}
                     onLoad={() => resolve(imageRef.current)}
                 />,
             ]);

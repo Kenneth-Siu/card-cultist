@@ -9,7 +9,7 @@ export default class CardFace {
         this.type = type || CardFace.type;
     }
 
-    getView(face, campaign, setCampaign) {
+    getView(face, cardSet, campaign, setCampaign) {
         return <BlankFaceView />;
     }
 }
