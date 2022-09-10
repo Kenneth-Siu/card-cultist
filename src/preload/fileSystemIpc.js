@@ -66,6 +66,16 @@ async function chooseImage() {
     return filePaths[0];
 }
 
+async function chooseIcon() {
+    const { cancelled, filePaths } = await dialog.showOpenDialog({
+        filters: [{ name: "Images", extensions: ["png"] }],
+    });
+    if (cancelled) {
+        return;
+    }
+    return filePaths[0];
+}
+
 async function openImage(event, path) {
     return await readFile(path);
 }
@@ -76,6 +86,7 @@ function initFileSystemIpc() {
     ipcMain.handle("fs:saveAsCampaign", saveAsCampaign);
     ipcMain.handle("fs:openLastOpened", openLastOpened);
     ipcMain.handle("fs:saveLastOpened", saveLastOpened);
+    ipcMain.handle("fs:chooseIcon", chooseIcon);
     ipcMain.handle("fs:chooseImage", chooseImage);
     ipcMain.handle("fs:openImage", openImage);
 }

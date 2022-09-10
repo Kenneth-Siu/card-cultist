@@ -19,6 +19,9 @@ contextBridge.exposeInMainWorld("fs", {
     chooseImage: () => {
         return ipcRenderer.invoke("fs:chooseImage");
     },
+    chooseIcon: () => {
+        return ipcRenderer.invoke("fs:chooseIcon");
+    },
     openImage: (path) => {
         return ipcRenderer.invoke("fs:openImage", path);
     },
