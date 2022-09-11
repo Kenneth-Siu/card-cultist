@@ -54,7 +54,7 @@ export default function TreacheryFaceView({ face, cardSet, campaign, setCampaign
     return (
         <div>
             <input type="text" value={face.title} onChange={(event) => changeTitle(event.target.value)} />
-            <input type="textarea" value={face.text} onChange={(event) => changeText(event.target.value)} />
+            <textarea value={face.text} onChange={(event) => changeText(event.target.value)} />
             <div>
                 <button onClick={() => changeEncounterSetSymbol()}>Change encounter set symbol</button>
                 <button onClick={() => changeIllustration()}>Change illustration</button>
