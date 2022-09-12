@@ -1,3 +1,7 @@
+import EndBold from "./atoms/instructions/EndBold";
+import EndItalic from "./atoms/instructions/EndItalic";
+import StartBold from "./atoms/instructions/StartBold";
+import StartItalic from "./atoms/instructions/StartItalic";
 import NewLine from "./atoms/NewLine";
 import Space from "./atoms/Space";
 import Word from "./atoms/Word";
@@ -26,8 +30,10 @@ spaces,
 newlines, 
 AHsymbols, 
 instructions 
-    start/end bold with **
+    start/end bold with *
     start/end italic with _
+
+Text replacements are not atoms, but add text
     ~ for card name
     ~~ for card name + subtitle
 
@@ -44,6 +50,9 @@ function atomEscape(text) {
 
 export default function splitIntoAtoms(text, cardFace) {
     const atoms = [];
+
+    let italicStarted = false;
+    let boldStarted = false;
 
     while (text.length > 0) {
         if (text.startsWith(" ")) {
@@ -73,6 +82,37 @@ export default function splitIntoAtoms(text, cardFace) {
                         atoms.push(atom);
                     }
                 }
+                continue;
+            }
+        }
+
+        if (text.startsWith("_")) {
+            const closeBoldIndex = text.indexOf("_", 1);
+            if (closeBoldIndex !== -1) {
+                atoms.push(new StartItalic());
+                text = text.substring(1);
+                italicStarted = true;
+                continue;
+            }
+            if (italicStarted) {
+                atoms.push(new EndItalic());
+                text = text.substring(1);
+                italicStarted = false;
+                continue;
+            }
+        }
+        if (text.startsWith("*")) {
+            const closeBoldIndex = text.indexOf("*", 1);
+            if (closeBoldIndex !== -1) {
+                atoms.push(new StartBold());
+                text = text.substring(1);
+                boldStarted = true;
+                continue;
+            }
+            if (boldStarted) {
+                atoms.push(new EndBold());
+                text = text.substring(1);
+                boldStarted = false;
                 continue;
             }
         }

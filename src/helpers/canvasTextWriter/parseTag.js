@@ -1,8 +1,10 @@
 import AHSymbol from "./atoms/AHSymbol";
 import EndBold from "./atoms/instructions/EndBold";
 import EndItalic from "./atoms/instructions/EndItalic";
+import EndTrait from "./atoms/instructions/EndTrait";
 import StartBold from "./atoms/instructions/StartBold";
 import StartItalic from "./atoms/instructions/StartItalic";
+import StartTrait from "./atoms/instructions/StartTrait";
 
 const symbolDictionary = {
     "<guardian>": "a",
@@ -55,6 +57,8 @@ const instructionDictionary = {
     "</i>": EndItalic,
     "<b>": StartBold,
     "</b>": EndBold,
+    "<t>": StartTrait,
+    "</t>": EndTrait,
 };
 
 const textReplacementDictionary = {
