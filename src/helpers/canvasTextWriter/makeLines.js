@@ -5,13 +5,15 @@ export default function makeLines(atoms, context, { width, fontSize, fontFamily 
     let italic = false;
     let bold = false;
 
-    atoms.forEach((atom) =>
-        atom.addToLine({ makeNewLine, getWidth, getSymbolWidth, wouldMakeNewLine, addAtomToLine, setItalic, setBold })
-    );
+    atoms.forEach((atom) => {
+        atom.addToLine({ makeNewLine, getWidth, getSymbolWidth, wouldMakeNewLine, addAtomToLine, setItalic, setBold });
+        if (line.length > 1 && typeof line[line.length - 1] === "string" && typeof line[line.length - 2] === "string") {
+            const text = line.pop();
+            line[line.length - 1] += text;
+        }
+    });
 
     lines.push(line);
-
-    // TODO for each line, merge contiguous strings together
 
     return lines;
 
@@ -32,7 +34,7 @@ export default function makeLines(atoms, context, { width, fontSize, fontFamily 
     }
 
     function wouldMakeNewLine(atomWidth) {
-        if (lineWidth === 0) {
+        if (lineWidth === 0 || width === 0) {
             return false;
         }
         return lineWidth + atomWidth > width;

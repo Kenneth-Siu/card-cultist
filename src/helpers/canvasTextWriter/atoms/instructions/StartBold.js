@@ -13,4 +13,9 @@ export default class StartBold extends Instruction {
     writeToCanvas({ setBold }) {
         setBold(true);
     }
+
+    getWidth({ setBold }) {
+        setBold(true);
+        return 0;
+    }
 }

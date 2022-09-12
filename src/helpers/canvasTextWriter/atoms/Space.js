@@ -3,6 +3,7 @@ import Atom from "./Atom";
 export default class Space extends Atom {
     constructor() {
         super();
+        this.text = " ";
     }
 
     addToLine({ makeNewLine, getWidth, wouldMakeNewLine, addAtomToLine }) {
@@ -12,5 +13,9 @@ export default class Space extends Atom {
         } else {
             addAtomToLine(" ", spaceWidth);
         }
+    }
+
+    getWidth({ getTextWidth }) {
+        return getTextWidth(" ");
     }
 }

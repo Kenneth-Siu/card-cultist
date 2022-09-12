@@ -13,4 +13,9 @@ export default class StartItalic extends Instruction {
     writeToCanvas({ setItalic }) {
         setItalic(true);
     }
+
+    getWidth({ setItalic }) {
+        setItalic(true);
+        return 0;
+    }
 }

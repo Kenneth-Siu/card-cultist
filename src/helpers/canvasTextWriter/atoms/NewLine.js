@@ -8,4 +8,8 @@ export default class NewLine extends Atom {
     addToLine({ makeNewLine }) {
         makeNewLine();
     }
+
+    getWidth() {
+        return 0;
+    }
 }

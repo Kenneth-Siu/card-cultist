@@ -1,3 +1,9 @@
+export const TEXTALIGN = {
+    LEFT: "left",
+    RIGHT: "right",
+    CENTER: "center",
+};
+
 export default class CanvasTextConfig {
     constructor() {
         this.text = "";
@@ -7,7 +13,7 @@ export default class CanvasTextConfig {
         this.height = 0;
         this.fontSize = 17;
         this.fontFamily = "Mongolian Baiti";
-        this.align = "start";
+        this.align = TEXTALIGN.LEFT;
     }
 
     withText(text) {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import CanvasTextLayer from "../../../models/canvasLayers/CanvasTextLayer";
-import CanvasTextConfig from "../../../models/CanvasTextConfig";
+import CanvasTextConfig, { TEXTALIGN } from "../../../models/CanvasTextConfig";
 import CanvasImageLayer from "../../../models/canvasLayers/CanvasImageLayer";
 import useLoadedImages from "../../../helpers/useLoadedImages";
 import TreacheryFace from "../../../models/cardFaces/TreacheryFace";
@@ -40,19 +40,13 @@ export default function TreacheryFaceView({ face, cardSet, campaign, setCampaign
                     .withY(326)
                     .withFontSize(23)
                     .withFontFamily("Teutonic")
-                    .withAlign("center")
+                    .withAlign(TEXTALIGN.CENTER)
             )
         );
-    }, [face.title]);
-
-    useEffect(() => {
         setTextLayer(
-            new CanvasTextLayer(
-                new CanvasTextConfig().withText(face.text).withX(31).withY(370).withWidth(325),
-                face
-            )
+            new CanvasTextLayer(new CanvasTextConfig().withText(face.text).withX(31).withY(370).withWidth(325), face)
         );
-    }, [face.text]);
+    }, [face.title, face.text]);
 
     return (
         <div>

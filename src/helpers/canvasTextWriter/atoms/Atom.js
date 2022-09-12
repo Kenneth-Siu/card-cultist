@@ -6,4 +6,8 @@ export default class Atom {
     isAWord() {
         return false;
     }
+
+    getWidth() {
+        return 0;
+    }
 }

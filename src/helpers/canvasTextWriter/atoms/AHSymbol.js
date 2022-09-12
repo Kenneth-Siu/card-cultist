@@ -17,4 +17,8 @@ export default class AHSymbol extends Atom {
     writeToCanvas({ writeSymbols }) {
         writeSymbols(this.character);
     }
+
+    getWidth({ getSymbolWidth }) {
+        return getSymbolWidth(this.character);
+    }
 }

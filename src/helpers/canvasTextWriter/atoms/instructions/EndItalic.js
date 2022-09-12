@@ -13,4 +13,9 @@ export default class EndItalic extends Instruction {
     writeToCanvas({ setItalic }) {
         setItalic(false);
     }
+
+    getWidth({ setItalic }) {
+        setItalic(false);
+        return 0;
+    }
 }

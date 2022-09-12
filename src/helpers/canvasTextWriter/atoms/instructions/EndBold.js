@@ -13,4 +13,9 @@ export default class EndBold extends Instruction {
     writeToCanvas({ setBold }) {
         setBold(false);
     }
+
+    getWidth({ setBold }) {
+        setBold(false);
+        return 0;
+    }
 }

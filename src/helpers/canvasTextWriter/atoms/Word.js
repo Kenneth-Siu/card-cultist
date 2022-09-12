@@ -25,4 +25,8 @@ export default class Word extends Atom {
     hasEnded() {
         return this.text.length > 0 && this.text[this.text.length - 1] === "-";
     }
+
+    getWidth({ getTextWidth }) {
+        return getTextWidth(this.text);
+    }
 }

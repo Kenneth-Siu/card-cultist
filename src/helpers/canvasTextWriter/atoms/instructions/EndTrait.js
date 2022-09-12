@@ -15,4 +15,10 @@ export default class EndTrait extends Instruction {
         setItalic(false);
         setBold(false);
     }
+
+    getWidth({ setItalic, setBold }) {
+        setItalic(false);
+        setBold(false);
+        return 0;
+    }
 }

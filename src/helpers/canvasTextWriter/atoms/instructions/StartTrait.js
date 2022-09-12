@@ -15,4 +15,10 @@ export default class StartTrait extends Instruction {
         setItalic(true);
         setBold(true);
     }
+
+    getWidth({ setItalic, setBold }) {
+        setItalic(true);
+        setBold(true);
+        return 0;
+    }
 }
