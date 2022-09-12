@@ -11,7 +11,7 @@ export default function MythosFaceView() {
     const canvasLayers = [frameLayer];
 
     useEffect(async () => {
-        setFrameLayer(new CanvasImageLayer(await loadPublicImage(MythosFace.frame), 0, 0));
+        setFrameLayer(new CanvasImageLayer(await loadPublicImage(MythosFace.frame), 0, 0, 750, 1050));
     }, []);
 
     return (

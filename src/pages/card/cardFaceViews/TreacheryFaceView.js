@@ -23,12 +23,12 @@ export default function TreacheryFaceView({ face, cardSet, campaign, setCampaign
     }, [face.illustration]);
 
     useEffect(async () => {
-        setFrameLayer(new CanvasImageLayer(await loadPublicImage(TreacheryFace.frame), 0, 0));
+        setFrameLayer(new CanvasImageLayer(await loadPublicImage(TreacheryFace.frame), 0, 0, 750, 1050));
     }, []);
 
     useEffect(async () => {
         const image = await loadFileSystemImage(face.encounterSetSymbol || cardSet.symbol);
-        setEncounterSetSymbolLayer(image ? new CanvasImageLayer(image, 174, 253, 29, 29) : null);
+        setEncounterSetSymbolLayer(image ? new CanvasImageLayer(image, 348, 506, 58, 58) : null);
     }, [face.encounterSetSymbol, cardSet.symbol]);
 
     useEffect(() => {
@@ -36,15 +36,15 @@ export default function TreacheryFaceView({ face, cardSet, campaign, setCampaign
             new CanvasTextLayer(
                 new CanvasTextConfig()
                     .withText(face.title)
-                    .withX(187)
-                    .withY(326)
-                    .withFontSize(23)
+                    .withX(374)
+                    .withY(652)
+                    .withFontSize(46)
                     .withFontFamily("Teutonic")
                     .withAlign(TEXTALIGN.CENTER)
             )
         );
         setTextLayer(
-            new CanvasTextLayer(new CanvasTextConfig().withText(face.text).withX(31).withY(370).withWidth(325), face)
+            new CanvasTextLayer(new CanvasTextConfig().withText(face.text).withX(62).withY(740).withWidth(650), face)
         );
     }, [face.title, face.text]);
 

@@ -14,8 +14,8 @@ export default function CardCanvas({ loadedImages, canvasLayers, orientation }) 
             <canvas
                 ref={canvas}
                 id="preview"
-                width={orientation === "landscape" ? "525" : "375"}
-                height={orientation === "landscape" ? "375" : "525"}
+                width={orientation === "landscape" ? "1050" : "750"}
+                height={orientation === "landscape" ? "750" : "1050"}
                 onLoad={() => refreshCanvas()}
             />
             <div className="loaded-images">{loadedImages}</div>

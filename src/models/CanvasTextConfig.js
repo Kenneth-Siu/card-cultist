@@ -11,7 +11,7 @@ export default class CanvasTextConfig {
         this.y = 0;
         this.width = 0;
         this.height = 0;
-        this.fontSize = 17;
+        this.fontSize = 34;
         this.fontFamily = "Mongolian Baiti";
         this.align = TEXTALIGN.LEFT;
     }
