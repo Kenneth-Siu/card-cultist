@@ -6,12 +6,12 @@ export default class Word extends Atom {
         this.text = text;
     }
 
-    write({ makeNewLine, getWidth, wouldMakeNewLine, addToLine }) {
+    addToLine({ makeNewLine, getWidth, wouldMakeNewLine, addAtomToLine }) {
         const wordWidth = getWidth(this.text);
         if (wouldMakeNewLine(wordWidth)) {
             makeNewLine();
         }
-        addToLine(this.text, wordWidth);
+        addAtomToLine(this.text, wordWidth);
     }
 
     isAWord() {

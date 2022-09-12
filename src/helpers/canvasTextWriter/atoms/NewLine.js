@@ -5,7 +5,7 @@ export default class NewLine extends Atom {
         super();
     }
 
-    write({ makeNewLine }) {
+    addToLine({ makeNewLine }) {
         makeNewLine();
     }
 }

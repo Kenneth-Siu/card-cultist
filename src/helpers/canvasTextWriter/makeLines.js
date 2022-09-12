@@ -2,8 +2,12 @@ export default function makeLines(atoms, context, { width, fontSize, fontFamily 
     const lines = [];
     let line = [];
     let lineWidth = 0;
+    let italic = false;
+    let bold = false;
 
-    atoms.forEach((atom) => atom.write({ makeNewLine, getWidth, getSymbolWidth, wouldMakeNewLine, addToLine }));
+    atoms.forEach((atom) =>
+        atom.addToLine({ makeNewLine, getWidth, getSymbolWidth, wouldMakeNewLine, addAtomToLine, setItalic, setBold })
+    );
 
     lines.push(line);
 
@@ -18,7 +22,7 @@ export default function makeLines(atoms, context, { width, fontSize, fontFamily 
     }
 
     function getWidth(atom) {
-        context.font = `${fontSize}px ${fontFamily}`;
+        context.font = `${italic ? "italic " : ""}${bold ? "bold " : ""}${fontSize}px ${fontFamily}`;
         return context.measureText(atom).width;
     }
 
@@ -34,8 +38,16 @@ export default function makeLines(atoms, context, { width, fontSize, fontFamily 
         return lineWidth + atomWidth > width;
     }
 
-    function addToLine(atom, width) {
+    function addAtomToLine(atom, width) {
         line.push(atom);
         lineWidth += width;
+    }
+
+    function setItalic(value) {
+        italic = value;
+    }
+
+    function setBold(value) {
+        bold = value;
     }
 }

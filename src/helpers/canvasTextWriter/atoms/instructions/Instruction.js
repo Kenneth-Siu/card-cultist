@@ -1,11 +1,11 @@
-import Atom from "./Atom";
+import Atom from "../Atom";
 
 export default class Instruction extends Atom {
     constructor() {
         super();
     }
 
-    write({ addToLine }) {
-        addToLine(this, 0);
+    addToLine({ addAtomToLine }) {
+        addAtomToLine(this, 0);
     }
 }

@@ -47,7 +47,10 @@ export default function TreacheryFaceView({ face, cardSet, campaign, setCampaign
 
     useEffect(() => {
         setTextLayer(
-            new CanvasTextLayer(new CanvasTextConfig().withText(face.text).withX(31).withY(370).withWidth(325))
+            new CanvasTextLayer(
+                new CanvasTextConfig().withText(face.text).withX(31).withY(370).withWidth(325),
+                face
+            )
         );
     }, [face.text]);
 

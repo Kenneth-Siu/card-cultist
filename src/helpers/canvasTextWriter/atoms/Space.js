@@ -5,12 +5,12 @@ export default class Space extends Atom {
         super();
     }
 
-    write({ makeNewLine, getWidth, wouldMakeNewLine, addToLine }) {
+    addToLine({ makeNewLine, getWidth, wouldMakeNewLine, addAtomToLine }) {
         const spaceWidth = getWidth(" ");
         if (wouldMakeNewLine(spaceWidth)) {
             makeNewLine();
         } else {
-            addToLine(" ", spaceWidth);
+            addAtomToLine(" ", spaceWidth);
         }
     }
 }

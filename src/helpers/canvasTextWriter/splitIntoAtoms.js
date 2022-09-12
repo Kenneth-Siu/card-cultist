@@ -1,15 +1,21 @@
-import AHSymbol from "./atoms/AHSymbol";
 import NewLine from "./atoms/NewLine";
 import Space from "./atoms/Space";
 import Word from "./atoms/Word";
+import parseTag from "./parseTag";
 
 const shorthands = {
-    "Revelation - ": "",
-    "Forced - ": "",
-    "Objective - ": "",
-    "Prey - ": "",
-    "Spawn - ": "",
-    "Haunted - ": "",
+    "Revelation -- ": "<b>Revelation – </b>",
+    "Revelation - ": "<b>Revelation – </b>",
+    "Forced -- ": "<b>Forced – </b>",
+    "Forced - ": "<b>Forced – </b>",
+    "Objective -- ": "<b>Objective – </b>",
+    "Objective - ": "<b>Objective – </b>",
+    "Prey -- ": "<b>Prey – </b>",
+    "Prey - ": "<b>Prey – </b>",
+    "Spawn -- ": "<b>Spawn – </b>",
+    "Spawn - ": "<b>Spawn – </b>",
+    "Haunted -- ": "<b>Haunted – </b>",
+    "Haunted - ": "<b>Haunted – </b>",
 };
 
 /*
@@ -23,15 +29,20 @@ instructions
     start/end bold with **
     start/end italic with _
     ~ for card name
-    @ for card name + subtitle
+    ~~ for card name + subtitle
 
 Words are composed of alphanumerics and punctuation. A hyphen ends the word.
 
 */
 
-// TODO instructions
+// TODO some instructions remain
 
-export default function splitIntoAtoms(text) {
+const escapeable = /[~<>]/g;
+function atomEscape(text) {
+    return text.replaceAll(escapeable, (match) => `\\${match}`);
+}
+
+export default function splitIntoAtoms(text, cardFace) {
     const atoms = [];
 
     while (text.length > 0) {
@@ -53,10 +64,45 @@ export default function splitIntoAtoms(text) {
         if (text.startsWith("<")) {
             const closeSymbolIndex = text.indexOf(">", 1);
             if (closeSymbolIndex !== -1) {
-                atoms.push(new AHSymbol(text.substring(0, closeSymbolIndex + 1)));
+                const atom = parseTag(text.substring(0, closeSymbolIndex + 1));
                 text = text.substring(closeSymbolIndex + 1);
+                if (atom) {
+                    if (typeof atom === "string") {
+                        text = atom + text;
+                    } else {
+                        atoms.push(atom);
+                    }
+                }
                 continue;
             }
+        }
+
+        if (text.startsWith("~") && cardFace && cardFace.title) {
+            if (text.at(1) === "~") {
+                text = text.substring(2);
+                text =
+                    `${atomEscape(cardFace.title)}${
+                        cardFace.subtitle ? ` <i>(${atomEscape(cardFace.subtitle)})</i>` : ""
+                    }` + text;
+                continue;
+            }
+            text = text.substring(1);
+            text = atomEscape(cardFace.title) + text;
+            continue;
+        }
+
+        const shorthand = getShorthand(text);
+        if (shorthand) {
+            text = text.substring(shorthand.length);
+            text = shorthands[shorthand] + text;
+            continue;
+        }
+
+        if (text.startsWith("\\")) {
+            if (text.at(1).match(escapeable)) {
+                text = text.substring(1);
+            }
+            // Do not use continue to skip to next loop, proceed to text processing.
         }
         if (atoms.length > 0 && atoms[atoms.length - 1].isAWord() && !atoms[atoms.length - 1].hasEnded()) {
             atoms[atoms.length - 1].addLetter(text.at(0));
@@ -67,4 +113,13 @@ export default function splitIntoAtoms(text) {
     }
 
     return atoms;
+}
+
+function getShorthand(text) {
+    for (const shorthand in shorthands) {
+        if (text.startsWith(shorthand)) {
+            return shorthand;
+        }
+    }
+    return undefined;
 }

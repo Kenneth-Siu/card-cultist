@@ -4,33 +4,54 @@ import splitIntoAtoms from "./splitIntoAtoms";
 // TODO some way to detect bottom of rect, for use with campaign guide
 // TODO make symbols work with center/right align
 // (probably just have to write line out normally, measure, then adjust the starting position to make it centered)
-export function writeText(canvasContext, canvasTextConfig) {
+export function writeText(canvasContext, canvasTextConfig, cardFace) {
     const { text, align, fontSize, fontFamily, x, y } = canvasTextConfig;
     if (align === "center") {
         writeCenteredLine(canvasContext, canvasTextConfig);
         return;
     }
     canvasContext.textAlign = "start";
-    const atoms = splitIntoAtoms(text);
+    const atoms = splitIntoAtoms(text, cardFace);
     const lines = makeLines(atoms, canvasContext, canvasTextConfig);
 
-    canvasContext.font = `${fontSize}px ${fontFamily}`;
-    lines.forEach((line, lineNumber) => {
+    let italic = false;
+    let bold = false;
+
+    let currentY = y;
+
+    lines.forEach((line) => {
         let currentX = x;
 
         line.forEach((atom) => {
             if (typeof atom === "string") {
-                canvasContext.font = `${fontSize}px ${fontFamily}`;
-                canvasContext.fillText(atom, currentX, y + lineNumber * fontSize);
+                canvasContext.font = `${italic ? "italic " : ""}${bold ? "bold " : ""}${fontSize}px ${fontFamily}`;
+                canvasContext.fillText(atom, currentX, currentY);
                 currentX += canvasContext.measureText(atom).width;
             } else {
-                // TODO Extend to any atom
-                canvasContext.font = `${fontSize}px AHCardTextSymbols`;
-                canvasContext.fillText(atom.character, currentX, y + lineNumber * fontSize);
-                currentX += canvasContext.measureText(atom.character).width;
+                atom.writeToCanvas({ writeSymbols, setItalic, setBold });
             }
         });
+
+        if (line.length === 0) {
+            currentY += fontSize * 0.4;
+        } else {
+            currentY += fontSize;
+        }
+
+        function writeSymbols(text) {
+            canvasContext.font = `${fontSize}px AHCardTextSymbols`;
+            canvasContext.fillText(text, currentX, currentY);
+            currentX += canvasContext.measureText(text).width;
+        }
     });
+
+    function setItalic(value) {
+        italic = value;
+    }
+
+    function setBold(value) {
+        bold = value;
+    }
 }
 
 export function writeCenteredLine(canvasContext, { text, x, y, fontSize, fontFamily }) {

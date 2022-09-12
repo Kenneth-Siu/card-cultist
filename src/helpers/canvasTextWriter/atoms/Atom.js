@@ -1,7 +1,7 @@
 export default class Atom {
     constructor() {}
 
-    write() {}
+    addToLine() {}
 
     isAWord() {
         return false;
