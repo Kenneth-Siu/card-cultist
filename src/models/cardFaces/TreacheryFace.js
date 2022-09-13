@@ -2,6 +2,7 @@ import React from "react";
 import CardFace from "./CardFace";
 import treachery from "../../../public/templates/treacheries/treachery.png";
 import TreacheryFaceView from "../../pages/card/cardFaceViews/TreacheryFaceView";
+import ImageTransform from "../ImageTransform";
 
 export default class TreacheryFace extends CardFace {
     static type = "Treachery";
@@ -13,6 +14,7 @@ export default class TreacheryFace extends CardFace {
             this.campaignSymbol = null;
             this.encounterSetSymbol = null;
             this.illustration = null;
+            this.illustrationTransform = new ImageTransform();
             this.title = "";
             this.text = "";
             this.illustrator = "";
@@ -23,6 +25,7 @@ export default class TreacheryFace extends CardFace {
             return;
         }
         Object.assign(this, face);
+        this.illustrationTransform = new ImageTransform(this.illustrationTransform);
     }
 
     getView(face, cardSet, campaign, setCampaign) {
