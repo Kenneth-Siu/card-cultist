@@ -24,7 +24,7 @@ export default function Card({ campaign, setCampaign }) {
     return (
         <main className="card-page">
             <div>
-                <select value={card.frontFace.type} onChange={(event) => changeFrontFaceType(event.target.value)}>
+                <select value={card.frontFace.type} onChange={(event) => setFrontFaceType(event.target.value)}>
                     {cardFaces.map((cardFace) => (
                         <option key={cardFace.type} value={cardFace.type}>
                             {cardFace.type}
@@ -34,7 +34,7 @@ export default function Card({ campaign, setCampaign }) {
                 {card.frontFace.getView(card.frontFace, cardSet, campaign, setCampaign)}
             </div>
             <div>
-                <select value={card.backFace.type} onChange={(event) => changeBackFaceType(event.target.value)}>
+                <select value={card.backFace.type} onChange={(event) => setBackFaceType(event.target.value)}>
                     {cardFaces.map((cardFace) => (
                         <option key={cardFace.type} value={cardFace.type}>
                             {cardFace.type}
@@ -51,12 +51,12 @@ export default function Card({ campaign, setCampaign }) {
         </main>
     );
 
-    function changeFrontFaceType(faceType) {
+    function setFrontFaceType(faceType) {
         card.frontFace.type = faceType;
         card.frontFace = getCardFaceClassInstance(card.frontFace);
         setCampaign(campaign.clone());
     }
-    function changeBackFaceType(faceType) {
+    function setBackFaceType(faceType) {
         card.backFace.type = faceType;
         card.backFace = getCardFaceClassInstance(card.backFace);
         setCampaign(campaign.clone());

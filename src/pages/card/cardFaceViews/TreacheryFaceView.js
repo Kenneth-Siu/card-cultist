@@ -57,17 +57,17 @@ export default function TreacheryFaceView({ face, cardSet, campaign, setCampaign
 
     return (
         <div>
-            <input type="text" value={face.title} onChange={(event) => changeTitle(event.target.value)} />
-            <textarea value={face.text} onChange={(event) => changeText(event.target.value)} />
+            <input type="text" value={face.title} onChange={(event) => setTitle(event.target.value)} />
+            <textarea value={face.text} onChange={(event) => setText(event.target.value)} />
             <div>
-                <button onClick={() => changeEncounterSetSymbol()}>Change encounter set symbol</button>
-                <button onClick={() => changeIllustration()}>Change illustration</button>
+                <button onClick={() => setEncounterSetSymbol()}>Change encounter set symbol</button>
+                <button onClick={() => setIllustration()}>Change illustration</button>
                 <label>
                     X Position
                     <input
                         type="number"
                         value={face.illustrationTransform.x}
-                        onChange={(event) => changeIllustrationX(event.target.value)}
+                        onChange={(event) => setIllustrationX(event.target.value)}
                     />
                 </label>
                 <label>
@@ -75,7 +75,7 @@ export default function TreacheryFaceView({ face, cardSet, campaign, setCampaign
                     <input
                         type="number"
                         value={face.illustrationTransform.y}
-                        onChange={(event) => changeIllustrationY(event.target.value)}
+                        onChange={(event) => setIllustrationY(event.target.value)}
                     />
                 </label>
                 <label>
@@ -85,7 +85,7 @@ export default function TreacheryFaceView({ face, cardSet, campaign, setCampaign
                         step="0.1"
                         min="0.1"
                         value={(face.illustrationTransform.scale * 100).toFixed(1)}
-                        onChange={(event) => changeIllustrationScale(event.target.value / 100)}
+                        onChange={(event) => setIllustrationScale(event.target.value / 100)}
                     />
                 </label>
                 <label>
@@ -93,7 +93,7 @@ export default function TreacheryFaceView({ face, cardSet, campaign, setCampaign
                     <input
                         type="number"
                         value={face.illustrationTransform.rotation}
-                        onChange={(event) => changeIllustrationRotation(event.target.value)}
+                        onChange={(event) => setIllustrationRotation(event.target.value)}
                     />
                 </label>
             </div>
@@ -101,44 +101,44 @@ export default function TreacheryFaceView({ face, cardSet, campaign, setCampaign
         </div>
     );
 
-    function changeTitle(title) {
+    function setTitle(title) {
         face.title = title;
         setCampaign(campaign.clone());
     }
 
-    function changeText(text) {
+    function setText(text) {
         face.text = text;
         setCampaign(campaign.clone());
     }
 
-    async function changeEncounterSetSymbol() {
+    async function setEncounterSetSymbol() {
         const path = await window.fs.chooseIcon();
         face.encounterSetSymbol = path;
         setCampaign(campaign.clone());
     }
 
-    async function changeIllustration() {
+    async function setIllustration() {
         const path = await window.fs.chooseImage();
         face.illustration = path;
         setCampaign(campaign.clone());
     }
 
-    function changeIllustrationX(x) {
+    function setIllustrationX(x) {
         face.illustrationTransform.x = x;
         setCampaign(campaign.clone());
     }
 
-    function changeIllustrationY(y) {
+    function setIllustrationY(y) {
         face.illustrationTransform.y = y;
         setCampaign(campaign.clone());
     }
 
-    function changeIllustrationScale(scale) {
+    function setIllustrationScale(scale) {
         face.illustrationTransform.scale = scale;
         setCampaign(campaign.clone());
     }
 
-    function changeIllustrationRotation(rotation) {
+    function setIllustrationRotation(rotation) {
         face.illustrationTransform.rotation = rotation;
         setCampaign(campaign.clone());
     }

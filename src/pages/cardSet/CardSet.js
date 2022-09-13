@@ -24,19 +24,19 @@ export default function CardSet({ campaign, setCampaign }) {
 
     return (
         <main className="card-set-page">
-            <input type="text" value={cardSet.title} onChange={(event) => changeTitle(event.target.value)} />
-            <button onClick={() => changeSetSymbol()}>Choose set symbol</button>
+            <input type="text" value={cardSet.title} onChange={(event) => setTitle(event.target.value)} />
+            <button onClick={() => setSetSymbol()}>Choose set symbol</button>
             {cardSet.symbol && loadedImages.length > 0 ? loadedImages[loadedImages.length - 1] : ""}
         </main>
     );
 
-    function changeTitle(title) {
+    function setTitle(title) {
         cardSet.title = title;
         setCampaign(campaign.clone());
     }
 
     // TODO doesn't work with SVGs
-    async function changeSetSymbol() {
+    async function setSetSymbol() {
         const path = await window.fs.chooseIcon();
         cardSet.symbol = path;
         setCampaign(campaign.clone());
