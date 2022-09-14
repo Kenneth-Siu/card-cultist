@@ -27,7 +27,7 @@ export default class TreacheryFace extends CardFace {
         this.illustrationTransform = new ImageTransform(this.illustrationTransform);
     }
 
-    getView(face, cardSet, campaign, setCampaign) {
-        return <TreacheryFaceView face={face} cardSet={cardSet} campaign={campaign} setCampaign={setCampaign} />;
+    getView(typeSelect, face, cardSet, campaign, setCampaign) {
+        return <TreacheryFaceView typeSelect={typeSelect} face={face} cardSet={cardSet} campaign={campaign} setCampaign={setCampaign} />;
     }
 }

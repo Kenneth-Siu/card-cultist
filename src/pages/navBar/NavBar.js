@@ -19,7 +19,7 @@ export default function NavBar({ campaign, setCampaign }) {
                         <Link to={`/card-set/${cardSet.id}`}>
                             {cardSet.title ? cardSet.title : `(No title – ID ${cardSet.id})`}
                         </Link>
-                        <ul>
+                        <ol>
                             {cardSet.cards.map((card) => (
                                 <li key={card.id}>
                                     <Link to={`/card-set/${cardSet.id}/card/${card.id}`}>
@@ -27,10 +27,12 @@ export default function NavBar({ campaign, setCampaign }) {
                                     </Link>
                                 </li>
                             ))}
-                            <a href="#" onClick={() => addCard(cardSet)}>
-                                + Card
-                            </a>
-                        </ul>
+                            <li>
+                                <a href="#" onClick={() => addCard(cardSet)}>
+                                    + Card
+                                </a>
+                            </li>
+                        </ol>
                     </li>
                 ))}
                 <li>

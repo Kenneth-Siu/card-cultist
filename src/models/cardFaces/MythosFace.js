@@ -11,7 +11,7 @@ export default class MythosFace extends CardFace {
         super(face, MythosFace.type);
     }
 
-    getView() {
-        return <MythosFaceView />;
+    getView(typeSelect) {
+        return <MythosFaceView typeSelect={typeSelect} />;
     }
 }

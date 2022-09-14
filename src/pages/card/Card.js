@@ -23,31 +23,38 @@ export default function Card({ campaign, setCampaign }) {
 
     return (
         <main className="card-page">
-            <div>
-                <select value={card.frontFace.type} onChange={(event) => setFrontFaceType(event.target.value)}>
-                    {cardFaces.map((cardFace) => (
-                        <option key={cardFace.type} value={cardFace.type}>
-                            {cardFace.type}
-                        </option>
-                    ))}
-                </select>
-                {card.frontFace.getView(card.frontFace, cardSet, campaign, setCampaign)}
-            </div>
-            <div>
-                <select value={card.backFace.type} onChange={(event) => setBackFaceType(event.target.value)}>
-                    {cardFaces.map((cardFace) => (
-                        <option key={cardFace.type} value={cardFace.type}>
-                            {cardFace.type}
-                        </option>
-                    ))}
-                </select>
-                {card.backFace.getView(card.backFace, cardSet, campaign, setCampaign)}
-            </div>
-
-            <div>
-                <button onClick={() => downloadOne()}>Download one</button>
-                <button onClick={() => downloadAll()}>Download all</button>
-            </div>
+            {card.frontFace.getView(
+                <div className="input-container">
+                    <label>Card Face</label>
+                    <select value={card.frontFace.type} onChange={(event) => setFrontFaceType(event.target.value)}>
+                        {cardFaces.map((cardFace) => (
+                            <option key={cardFace.type} value={cardFace.type}>
+                                {cardFace.type}
+                            </option>
+                        ))}
+                    </select>
+                </div>,
+                card.frontFace,
+                cardSet,
+                campaign,
+                setCampaign
+            )}
+            {card.backFace.getView(
+                <div className="input-container">
+                    <label>Card Face</label>
+                    <select value={card.backFace.type} onChange={(event) => setBackFaceType(event.target.value)}>
+                        {cardFaces.map((cardFace) => (
+                            <option key={cardFace.type} value={cardFace.type}>
+                                {cardFace.type}
+                            </option>
+                        ))}
+                    </select>
+                </div>,
+                card.backFace,
+                cardSet,
+                campaign,
+                setCampaign
+            )}
         </main>
     );
 

@@ -1,0 +1,37 @@
+.face-view {
+    display: flex;
+
+    &:first-child {
+        margin-bottom: 0.5rem;
+    }
+
+    .card-canvas-container {
+        flex-grow: 0;
+    }
+
+    .form-container {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .input-container {
+        display: flex;
+    }
+
+    input {
+        width: 20rem;
+    }
+
+    textarea {
+        width: 20rem;
+        height: 6rem;
+        resize: vertical;
+    }
+
+    label {
+        min-width: 10rem;
+        text-align: right;
+        margin-right: 0.5rem;
+    }
+}

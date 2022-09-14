@@ -1,9 +1,36 @@
 @import "../../components/colors.scss";
 
+$nav-padding: 0.25rem;
+$indented-nav-padding: 1rem + $navpadding;
+
 #nav-bar {
     flex-grow: 0;
-    
+    font-size: 0.95rem;
+
     a {
         color: $color-1;
+        padding: $nav-padding;
+        flex-grow: 1;
+        text-decoration: none;
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+    }
+
+    li {
+        display: flex;
+        flex-direction: column;
+    }
+
+    > ol > li {
+        > a {
+            padding-left: $nav-padding;
+        }
+
+        > ol > li {
+            > a {
+                padding-left: $indented-nav-padding;
+            }
+        }
     }
 }

@@ -6,8 +6,10 @@ import useLoadedImages from "../../../helpers/useLoadedImages";
 import TreacheryFace from "../../../models/cardFaces/TreacheryFace";
 import CardCanvas from "./CardCanvas";
 import ImageTransform from "../../../models/ImageTransform";
+import "./FaceView.scss";
+import "./TreacheryFaceView.scss";
 
-export default function TreacheryFaceView({ face, cardSet, campaign, setCampaign }) {
+export default function TreacheryFaceView({ typeSelect, face, cardSet, campaign, setCampaign }) {
     const [loadedImages, loadPublicImage, loadFileSystemImage] = useLoadedImages();
 
     const [illustrationLayer, setIllustrationLayer] = useState(null);
@@ -56,32 +58,55 @@ export default function TreacheryFaceView({ face, cardSet, campaign, setCampaign
     }, [face.title, face.text]);
 
     return (
-        <div>
-            <input type="text" value={face.title} onChange={(event) => setTitle(event.target.value)} />
-            <textarea value={face.text} onChange={(event) => setText(event.target.value)} />
-            <div>
-                <button onClick={() => setEncounterSetSymbol()}>Change encounter set symbol</button>
-                <button onClick={() => setIllustration()}>Change illustration</button>
-                <label>
-                    X Position
+        <div className="face-view treachery-face-view">
+            <CardCanvas
+                loadedImages={loadedImages}
+                canvasLayers={canvasLayers}
+                illustrationTransform={face.illustrationTransform}
+                setIllustrationTransform={setIllustrationTransform}
+            />
+            <div className="form-container">
+                {typeSelect}
+                <div className="input-container">
+                    <label>Title</label>
+                    <input type="text" value={face.title} onChange={(event) => setTitle(event.target.value)} />
+                </div>
+
+                <div className="input-container">
+                    <label>Text</label>
+                    <textarea value={face.text} onChange={(event) => setText(event.target.value)} />
+                </div>
+
+                <div className="input-container">
+                    <label>Encounter Set Symbol</label>
+                    <button onClick={() => setEncounterSetSymbol()}>Load Image</button>
+                </div>
+
+                <div className="input-container">
+                    <label>Illustration</label>
+                    <button onClick={() => setIllustration()}>Load Image</button>
+                </div>
+
+                <div className="input-container">
+                    <label>X Position</label>
                     <input
                         type="number"
                         step="1"
                         value={face.illustrationTransform.x}
                         onChange={(event) => setIllustrationX(parseInt(event.target.value))}
                     />
-                </label>
-                <label>
-                    Y Position
+                </div>
+                <div className="input-container">
+                    <label>Y Position</label>
                     <input
                         type="number"
                         step="1"
                         value={face.illustrationTransform.y}
                         onChange={(event) => setIllustrationY(parseInt(event.target.value))}
                     />
-                </label>
-                <label>
-                    Scale
+                </div>
+                <div className="input-container">
+                    <label>Scale</label>
                     <input
                         type="number"
                         step="0.01"
@@ -89,23 +114,17 @@ export default function TreacheryFaceView({ face, cardSet, campaign, setCampaign
                         value={(face.illustrationTransform.scale * 100).toFixed(2)}
                         onChange={(event) => setIllustrationScale(parseFloat(event.target.value / 100))}
                     />
-                </label>
-                <label>
-                    Rotation
+                </div>
+                <div className="input-container">
+                    <label>Rotation</label>
                     <input
                         type="number"
                         step="0.1"
                         value={face.illustrationTransform.rotation.toFixed(1)}
                         onChange={(event) => setIllustrationRotation(parseFloat(event.target.value))}
                     />
-                </label>
+                </div>
             </div>
-            <CardCanvas
-                loadedImages={loadedImages}
-                canvasLayers={canvasLayers}
-                illustrationTransform={face.illustrationTransform}
-                setIllustrationTransform={setIllustrationTransform}
-            />
         </div>
     );
 

@@ -85,7 +85,7 @@ export default function CardCanvas({
             : {};
 
     return (
-        <div>
+        <div className="card-canvas-container">
             <canvas
                 ref={canvas}
                 id="preview"
