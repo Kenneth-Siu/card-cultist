@@ -66,38 +66,46 @@ export default function TreacheryFaceView({ face, cardSet, campaign, setCampaign
                     X Position
                     <input
                         type="number"
+                        step="1"
                         value={face.illustrationTransform.x}
-                        onChange={(event) => setIllustrationX(event.target.value)}
+                        onChange={(event) => setIllustrationX(parseInt(event.target.value))}
                     />
                 </label>
                 <label>
                     Y Position
                     <input
                         type="number"
+                        step="1"
                         value={face.illustrationTransform.y}
-                        onChange={(event) => setIllustrationY(event.target.value)}
+                        onChange={(event) => setIllustrationY(parseInt(event.target.value))}
                     />
                 </label>
                 <label>
                     Scale
                     <input
                         type="number"
-                        step="0.1"
-                        min="0.1"
-                        value={(face.illustrationTransform.scale * 100).toFixed(1)}
-                        onChange={(event) => setIllustrationScale(event.target.value / 100)}
+                        step="0.01"
+                        min="0.01"
+                        value={(face.illustrationTransform.scale * 100).toFixed(2)}
+                        onChange={(event) => setIllustrationScale(parseFloat(event.target.value / 100))}
                     />
                 </label>
                 <label>
                     Rotation
                     <input
                         type="number"
-                        value={face.illustrationTransform.rotation}
-                        onChange={(event) => setIllustrationRotation(event.target.value)}
+                        step="0.1"
+                        value={face.illustrationTransform.rotation.toFixed(1)}
+                        onChange={(event) => setIllustrationRotation(parseFloat(event.target.value))}
                     />
                 </label>
             </div>
-            <CardCanvas loadedImages={loadedImages} canvasLayers={canvasLayers} />
+            <CardCanvas
+                loadedImages={loadedImages}
+                canvasLayers={canvasLayers}
+                illustrationTransform={face.illustrationTransform}
+                setIllustrationTransform={setIllustrationTransform}
+            />
         </div>
     );
 
@@ -123,23 +131,24 @@ export default function TreacheryFaceView({ face, cardSet, campaign, setCampaign
         setCampaign(campaign.clone());
     }
 
-    function setIllustrationX(x) {
-        face.illustrationTransform.x = x;
+    function setIllustrationTransform(transform) {
+        face.illustrationTransform = transform;
         setCampaign(campaign.clone());
+    }
+
+    function setIllustrationX(x) {
+        setIllustrationTransform(face.illustrationTransform.withX(x));
     }
 
     function setIllustrationY(y) {
-        face.illustrationTransform.y = y;
-        setCampaign(campaign.clone());
+        setIllustrationTransform(face.illustrationTransform.withY(y));
     }
 
     function setIllustrationScale(scale) {
-        face.illustrationTransform.scale = scale;
-        setCampaign(campaign.clone());
+        setIllustrationTransform(face.illustrationTransform.withScale(scale));
     }
 
     function setIllustrationRotation(rotation) {
-        face.illustrationTransform.rotation = rotation;
-        setCampaign(campaign.clone());
+        setIllustrationTransform(face.illustrationTransform.withRotation(rotation));
     }
 }

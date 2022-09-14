@@ -9,7 +9,7 @@ export default class TreacheryFace extends CardFace {
     static frame = treachery;
 
     constructor(face) {
-        super(TreacheryFace.type);
+        super(face, TreacheryFace.type);
         if (!face) {
             this.campaignSymbol = null;
             this.encounterSetSymbol = null;
@@ -24,7 +24,6 @@ export default class TreacheryFace extends CardFace {
             this.campaignSetId = null;
             return;
         }
-        Object.assign(this, face);
         this.illustrationTransform = new ImageTransform(this.illustrationTransform);
     }
 

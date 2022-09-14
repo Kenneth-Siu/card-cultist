@@ -5,8 +5,9 @@ export default class CardFace {
     static type = "None";
     static frame = null;
 
-    constructor(type, frame) {
+    constructor(face, type, frame) {
         this.type = type || CardFace.type;
+        Object.assign(this, face);
     }
 
     getView(face, cardSet, campaign, setCampaign) {

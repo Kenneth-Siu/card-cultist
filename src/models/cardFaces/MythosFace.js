@@ -7,8 +7,8 @@ export default class MythosFace extends CardFace {
     static type = "Mythos";
     static frame = mythosBack;
 
-    constructor() {
-        super(MythosFace.type);
+    constructor(face) {
+        super(face, MythosFace.type);
     }
 
     getView() {
