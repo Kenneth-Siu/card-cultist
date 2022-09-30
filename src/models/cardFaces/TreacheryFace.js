@@ -11,23 +11,32 @@ export default class TreacheryFace extends CardFace {
     constructor(face) {
         super(face, TreacheryFace.type);
         if (!face) {
-            this.campaignSymbol = null;
-            this.encounterSetSymbol = null;
-            this.illustration = null;
-            this.illustrationTransform = new ImageTransform();
-            this.title = "";
-            this.text = "";
-            this.illustrator = "";
-            this.copyrightInformation = "";
-            this.encounterSetId = null;
-            this.encounterSetMaxId = null;
-            this.campaignSetId = null;
-            return;
+            face = {};
         }
-        this.illustrationTransform = new ImageTransform(this.illustrationTransform);
+        this.campaignSymbol = face.campaignSymbol || null;
+        this.encounterSetSymbol = face.encounterSetSymbol || null;
+        this.illustration = face.illustration || null;
+        this.illustrationTransform = new ImageTransform(face.illustrationTransform);
+        this.cardType = face.cardType || TreacheryFace.type;
+        this.title = face.title || "";
+        this.traits = face.traits || "";
+        this.text = face.text || "";
+        this.illustrator = face.illustrator || "";
+        this.copyrightInformation = face.copyrightInformation || "";
+        this.encounterSetId = face.encounterSetId || "";
+        this.encounterSetMaxId = face.encounterSetMaxId || "";
+        this.campaignSetId = face.campaignSetId || "";
     }
 
     getView(typeSelect, face, cardSet, campaign, setCampaign) {
-        return <TreacheryFaceView typeSelect={typeSelect} face={face} cardSet={cardSet} campaign={campaign} setCampaign={setCampaign} />;
+        return (
+            <TreacheryFaceView
+                typeSelect={typeSelect}
+                face={face}
+                cardSet={cardSet}
+                campaign={campaign}
+                setCampaign={setCampaign}
+            />
+        );
     }
 }

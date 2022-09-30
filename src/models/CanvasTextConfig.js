@@ -12,8 +12,11 @@ export default class CanvasTextConfig {
         this.width = 0;
         this.height = 0;
         this.fontSize = 34;
-        this.fontFamily = "Mongolian Baiti";
+        this.fontFamily = "Amiri";
         this.align = TEXTALIGN.LEFT;
+        this.bold = false;
+        this.italic = false;
+        this.color = "black";
     }
 
     withText(text) {
@@ -53,6 +56,21 @@ export default class CanvasTextConfig {
 
     withAlign(align) {
         this.align = align;
+        return this;
+    }
+
+    withBold() {
+        this.bold = true;
+        return this;
+    }
+
+    withItalic() {
+        this.italic = true;
+        return this;
+    }
+
+    withColor(color) {
+        this.color = color;
         return this;
     }
 }

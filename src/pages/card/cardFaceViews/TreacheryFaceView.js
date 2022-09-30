@@ -15,10 +15,30 @@ export default function TreacheryFaceView({ typeSelect, face, cardSet, campaign,
     const [illustrationLayer, setIllustrationLayer] = useState(null);
     const [frameLayer, setFrameLayer] = useState(null);
     const [encounterSetSymbolLayer, setEncounterSetSymbolLayer] = useState(null);
+    const [cardTypeLayer, setCardTypeLayer] = useState(null);
     const [titleLayer, setTitleLayer] = useState(null);
+    const [traitsLayer, setTraitsLayer] = useState(null);
     const [textLayer, setTextLayer] = useState(null);
+    const [illustratorLayer, setIllustratorLayer] = useState(null);
+    const [copyrightInformationLayer, setCopyrightInformationLayer] = useState(null);
+    const [encounterSetIdLayer, setEncounterSetIdLayer] = useState(null);
+    const [campaignSymbolLayer, setCampaignSymbolLayer] = useState(null);
+    const [campaignSetIdLayer, setCampaignSetIdLayer] = useState(null);
 
-    const canvasLayers = [illustrationLayer, frameLayer, encounterSetSymbolLayer, titleLayer, textLayer];
+    const canvasLayers = [
+        illustrationLayer,
+        frameLayer,
+        encounterSetSymbolLayer,
+        cardTypeLayer,
+        titleLayer,
+        traitsLayer,
+        textLayer,
+        illustratorLayer,
+        copyrightInformationLayer,
+        encounterSetIdLayer,
+        campaignSymbolLayer,
+        campaignSetIdLayer,
+    ];
 
     useEffect(async () => {
         const image = await loadFileSystemImage(face.illustration);
@@ -41,6 +61,20 @@ export default function TreacheryFaceView({ typeSelect, face, cardSet, campaign,
     }, [face.encounterSetSymbol, cardSet.symbol]);
 
     useEffect(() => {
+        setCardTypeLayer(
+            new CanvasTextLayer(
+                new CanvasTextConfig()
+                    .withText(face.cardType.toUpperCase().split("").join(String.fromCharCode(8202)))
+                    .withX(374)
+                    .withY(590)
+                    .withFontSize(24)
+                    .withAlign(TEXTALIGN.CENTER)
+                    .withBold()
+            )
+        );
+    }, [face.cardType]);
+
+    useEffect(() => {
         setTitleLayer(
             new CanvasTextLayer(
                 new CanvasTextConfig()
@@ -52,10 +86,100 @@ export default function TreacheryFaceView({ typeSelect, face, cardSet, campaign,
                     .withAlign(TEXTALIGN.CENTER)
             )
         );
+    }, [face.title, face.text]);
+
+    useEffect(() => {
+        setTraitsLayer(
+            new CanvasTextLayer(
+                new CanvasTextConfig()
+                    .withText(face.traits)
+                    .withX(374)
+                    .withY(701)
+                    .withFontSize(28)
+                    .withAlign(TEXTALIGN.CENTER)
+                    .withBold()
+                    .withItalic()
+            )
+        );
+    }, [face.traits]);
+
+    useEffect(() => {
         setTextLayer(
-            new CanvasTextLayer(new CanvasTextConfig().withText(face.text).withX(62).withY(740).withWidth(650), face)
+            new CanvasTextLayer(new CanvasTextConfig().withText(face.text).withX(62).withY(743).withWidth(650), face)
         );
     }, [face.title, face.text]);
+
+    useEffect(() => {
+        setIllustratorLayer(
+            new CanvasTextLayer(
+                new CanvasTextConfig()
+                    .withText(face.illustrator ? "Illus. " + face.illustrator : "")
+                    .withX(36)
+                    .withY(1042)
+                    .withFontSize(18)
+                    .withColor("white")
+            )
+        );
+    }, [face.illustrator]);
+
+    useEffect(() => {
+        setCopyrightInformationLayer(
+            new CanvasTextLayer(
+                new CanvasTextConfig()
+                    .withText(face.copyrightInformation)
+                    .withX(374)
+                    .withY(1042)
+                    .withFontSize(18)
+                    .withAlign(TEXTALIGN.CENTER)
+                    .withColor("white")
+            )
+        );
+    }, [face.copyrightInformation]);
+
+    useEffect(() => {
+        const text =
+            face.encounterSetId || face.encounterSetMaxId
+                ? face.encounterSetId +
+                  String.fromCharCode(8202) +
+                  "/" +
+                  String.fromCharCode(8202) +
+                  face.encounterSetMaxId
+                : "";
+        setEncounterSetIdLayer(
+            new CanvasTextLayer(
+                new CanvasTextConfig()
+                    .withText(text)
+                    .withX(602)
+                    .withY(1042)
+                    .withFontSize(18)
+                    .withAlign(TEXTALIGN.RIGHT)
+                    .withColor("white")
+            )
+        );
+    }, [face.encounterSetId, face.encounterSetMaxId]);
+
+    useEffect(async () => {
+        const image = await loadFileSystemImage(face.campaignSymbol || campaign.symbol);
+        setCampaignSymbolLayer(
+            image
+                ? new CanvasImageLayer(image, new ImageTransform({ x: 639, y: 1020, scale: 28 / image.width }), true)
+                : null
+        );
+    }, [face.campaignSymbol, campaign.symbol]);
+
+    useEffect(() => {
+        setCampaignSetIdLayer(
+            new CanvasTextLayer(
+                new CanvasTextConfig()
+                    .withText(face.campaignSetId)
+                    .withX(716)
+                    .withY(1042)
+                    .withFontSize(18)
+                    .withAlign(TEXTALIGN.RIGHT)
+                    .withColor("white")
+            )
+        );
+    }, [face.campaignSetId]);
 
     return (
         <div className="face-view treachery-face-view">
@@ -67,20 +191,6 @@ export default function TreacheryFaceView({ typeSelect, face, cardSet, campaign,
             />
             <div className="form-container">
                 {typeSelect}
-                <div className="input-container">
-                    <label>Title</label>
-                    <input type="text" value={face.title} onChange={(event) => setTitle(event.target.value)} />
-                </div>
-
-                <div className="input-container">
-                    <label>Text</label>
-                    <textarea value={face.text} onChange={(event) => setText(event.target.value)} />
-                </div>
-
-                <div className="input-container">
-                    <label>Encounter Set Symbol</label>
-                    <button onClick={() => setEncounterSetSymbol()}>Load Image</button>
-                </div>
 
                 <div className="input-container">
                     <label>Illustration</label>
@@ -124,12 +234,94 @@ export default function TreacheryFaceView({ typeSelect, face, cardSet, campaign,
                         onChange={(event) => setIllustrationRotation(parseFloat(event.target.value))}
                     />
                 </div>
+
+                <div className="input-container">
+                    <label>Encounter Set Symbol</label>
+                    <button onClick={() => setEncounterSetSymbol()}>Load Image</button>
+                </div>
+
+                <div className="input-container">
+                    <label>Card Type</label>
+                    <input type="text" value={face.cardType} onChange={(event) => setCardType(event.target.value)} />
+                </div>
+
+                <div className="input-container">
+                    <label>Title</label>
+                    <input type="text" value={face.title} onChange={(event) => setTitle(event.target.value)} />
+                </div>
+
+                <div className="input-container">
+                    <label>Traits</label>
+                    <input type="text" value={face.traits} onChange={(event) => setTraits(event.target.value)} />
+                </div>
+
+                <div className="input-container">
+                    <label>Text</label>
+                    <textarea value={face.text} onChange={(event) => setText(event.target.value)} />
+                </div>
+
+                <div className="input-container">
+                    <label>Illustrator</label>
+                    <input
+                        type="text"
+                        value={face.illustrator}
+                        onChange={(event) => setIllustrator(event.target.value)}
+                    />
+                </div>
+
+                <div className="input-container">
+                    <label>Copyright Information</label>
+                    <input
+                        type="text"
+                        value={face.copyrightInformation}
+                        onChange={(event) => setCopyrightInformation(event.target.value)}
+                    />
+                </div>
+
+                <div className="input-container">
+                    <label>Encounter Set ID</label>
+                    <input
+                        type="text"
+                        value={face.encounterSetId}
+                        onChange={(event) => setEncounterSetId(event.target.value)}
+                    />
+                    /
+                    <input
+                        type="text"
+                        value={face.encounterSetMaxId}
+                        onChange={(event) => setEncounterSetMaxId(event.target.value)}
+                    />
+                </div>
+
+                <div className="input-container">
+                    <label>Campaign Symbol</label>
+                    <button onClick={() => setCampaignSymbol()}>Load Image</button>
+                </div>
+
+                <div className="input-container">
+                    <label>Campaign Set ID</label>
+                    <input
+                        type="text"
+                        value={face.campaignSetId}
+                        onChange={(event) => setCampaignSetId(event.target.value)}
+                    />
+                </div>
             </div>
         </div>
     );
 
+    function setCardType(cardType) {
+        face.cardType = cardType;
+        setCampaign(campaign.clone());
+    }
+
     function setTitle(title) {
         face.title = title;
+        setCampaign(campaign.clone());
+    }
+
+    function setTraits(traits) {
+        face.traits = traits;
         setCampaign(campaign.clone());
     }
 
@@ -138,9 +330,40 @@ export default function TreacheryFaceView({ typeSelect, face, cardSet, campaign,
         setCampaign(campaign.clone());
     }
 
+    function setIllustrator(illustrator) {
+        face.illustrator = illustrator;
+        setCampaign(campaign.clone());
+    }
+
+    function setCopyrightInformation(copyrightInformation) {
+        face.copyrightInformation = copyrightInformation;
+        setCampaign(campaign.clone());
+    }
+
+    function setEncounterSetId(encounterSetId) {
+        face.encounterSetId = encounterSetId;
+        setCampaign(campaign.clone());
+    }
+
+    function setEncounterSetMaxId(encounterSetMaxId) {
+        face.encounterSetMaxId = encounterSetMaxId;
+        setCampaign(campaign.clone());
+    }
+
+    function setCampaignSetId(campaignSetId) {
+        face.campaignSetId = campaignSetId;
+        setCampaign(campaign.clone());
+    }
+
     async function setEncounterSetSymbol() {
         const path = await window.fs.chooseIcon();
         face.encounterSetSymbol = path;
+        setCampaign(campaign.clone());
+    }
+
+    async function setCampaignSymbol() {
+        const path = await window.fs.chooseIcon();
+        face.campaignSymbol = path;
         setCampaign(campaign.clone());
     }
 

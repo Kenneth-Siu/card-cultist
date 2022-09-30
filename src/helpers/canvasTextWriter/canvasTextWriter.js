@@ -7,13 +7,12 @@ import splitIntoAtoms from "./splitIntoAtoms";
 // TODO make symbols work with center/right align
 // (probably just have to write line out normally, measure, then adjust the starting position to make it centered)
 export function writeText(canvasContext, canvasTextConfig, cardFace) {
-    const { text, align, fontSize, fontFamily, x, y, width } = canvasTextConfig;
+    const { text, align, fontSize, fontFamily, x, y, width, color } = canvasTextConfig;
     canvasContext.textAlign = TEXTALIGN.LEFT;
     const atoms = splitIntoAtoms(text, cardFace);
     const lines = makeLines(atoms, canvasContext, canvasTextConfig);
 
-    let italic = false;
-    let bold = false;
+    let { italic, bold } = canvasTextConfig;
 
     let currentY = y;
 
@@ -62,12 +61,14 @@ export function writeText(canvasContext, canvasTextConfig, cardFace) {
 
         function writeText(text) {
             canvasContext.font = `${italic ? "italic " : ""}${bold ? "bold " : ""}${fontSize}px ${fontFamily}`;
+            canvasContext.fillStyle = color;
             canvasContext.fillText(text, currentX, currentY);
             currentX += canvasContext.measureText(text).width;
         }
 
         function writeSymbols(text) {
             canvasContext.font = `${fontSize}px AHCardTextSymbols`;
+            canvasContext.fillStyle = color;
             canvasContext.fillText(text, currentX, currentY);
             currentX += canvasContext.measureText(text).width;
         }

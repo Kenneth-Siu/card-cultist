@@ -6,7 +6,7 @@ export default class Campaign {
         if (!campaign) {
             this.path = "";
             this.title = "";
-            this.icon = null;
+            this.symbol = null;
             this.campaignGuide = null;
             this.cardSets = [];
             return;
