@@ -51,6 +51,10 @@ function atomEscape(text) {
 export default function splitIntoAtoms(text, cardFace) {
     const atoms = [];
 
+    if (!text) {
+        return atoms;
+    }
+
     let italicStarted = false;
     let boldStarted = false;
 
