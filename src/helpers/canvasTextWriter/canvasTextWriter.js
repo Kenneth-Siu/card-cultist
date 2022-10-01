@@ -66,11 +66,12 @@ export function writeText(canvasContext, canvasTextConfig, cardFace) {
             currentX += canvasContext.measureText(text).width;
         }
 
-        function writeSymbols(text) {
-            canvasContext.font = `${fontSize}px AHCardTextSymbols`;
+        function writeSymbols(text, nudgeFactorSize, nudgeFactorX, nudgeFactorY, nudgeFactorWidth) {
+            canvasContext.font = `${fontSize + fontSize * nudgeFactorSize}px AHCardTextSymbols`;
             canvasContext.fillStyle = color;
-            canvasContext.fillText(text, currentX, currentY);
-            currentX += canvasContext.measureText(text).width;
+            canvasContext.fillText(text, currentX + fontSize * nudgeFactorX, currentY + fontSize * nudgeFactorY);
+            currentX +=
+                canvasContext.measureText(text).width + 2 * (fontSize * nudgeFactorX) + fontSize * nudgeFactorWidth;
         }
     });
 
