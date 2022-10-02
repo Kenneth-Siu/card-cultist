@@ -27,7 +27,7 @@ const symbolDictionary = {
     "<agi>": new AHSymbol("i", 0.1, -0.17, 0.125),
     "<wild>": new AHSymbol("j", -0.12, -0.17, 0),
     "<eld>": new AHSymbol("k", 0.1, 0, 0.15),
-    "<neu>": new AHSymbol("l", 0.2, 0, 0.2),
+    "<neu>": new AHSymbol("l", 0.2, -0.05, 0.2),
     "<sku>": new AHSymbol("m", 0.1, -0.15, 0.15),
     "<cul>": new AHSymbol("n", 0.1, -0.1, 0.15),
     "<tab>": new AHSymbol("o", 0.1, -0.1, 0.15),
