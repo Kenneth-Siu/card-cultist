@@ -21,6 +21,7 @@ export default class TreacheryFace extends CardFace {
         this.title = face.title || "";
         this.traits = face.traits || "";
         this.text = face.text || "";
+        this.textFontSize = face.textFontSize || 34;
         this.illustrator = face.illustrator || "";
         this.copyrightInformation = face.copyrightInformation || "";
         this.encounterSetId = face.encounterSetId || "";

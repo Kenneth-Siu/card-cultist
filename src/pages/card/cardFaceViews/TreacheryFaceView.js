@@ -105,9 +105,17 @@ export default function TreacheryFaceView({ typeSelect, canvas, face, cardSet, c
 
     useEffect(() => {
         setTextLayer(
-            new CanvasTextLayer(new CanvasTextConfig().withText(face.text).withX(62).withY(743).withWidth(650), face)
+            new CanvasTextLayer(
+                new CanvasTextConfig()
+                    .withText(face.text)
+                    .withX(62)
+                    .withY(743)
+                    .withWidth(650)
+                    .withFontSize(face.textFontSize),
+                face
+            )
         );
-    }, [face.title, face.text]);
+    }, [face.title, face.text, face.textFontSize]);
 
     useEffect(() => {
         setIllustratorLayer(
@@ -257,7 +265,19 @@ export default function TreacheryFaceView({ typeSelect, canvas, face, cardSet, c
                 </div>
 
                 <div className="input-container">
-                    <label>Text</label>
+                    <div className="text-label-container">
+                        <label>Text</label>
+                        <label className="font-size-label">
+                            Font Size
+                            <input
+                                type="number"
+                                value={face.textFontSize.toFixed(1)}
+                                step="0.1"
+                                min="1"
+                                onChange={(event) => setTextFontSize(parseFloat(event.target.value))}
+                            />
+                        </label>
+                    </div>
                     <textarea value={face.text} onChange={(event) => setText(event.target.value)} />
                 </div>
 
@@ -328,6 +348,11 @@ export default function TreacheryFaceView({ typeSelect, canvas, face, cardSet, c
 
     function setText(text) {
         face.text = text;
+        setCampaign(campaign.clone());
+    }
+
+    function setTextFontSize(fontSize) {
+        face.textFontSize = fontSize;
         setCampaign(campaign.clone());
     }
 
