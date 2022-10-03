@@ -6,6 +6,9 @@ import StartBold from "./atoms/instructions/StartBold";
 import StartItalic from "./atoms/instructions/StartItalic";
 import StartTrait from "./atoms/instructions/StartTrait";
 
+export const bulletAHSymbol = new AHSymbol("w");
+export const gBulletAHSymbol = new AHSymbol("x", 0.33, 0, 0.22);
+
 const symbolDictionary = {
     "<guardian>": new AHSymbol("a", 0.2, 0, 0.1, 0.02),
     "<gua>": new AHSymbol("a", 0.2, 0, 0.1, 0.02),
@@ -40,8 +43,8 @@ const symbolDictionary = {
     "<act>": new AHSymbol("t", 0.4, -0.05, 0.25),
     "<rea>": new AHSymbol("u", 0.4, -0.05, 0.25),
     "<fre>": new AHSymbol("v", 1.22, 0, 0.55),
-    "<bul>": new AHSymbol("w"),
-    "<gbul>": new AHSymbol("x", 0.33, 0, 0.22),
+    "<bul>": bulletAHSymbol,
+    "<gbul>": gBulletAHSymbol,
     "<cur>": new AHSymbol("y", 0.1, -0.1, 0.1),
     "<ble>": new AHSymbol("z", 0.1, -0.1, 0.15),
     "<fro>": new AHSymbol("A", 0.1, -0.1, 0.15),

@@ -6,8 +6,8 @@ export default class Word extends Atom {
         this.text = text;
     }
 
-    addToLine({ makeNewLine, getWidth, wouldMakeNewLine, addAtomToLine }) {
-        const wordWidth = getWidth(this.text);
+    addToLine({ makeNewLine, getTextWidth, wouldMakeNewLine, addAtomToLine }) {
+        const wordWidth = getTextWidth(this.text);
         if (wouldMakeNewLine(wordWidth)) {
             makeNewLine();
         }

@@ -6,8 +6,8 @@ export default class Space extends Atom {
         this.text = " ";
     }
 
-    addToLine({ makeNewLine, getWidth, wouldMakeNewLine, addAtomToLine }) {
-        const spaceWidth = getWidth(" ");
+    addToLine({ makeNewLine, getTextWidth, wouldMakeNewLine, addAtomToLine }) {
+        const spaceWidth = getTextWidth(" ");
         if (wouldMakeNewLine(spaceWidth)) {
             makeNewLine();
         } else {

@@ -1,12 +1,25 @@
-export default function makeLines(atoms, context, { width, fontSize, fontFamily }) {
+import { TEXTALIGN } from "../../models/CanvasTextConfig";
+
+export default function makeLines(atoms, context, { width, fontSize, fontFamily, align }) {
     const lines = [];
     let line = [];
     let lineWidth = 0;
     let italic = false;
     let bold = false;
+    let indent = 0;
 
     atoms.forEach((atom) => {
-        atom.addToLine({ makeNewLine, getWidth, getSymbolWidth, wouldMakeNewLine, addAtomToLine, setItalic, setBold });
+        atom.addToLine({
+            makeNewLine,
+            getTextWidth,
+            getSymbolWidth,
+            wouldMakeNewLine,
+            addAtomToLine,
+            setItalic,
+            setBold,
+            startIndent,
+            endIndent,
+        });
         if (line.length > 1 && typeof line[line.length - 1] === "string" && typeof line[line.length - 2] === "string") {
             const text = line.pop();
             line[line.length - 1] += text;
@@ -20,10 +33,10 @@ export default function makeLines(atoms, context, { width, fontSize, fontFamily 
     function makeNewLine() {
         lines.push(line);
         line = [];
-        lineWidth = 0;
+        lineWidth = indent;
     }
 
-    function getWidth(atom) {
+    function getTextWidth(atom) {
         context.font = `${italic ? "italic " : ""}${bold ? "bold " : ""}${fontSize}px ${fontFamily}`;
         return context.measureText(atom).width;
     }
@@ -51,5 +64,15 @@ export default function makeLines(atoms, context, { width, fontSize, fontFamily 
 
     function setBold(value) {
         bold = value;
+    }
+
+    function startIndent() {
+        if (align === TEXTALIGN.LEFT) {
+            indent = lineWidth;
+        }
+    }
+
+    function endIndent() {
+        indent = 0;
     }
 }

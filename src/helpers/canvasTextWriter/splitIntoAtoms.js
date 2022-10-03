@@ -1,11 +1,13 @@
 import EndBold from "./atoms/instructions/EndBold";
 import EndItalic from "./atoms/instructions/EndItalic";
 import StartBold from "./atoms/instructions/StartBold";
+import StartIndent from "./atoms/instructions/StartIndent";
+import EndIndent from "./atoms/instructions/EndIndent";
 import StartItalic from "./atoms/instructions/StartItalic";
 import NewLine from "./atoms/NewLine";
 import Space from "./atoms/Space";
 import Word from "./atoms/Word";
-import parseTag from "./parseTag";
+import parseTag, { bulletAHSymbol, gBulletAHSymbol } from "./parseTag";
 
 const shorthands = {
     "Revelation -- ": "<b>Revelation – </b>",
@@ -32,6 +34,9 @@ AHsymbols,
 instructions 
     start/end bold with *
     start/end italic with _
+    start bullet point with *⋅ at start of line (the indentation ends at next newline)
+    start gbullet point with **⋅ at start of line (the indentation ends at next newline)
+    TODO sub-lists that start with ⋅⋅* or ⋅⋅**
 
 Text replacements are not atoms, but add text
     ~ for card name
@@ -57,6 +62,7 @@ export default function splitIntoAtoms(text, cardFace) {
 
     let italicStarted = false;
     let boldStarted = false;
+    let indentStarted = false;
 
     while (text.length > 0) {
         if (text.startsWith(" ")) {
@@ -65,11 +71,19 @@ export default function splitIntoAtoms(text, cardFace) {
             continue;
         }
         if (text.startsWith("\r\n")) {
+            if (indentStarted) {
+                atoms.push(new EndIndent());
+                indentStarted = false;
+            }
             atoms.push(new NewLine());
             text = text.substring(2);
             continue;
         }
         if (text.startsWith("\r") || text.startsWith("\n")) {
+            if (indentStarted) {
+                atoms.push(new EndIndent());
+                indentStarted = false;
+            }
             atoms.push(new NewLine());
             text = text.substring(1);
             continue;
@@ -105,7 +119,26 @@ export default function splitIntoAtoms(text, cardFace) {
                 continue;
             }
         }
+
+        if ((atoms.length === 0 || atoms[atoms.length - 1] instanceof NewLine) && text.startsWith("* ")) {
+            atoms.push(bulletAHSymbol);
+            atoms.push(new Space());
+            atoms.push(new StartIndent());
+            indentStarted = true;
+            text = text.substring(2);
+            continue;
+        }
+        if ((atoms.length === 0 || atoms[atoms.length - 1] instanceof NewLine) && text.startsWith("** ")) {
+            atoms.push(gBulletAHSymbol);
+            atoms.push(new Space());
+            atoms.push(new StartIndent());
+            indentStarted = true;
+            text = text.substring(3);
+            continue;
+        }
+
         if (text.startsWith("*")) {
+            // TODO find next * that isn't after a newline
             const closeBoldIndex = text.indexOf("*", 1);
             if (closeBoldIndex !== -1) {
                 atoms.push(new StartBold());
