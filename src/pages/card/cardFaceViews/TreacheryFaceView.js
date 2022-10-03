@@ -9,7 +9,7 @@ import ImageTransform from "../../../models/ImageTransform";
 import "./FaceView.scss";
 import "./TreacheryFaceView.scss";
 
-export default function TreacheryFaceView({ typeSelect, face, cardSet, campaign, setCampaign }) {
+export default function TreacheryFaceView({ typeSelect, canvas, face, cardSet, campaign, setCampaign }) {
     const [loadedImages, loadPublicImage, loadFileSystemImage] = useLoadedImages();
 
     const [illustrationLayer, setIllustrationLayer] = useState(null);
@@ -184,6 +184,7 @@ export default function TreacheryFaceView({ typeSelect, face, cardSet, campaign,
     return (
         <div className="face-view treachery-face-view">
             <CardCanvas
+                canvas={canvas}
                 loadedImages={loadedImages}
                 canvasLayers={canvasLayers}
                 illustrationTransform={face.illustrationTransform}

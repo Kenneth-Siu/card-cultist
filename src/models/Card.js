@@ -19,6 +19,6 @@ export default class Card {
         if (this.backFace && this.backFace.title) {
             return this.backFace.title;
         }
-        return "";
+        return "CARD_ID#" + this.id;
     }
 }

@@ -7,7 +7,7 @@ import CardCanvas from "./CardCanvas";
 import "./FaceView.scss";
 import "./MythosFaceView.scss";
 
-export default function MythosFaceView({ typeSelect }) {
+export default function MythosFaceView({ typeSelect, canvas }) {
     const [loadedImages, loadPublicImage] = useLoadedImages();
     const [frameLayer, setFrameLayer] = useState(null);
 
@@ -19,7 +19,7 @@ export default function MythosFaceView({ typeSelect }) {
 
     return (
         <div className="face-view mythos-face-view">
-            <CardCanvas loadedImages={loadedImages} canvasLayers={canvasLayers} />
+            <CardCanvas canvas={canvas} loadedImages={loadedImages} canvasLayers={canvasLayers} />
             <div className="form-container">{typeSelect}</div>
         </div>
     );

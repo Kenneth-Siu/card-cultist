@@ -1,5 +1,6 @@
 const { ipcMain, dialog } = require("electron");
-const { readFile, writeFile } = require("node:fs/promises");
+const path = require("path");
+const { readFile, writeFile, mkdir } = require("node:fs/promises");
 
 // TODO handle file read/write failures
 
@@ -52,13 +53,13 @@ async function openLastOpened() {
     }
 }
 
-async function saveLastOpened(event, path) {
-    await writeFile("./.lastopened", path, { encoding: "utf-8" });
+async function saveLastOpened(event, filePath) {
+    await writeFile("./.lastopened", filePath, { encoding: "utf-8" });
 }
 
 async function chooseImage() {
     const { cancelled, filePaths } = await dialog.showOpenDialog({
-        filters: [{ name: "Images", extensions: ["jpg", "png"] }],
+        filters: [{ name: "Images", extensions: ["jpg", "jpeg", "png"] }],
     });
     if (cancelled) {
         return;
@@ -80,6 +81,29 @@ async function openImage(event, path) {
     return await readFile(path);
 }
 
+async function exportCardImage(event, campaignPath, cardSetName, fileName, dataView) {
+    const exportsFolderPath = path.join(campaignPath, "..", "Exports");
+    try {
+        await mkdir(exportsFolderPath);
+    } catch (exception) {
+        if (exception.code !== "EEXIST") {
+            // TODO proper error handling...
+            console.log(exception);
+        }
+    }
+    if (cardSetName) {
+        try {
+            await mkdir(path.join(exportsFolderPath, cardSetName));
+        } catch (exception) {
+            if (exception.code !== "EEXIST") {
+                // TODO proper error handling...
+                console.log(exception);
+            }
+        }
+    }
+    await writeFile(path.join(exportsFolderPath, cardSetName, fileName), dataView);
+}
+
 function initFileSystemIpc() {
     ipcMain.handle("fs:openCampaign", openCampaign);
     ipcMain.handle("fs:saveCampaign", saveCampaign);
@@ -89,6 +113,7 @@ function initFileSystemIpc() {
     ipcMain.handle("fs:chooseIcon", chooseIcon);
     ipcMain.handle("fs:chooseImage", chooseImage);
     ipcMain.handle("fs:openImage", openImage);
+    ipcMain.handle("fs:exportCardImage", exportCardImage);
 }
 
 module.exports = { initFileSystemIpc };

@@ -10,7 +10,7 @@ export default class CardSet {
             this.cards = [];
         }
         Object.assign(this, idOrCardSet);
-        this.cards = this.cards.map(card => new Card(card));
+        this.cards = this.cards.map((card) => new Card(card));
     }
 
     addCard() {
@@ -22,5 +22,9 @@ export default class CardSet {
 
     getCard(id) {
         return this.cards.find((card) => card.id === id);
+    }
+
+    getTitle() {
+        return this.title || "SET_ID#" + this.id;
     }
 }

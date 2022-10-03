@@ -46,14 +46,13 @@ const throttledHandleMove = throttle((event, transformState, startIllustrationTr
 }, 15);
 
 export default function CardCanvas({
+    canvas,
     loadedImages,
     canvasLayers,
     orientation,
     illustrationTransform,
     setIllustrationTransform,
 }) {
-    const canvas = useRef(null);
-
     useEffect(() => {
         if (canvas.current) {
             refreshCanvas();

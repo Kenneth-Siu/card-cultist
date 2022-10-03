@@ -25,4 +25,7 @@ contextBridge.exposeInMainWorld("fs", {
     openImage: (path) => {
         return ipcRenderer.invoke("fs:openImage", path);
     },
+    exportCardImage: (campaignPath, cardSetName, fileName, dataView) => {
+        return ipcRenderer.invoke("fs:exportCardImage", campaignPath, cardSetName, fileName, dataView);
+    },
 });

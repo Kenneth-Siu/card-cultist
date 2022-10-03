@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useParams } from "react-router-dom";
 import cardFaces from "../../models/cardFaces/cardFaces";
 import getCardFaceClassInstance from "../../models/cardFaces/getCardFaceClassInstance";
@@ -6,6 +6,8 @@ import "./Card.scss";
 
 export default function Card({ campaign, setCampaign }) {
     const params = useParams();
+    const frontCanvas = useRef(null);
+    const backCanvas = useRef(null);
 
     const id = parseInt(params.id);
     const cardSetId = parseInt(params.cardSetId);
@@ -20,9 +22,13 @@ export default function Card({ campaign, setCampaign }) {
             </main>
         );
     }
-
+ 
     return (
         <main className="card-page">
+            <div>
+                <button onClick={() => exportCard("image/png", "png")}>Export PNG</button>
+                <button onClick={() => exportCard("image/jpeg", "jpg", 0.9)}>Export JPG</button>
+            </div>
             {card.frontFace.getView(
                 <div className="input-container">
                     <label>Card Face</label>
@@ -34,6 +40,7 @@ export default function Card({ campaign, setCampaign }) {
                         ))}
                     </select>
                 </div>,
+                frontCanvas,
                 card.frontFace,
                 cardSet,
                 campaign,
@@ -50,6 +57,7 @@ export default function Card({ campaign, setCampaign }) {
                         ))}
                     </select>
                 </div>,
+                backCanvas,
                 card.backFace,
                 cardSet,
                 campaign,
@@ -71,31 +79,34 @@ export default function Card({ campaign, setCampaign }) {
         setCampaign(campaign.clone());
     }
 
-    function downloadOne() {
-        canvas.current.toBlob((canvasBlob) => {
-            saveAs(canvasBlob, "Rotting Remains.png");
-        });
-    }
-
-    function downloadAll() {
-        const zip = new JSZip();
-        const strikingFear = zip.folder("Striking Fear");
-        const promise1 = new Promise((resolve, reject) => {
-            canvas.current.toBlob((canvasBlob) => {
-                resolve(canvasBlob);
-            });
-        });
-        const promise2 = new Promise((resolve, reject) => {
-            canvas.current.toBlob((canvasBlob) => {
-                resolve(canvasBlob);
-            });
-        });
-        Promise.all([promise1, promise2]).then(([canvasBlob1, canvasBlob2]) => {
-            strikingFear.file("Rotting Remains.png", canvasBlob1);
-            strikingFear.file("Rotting Remains2.png", canvasBlob2);
-            zip.generateAsync({ type: "blob" }).then((zipBlob) => {
-                saveAs(zipBlob, "Darkham Horror.zip");
-            });
-        });
+    function exportCard(imageType, extension, quality) {
+        frontCanvas.current.toBlob(
+            (canvasBlob) => {
+                return canvasBlob.arrayBuffer().then((arrayBuffer) => {
+                    return window.fs.exportCardImage(
+                        campaign.path,
+                        cardSet.getTitle(),
+                        `${card.getTitle()} (Front).${extension}`,
+                        new DataView(arrayBuffer)
+                    );
+                });
+            },
+            imageType,
+            quality
+        );
+        backCanvas.current.toBlob(
+            (canvasBlob) => {
+                return canvasBlob.arrayBuffer().then((arrayBuffer) => {
+                    return window.fs.exportCardImage(
+                        campaign.path,
+                        cardSet.getTitle(),
+                        `${card.getTitle()} (Back).${extension}`,
+                        new DataView(arrayBuffer)
+                    );
+                });
+            },
+            imageType,
+            quality
+        );
     }
 }

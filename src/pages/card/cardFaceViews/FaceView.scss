@@ -1,12 +1,10 @@
 .face-view {
     display: flex;
 
-    &:first-child {
-        margin-bottom: 0.5rem;
-    }
-
     .card-canvas-container {
         flex-grow: 0;
+        background-color: rgba(255, 255, 255, 0.1);
+        line-height: 0;
     }
 
     .form-container {

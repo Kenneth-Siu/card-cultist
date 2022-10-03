@@ -28,10 +28,11 @@ export default class TreacheryFace extends CardFace {
         this.campaignSetId = face.campaignSetId || "";
     }
 
-    getView(typeSelect, face, cardSet, campaign, setCampaign) {
+    getView(typeSelect, canvas, face, cardSet, campaign, setCampaign) {
         return (
             <TreacheryFaceView
                 typeSelect={typeSelect}
+                canvas={canvas}
                 face={face}
                 cardSet={cardSet}
                 campaign={campaign}

@@ -10,7 +10,7 @@ export default class CardFace {
         Object.assign(this, face);
     }
 
-    getView(typeSelect, face, cardSet, campaign, setCampaign) {
-        return <BlankFaceView typeSelect={typeSelect} />;
+    getView(typeSelect, canvas, face, cardSet, campaign, setCampaign) {
+        return <BlankFaceView typeSelect={typeSelect} canvas={canvas} />;
     }
 }

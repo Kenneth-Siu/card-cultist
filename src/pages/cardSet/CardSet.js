@@ -1,3 +1,4 @@
+import JSZip from "jszip";
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import useLoadedImages from "../../helpers/useLoadedImages";
@@ -40,5 +41,27 @@ export default function CardSet({ campaign, setCampaign }) {
         const path = await window.fs.chooseIcon();
         cardSet.symbol = path;
         setCampaign(campaign.clone());
+    }
+
+    function downloadAll() {
+        const zip = new JSZip();
+        const strikingFear = zip.folder("Striking Fear");
+        const promise1 = new Promise((resolve, reject) => {
+            canvas.current.toBlob((canvasBlob) => {
+                resolve(canvasBlob);
+            });
+        });
+        const promise2 = new Promise((resolve, reject) => {
+            canvas.current.toBlob((canvasBlob) => {
+                resolve(canvasBlob);
+            });
+        });
+        Promise.all([promise1, promise2]).then(([canvasBlob1, canvasBlob2]) => {
+            strikingFear.file("Rotting Remains.png", canvasBlob1);
+            strikingFear.file("Rotting Remains2.png", canvasBlob2);
+            zip.generateAsync({ type: "blob" }).then((zipBlob) => {
+                saveAs(zipBlob, "Darkham Horror.zip");
+            });
+        });
     }
 }
