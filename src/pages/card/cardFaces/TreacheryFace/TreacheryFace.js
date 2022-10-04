@@ -1,8 +1,9 @@
 import React from "react";
-import CardFace from "./CardFace";
-import treachery from "../../../public/templates/treacheries/treachery.png";
-import TreacheryFaceView from "../../pages/card/cardFaceViews/TreacheryFaceView";
-import ImageTransform from "../ImageTransform";
+import CardFace from "../BlankFace/CardFace";
+import treachery from "../../../../../public/templates/treacheries/treachery.png";
+import TreacheryFaceView from "./TreacheryFaceView";
+import ImageTransform from "../../../../models/ImageTransform";
+import TreacheryFaceCanvas from "./TreacheryFaceCanvas";
 
 export default class TreacheryFace extends CardFace {
     static type = "Treachery";
@@ -29,15 +30,27 @@ export default class TreacheryFace extends CardFace {
         this.campaignSetId = face.campaignSetId || "";
     }
 
-    getView(typeSelect, canvas, face, cardSet, campaign, setCampaign) {
+    getView(typeSelect, canvasRef, cardSet, campaign, setCampaign) {
         return (
             <TreacheryFaceView
                 typeSelect={typeSelect}
-                canvas={canvas}
-                face={face}
+                canvasRef={canvasRef}
+                face={this}
                 cardSet={cardSet}
                 campaign={campaign}
                 setCampaign={setCampaign}
+            />
+        );
+    }
+
+    getCanvas(canvasRef, cardSet, campaign, setIllustrationTransform) {
+        return (
+            <TreacheryFaceCanvas
+                face={this}
+                cardSet={cardSet}
+                campaign={campaign}
+                canvasRef={canvasRef}
+                setIllustrationTransform={setIllustrationTransform}
             />
         );
     }

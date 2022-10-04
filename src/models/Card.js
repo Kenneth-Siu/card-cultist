@@ -1,4 +1,4 @@
-import getCardFaceClassInstance from "./cardFaces/getCardFaceClassInstance";
+import getCardFaceClassInstance from "../helpers/getCardFaceClassInstance";
 
 export default class Card {
     constructor(idOrCard) {

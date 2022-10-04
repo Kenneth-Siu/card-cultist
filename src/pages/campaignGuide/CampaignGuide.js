@@ -29,7 +29,7 @@ const symbolMapping = {
 };
 
 export default function CampaignGuide() {
-    const canvas = useRef(null);
+    const canvasRef = useRef(null);
     const [loadedImages, setLoadedImages] = useState([]);
 
     return (
@@ -63,7 +63,7 @@ export default function CampaignGuide() {
                     </button>
                     <button onClick={() => downloadPDF()}>Download PDF</button>
                 </div>
-                <canvas ref={canvas} id="preview" width="1125" height="1125"></canvas>
+                <canvas ref={canvasRef} id="preview" width="1125" height="1125"></canvas>
                 <div id="loaded-images">{loadedImages}</div>
             </main>
         </>
@@ -80,7 +80,7 @@ export default function CampaignGuide() {
                 width={width !== undefined ? `${width}` : ""}
                 height={height !== undefined ? `${height}` : ""}
                 onLoad={() => {
-                    const context = canvas.current.getContext("2d");
+                    const context = canvasRef.current.getContext("2d");
                     context.drawImage(imageRef.current, 0, 0);
                 }}
             />,
@@ -88,14 +88,14 @@ export default function CampaignGuide() {
     }
 
     function addTitle(text) {
-        const context = canvas.current.getContext("2d");
+        const context = canvasRef.current.getContext("2d");
         context.font = "46px Teutonic";
         context.textAlign = "center";
         context.fillText(text, 375, 652);
     }
 
     function addTextBox(text) {
-        const context = canvas.current.getContext("2d");
+        const context = canvasRef.current.getContext("2d");
         context.textAlign = "start";
         const lines = getLines(context, text, 650);
         context.font = "34px Mongolian Baiti";
@@ -175,7 +175,7 @@ export default function CampaignGuide() {
             hotfixes: ["px_scaling"],
             format: [1125, 1125],
         });
-        document.addImage(canvas.current, "PNG", 0, 0, 1125, 1125)
+        document.addImage(canvasRef.current, "PNG", 0, 0, 1125, 1125)
         document.save("campaignGuide.pdf");
     }
 }

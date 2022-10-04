@@ -1,8 +1,8 @@
 import React, { useRef } from "react";
 import { useParams } from "react-router-dom";
-import cardFaces from "../../models/cardFaces/cardFaces";
-import getCardFaceClassInstance from "../../models/cardFaces/getCardFaceClassInstance";
+import getCardFaceClassInstance from "../../helpers/getCardFaceClassInstance";
 import "./Card.scss";
+import listOfCardFaces from "./cardFaces/listOfCardFaces";
 
 export default function Card({ campaign, setCampaign }) {
     const params = useParams();
@@ -22,7 +22,7 @@ export default function Card({ campaign, setCampaign }) {
             </main>
         );
     }
- 
+
     return (
         <main className="card-page">
             <div>
@@ -33,7 +33,7 @@ export default function Card({ campaign, setCampaign }) {
                 <div className="input-container">
                     <label>Card Face</label>
                     <select value={card.frontFace.type} onChange={(event) => setFrontFaceType(event.target.value)}>
-                        {cardFaces.map((cardFace) => (
+                        {listOfCardFaces.map((cardFace) => (
                             <option key={cardFace.type} value={cardFace.type}>
                                 {cardFace.type}
                             </option>
@@ -41,7 +41,6 @@ export default function Card({ campaign, setCampaign }) {
                     </select>
                 </div>,
                 frontCanvas,
-                card.frontFace,
                 cardSet,
                 campaign,
                 setCampaign
@@ -50,7 +49,7 @@ export default function Card({ campaign, setCampaign }) {
                 <div className="input-container">
                     <label>Card Face</label>
                     <select value={card.backFace.type} onChange={(event) => setBackFaceType(event.target.value)}>
-                        {cardFaces.map((cardFace) => (
+                        {listOfCardFaces.map((cardFace) => (
                             <option key={cardFace.type} value={cardFace.type}>
                                 {cardFace.type}
                             </option>
@@ -58,7 +57,6 @@ export default function Card({ campaign, setCampaign }) {
                     </select>
                 </div>,
                 backCanvas,
-                card.backFace,
                 cardSet,
                 campaign,
                 setCampaign

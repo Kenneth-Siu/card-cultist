@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import throttle from "lodash.throttle";
 import ImageTransform from "../../../models/ImageTransform";
 
@@ -46,7 +46,7 @@ const throttledHandleMove = throttle((event, transformState, startIllustrationTr
 }, 15);
 
 export default function CardCanvas({
-    canvas,
+    canvasRef,
     loadedImages,
     canvasLayers,
     orientation,
@@ -54,7 +54,7 @@ export default function CardCanvas({
     setIllustrationTransform,
 }) {
     useEffect(() => {
-        if (canvas.current) {
+        if (canvasRef.current) {
             refreshCanvas();
         }
     }, canvasLayers);
@@ -86,7 +86,7 @@ export default function CardCanvas({
     return (
         <div className="card-canvas-container">
             <canvas
-                ref={canvas}
+                ref={canvasRef}
                 id="preview"
                 width={orientation === "landscape" ? "1050" : "750"}
                 height={orientation === "landscape" ? "750" : "1050"}
@@ -98,8 +98,8 @@ export default function CardCanvas({
     );
 
     function refreshCanvas() {
-        const context = canvas.current.getContext("2d");
-        context.clearRect(0, 0, canvas.current.width, canvas.current.height);
+        const context = canvasRef.current.getContext("2d");
+        context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
         canvasLayers.forEach((canvasLayer) => {
             canvasLayer && canvasLayer.draw(context);
         });
