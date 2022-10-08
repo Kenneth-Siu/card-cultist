@@ -34,7 +34,7 @@ export default function App() {
                     <Home campaign={campaign} setCampaign={setCampaign} />
                 </Route>
                 <Route exact={true} path="/campaign-guide">
-                    <CampaignGuide />
+                    <CampaignGuide campaign={campaign} setCampaign={setCampaign} />
                 </Route>
                 <Route exact={true} path="/card-set/:id">
                     <CardSet campaign={campaign} setCampaign={setCampaign} />

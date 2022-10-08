@@ -3,10 +3,9 @@ import makeLines from "./makeLines";
 import splitIntoAtoms from "./splitIntoAtoms";
 
 // TODO properly support more languages (...maybe. It's a lot of work...)
-// TODO some way to detect bottom of rect, for use with campaign guide
 // TODO allow defining non-rectangular text box
 export function writeText(canvasContext, canvasTextConfig, cardFace) {
-    const { text, align, fontSize, fontFamily, x, y, width, color } = canvasTextConfig;
+    const { text, align, fontSize, fontFamily, x, y, width, color, lineHeight } = canvasTextConfig;
     canvasContext.textAlign = TEXTALIGN.LEFT;
     const atoms = splitIntoAtoms(text, cardFace);
     const lines = makeLines(atoms, canvasContext, canvasTextConfig);
@@ -30,9 +29,9 @@ export function writeText(canvasContext, canvasTextConfig, cardFace) {
         });
 
         if (line.length === 0) {
-            currentY += fontSize * 0.4;
+            currentY += fontSize * lineHeight * 0.4;
         } else {
-            currentY += fontSize;
+            currentY += fontSize * lineHeight;
         }
 
         function getLineWidth() {

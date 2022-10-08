@@ -17,6 +17,7 @@ export default class CanvasTextConfig {
         this.bold = false;
         this.italic = false;
         this.color = "black";
+        this.lineHeight = 1;
     }
 
     withText(text) {
@@ -71,6 +72,11 @@ export default class CanvasTextConfig {
 
     withColor(color) {
         this.color = color;
+        return this;
+    }
+
+    withLineHeight(lineHeight) {
+        this.lineHeight = lineHeight;
         return this;
     }
 }
