@@ -11,11 +11,11 @@ export default class CardFace {
         Object.assign(this, face);
     }
 
-    getView(typeSelect, canvasRef) {
-        return <BlankFaceView typeSelect={typeSelect} canvasRef={canvasRef} />;
+    getView(typeSelect) {
+        return <BlankFaceView typeSelect={typeSelect} />;
     }
 
-    getCanvas(canvasRef) {
-        return <BlankFaceCanvas canvasRef={canvasRef} />;
+    getCanvas() {
+        return <BlankFaceCanvas />;
     }
 }

@@ -7,7 +7,7 @@ import ImageTransform from "../../../../models/ImageTransform";
 import TreacheryFace from "./TreacheryFace";
 import CardCanvas from "../CardCanvas";
 
-export default function TreacheryFaceCanvas({ face, cardSet, campaign, canvasRef, setIllustrationTransform }) {
+export default function TreacheryFaceCanvas({ face, cardSet, campaign, setIllustrationTransform }) {
     const [loadedImages, loadPublicImage, loadFileSystemImage] = useLoadedImages();
 
     const [illustrationLayer, setIllustrationLayer] = useState(null);
@@ -189,7 +189,6 @@ export default function TreacheryFaceCanvas({ face, cardSet, campaign, canvasRef
 
     return (
         <CardCanvas
-            canvasRef={canvasRef}
             loadedImages={loadedImages}
             canvasLayers={canvasLayers}
             illustrationTransform={face.illustrationTransform}

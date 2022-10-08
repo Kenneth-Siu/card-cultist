@@ -1,13 +1,11 @@
-import React, { useRef } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import getCardFaceClassInstance from "../../helpers/getCardFaceClassInstance";
-import "./Card.scss";
 import listOfCardFaces from "./cardFaces/listOfCardFaces";
+import "./Card.scss";
 
 export default function Card({ campaign, setCampaign }) {
     const params = useParams();
-    const frontCanvas = useRef(null);
-    const backCanvas = useRef(null);
 
     const id = parseInt(params.id);
     const cardSetId = parseInt(params.cardSetId);
@@ -29,38 +27,40 @@ export default function Card({ campaign, setCampaign }) {
                 <button onClick={() => exportCard("image/png", "png")}>Export PNG</button>
                 <button onClick={() => exportCard("image/jpeg", "jpg", 0.9)}>Export JPG</button>
             </div>
-            {card.frontFace.getView(
-                <div className="input-container">
-                    <label>Card Face</label>
-                    <select value={card.frontFace.type} onChange={(event) => setFrontFaceType(event.target.value)}>
-                        {listOfCardFaces.map((cardFace) => (
-                            <option key={cardFace.type} value={cardFace.type}>
-                                {cardFace.type}
-                            </option>
-                        ))}
-                    </select>
-                </div>,
-                frontCanvas,
-                cardSet,
-                campaign,
-                setCampaign
-            )}
-            {card.backFace.getView(
-                <div className="input-container">
-                    <label>Card Face</label>
-                    <select value={card.backFace.type} onChange={(event) => setBackFaceType(event.target.value)}>
-                        {listOfCardFaces.map((cardFace) => (
-                            <option key={cardFace.type} value={cardFace.type}>
-                                {cardFace.type}
-                            </option>
-                        ))}
-                    </select>
-                </div>,
-                backCanvas,
-                cardSet,
-                campaign,
-                setCampaign
-            )}
+            <div className="front-face-view-container">
+                {card.frontFace.getView(
+                    <div className="input-container">
+                        <label>Card Face</label>
+                        <select value={card.frontFace.type} onChange={(event) => setFrontFaceType(event.target.value)}>
+                            {listOfCardFaces.map((cardFace) => (
+                                <option key={cardFace.type} value={cardFace.type}>
+                                    {cardFace.type}
+                                </option>
+                            ))}
+                        </select>
+                    </div>,
+                    cardSet,
+                    campaign,
+                    setCampaign
+                )}
+            </div>
+            <div className="back-face-view-container">
+                {card.backFace.getView(
+                    <div className="input-container">
+                        <label>Card Face</label>
+                        <select value={card.backFace.type} onChange={(event) => setBackFaceType(event.target.value)}>
+                            {listOfCardFaces.map((cardFace) => (
+                                <option key={cardFace.type} value={cardFace.type}>
+                                    {cardFace.type}
+                                </option>
+                            ))}
+                        </select>
+                    </div>,
+                    cardSet,
+                    campaign,
+                    setCampaign
+                )}
+            </div>
         </main>
     );
 
@@ -78,7 +78,7 @@ export default function Card({ campaign, setCampaign }) {
     }
 
     function exportCard(imageType, extension, quality) {
-        frontCanvas.current.toBlob(
+        document.querySelector(".front-face-view-container canvas").toBlob(
             (canvasBlob) => {
                 return canvasBlob.arrayBuffer().then((arrayBuffer) => {
                     return window.fs.exportCardImage(
@@ -92,7 +92,7 @@ export default function Card({ campaign, setCampaign }) {
             imageType,
             quality
         );
-        backCanvas.current.toBlob(
+        document.querySelector(".back-face-view-container canvas").toBlob(
             (canvasBlob) => {
                 return canvasBlob.arrayBuffer().then((arrayBuffer) => {
                     return window.fs.exportCardImage(

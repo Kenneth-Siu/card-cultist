@@ -3,15 +3,13 @@ import TreacheryFaceCanvas from "./TreacheryFaceCanvas";
 import "../FaceView.scss";
 import "./TreacheryFaceView.scss";
 
-export default function TreacheryFaceView({ typeSelect, canvasRef, face, cardSet, campaign, setCampaign }) {
-
+export default function TreacheryFaceView({ typeSelect, face, cardSet, campaign, setCampaign }) {
     return (
         <div className="face-view treachery-face-view">
             <TreacheryFaceCanvas
                 face={face}
                 cardSet={cardSet}
                 campaign={campaign}
-                canvasRef={canvasRef}
                 setIllustrationTransform={setIllustrationTransform}
             />
             <div className="form-container">
