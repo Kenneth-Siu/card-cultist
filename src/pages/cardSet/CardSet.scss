@@ -13,4 +13,18 @@
             background-color: $color-1;
         }
     }
+
+    .export-card-front-canvases-container,
+    .export-card-back-canvases-container {
+        display: flex;
+        flex-wrap: wrap;
+
+        canvas {
+            width: 100px;
+        }
+    }
+
+    .export-tts-container {
+        display: none;
+    }
 }

@@ -15,7 +15,7 @@ export default class CardFace {
         return <BlankFaceView typeSelect={typeSelect} />;
     }
 
-    getCanvas() {
-        return <BlankFaceCanvas />;
+    getCanvas(cardId) {
+        return <BlankFaceCanvas key={cardId} />;
     }
 }

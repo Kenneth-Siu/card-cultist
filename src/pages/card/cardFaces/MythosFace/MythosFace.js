@@ -16,7 +16,7 @@ export default class MythosFace extends CardFace {
         return <MythosFaceView typeSelect={typeSelect} />;
     }
 
-    getCanvas() {
-        return <MythosFaceCanvas />;
+    getCanvas(cardId) {
+        return <MythosFaceCanvas key={cardId} />;
     }
 }

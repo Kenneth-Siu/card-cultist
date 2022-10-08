@@ -42,13 +42,14 @@ export default class TreacheryFace extends CardFace {
         );
     }
 
-    getCanvas(cardSet, campaign, setIllustrationTransform) {
+    getCanvas(cardId, cardSet, campaign, setIllustrationTransform) {
         return (
             <TreacheryFaceCanvas
                 face={this}
                 cardSet={cardSet}
                 campaign={campaign}
                 setIllustrationTransform={setIllustrationTransform}
+                key={cardId}
             />
         );
     }

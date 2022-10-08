@@ -1,13 +1,15 @@
-import JSZip from "jszip";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import useLoadedImages from "../../helpers/useLoadedImages";
 import "./CardSet.scss";
 
-// TODO can export all cards in set individually
-// TODO can export all front/back faces of cards in set in a TTS-friendly format
 // TODO can export all cards in set individually with bleed (MPC friendly)
 // TODO can export all front/back faces of cards in set with bleed (printer-friendly)
+
+const ttsMaxRows = 7;
+const ttsMinRows = 2;
+const ttsMaxColumns = 10;
+const ttsMinColumns = 2;
 
 export default function CardSet({ campaign, setCampaign }) {
     const [loadedImages, loadPublicImage, loadFileSystemImage] = useLoadedImages();
@@ -15,6 +17,9 @@ export default function CardSet({ campaign, setCampaign }) {
     const params = useParams();
     const id = parseInt(params.id);
     const cardSet = campaign.getCardSet(id);
+
+    const ttsFrontCanvas = useRef(null);
+    const ttsBackCanvas = useRef(null);
 
     useEffect(() => {
         loadFileSystemImage(cardSet.symbol);
@@ -36,7 +41,19 @@ export default function CardSet({ campaign, setCampaign }) {
                 <button onClick={() => setSetSymbol()}>Choose set symbol</button>
             </div>
             <div className="export-container">
-                <button>Export all cards</button>
+                <button onClick={() => exportAllCards("image/png", "png")}>Export all cards (PNG)</button>
+                <button onClick={() => exportAllCards("image/jpeg", "jpg", 0.9)}>Export all cards (JPG)</button>
+                <button onClick={() => exportForTts()}>Export for TTS (JPG)</button>
+                <div className="export-card-front-canvases-container">
+                    {cardSet.cards.map((card) => card.frontFace.getCanvas(card.id, cardSet, campaign))}
+                </div>
+                <div className="export-card-back-canvases-container">
+                    {cardSet.cards.map((card) => card.backFace.getCanvas(card.id, cardSet, campaign))}
+                </div>
+                <div className="export-tts-container">
+                    <canvas ref={ttsFrontCanvas} />
+                    <canvas ref={ttsBackCanvas} />
+                </div>
             </div>
         </main>
     );
@@ -53,29 +70,92 @@ export default function CardSet({ campaign, setCampaign }) {
         setCampaign(campaign.clone());
     }
 
-    function exportAllCards() {
-
+    function exportAllCards(imageType, extension, quality) {
+        document.querySelectorAll(".export-card-front-canvases-container canvas").forEach((canvas, index) => {
+            canvas.toBlob(
+                (canvasBlob) => {
+                    return canvasBlob.arrayBuffer().then((arrayBuffer) => {
+                        return window.fs.exportCardImage(
+                            campaign.path,
+                            cardSet.getTitle(),
+                            `${cardSet.cards[index].getTitle()} (Front).${extension}`,
+                            new DataView(arrayBuffer)
+                        );
+                    });
+                },
+                imageType,
+                quality
+            );
+        });
+        document.querySelectorAll(".export-card-back-canvases-container canvas").forEach((canvas, index) => {
+            canvas.toBlob(
+                (canvasBlob) => {
+                    return canvasBlob.arrayBuffer().then((arrayBuffer) => {
+                        return window.fs.exportCardImage(
+                            campaign.path,
+                            cardSet.getTitle(),
+                            `${cardSet.cards[index].getTitle()} (Back).${extension}`,
+                            new DataView(arrayBuffer)
+                        );
+                    });
+                },
+                imageType,
+                quality
+            );
+        });
     }
 
-    function downloadAll() {
-        const zip = new JSZip();
-        const strikingFear = zip.folder("Striking Fear");
-        const promise1 = new Promise((resolve, reject) => {
-            canvasRef.current.toBlob((canvasBlob) => {
-                resolve(canvasBlob);
-            });
+    function exportForTts() {
+        const cardTotal = cardSet.cards.length;
+        const spacesNeeded = cardTotal + 1; // Bottom-right is saved for card back
+        if (spacesNeeded > ttsMaxColumns * ttsMaxRows) {
+            // TODO Separate into two
+        }
+        const numberOfColumns = Math.max(ttsMinColumns, Math.min(cardTotal, ttsMaxColumns));
+        const numberOfRows = Math.max(ttsMinRows, Math.floor(spacesNeeded / ttsMaxColumns) + 1);
+
+        ttsFrontCanvas.current.width = 750 * numberOfColumns;
+        ttsFrontCanvas.current.height = 1050 * numberOfRows;
+
+        const frontContext = ttsFrontCanvas.current.getContext("2d");
+        document.querySelectorAll(".export-card-front-canvases-container canvas").forEach((canvas, index) => {
+            frontContext.drawImage(canvas, (index % ttsMaxColumns) * 750, Math.floor(index / ttsMaxColumns) * 1050);
         });
-        const promise2 = new Promise((resolve, reject) => {
-            canvasRef.current.toBlob((canvasBlob) => {
-                resolve(canvasBlob);
-            });
+        ttsFrontCanvas.current.toBlob(
+            (canvasBlob) => {
+                return canvasBlob.arrayBuffer().then((arrayBuffer) => {
+                    return window.fs.exportCardImage(
+                        campaign.path,
+                        cardSet.getTitle(),
+                        `${cardSet.getTitle()} (Front).jpg`,
+                        new DataView(arrayBuffer)
+                    );
+                });
+            },
+            "image/jpeg",
+            0.9
+        );
+
+        ttsBackCanvas.current.width = 750 * numberOfColumns;
+        ttsBackCanvas.current.height = 1050 * numberOfRows;
+
+        const backContext = ttsBackCanvas.current.getContext("2d");
+        document.querySelectorAll(".export-card-back-canvases-container canvas").forEach((canvas, index) => {
+            backContext.drawImage(canvas, (index % ttsMaxColumns) * 750, Math.floor(index / ttsMaxColumns) * 1050);
         });
-        Promise.all([promise1, promise2]).then(([canvasBlob1, canvasBlob2]) => {
-            strikingFear.file("Rotting Remains.png", canvasBlob1);
-            strikingFear.file("Rotting Remains2.png", canvasBlob2);
-            zip.generateAsync({ type: "blob" }).then((zipBlob) => {
-                saveAs(zipBlob, "Darkham Horror.zip");
-            });
-        });
+        ttsBackCanvas.current.toBlob(
+            (canvasBlob) => {
+                return canvasBlob.arrayBuffer().then((arrayBuffer) => {
+                    return window.fs.exportCardImage(
+                        campaign.path,
+                        cardSet.getTitle(),
+                        `${cardSet.getTitle()} (Back).jpg`,
+                        new DataView(arrayBuffer)
+                    );
+                });
+            },
+            "image/jpeg",
+            0.9
+        );
     }
 }
