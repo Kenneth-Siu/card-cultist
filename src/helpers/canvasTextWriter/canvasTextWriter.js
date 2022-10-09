@@ -15,7 +15,9 @@ export function writeText(canvasContext, canvasTextConfig, cardFace) {
 
     let currentY = y;
 
-    lines.forEach((line) => {
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+
         const alignmentIndent =
             align !== TEXTALIGN.LEFT ? (width - getLineWidth()) * (align === TEXTALIGN.RIGHT ? 1 : 0.5) : 0;
         let currentX = x + alignmentIndent + (TEXTALIGN.LEFT ? indent : 0);
@@ -27,6 +29,10 @@ export function writeText(canvasContext, canvasTextConfig, cardFace) {
                 atom.writeToCanvas({ writeSymbols, setItalic, setBold, startIndent, endIndent });
             }
         });
+
+        if (lines.slice(i + 1).every((futureLine) => futureLine.length === 0)) {
+            break;
+        }
 
         if (line.length === 0) {
             currentY += fontSize * lineHeight * 0.4;
@@ -81,7 +87,9 @@ export function writeText(canvasContext, canvasTextConfig, cardFace) {
         function endIndent() {
             indent = 0;
         }
-    });
+    }
+
+    return currentY;
 
     function setItalic(value) {
         italic = value;

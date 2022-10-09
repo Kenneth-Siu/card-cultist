@@ -9,6 +9,6 @@ export default class CanvasTextLayer extends CanvasLayer {
     }
 
     draw(context) {
-        writeText(context, this.canvasTextConfig, this.cardFace);
+        return writeText(context, this.canvasTextConfig, this.cardFace);
     }
 }

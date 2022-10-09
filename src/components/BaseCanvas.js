@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 
-export default function BaseCanvas({ loadedImages, canvasLayers, width, height, ...other }) {
+export default function BaseCanvas({ loadedImages, canvasLayers, width, height }) {
     const canvasRef = useRef(null);
 
     useEffect(() => {
@@ -10,7 +10,7 @@ export default function BaseCanvas({ loadedImages, canvasLayers, width, height, 
     }, canvasLayers);
 
     return (
-        <div className="canvas-container" {...other}>
+        <div className="canvas-container">
             <canvas ref={canvasRef} className="preview" width={width} height={height} onLoad={() => refreshCanvas()} />
             <div className="loaded-images">{loadedImages}</div>
         </div>

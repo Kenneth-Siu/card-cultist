@@ -12,20 +12,21 @@ export default function useLoadedImages() {
                     ref={imageRef}
                     key={src}
                     src={src}
-                    onLoad={() => resolve(imageRef.current)}
+                    onLoad={() => {
+                        resolve(imageRef.current);
+                    }}
                 />,
             ]);
         });
     }
 
-    function loadFileSystemImage(path) {
+    async function loadFileSystemImage(path) {
         if (!path) {
             return undefined;
         }
-        return window.fs.openImage(path).then((data) => {
-            const src = URL.createObjectURL(new Blob([data]));
-            return loadPublicImage(src);
-        });
+        const data = await window.fs.openImage(path);
+        const src = URL.createObjectURL(new Blob([data]));
+        return await loadPublicImage(src);
     }
 
     return [loadedImages, loadPublicImage, loadFileSystemImage];

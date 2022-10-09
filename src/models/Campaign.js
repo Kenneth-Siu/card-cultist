@@ -1,18 +1,21 @@
 import generateId from "../helpers/generateId";
+import CampaignGuide from "./CampaignGuide";
 import CardSet from "./CardSet";
 
 export default class Campaign {
     constructor(campaign) {
+        Object.assign(this, campaign);
         if (!campaign) {
-            this.path = "";
-            this.title = "";
-            this.symbol = null;
-            this.campaignGuide = "";
-            this.cardSets = [];
+            campaign = {};
             return;
         }
-        Object.assign(this, campaign);
-        this.cardSets = campaign.cardSets.map(cardSet => new CardSet(cardSet));
+        this.path = campaign.path || "";
+        this.title = campaign.title || "";
+        this.symbol = campaign.symbol || null;
+        this.campaignGuide = new CampaignGuide(this.campaignGuide);
+        this.cardSets = Array.isArray(campaign.cardSets)
+            ? campaign.cardSets.map((cardSet) => new CardSet(cardSet))
+            : [];
     }
 
     clone() {

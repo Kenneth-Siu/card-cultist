@@ -5,7 +5,7 @@ import ImageTransform from "../../../../models/ImageTransform";
 import MythosFace from "./MythosFace";
 import CardCanvas from "../CardCanvas";
 
-export default function MythosFaceCanvas({ ...other }) {
+export default function MythosFaceCanvas() {
     const [loadedImages, loadPublicImage] = useLoadedImages();
     const [frameLayer, setFrameLayer] = useState(null);
 
@@ -15,5 +15,5 @@ export default function MythosFaceCanvas({ ...other }) {
         setFrameLayer(new CanvasImageLayer(await loadPublicImage(MythosFace.frame), new ImageTransform({ scale: 2 })));
     }, []);
 
-    return <CardCanvas loadedImages={loadedImages} canvasLayers={canvasLayers} {...other} />;
+    return <CardCanvas loadedImages={loadedImages} canvasLayers={canvasLayers} />;
 }

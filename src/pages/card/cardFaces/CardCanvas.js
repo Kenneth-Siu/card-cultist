@@ -51,7 +51,6 @@ export default function CardCanvas({
     orientation,
     illustrationTransform,
     setIllustrationTransform,
-    ...other
 }) {
     const canvasRef = useRef(null);
 
@@ -86,7 +85,7 @@ export default function CardCanvas({
             : {};
 
     return (
-        <div className="canvas-container" {...other}>
+        <div className="canvas-container">
             <canvas
                 ref={canvasRef}
                 className="preview"

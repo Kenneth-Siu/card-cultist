@@ -1,25 +1,34 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { jsPDF } from "jspdf";
+import listOfPageTypes from "./pages/listOfPageTypes";
 import "./CampaignGuide.scss";
-import CampaignGuideCanvas from "./CampaignGuideCanvas";
 
 export default function CampaignGuide({ campaign, setCampaign }) {
+    const [newPageType, setNewPageType] = useState(listOfPageTypes[0].type);
+
     return (
-        <>
-            <main className="campaign-guide-page">
+        <main className="campaign-guide-page">
+            <div>
                 <button onClick={() => downloadPDF()}>Export as PDF</button>
-                <div className="working-container">
-                    <CampaignGuideCanvas campaign={campaign} />
-                    <div className="form-container">
-                        <textarea value={campaign.campaignGuide} onChange={(event) => setText(event.target.value)} />
-                    </div>
-                </div>
-            </main>
-        </>
+            </div>
+            <div>
+                {campaign.campaignGuide.pages.map((page, index) => page.getView(campaign, setCampaign, index + 1))}
+                <select value={newPageType} onChange={(event) => setNewPageType(event.target.value)}>
+                    {listOfPageTypes.map((pageType) => (
+                        <option key={pageType.type} value={pageType.type}>
+                            {pageType.type}
+                        </option>
+                    ))}
+                </select>
+                <button className="add-page-button" onClick={() => addPage()}>
+                    + Page
+                </button>
+            </div>
+        </main>
     );
 
-    function setText(text) {
-        campaign.campaignGuide = text;
+    function addPage() {
+        campaign.campaignGuide.addPage(newPageType);
         setCampaign(campaign.clone());
     }
 
@@ -29,7 +38,12 @@ export default function CampaignGuide({ campaign, setCampaign }) {
             hotfixes: ["px_scaling"],
             format: [1125, 1125],
         });
-        pdf.addImage(document.querySelector(".campaign-guide-page canvas"), "PNG", 0, 0, 1125, 1125);
+        document.querySelectorAll(".campaign-guide-page canvas").forEach((page, index) => {
+            if (index !== 0) {
+                pdf.addPage();
+            }
+            pdf.addImage(page, "PNG", 0, 0, 1125, 1125);
+        });
         pdf.save("campaignGuide.pdf");
     }
 }

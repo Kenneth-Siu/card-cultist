@@ -19,5 +19,7 @@ export default class CanvasImageLayer extends CanvasLayer {
 
         context.setTransform(1, 0, 0, 1, 0, 0);
         context.filter = `invert(0)`;
+
+        return this.y + this.imageRef.height * this.scale;
     }
 }
