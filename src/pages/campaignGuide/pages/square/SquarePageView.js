@@ -10,6 +10,7 @@ export default function SquarePageView({ page, pageNumber, campaign, setCampaign
         <div className="page-view">
             <SquarePageCanvas page={page} pageNumber={pageNumber} campaign={campaign} />
             <div className="form-container">
+                <button onClick={() => deletePage()}>Delete</button>
                 <div className="left-column">
                     {page.leftColumnWidgets.map((widget) => widget.getView(page, campaign, setCampaign))}
                     <select value={newLeftWidgetType} onChange={(event) => setNewLeftWidgetType(event.target.value)}>
@@ -39,6 +40,11 @@ export default function SquarePageView({ page, pageNumber, campaign, setCampaign
             </div>
         </div>
     );
+
+    function deletePage() {
+        campaign.campaignGuide.deletePage(page);
+        setCampaign(campaign.clone());
+    }
 
     function addWidgetToLeftColumn() {
         page.addWidgetToLeftColumn(newLeftWidgetType);

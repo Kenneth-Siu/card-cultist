@@ -1,3 +1,4 @@
+import remove from "lodash.remove";
 import generateId from "../helpers/generateId";
 import getPageClassInstance from "../pages/campaignGuide/pages/getPageClassInstance";
 import listOfPageTypes from "../pages/campaignGuide/pages/listOfPageTypes";
@@ -20,5 +21,9 @@ export default class CampaignGuide {
                 this.pages.push(new listOfPageTypes[i](generateId(this.pages)));
             }
         }
+    }
+
+    deletePage(page) {
+        remove(this.pages, (p) => p === page);
     }
 }

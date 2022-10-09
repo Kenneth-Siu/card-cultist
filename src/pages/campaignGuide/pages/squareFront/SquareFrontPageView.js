@@ -10,6 +10,7 @@ export default function SquareFrontPageView({ page, campaign, setCampaign }) {
         <div className="page-view">
             <SquareFrontPageCanvas page={page} campaign={campaign} />
             <div className="form-container">
+                <button onClick={() => deletePage()}>Delete</button>
                 <input type="text" value={page.title} onChange={(event) => setTitle(event.target.value)} />
                 <div className="left-column">
                     {page.leftColumnWidgets.map((widget) => widget.getView(page, campaign, setCampaign))}
@@ -40,6 +41,11 @@ export default function SquareFrontPageView({ page, campaign, setCampaign }) {
             </div>
         </div>
     );
+
+    function deletePage() {
+        campaign.campaignGuide.deletePage(page);
+        setCampaign(campaign.clone());
+    }
 
     function setTitle(title) {
         page.title = title;
