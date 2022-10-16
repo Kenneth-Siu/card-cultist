@@ -25,7 +25,7 @@ export default class SectionHeaderWidget extends Widget {
         );
     }
 
-    draw(context, x, y, isFirst) {
+    draw(context, x, y, isFirst, campaignGuide) {
         const layer = new CanvasTextLayer(
             new CanvasTextConfig()
                 .withText(this.text)
@@ -39,6 +39,7 @@ export default class SectionHeaderWidget extends Widget {
                 .withWidth(COLUMN_WIDTH)
                 .withFontSize(SECTION_HEADER_FONT_SIZE)
                 .withFontFamily("Teutonic")
+                .withColor(campaignGuide.colorTheme)
         );
 
         return layer.draw(context);
