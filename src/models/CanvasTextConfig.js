@@ -18,6 +18,9 @@ export default class CanvasTextConfig {
         this.italic = false;
         this.color = "black";
         this.lineHeight = 1;
+        this.cardTitle = "";
+        this.cardSubtitle = "";
+        this.highlightColor = "";
     }
 
     withText(text) {
@@ -77,6 +80,21 @@ export default class CanvasTextConfig {
 
     withLineHeight(lineHeight) {
         this.lineHeight = lineHeight;
+        return this;
+    }
+
+    withCardTitle(cardTitle) {
+        this.cardTitle = cardTitle;
+        return this;
+    }
+
+    withCardSubtitle(cardSubtitle) {
+        this.cardSubtitle = cardSubtitle;
+        return this;
+    }
+
+    withHighlightColor(highlightColor) {
+        this.highlightColor = highlightColor;
         return this;
     }
 }

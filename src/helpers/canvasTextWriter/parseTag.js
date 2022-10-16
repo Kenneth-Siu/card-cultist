@@ -1,8 +1,10 @@
 import AHSymbol from "./atoms/AHSymbol";
 import EndBold from "./atoms/instructions/EndBold";
+import EndColor from "./atoms/instructions/EndColor";
 import EndItalic from "./atoms/instructions/EndItalic";
 import EndTrait from "./atoms/instructions/EndTrait";
 import StartBold from "./atoms/instructions/StartBold";
+import StartColor from "./atoms/instructions/StartColor";
 import StartItalic from "./atoms/instructions/StartItalic";
 import StartTrait from "./atoms/instructions/StartTrait";
 
@@ -62,6 +64,8 @@ const instructionDictionary = {
     "</b>": EndBold,
     "<t>": StartTrait,
     "</t>": EndTrait,
+    // Start color requires extra processing
+    "</color>": EndColor,
 };
 
 const textReplacementDictionary = {
@@ -73,15 +77,21 @@ const textReplacementDictionary = {
     "<hau>": "<b>Haunted – </b>",
 };
 
-export default function parseTag(tag) {
+export default function parseTag(tag, highlightColor) {
+    if (highlightColor && tag === "<gbul>") {
+        return [new StartColor(highlightColor), gBulletAHSymbol, new EndColor()];
+    }
     if (symbolDictionary[tag]) {
-        return symbolDictionary[tag];
+        return [symbolDictionary[tag]];
+    }
+    if (tag.startsWith("<color=")) {
+        return [new StartColor(tag.substring(7, tag.length - 1))];
     }
     if (instructionDictionary[tag]) {
-        return new instructionDictionary[tag]();
+        return [new instructionDictionary[tag]()];
     }
     if (textReplacementDictionary[tag]) {
-        return textReplacementDictionary[tag];
+        return [textReplacementDictionary[tag]];
     }
-    return undefined;
+    return [];
 }

@@ -16,11 +16,11 @@ import DecoBoxWidgetView from "./DecoBoxWidgetView";
 export default class DecoBoxWidget extends Widget {
     static type = "Deco Box";
 
-    constructor(widgetOrId) {
+    constructor(widgetOrId, campaignGuide) {
         super(widgetOrId, DecoBoxWidget.type);
         const widget = typeof widgetOrId === "number" || !widgetOrId ? {} : widgetOrId;
 
-        this.color = widget.color || "";
+        this.color = widget.color || (campaignGuide && campaignGuide.colorTheme) || "#000000";
         this.title = widget.title || "";
         this.subtitle = widget.subtitle || "";
         this.text = widget.text || "";
@@ -217,6 +217,7 @@ export default class DecoBoxWidget extends Widget {
                 .withFontSize(PARAGRAPH_FONT_SIZE)
                 .withLineHeight(PARAGRAPH_LINE_HEIGHT)
                 .withColor(inTransparent ? "transparent" : "black")
+                .withHighlightColor(this.color)
         );
 
         return textLayer.draw(context);

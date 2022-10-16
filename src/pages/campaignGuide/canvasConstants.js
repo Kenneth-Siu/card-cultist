@@ -1,4 +1,4 @@
-export const COLUMN_WIDTH = 488;
+export const COLUMN_WIDTH = 486;
 export const PARAGRAPH_FONT_SIZE = 17.5;
 export const PARAGRAPH_LINE_HEIGHT = 1.32;
 export const PARAGRAPH_SPACING = 0.4;

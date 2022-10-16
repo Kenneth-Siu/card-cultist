@@ -25,18 +25,18 @@ export default class Page {
             : [];
     }
 
-    addWidgetToLeftColumn(widgetType) {
+    addWidgetToLeftColumn(widgetType, campaignGuide) {
         for (let i = 0; i < listOfWidgetTypes.length; i++) {
             if (listOfWidgetTypes[i].type === widgetType) {
-                this.leftColumnWidgets.push(new listOfWidgetTypes[i](generateId(this.leftColumnWidgets)));
+                this.leftColumnWidgets.push(new listOfWidgetTypes[i](generateId(this.leftColumnWidgets), campaignGuide));
             }
         }
     }
 
-    addWidgetToRightColumn(widgetType) {
+    addWidgetToRightColumn(widgetType, campaignGuide) {
         for (let i = 0; i < listOfWidgetTypes.length; i++) {
             if (listOfWidgetTypes[i].type === widgetType) {
-                this.rightColumnWidgets.push(new listOfWidgetTypes[i](generateId(this.rightColumnWidgets)));
+                this.rightColumnWidgets.push(new listOfWidgetTypes[i](generateId(this.rightColumnWidgets), campaignGuide));
             }
         }
     }

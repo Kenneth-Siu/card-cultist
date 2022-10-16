@@ -19,6 +19,8 @@ export default function makeLines(atoms, context, { width, fontSize, fontFamily,
             setBold,
             startIndent,
             endIndent,
+            setColor: () => {},
+            endColor: () => {},
         });
         if (line.length > 1 && typeof line[line.length - 1] === "string" && typeof line[line.length - 2] === "string") {
             const text = line.pop();

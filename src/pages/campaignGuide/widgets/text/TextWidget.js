@@ -17,7 +17,7 @@ export default class TextWidget extends Widget {
         return <TextWidgetView key={this.id} widget={this} page={page} campaign={campaign} setCampaign={setCampaign} />;
     }
 
-    draw(context, x, y, isFirst) {
+    draw(context, x, y, isFirst, campaignGuide) {
         const layer = new CanvasTextLayer(
             new CanvasTextConfig()
                 .withText(this.text)
@@ -31,6 +31,7 @@ export default class TextWidget extends Widget {
                 .withWidth(COLUMN_WIDTH)
                 .withFontSize(PARAGRAPH_FONT_SIZE)
                 .withLineHeight(PARAGRAPH_LINE_HEIGHT)
+                .withHighlightColor(campaignGuide.colorTheme)
         );
 
         return layer.draw(context);

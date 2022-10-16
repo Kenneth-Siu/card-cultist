@@ -53,12 +53,12 @@ export default function SquareFrontPageView({ page, campaign, setCampaign }) {
     }
 
     function addWidgetToLeftColumn() {
-        page.addWidgetToLeftColumn(newLeftWidgetType);
+        page.addWidgetToLeftColumn(newLeftWidgetType, campaign.campaignGuide);
         setCampaign(campaign.clone());
     }
 
     function addWidgetToRightColumn() {
-        page.addWidgetToRightColumn(newRightWidgetType);
+        page.addWidgetToRightColumn(newRightWidgetType, campaign.campaignGuide);
         setCampaign(campaign.clone());
     }
 }

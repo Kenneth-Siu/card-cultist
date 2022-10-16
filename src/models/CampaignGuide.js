@@ -9,7 +9,7 @@ export default class CampaignGuide {
         if (!campaignGuide) {
             campaignGuide = {};
         }
-        this.colorTheme = campaignGuide.colorTheme || "rgba(41,98,95,0)";
+        this.colorTheme = campaignGuide.colorTheme || "rgb(38,73,59)";
         this.pages = Array.isArray(campaignGuide.pages)
             ? campaignGuide.pages.map((page) => getPageClassInstance(page))
             : [];

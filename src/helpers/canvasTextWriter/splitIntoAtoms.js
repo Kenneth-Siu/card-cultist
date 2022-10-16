@@ -1,13 +1,11 @@
-import EndBold from "./atoms/instructions/EndBold";
-import EndItalic from "./atoms/instructions/EndItalic";
-import StartBold from "./atoms/instructions/StartBold";
 import StartIndent from "./atoms/instructions/StartIndent";
 import EndIndent from "./atoms/instructions/EndIndent";
-import StartItalic from "./atoms/instructions/StartItalic";
 import NewLine from "./atoms/NewLine";
 import Space from "./atoms/Space";
 import Word from "./atoms/Word";
 import parseTag, { bulletAHSymbol, gBulletAHSymbol } from "./parseTag";
+import StartColor from "./atoms/instructions/StartColor";
+import EndColor from "./atoms/instructions/EndColor";
 
 const shorthands = {
     "Revelation -- ": "<b>Revelation – </b>",
@@ -53,15 +51,13 @@ function atomEscape(text) {
     return text.replaceAll(escapeable, (match) => `\\${match}`);
 }
 
-export default function splitIntoAtoms(text, cardFace) {
+export default function splitIntoAtoms(text, canvasTextConfig) {
     const atoms = [];
 
     if (!text) {
         return atoms;
     }
 
-    let italicStarted = false;
-    let boldStarted = false;
     let indentStarted = false;
 
     while (text.length > 0) {
@@ -91,31 +87,18 @@ export default function splitIntoAtoms(text, cardFace) {
         if (text.startsWith("<")) {
             const closeSymbolIndex = text.indexOf(">", 1);
             if (closeSymbolIndex !== -1) {
-                const atom = parseTag(text.substring(0, closeSymbolIndex + 1));
+                const symbolAtoms = parseTag(text.substring(0, closeSymbolIndex + 1), canvasTextConfig.highlightColor);
                 text = text.substring(closeSymbolIndex + 1);
-                if (atom) {
-                    if (typeof atom === "string") {
-                        text = atom + text;
-                    } else {
-                        atoms.push(atom);
+                symbolAtoms.forEach((atom) => {
+                    if (atom) {
+                        if (typeof atom === "string") {
+                            text = atom + text;
+                        } else {
+                            atoms.push(atom);
+                        }
                     }
-                }
-                continue;
-            }
-        }
+                });
 
-        if (text.startsWith("_")) {
-            const closeBoldIndex = text.indexOf("_", 1);
-            if (closeBoldIndex !== -1) {
-                atoms.push(new StartItalic());
-                text = text.substring(1);
-                italicStarted = true;
-                continue;
-            }
-            if (italicStarted) {
-                atoms.push(new EndItalic());
-                text = text.substring(1);
-                italicStarted = false;
                 continue;
             }
         }
@@ -129,7 +112,9 @@ export default function splitIntoAtoms(text, cardFace) {
             continue;
         }
         if ((atoms.length === 0 || atoms[atoms.length - 1] instanceof NewLine) && text.startsWith("** ")) {
+            canvasTextConfig.highlightColor && atoms.push(new StartColor(canvasTextConfig.highlightColor));
             atoms.push(gBulletAHSymbol);
+            canvasTextConfig.highlightColor && atoms.push(new EndColor());
             atoms.push(new Space());
             atoms.push(new StartIndent());
             indentStarted = true;
@@ -137,34 +122,17 @@ export default function splitIntoAtoms(text, cardFace) {
             continue;
         }
 
-        if (text.startsWith("*")) {
-            // TODO find next * that isn't after a newline
-            const closeBoldIndex = text.indexOf("*", 1);
-            if (closeBoldIndex !== -1) {
-                atoms.push(new StartBold());
-                text = text.substring(1);
-                boldStarted = true;
-                continue;
-            }
-            if (boldStarted) {
-                atoms.push(new EndBold());
-                text = text.substring(1);
-                boldStarted = false;
-                continue;
-            }
-        }
-
-        if (text.startsWith("~") && cardFace && cardFace.title) {
+        if (text.startsWith("~") && canvasTextConfig.cardTitle) {
             if (text.at(1) === "~") {
                 text = text.substring(2);
                 text =
-                    `${atomEscape(cardFace.title)}${
-                        cardFace.subtitle ? ` <i>(${atomEscape(cardFace.subtitle)})</i>` : ""
+                    `${atomEscape(canvasTextConfig.cardTitle)}${
+                        canvasTextConfig.cardSubtitle ? ` <i>(${atomEscape(canvasTextConfig.cardSubtitle)})</i>` : ""
                     }` + text;
                 continue;
             }
             text = text.substring(1);
-            text = atomEscape(cardFace.title) + text;
+            text = atomEscape(canvasTextConfig.cardTitle) + text;
             continue;
         }
 
