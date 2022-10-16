@@ -1,5 +1,6 @@
 import CanvasTextLayer from "../../../../models/canvasLayers/CanvasTextLayer";
 import CanvasTextConfig from "../../../../models/CanvasTextConfig";
+import { COLUMN_WIDTH, PARAGRAPH_FONT_SIZE, PARAGRAPH_LINE_HEIGHT } from "../../canvasConstants";
 import Widget from "../Widget";
 import TextWidgetView from "./TextWidgetView";
 
@@ -21,10 +22,15 @@ export default class TextWidget extends Widget {
             new CanvasTextConfig()
                 .withText(this.text)
                 .withX(x + this.xNudge)
-                .withY(y + 9 + (isFirst ? 0 : 23) + this.yNudge)
-                .withWidth(488)
-                .withFontSize(17.5)
-                .withLineHeight(1.32)
+                .withY(
+                    y +
+                        Math.round(PARAGRAPH_FONT_SIZE / 2) +
+                        (isFirst ? 0 : Math.round(PARAGRAPH_LINE_HEIGHT * PARAGRAPH_FONT_SIZE)) +
+                        this.yNudge
+                )
+                .withWidth(COLUMN_WIDTH)
+                .withFontSize(PARAGRAPH_FONT_SIZE)
+                .withLineHeight(PARAGRAPH_LINE_HEIGHT)
         );
 
         return layer.draw(context);

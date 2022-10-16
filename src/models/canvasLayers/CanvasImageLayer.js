@@ -10,6 +10,7 @@ export default class CanvasImageLayer extends CanvasLayer {
     }
 
     draw(context) {
+        context.save();
         context.translate(this.x, this.y);
         context.rotate((this.rotation * Math.PI) / 180);
         context.scale(this.scale, this.scale);
@@ -17,9 +18,7 @@ export default class CanvasImageLayer extends CanvasLayer {
 
         context.drawImage(this.imageRef, 0, 0);
 
-        context.setTransform(1, 0, 0, 1, 0, 0);
-        context.filter = `invert(0)`;
-
+        context.restore();
         return this.y + this.imageRef.height * this.scale;
     }
 }

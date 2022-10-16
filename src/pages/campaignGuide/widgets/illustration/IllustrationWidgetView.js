@@ -14,7 +14,7 @@ export default function IllustrationWidgetView({ widget, page, campaign, setCamp
     }, []);
 
     return (
-        <div className="text-widget-view">
+        <div className="illustration-widget-view">
             <div className="loaded-images">{loadedImages}</div>
 
             <div className="input-container">

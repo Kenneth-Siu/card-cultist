@@ -1,10 +1,12 @@
 import { TEXTALIGN } from "../../models/CanvasTextConfig";
+import { PARAGRAPH_SPACING } from "../../pages/campaignGuide/canvasConstants";
 import makeLines from "./makeLines";
 import splitIntoAtoms from "./splitIntoAtoms";
 
 // TODO properly support more languages (...maybe. It's a lot of work...)
 // TODO allow defining non-rectangular text box
 export function writeText(canvasContext, canvasTextConfig, cardFace) {
+    canvasContext.save();
     const { text, align, fontSize, fontFamily, x, y, width, color, lineHeight } = canvasTextConfig;
     canvasContext.textAlign = TEXTALIGN.LEFT;
     const atoms = splitIntoAtoms(text, cardFace);
@@ -14,10 +16,13 @@ export function writeText(canvasContext, canvasTextConfig, cardFace) {
     let indent = 0;
 
     let currentY = y;
+    let maxLineWidth = 0;
 
     for (let i = 0; i < lines.length; i++) {
         const line = lines[i];
 
+        const lineWidth = getLineWidth();
+        maxLineWidth = Math.max(lineWidth, maxLineWidth);
         const alignmentIndent =
             align !== TEXTALIGN.LEFT ? (width - getLineWidth()) * (align === TEXTALIGN.RIGHT ? 1 : 0.5) : 0;
         let currentX = x + alignmentIndent + (TEXTALIGN.LEFT ? indent : 0);
@@ -35,7 +40,7 @@ export function writeText(canvasContext, canvasTextConfig, cardFace) {
         }
 
         if (line.length === 0) {
-            currentY += fontSize * lineHeight * 0.4;
+            currentY += fontSize * lineHeight * PARAGRAPH_SPACING;
         } else {
             currentY += fontSize * lineHeight;
         }
@@ -89,7 +94,8 @@ export function writeText(canvasContext, canvasTextConfig, cardFace) {
         }
     }
 
-    return currentY;
+    canvasContext.restore();
+    return { y: currentY, w: maxLineWidth };
 
     function setItalic(value) {
         italic = value;

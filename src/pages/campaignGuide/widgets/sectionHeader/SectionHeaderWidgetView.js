@@ -2,7 +2,7 @@ import React from "react";
 
 export default function SectionHeaderWidgetView({ widget, page, campaign, setCampaign }) {
     return (
-        <div className="text-widget-view">
+        <div className="section-header-widget-view">
             <input type="text" value={widget.text} onChange={(event) => setText(event.target.value)} />
 
             <div className="input-container">

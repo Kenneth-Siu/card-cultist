@@ -1,5 +1,6 @@
 import CanvasTextLayer from "../../../../models/canvasLayers/CanvasTextLayer";
 import CanvasTextConfig from "../../../../models/CanvasTextConfig";
+import { COLUMN_WIDTH, SECTION_HEADER_FONT_SIZE } from "../../canvasConstants";
 import Widget from "../Widget";
 import SectionHeaderWidgetView from "./SectionHeaderWidgetView";
 
@@ -29,9 +30,14 @@ export default class SectionHeaderWidget extends Widget {
             new CanvasTextConfig()
                 .withText(this.text)
                 .withX(x + this.xNudge)
-                .withY(y + 16 + (isFirst ? 0 : 32) + this.yNudge)
-                .withWidth(488)
-                .withFontSize(31)
+                .withY(
+                    y +
+                        Math.round(SECTION_HEADER_FONT_SIZE / 2) +
+                        (isFirst ? 5 : SECTION_HEADER_FONT_SIZE) +
+                        this.yNudge
+                )
+                .withWidth(COLUMN_WIDTH)
+                .withFontSize(SECTION_HEADER_FONT_SIZE)
                 .withFontFamily("Teutonic")
         );
 

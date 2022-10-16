@@ -54,13 +54,13 @@ export default function SquareFrontPageCanvas({ page, campaign }) {
         const leftWidgets = page.leftColumnWidgets;
         let y = 68;
         for (let i = 0; i < leftWidgets.length; i++) {
-            y = leftWidgets[i].draw(context, 66, y, i === 0);
+            y = leftWidgets[i].draw(context, 66, y, i === 0).y;
         }
 
         const rightWidgets = page.rightColumnWidgets;
         y = 68;
         for (let i = 0; i < rightWidgets.length; i++) {
-            y = rightWidgets[i].draw(context, 572, y, i === 0);
+            y = rightWidgets[i].draw(context, 572, y, i === 0).y;
         }
     }
 }
