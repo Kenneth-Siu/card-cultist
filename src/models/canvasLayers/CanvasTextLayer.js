@@ -1,4 +1,4 @@
-import { writeText } from "../../helpers/canvasTextWriter/canvasTextWriter";
+import { CanvasTextWriter, writeText } from "../../helpers/canvasTextWriter/CanvasTextWriter2";
 import CanvasLayer from "./CanvasLayer";
 
 export default class CanvasTextLayer extends CanvasLayer {
@@ -8,6 +8,6 @@ export default class CanvasTextLayer extends CanvasLayer {
     }
 
     draw(context) {
-        return writeText(context, this.canvasTextConfig);
+        return new CanvasTextWriter(context, this.canvasTextConfig).write();
     }
 }
