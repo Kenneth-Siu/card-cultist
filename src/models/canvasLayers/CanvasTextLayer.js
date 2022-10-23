@@ -1,4 +1,4 @@
-import { CanvasTextWriter, writeText } from "../../helpers/canvasTextWriter/CanvasTextWriter2";
+import { CanvasTextWriter } from "../../helpers/canvasTextWriter/CanvasTextWriter";
 import CanvasLayer from "./CanvasLayer";
 
 export default class CanvasTextLayer extends CanvasLayer {
