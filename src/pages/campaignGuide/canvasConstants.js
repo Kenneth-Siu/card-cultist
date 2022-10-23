@@ -2,6 +2,7 @@ export const COLUMN_WIDTH = 486;
 export const PARAGRAPH_FONT_SIZE = 17.5;
 export const PARAGRAPH_LINE_HEIGHT = 1.32;
 export const PARAGRAPH_SPACING = 0.4;
+export const HEADER_1_FONT_SIZE = 35;
 export const HEADER_2_FONT_SIZE = 32;
 export const FLEUR_SIZE = 72;
 export const DECO_BOX_HORIZONTAL_MARGIN = 2;
