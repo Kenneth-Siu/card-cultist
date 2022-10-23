@@ -8,7 +8,7 @@ import {
     FLEUR_SIZE,
     PARAGRAPH_FONT_SIZE,
     PARAGRAPH_LINE_HEIGHT,
-    SECTION_HEADER_FONT_SIZE,
+    HEADER_2_FONT_SIZE,
 } from "../../canvasConstants";
 import Widget from "../Widget";
 import DecoBoxWidgetView from "./DecoBoxWidgetView";
@@ -164,7 +164,7 @@ export default class DecoBoxWidget extends Widget {
                 .withX(x + DECO_BOX_PADDING)
                 .withY(y + DECO_BOX_PADDING + 15)
                 .withWidth(COLUMN_WIDTH - DECO_BOX_PADDING * 2)
-                .withFontSize(SECTION_HEADER_FONT_SIZE)
+                .withFontSize(HEADER_2_FONT_SIZE)
                 .withFontFamily("Teutonic")
                 .withAlign(TEXTALIGN.CENTER)
                 .withColor(inTransparent ? "transparent" : this.color)

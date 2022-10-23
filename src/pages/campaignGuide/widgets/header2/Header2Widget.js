@@ -1,21 +1,21 @@
 import CanvasTextLayer from "../../../../models/canvasLayers/CanvasTextLayer";
 import CanvasTextConfig from "../../../../models/CanvasTextConfig";
-import { COLUMN_WIDTH, SECTION_HEADER_FONT_SIZE } from "../../canvasConstants";
+import { COLUMN_WIDTH, HEADER_2_FONT_SIZE } from "../../canvasConstants";
 import Widget from "../Widget";
-import SectionHeaderWidgetView from "./SectionHeaderWidgetView";
+import Header2WidgetView from "./Header2WidgetView";
 
-export default class SectionHeaderWidget extends Widget {
-    static type = "Section Header";
+export default class Header2Widget extends Widget {
+    static type = "Header 2";
 
     constructor(widgetOrId) {
-        super(widgetOrId, SectionHeaderWidget.type);
+        super(widgetOrId, Header2Widget.type);
         const widget = typeof widgetOrId === "number" || !widgetOrId ? {} : widgetOrId;
         this.text = widget.text || "";
     }
 
     getView(page, campaign, setCampaign) {
         return (
-            <SectionHeaderWidgetView
+            <Header2WidgetView
                 key={this.id}
                 widget={this}
                 page={page}
@@ -32,12 +32,12 @@ export default class SectionHeaderWidget extends Widget {
                 .withX(x + this.xNudge)
                 .withY(
                     y +
-                        Math.round(SECTION_HEADER_FONT_SIZE / 2) +
-                        (isFirst ? 5 : SECTION_HEADER_FONT_SIZE) +
+                        Math.round(HEADER_2_FONT_SIZE / 2) +
+                        (isFirst ? 5 : HEADER_2_FONT_SIZE) +
                         this.yNudge
                 )
                 .withWidth(COLUMN_WIDTH)
-                .withFontSize(SECTION_HEADER_FONT_SIZE)
+                .withFontSize(HEADER_2_FONT_SIZE)
                 .withFontFamily("Teutonic")
                 .withColor(campaignGuide.colorTheme)
         );
