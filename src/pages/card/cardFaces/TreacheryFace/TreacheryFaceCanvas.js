@@ -6,6 +6,8 @@ import CanvasTextConfig, { TEXTALIGN } from "../../../../models/CanvasTextConfig
 import ImageTransform from "../../../../models/ImageTransform";
 import TreacheryFace from "./TreacheryFace";
 import CardCanvas from "../CardCanvas";
+import { SVG_SCALING } from "../../../campaignGuide/canvasConstants";
+import { isSvgPath } from "../../../../helpers/isSvgPath";
 
 export default function TreacheryFaceCanvas({ face, cardSet, campaign, setIllustrationTransform }) {
     const [loadedImages, loadPublicImage, loadFileSystemImage] = useLoadedImages();
@@ -54,7 +56,18 @@ export default function TreacheryFaceCanvas({ face, cardSet, campaign, setIllust
     useEffect(async () => {
         const image = await loadFileSystemImage(face.encounterSetSymbol || cardSet.symbol);
         setEncounterSetSymbolLayer(
-            image ? new CanvasImageLayer(image, new ImageTransform({ x: 348, y: 506, scale: 58 / image.width })) : null
+            image
+                ? new CanvasImageLayer(
+                      image,
+                      new ImageTransform({
+                          x: 348,
+                          y: 506,
+                          scale:
+                              (58 * (isSvgPath(face.encounterSetSymbol || cardSet.symbol) ? SVG_SCALING : 1)) /
+                              image.width,
+                      })
+                  )
+                : null
         );
     }, [face.encounterSetSymbol, cardSet.symbol]);
 
@@ -168,7 +181,17 @@ export default function TreacheryFaceCanvas({ face, cardSet, campaign, setIllust
         const image = await loadFileSystemImage(face.campaignSymbol || campaign.symbol);
         setCampaignSymbolLayer(
             image
-                ? new CanvasImageLayer(image, new ImageTransform({ x: 639, y: 1020, scale: 28 / image.width }), true)
+                ? new CanvasImageLayer(
+                      image,
+                      new ImageTransform({
+                          x: 639,
+                          y: 1020,
+                          scale:
+                              (28 * (isSvgPath(face.campaignSymbol || campaign.symbol) ? SVG_SCALING : 1)) /
+                              image.width,
+                      }),
+                      true
+                  )
                 : null
         );
     }, [face.campaignSymbol, campaign.symbol]);

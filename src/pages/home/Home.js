@@ -59,7 +59,6 @@ export default function Home({ campaign, setCampaign }) {
         setCampaign(campaign.clone());
     }
 
-    // TODO doesn't work with SVGs
     async function setCampaignSymbol() {
         const path = await window.fs.chooseIcon();
         campaign.symbol = path;

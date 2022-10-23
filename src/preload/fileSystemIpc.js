@@ -69,7 +69,7 @@ async function chooseImage() {
 
 async function chooseIcon() {
     const { cancelled, filePaths } = await dialog.showOpenDialog({
-        filters: [{ name: "Images", extensions: ["png"] }],
+        filters: [{ name: "Images", extensions: ["png", "svg"] }],
     });
     if (cancelled) {
         return;

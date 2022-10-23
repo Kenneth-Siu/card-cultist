@@ -63,7 +63,6 @@ export default function CardSet({ campaign, setCampaign }) {
         setCampaign(campaign.clone());
     }
 
-    // TODO doesn't work with SVGs
     async function setSetSymbol() {
         const path = await window.fs.chooseIcon();
         cardSet.symbol = path;
