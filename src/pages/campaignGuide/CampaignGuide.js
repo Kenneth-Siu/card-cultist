@@ -1,49 +1,29 @@
-import React, { useState } from "react";
-import { jsPDF } from "jspdf";
+import remove from "lodash.remove";
+import generateId from "../../helpers/generateId";
+import getPageClassInstance from "./pages/getPageClassInstance";
 import listOfPageTypes from "./pages/listOfPageTypes";
-import "./CampaignGuide.scss";
 
-export default function CampaignGuide({ campaign, setCampaign }) {
-    const [newPageType, setNewPageType] = useState(listOfPageTypes[0].type);
-
-    return (
-        <main className="campaign-guide-page">
-            <div>
-                <button onClick={() => downloadPDF()}>Export as PDF</button>
-            </div>
-            <div>
-                {campaign.campaignGuide.pages.map((page, index) => page.getView(campaign, setCampaign, index + 1))}
-                <select value={newPageType} onChange={(event) => setNewPageType(event.target.value)}>
-                    {listOfPageTypes.map((pageType) => (
-                        <option key={pageType.type} value={pageType.type}>
-                            {pageType.type}
-                        </option>
-                    ))}
-                </select>
-                <button className="add-page-button" onClick={() => addPage()}>
-                    + Page
-                </button>
-            </div>
-        </main>
-    );
-
-    function addPage() {
-        campaign.campaignGuide.addPage(newPageType);
-        setCampaign(campaign.clone());
+export default class CampaignGuide {
+    constructor(campaignGuide) {
+        Object.assign(this, campaignGuide);
+        if (!campaignGuide) {
+            campaignGuide = {};
+        }
+        this.colorTheme = campaignGuide.colorTheme || "rgb(38,73,59)";
+        this.pages = Array.isArray(campaignGuide.pages)
+            ? campaignGuide.pages.map((page) => getPageClassInstance(page))
+            : [];
     }
 
-    function downloadPDF() {
-        const pdf = new jsPDF({
-            unit: "px",
-            hotfixes: ["px_scaling"],
-            format: [1125, 1125],
-        });
-        document.querySelectorAll(".campaign-guide-page canvas").forEach((page, index) => {
-            if (index !== 0) {
-                pdf.addPage();
+    addPage(pageType) {
+        for (let i = 0; i < listOfPageTypes.length; i++) {
+            if (listOfPageTypes[i].type === pageType) {
+                this.pages.push(new listOfPageTypes[i](generateId(this.pages)));
             }
-            pdf.addImage(page, "PNG", 0, 0, 1125, 1125);
-        });
-        pdf.save("campaignGuide.pdf");
+        }
+    }
+
+    deletePage(page) {
+        remove(this.pages, (p) => p === page);
     }
 }

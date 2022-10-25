@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import useLoadedImages from "../../helpers/useLoadedImages";
-import Campaign from "../../models/Campaign";
-import "./Home.scss";
+import Campaign from "./Campaign";
+import "./CampaignView.scss";
 
-export default function Home({ campaign, setCampaign }) {
+export default function CampaignView({ campaign, setCampaign }) {
     const [newCampaignTitle, setNewCampaignTitle] = useState("");
 
     const [loadedImages, loadPublicImage, loadFileSystemImage] = useLoadedImages();

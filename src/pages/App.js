@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Route, Switch } from "react-router-dom";
-import Home from "./home/Home";
-import CampaignGuide from "./campaignGuide/CampaignGuide";
+import CampaignView from "./campaign/CampaignView";
+import CampaignGuideView from "./campaignGuide/CampaignGuideView";
 import NavBar from "./navBar/NavBar";
-import CardSet from "./cardSet/CardSet";
-import Card from "./card/Card";
+import CardSetView from "./cardSet/CardSetView";
+import CardView from "./card/CardView";
 import "./cssreset.css";
 import "./App.scss";
-import Campaign from "../models/Campaign";
+import Campaign from "./campaign/Campaign";
 
 export default function App() {
     const [campaign, setCampaign] = useState(null);
@@ -33,16 +33,16 @@ export default function App() {
             <p style={{ fontFamily: "AHCardTextSymbols", color: "transparent", position: "fixed", top: "-100px" }}>a</p>
             <Switch>
                 <Route exact={true} path="/">
-                    <Home campaign={campaign} setCampaign={setCampaign} />
+                    <CampaignView campaign={campaign} setCampaign={setCampaign} />
                 </Route>
                 <Route exact={true} path="/campaign-guide">
-                    <CampaignGuide campaign={campaign} setCampaign={setCampaign} />
+                    <CampaignGuideView campaign={campaign} setCampaign={setCampaign} />
                 </Route>
                 <Route exact={true} path="/card-set/:id">
-                    <CardSet campaign={campaign} setCampaign={setCampaign} />
+                    <CardSetView campaign={campaign} setCampaign={setCampaign} />
                 </Route>
                 <Route exact={true} path="/card-set/:cardSetId/card/:id">
-                    <Card campaign={campaign} setCampaign={setCampaign} />
+                    <CardView campaign={campaign} setCampaign={setCampaign} />
                 </Route>
             </Switch>
         </>

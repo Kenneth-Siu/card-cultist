@@ -1,6 +1,6 @@
-import generateId from "../helpers/generateId";
-import CampaignGuide from "./CampaignGuide";
-import CardSet from "./CardSet";
+import generateId from "../../helpers/generateId";
+import CampaignGuide from "../campaignGuide/CampaignGuide";
+import CardSet from "../cardSet/CardSet";
 
 export default class Campaign {
     constructor(campaign) {
