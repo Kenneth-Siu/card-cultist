@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import useLoadedImages from "../../../../helpers/useLoadedImages";
+import WidgetView from "../WidgetView";
 import IllustrationWidget from "./IllustrationWidget";
 
 export default function IllustrationWidgetView({ widget, page, campaign, setCampaign }) {
@@ -14,34 +15,17 @@ export default function IllustrationWidgetView({ widget, page, campaign, setCamp
     }, []);
 
     return (
-        <div className="illustration-widget-view">
-            <div className="loaded-images">{loadedImages}</div>
-
+        <WidgetView
+            widget={widget}
+            page={page}
+            campaign={campaign}
+            setCampaign={setCampaign}
+            className="illustration-widget-view"
+        >
             <div className="input-container">
                 <label>Illustration</label>
                 <button onClick={() => setIllustration()}>Load Image</button>
             </div>
-
-            <div className="input-container">
-                <label>X Nudge</label>
-                <input
-                    type="number"
-                    step="1"
-                    value={widget.xNudge}
-                    onChange={(event) => setXNudge(parseInt(event.target.value))}
-                />
-            </div>
-
-            <div className="input-container">
-                <label>Y Nudge</label>
-                <input
-                    type="number"
-                    step="1"
-                    value={widget.yNudge}
-                    onChange={(event) => setYNudge(parseInt(event.target.value))}
-                />
-            </div>
-
             <div className="input-container">
                 <label>Scale</label>
                 <input
@@ -61,9 +45,7 @@ export default function IllustrationWidgetView({ widget, page, campaign, setCamp
                     onChange={(event) => setIllustrationRotation(parseFloat(event.target.value))}
                 />
             </div>
-
-            <button onClick={() => deleteWidget()}>Delete</button>
-        </div>
+        </WidgetView>
     );
 
     async function setIllustration() {
@@ -71,16 +53,6 @@ export default function IllustrationWidgetView({ widget, page, campaign, setCamp
         widget.path = path;
         const image = await loadFileSystemImage(path);
         IllustrationWidget.dictionary[widget.id] = image;
-        setCampaign(campaign.clone());
-    }
-
-    function setXNudge(xNudge) {
-        widget.xNudge = xNudge;
-        setCampaign(campaign.clone());
-    }
-
-    function setYNudge(yNudge) {
-        widget.yNudge = yNudge;
         setCampaign(campaign.clone());
     }
 
@@ -95,10 +67,5 @@ export default function IllustrationWidgetView({ widget, page, campaign, setCamp
 
     function setIllustrationRotation(rotation) {
         setIllustrationTransform(widget.transform.withRotation(rotation));
-    }
-
-    function deleteWidget() {
-        page.deleteWidget(widget);
-        setCampaign(campaign.clone());
     }
 }

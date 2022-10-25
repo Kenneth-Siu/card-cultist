@@ -1,37 +1,27 @@
 import React from "react";
+import WidgetView from "../WidgetView";
 
 export default function DecoBoxWidgetView({ widget, page, campaign, setCampaign }) {
     return (
-        <div className="deco-box-widget-view">
-            <input type="checkbox" checked={widget.topBracket} onChange={() => toggleTopBracket()} />
+        <WidgetView
+            widget={widget}
+            page={page}
+            campaign={campaign}
+            setCampaign={setCampaign}
+            className="deco-box-widget-view"
+        >
+            <label>
+                Top bracket: <input type="checkbox" checked={widget.topBracket} onChange={() => toggleTopBracket()} />
+            </label>
             <input type="text" value={widget.color} onChange={(event) => setColor(event.target.value)} />
             <input type="text" value={widget.title} onChange={(event) => setTitle(event.target.value)} />
             <input type="text" value={widget.subtitle} onChange={(event) => setSubtitle(event.target.value)} />
             <textarea value={widget.text} onChange={(event) => setText(event.target.value)} />
-            <input type="checkbox" checked={widget.bottomBracket} onChange={() => toggleBottomBracket()} />
-
-            <div className="input-container">
-                <label>X Nudge</label>
-                <input
-                    type="number"
-                    step="1"
-                    value={widget.xNudge}
-                    onChange={(event) => setXNudge(parseInt(event.target.value))}
-                />
-            </div>
-
-            <div className="input-container">
-                <label>Y Nudge</label>
-                <input
-                    type="number"
-                    step="1"
-                    value={widget.yNudge}
-                    onChange={(event) => setYNudge(parseInt(event.target.value))}
-                />
-            </div>
-
-            <button onClick={() => deleteWidget()}>Delete</button>
-        </div>
+            <label>
+                Bottom bracket:{" "}
+                <input type="checkbox" checked={widget.bottomBracket} onChange={() => toggleBottomBracket()} />
+            </label>
+        </WidgetView>
     );
 
     function toggleTopBracket() {

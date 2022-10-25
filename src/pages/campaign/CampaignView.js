@@ -17,7 +17,7 @@ export default function CampaignView({ campaign, setCampaign }) {
     return (
         <main className="campaign-page">
             {campaign ? (
-                <div>
+                <div className="campaign-details-container">
                     <input type="text" value={campaign.title} onChange={(event) => setTitle(event.target.value)} />
                     <button onClick={() => setCampaignSymbol()}>Choose campaign symbol</button>
                     {campaign.symbol && loadedImages.length > 0 ? loadedImages[loadedImages.length - 1] : ""}

@@ -1,51 +1,21 @@
 import React from "react";
+import WidgetView from "../WidgetView";
 
 export default function TextWidgetView({ widget, page, campaign, setCampaign }) {
     return (
-        <div className="text-widget-view">
+        <WidgetView
+            widget={widget}
+            page={page}
+            campaign={campaign}
+            setCampaign={setCampaign}
+            className="text-widget-view"
+        >
             <textarea value={widget.text} onChange={(event) => setText(event.target.value)} />
-
-            <div className="input-container">
-                <label>X Nudge</label>
-                <input
-                    type="number"
-                    step="1"
-                    value={widget.xNudge}
-                    onChange={(event) => setXNudge(parseInt(event.target.value))}
-                />
-            </div>
-
-            <div className="input-container">
-                <label>Y Nudge</label>
-                <input
-                    type="number"
-                    step="1"
-                    value={widget.yNudge}
-                    onChange={(event) => setYNudge(parseInt(event.target.value))}
-                />
-            </div>
-
-            <button onClick={() => deleteWidget()}>Delete</button>
-        </div>
+        </WidgetView>
     );
 
     function setText(text) {
         widget.text = text;
-        setCampaign(campaign.clone());
-    }
-
-    function setXNudge(xNudge) {
-        widget.xNudge = xNudge;
-        setCampaign(campaign.clone());
-    }
-
-    function setYNudge(yNudge) {
-        widget.yNudge = yNudge;
-        setCampaign(campaign.clone());
-    }
-
-    function deleteWidget() {
-        page.deleteWidget(widget);
         setCampaign(campaign.clone());
     }
 }

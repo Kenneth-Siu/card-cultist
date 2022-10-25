@@ -1,3 +1,13 @@
+@import "../../helpers/scss/colors.scss";
+
 .campaign-page {
     padding: 0.5rem;
+
+    .campaign-details-container {
+        img {
+            width: 5rem;
+            height: 5rem;
+            background-color: $color-1;
+        }
+    }
 }
