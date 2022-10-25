@@ -9,4 +9,5 @@ export const DECO_BOX_HORIZONTAL_MARGIN = 2;
 export const DECO_BOX_BLUR_DISTANCE = 30;
 export const DECO_BOX_SUBTITLE_FONT_SIZE = 26;
 export const DECO_BOX_PADDING = 35;
-export const SVG_SCALING = 0.2;   // Not sure why this is...
+export const CARD_PORTRAIT_WIDTH = 750;
+export const CARD_PORTRAIT_HEIGHT = 1050;

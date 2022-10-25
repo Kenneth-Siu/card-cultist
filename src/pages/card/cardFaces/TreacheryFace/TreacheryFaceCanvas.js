@@ -6,8 +6,9 @@ import CanvasTextConfig, { TEXTALIGN } from "../../../../models/CanvasTextConfig
 import ImageTransform from "../../../../models/ImageTransform";
 import TreacheryFace from "./TreacheryFace";
 import CardCanvas from "../CardCanvas";
-import { SVG_SCALING } from "../../../campaignGuide/canvasConstants";
+import { CARD_PORTRAIT_HEIGHT, CARD_PORTRAIT_WIDTH } from "../../../campaignGuide/canvasConstants";
 import { isSvgPath } from "../../../../helpers/isSvgPath";
+import { transformSvgOnCanvas } from "../../../../helpers/transformSvgOnCanvas";
 
 export default function TreacheryFaceCanvas({ face, cardSet, campaign, setIllustrationTransform }) {
     const [loadedImages, loadPublicImage, loadFileSystemImage] = useLoadedImages();
@@ -55,16 +56,21 @@ export default function TreacheryFaceCanvas({ face, cardSet, campaign, setIllust
 
     useEffect(async () => {
         const image = await loadFileSystemImage(face.encounterSetSymbol || cardSet.symbol);
+        const transform = isSvgPath(face.encounterSetSymbol || cardSet.symbol)
+            ? transformSvgOnCanvas(
+                  { h: CARD_PORTRAIT_HEIGHT, w: CARD_PORTRAIT_WIDTH },
+                  { h: image.height, w: image.width },
+                  58
+              )
+            : null;
         setEncounterSetSymbolLayer(
             image
                 ? new CanvasImageLayer(
                       image,
                       new ImageTransform({
-                          x: 348,
-                          y: 506,
-                          scale:
-                              (58 * (isSvgPath(face.encounterSetSymbol || cardSet.symbol) ? SVG_SCALING : 1)) /
-                              image.width,
+                          x: 348 + (transform ? transform.xNudge : 0),
+                          y: 506 + (transform ? transform.yNudge : 0),
+                          scale: (transform && transform.scale) || 58 / Math.max(image.height, image.width),
                       })
                   )
                 : null
@@ -179,16 +185,21 @@ export default function TreacheryFaceCanvas({ face, cardSet, campaign, setIllust
 
     useEffect(async () => {
         const image = await loadFileSystemImage(face.campaignSymbol || campaign.symbol);
+        const transform = isSvgPath(face.campaignSymbol || campaign.symbol)
+            ? transformSvgOnCanvas(
+                  { h: CARD_PORTRAIT_HEIGHT, w: CARD_PORTRAIT_WIDTH },
+                  { h: image.height, w: image.width },
+                  28
+              )
+            : null;
         setCampaignSymbolLayer(
             image
                 ? new CanvasImageLayer(
                       image,
                       new ImageTransform({
-                          x: 639,
-                          y: 1020,
-                          scale:
-                              (28 * (isSvgPath(face.campaignSymbol || campaign.symbol) ? SVG_SCALING : 1)) /
-                              image.width,
+                          x: 639 + (transform ? transform.xNudge : 0),
+                          y: 1020 + (transform ? transform.yNudge : 0),
+                          scale: (transform && transform.scale) || 28 / Math.max(image.height, image.width),
                       }),
                       true
                   )

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import throttle from "lodash.throttle";
 import ImageTransform from "../../../models/ImageTransform";
+import { CARD_PORTRAIT_HEIGHT, CARD_PORTRAIT_WIDTH } from "../../campaignGuide/canvasConstants";
 
 const TRANSFORM = {
     NONE: "none",
@@ -89,8 +90,8 @@ export default function CardCanvas({
             <canvas
                 ref={canvasRef}
                 className="preview"
-                width={orientation === "landscape" ? "1050" : "750"}
-                height={orientation === "landscape" ? "750" : "1050"}
+                width={orientation === "landscape" ? "1050" : CARD_PORTRAIT_WIDTH}
+                height={orientation === "landscape" ? "750" : CARD_PORTRAIT_HEIGHT}
                 onLoad={() => refreshCanvas()}
                 {...mouseProps}
             />
