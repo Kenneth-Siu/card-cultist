@@ -15,7 +15,7 @@ export default function CampaignView({ campaign, setCampaign }) {
     }, [...[campaign && campaign.symbol]]);
 
     return (
-        <main className="home-page">
+        <main className="campaign-page">
             {campaign ? (
                 <div>
                     <input type="text" value={campaign.title} onChange={(event) => setTitle(event.target.value)} />
