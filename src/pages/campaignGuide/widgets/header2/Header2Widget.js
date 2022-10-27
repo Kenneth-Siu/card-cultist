@@ -1,6 +1,6 @@
 import CanvasTextLayer from "../../../../models/canvasLayers/CanvasTextLayer";
 import CanvasTextConfig from "../../../../models/CanvasTextConfig";
-import { COLUMN_WIDTH, HEADER_2_FONT_SIZE } from "../../canvasConstants";
+import { COLUMN_WIDTH, HEADER_2_FONT_SIZE, HEADER_2_START_TOP } from "../../canvasConstants";
 import Widget from "../Widget";
 import Header2WidgetView from "./Header2WidgetView";
 
@@ -15,13 +15,7 @@ export default class Header2Widget extends Widget {
 
     getView(page, campaign, setCampaign) {
         return (
-            <Header2WidgetView
-                key={this.id}
-                widget={this}
-                page={page}
-                campaign={campaign}
-                setCampaign={setCampaign}
-            />
+            <Header2WidgetView key={this.id} widget={this} page={page} campaign={campaign} setCampaign={setCampaign} />
         );
     }
 
@@ -33,7 +27,7 @@ export default class Header2Widget extends Widget {
                 .withY(
                     y +
                         Math.round(HEADER_2_FONT_SIZE / 2) +
-                        (isFirst ? 5 : HEADER_2_FONT_SIZE) +
+                        (isFirst ? HEADER_2_START_TOP : HEADER_2_FONT_SIZE) +
                         this.yNudge
                 )
                 .withWidth(COLUMN_WIDTH)

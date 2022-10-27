@@ -13,10 +13,6 @@ export default class Page {
         const page = typeof pageOrId === "number" || !pageOrId ? {} : pageOrId;
         Object.assign(this, page);
         this.id = typeof pageOrId === "number" ? pageOrId : page.id;
-        this.columnWidth = 489;
-        this.leftColumnX = 64;
-        this.rightColumnX = 572;
-        this.y = 77;
         this.leftColumnWidgets = Array.isArray(page.leftColumnWidgets)
             ? page.leftColumnWidgets.map((widget) => getWidgetClassInstance(widget))
             : [];

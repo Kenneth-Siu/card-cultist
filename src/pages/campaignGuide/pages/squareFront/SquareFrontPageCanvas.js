@@ -3,6 +3,15 @@ import useLoadedImages from "../../../../helpers/useLoadedImages";
 import CanvasImageLayer from "../../../../models/canvasLayers/CanvasImageLayer";
 import CanvasTextLayer from "../../../../models/canvasLayers/CanvasTextLayer";
 import CanvasTextConfig, { TEXTALIGN } from "../../../../models/CanvasTextConfig";
+import {
+    CAMPAIGN_GUIDE_SQUARE_HEIGHT,
+    CAMPAIGN_GUIDE_SQUARE_WIDTH,
+    FRONT_PAGE_TITLE_FONT_SIZE,
+    FRONT_PAGE_TITLE_Y,
+    FRONT_PAGE_TOP_MARGIN,
+    LEFT_COLUMN_X,
+    RIGHT_COLUMN_X,
+} from "../../canvasConstants";
 
 export default function SquareFrontPageCanvas({ page, campaign }) {
     const [loadedImages, loadPublicImage] = useLoadedImages();
@@ -27,9 +36,9 @@ export default function SquareFrontPageCanvas({ page, campaign }) {
             new CanvasTextLayer(
                 new CanvasTextConfig()
                     .withText(page.title.toUpperCase())
-                    .withX(562)
-                    .withY(317)
-                    .withFontSize(44)
+                    .withX(CAMPAIGN_GUIDE_SQUARE_WIDTH / 2)
+                    .withY(FRONT_PAGE_TITLE_Y)
+                    .withFontSize(FRONT_PAGE_TITLE_FONT_SIZE)
                     .withFontFamily("Teutonic")
                     .withAlign(TEXTALIGN.CENTER)
                     .withColor("white")
@@ -39,7 +48,13 @@ export default function SquareFrontPageCanvas({ page, campaign }) {
 
     return (
         <div className="canvas-container">
-            <canvas ref={canvasRef} className="preview" width={1125} height={1125} onLoad={() => refreshCanvas()} />
+            <canvas
+                ref={canvasRef}
+                className="preview"
+                width={CAMPAIGN_GUIDE_SQUARE_WIDTH}
+                height={CAMPAIGN_GUIDE_SQUARE_HEIGHT}
+                onLoad={() => refreshCanvas()}
+            />
             <div className="loaded-images">{loadedImages}</div>
         </div>
     );
@@ -52,15 +67,15 @@ export default function SquareFrontPageCanvas({ page, campaign }) {
         titleLayer && titleLayer.draw(context);
 
         const leftWidgets = page.leftColumnWidgets;
-        let y = 68;
+        let y = FRONT_PAGE_TOP_MARGIN;
         for (let i = 0; i < leftWidgets.length; i++) {
-            y = leftWidgets[i].draw(context, 66, y, i === 0, campaign.campaignGuide).y;
+            y = leftWidgets[i].draw(context, LEFT_COLUMN_X, y, i === 0, campaign.campaignGuide).y;
         }
 
         const rightWidgets = page.rightColumnWidgets;
-        y = 68;
+        y = FRONT_PAGE_TOP_MARGIN;
         for (let i = 0; i < rightWidgets.length; i++) {
-            y = rightWidgets[i].draw(context, 572, y, i === 0, campaign.campaignGuide).y;
+            y = rightWidgets[i].draw(context, RIGHT_COLUMN_X, y, i === 0, campaign.campaignGuide).y;
         }
     }
 }

@@ -53,19 +53,4 @@ export default function DecoBoxWidgetView({ widget, page, campaign, setCampaign 
         widget.bottomBracket = !widget.bottomBracket;
         setCampaign(campaign.clone());
     }
-
-    function setXNudge(xNudge) {
-        widget.xNudge = xNudge;
-        setCampaign(campaign.clone());
-    }
-
-    function setYNudge(yNudge) {
-        widget.yNudge = yNudge;
-        setCampaign(campaign.clone());
-    }
-
-    function deleteWidget() {
-        page.deleteWidget(widget);
-        setCampaign(campaign.clone());
-    }
 }

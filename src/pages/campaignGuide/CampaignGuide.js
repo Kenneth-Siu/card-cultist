@@ -1,5 +1,6 @@
 import remove from "lodash.remove";
 import generateId from "../../helpers/generateId";
+import { DEFAULT_CAMPAIGN_GUIDE_COLOR_THEME } from "./canvasConstants";
 import getPageClassInstance from "./pages/getPageClassInstance";
 import listOfPageTypes from "./pages/listOfPageTypes";
 
@@ -9,7 +10,7 @@ export default class CampaignGuide {
         if (!campaignGuide) {
             campaignGuide = {};
         }
-        this.colorTheme = campaignGuide.colorTheme || "rgb(38,73,59)";
+        this.colorTheme = campaignGuide.colorTheme || DEFAULT_CAMPAIGN_GUIDE_COLOR_THEME;
         this.pages = Array.isArray(campaignGuide.pages)
             ? campaignGuide.pages.map((page) => getPageClassInstance(page))
             : [];
