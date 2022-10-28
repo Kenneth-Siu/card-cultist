@@ -1,6 +1,6 @@
 import CanvasTextLayer from "../../../../models/canvasLayers/CanvasTextLayer";
 import CanvasTextConfig from "../../../../models/CanvasTextConfig";
-import { COLUMN_WIDTH, PARAGRAPH_FONT_SIZE, PARAGRAPH_LINE_HEIGHT } from "../../canvasConstants";
+import { COLUMN_WIDTH, PARAGRAPH_FONT_SIZE, PARAGRAPH_LINE_HEIGHT } from "../../campaignGuideConstants";
 import Widget from "../Widget";
 import TextWidgetView from "./TextWidgetView";
 

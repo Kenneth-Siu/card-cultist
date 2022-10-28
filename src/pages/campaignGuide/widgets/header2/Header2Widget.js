@@ -1,6 +1,6 @@
 import CanvasTextLayer from "../../../../models/canvasLayers/CanvasTextLayer";
 import CanvasTextConfig from "../../../../models/CanvasTextConfig";
-import { COLUMN_WIDTH, HEADER_2_FONT_SIZE, HEADER_2_START_TOP } from "../../canvasConstants";
+import { COLUMN_WIDTH, HEADER_2_FONT_SIZE, HEADER_2_START_TOP } from "../../campaignGuideConstants";
 import Widget from "../Widget";
 import Header2WidgetView from "./Header2WidgetView";
 

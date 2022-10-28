@@ -6,9 +6,9 @@ import CanvasTextConfig, { TEXTALIGN } from "../../../../models/CanvasTextConfig
 import ImageTransform from "../../../../models/ImageTransform";
 import TreacheryFace from "./TreacheryFace";
 import CardCanvas from "../CardCanvas";
-import { CARD_PORTRAIT_HEIGHT, CARD_PORTRAIT_WIDTH } from "../../../campaignGuide/canvasConstants";
 import { isSvgPath } from "../../../../helpers/isSvgPath";
 import { transformSvgOnCanvas } from "../../../../helpers/transformSvgOnCanvas";
+import { CARD_PORTRAIT_HEIGHT, CARD_PORTRAIT_WIDTH } from "../../cardConstants";
 
 export default function TreacheryFaceCanvas({ face, cardSet, campaign, setIllustrationTransform }) {
     const [loadedImages, loadPublicImage, loadFileSystemImage] = useLoadedImages();

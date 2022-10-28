@@ -1,5 +1,5 @@
 import { TEXTALIGN } from "../../models/CanvasTextConfig";
-import { PARAGRAPH_SPACING } from "../../pages/campaignGuide/canvasConstants";
+import { PARAGRAPH_SPACING } from "../../pages/campaignGuide/campaignGuideConstants";
 import makeLines from "./makeLines";
 import splitIntoAtoms from "./splitIntoAtoms";
 

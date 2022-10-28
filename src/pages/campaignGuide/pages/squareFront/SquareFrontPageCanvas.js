@@ -3,6 +3,7 @@ import useLoadedImages from "../../../../helpers/useLoadedImages";
 import CanvasImageLayer from "../../../../models/canvasLayers/CanvasImageLayer";
 import CanvasTextLayer from "../../../../models/canvasLayers/CanvasTextLayer";
 import CanvasTextConfig, { TEXTALIGN } from "../../../../models/CanvasTextConfig";
+import ImageTransform from "../../../../models/ImageTransform";
 import {
     CAMPAIGN_GUIDE_SQUARE_HEIGHT,
     CAMPAIGN_GUIDE_SQUARE_WIDTH,
@@ -11,7 +12,7 @@ import {
     FRONT_PAGE_TOP_MARGIN,
     LEFT_COLUMN_X,
     RIGHT_COLUMN_X,
-} from "../../canvasConstants";
+} from "../../campaignGuideConstants";
 
 export default function SquareFrontPageCanvas({ page, campaign }) {
     const [loadedImages, loadPublicImage] = useLoadedImages();
@@ -28,7 +29,9 @@ export default function SquareFrontPageCanvas({ page, campaign }) {
     }, [backgroundLayer, titleLayer, campaign]);
 
     useEffect(async () => {
-        setBackgroundLayer(new CanvasImageLayer(await loadPublicImage(page.background)));
+        setBackgroundLayer(
+            new CanvasImageLayer(await loadPublicImage(page.background), new ImageTransform({ scale: 2 }))
+        );
     }, []);
 
     useEffect(() => {

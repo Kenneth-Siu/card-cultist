@@ -1,6 +1,6 @@
 import remove from "lodash.remove";
 import generateId from "../../helpers/generateId";
-import { DEFAULT_CAMPAIGN_GUIDE_COLOR_THEME } from "./canvasConstants";
+import { DEFAULT_CAMPAIGN_GUIDE_COLOR_THEME } from "./campaignGuideConstants";
 import getPageClassInstance from "./pages/getPageClassInstance";
 import listOfPageTypes from "./pages/listOfPageTypes";
 

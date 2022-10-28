@@ -3,6 +3,7 @@ import useLoadedImages from "../../../../helpers/useLoadedImages";
 import CanvasImageLayer from "../../../../models/canvasLayers/CanvasImageLayer";
 import CanvasTextLayer from "../../../../models/canvasLayers/CanvasTextLayer";
 import CanvasTextConfig, { TEXTALIGN } from "../../../../models/CanvasTextConfig";
+import ImageTransform from "../../../../models/ImageTransform";
 import {
     CAMPAIGN_GUIDE_SQUARE_HEIGHT,
     CAMPAIGN_GUIDE_SQUARE_WIDTH,
@@ -11,7 +12,7 @@ import {
     PAGE_NUMBER_Y,
     RIGHT_COLUMN_X,
     TOP_MARGIN,
-} from "../../canvasConstants";
+} from "../../campaignGuideConstants";
 
 // TODO update page numbers to use number font for cards
 
@@ -30,7 +31,9 @@ export default function SquarePageCanvas({ page, pageNumber, campaign }) {
     }, [backgroundLayer, pageNumberLayer, campaign]);
 
     useEffect(async () => {
-        setBackgroundLayer(new CanvasImageLayer(await loadPublicImage(page.background)));
+        setBackgroundLayer(
+            new CanvasImageLayer(await loadPublicImage(page.background), new ImageTransform({ scale: 2 }))
+        );
     }, []);
 
     useEffect(() => {

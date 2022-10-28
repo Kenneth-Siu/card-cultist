@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import throttle from "lodash.throttle";
 import ImageTransform from "../../../models/ImageTransform";
-import { CARD_PORTRAIT_HEIGHT, CARD_PORTRAIT_WIDTH } from "../../campaignGuide/canvasConstants";
+import { CARD_PORTRAIT_HEIGHT, CARD_PORTRAIT_WIDTH } from "../cardConstants";
 
 const TRANSFORM = {
     NONE: "none",

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { jsPDF } from "jspdf";
 import listOfPageTypes from "./pages/listOfPageTypes";
 import "./CampaignGuideView.scss";
-import { CAMPAIGN_GUIDE_SQUARE_HEIGHT, CAMPAIGN_GUIDE_SQUARE_WIDTH } from "./canvasConstants";
+import { CAMPAIGN_GUIDE_SQUARE_HEIGHT, CAMPAIGN_GUIDE_SQUARE_WIDTH } from "./campaignGuideConstants";
 
 export default function CampaignGuide({ campaign, setCampaign }) {
     const [newPageType, setNewPageType] = useState(listOfPageTypes[0].type);

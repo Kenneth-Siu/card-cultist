@@ -7,7 +7,7 @@ import {
     PARAGRAPH_LINE_HEIGHT,
     HEADER_2_FONT_SIZE,
     TITLE_UNDERLINE,
-} from "../../canvasConstants";
+} from "../../campaignGuideConstants";
 import Widget from "../Widget";
 import DecoBoxWidgetView from "./DecoBoxWidgetView";
 

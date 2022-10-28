@@ -6,7 +6,7 @@ import {
     HEADER_1_START_TOP,
     TITLE_UNDERLINE,
     HEADER_1_BOTTOM_MARGIN,
-} from "../../canvasConstants";
+} from "../../campaignGuideConstants";
 import Widget from "../Widget";
 import Header1WidgetView from "./Header1WidgetView";
 
