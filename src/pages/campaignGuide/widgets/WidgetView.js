@@ -14,16 +14,20 @@ export default function WidgetView({ widget, page, campaign, setCampaign, childr
                     >
                         🔄
                     </button>
-                    <button onClick={() => setXNudge(widget.xNudge - 1)}>👈</button>
-                    <button onClick={() => setXNudge(widget.xNudge + 1)}>👉</button>
-                    <button onClick={() => setYNudge(widget.yNudge - 1)}>👆</button>
-                    <button onClick={() => setYNudge(widget.yNudge + 1)}>👇</button>
+                    <button onClick={(event) => setXNudge(widget.xNudge - getNudge(event))}>👈</button>
+                    <button onClick={(event) => setXNudge(widget.xNudge + getNudge(event))}>👉</button>
+                    <button onClick={(event) => setYNudge(widget.yNudge - getNudge(event))}>👆</button>
+                    <button onClick={(event) => setYNudge(widget.yNudge + getNudge(event))}>👇</button>
                     <button onClick={() => deleteWidget()}>❌</button>
                 </div>
             </div>
             {children}
         </div>
     );
+
+    function getNudge(event) {
+        return event.ctrlKey || event.metaKey ? 10 : event.shiftKey ? 100 : 1;
+    }
 
     function setXNudge(xNudge) {
         widget.xNudge = xNudge;
