@@ -42,8 +42,6 @@
         }
     }
 
-    
-
     input {
         width: 100%;
     }
@@ -56,14 +54,22 @@
         font-family: inherit;
         width: 100%;
         height: 10rem;
-        // resize: none;
+        resize: vertical;
     }
 
     canvas {
         flex-grow: 0;
         flex-shrink: 0;
-        width: 751px;
-        height: 751px;
         margin-right: 0.5rem;
+
+        &.square {
+            width: 751px;
+            height: 751px;
+        }
+
+        &.a4 {
+            width: 827px;
+            height: 1170px;
+        }
     }
 }

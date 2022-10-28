@@ -1,8 +1,3 @@
-export const TOP_MARGIN = 126;
-export const FRONT_PAGE_TOP_MARGIN = 770;
-export const LEFT_COLUMN_X = 132;
-export const RIGHT_COLUMN_X = 1144;
-export const COLUMN_WIDTH = 972;
 export const PARAGRAPH_FONT_SIZE = 35;
 export const PARAGRAPH_LINE_HEIGHT = 1.32;
 export const PARAGRAPH_SPACING = 0.4;
@@ -42,12 +37,30 @@ export const DECO_BOX = Object.freeze({
     }),
 });
 export const DEFAULT_CAMPAIGN_GUIDE_COLOR_THEME = "rgb(38,73,59)";
-export const CAMPAIGN_GUIDE_SQUARE_WIDTH = 2250;
-export const CAMPAIGN_GUIDE_SQUARE_HEIGHT = 2250;
-export const CAMPAIGN_GUIDE_A4_WIDTH = 1480;
-export const CAMPAIGN_GUIDE_A4_HEIGHT = 3508;
 
-export const PAGE_NUMBER_Y = 2208;
 export const PAGE_NUMBER_FONT_SIZE = 72;
-export const FRONT_PAGE_TITLE_Y = 634;
 export const FRONT_PAGE_TITLE_FONT_SIZE = 88;
+
+export const SQUARE = Object.freeze({
+    TOP_MARGIN: 126,
+    FRONT_PAGE_TOP_MARGIN: 770,
+    LEFT_COLUMN_X: 132,
+    RIGHT_COLUMN_X: 1144,
+    COLUMN_WIDTH: 972,
+    WIDTH: 2250,
+    HEIGHT: 2250,
+    PAGE_NUMBER_Y: 2208,
+    FRONT_PAGE_TITLE_Y: 634,
+});
+
+export const A4 = Object.freeze({
+    TOP_MARGIN: 164,
+    FRONT_PAGE_TOP_MARGIN: 888,
+    LEFT_COLUMN_X: 162,
+    RIGHT_COLUMN_X: 1272,
+    COLUMN_WIDTH: 1046,
+    WIDTH: 2480,
+    HEIGHT: 3508,
+    PAGE_NUMBER_Y: 3462,
+    FRONT_PAGE_TITLE_Y: 696,
+});

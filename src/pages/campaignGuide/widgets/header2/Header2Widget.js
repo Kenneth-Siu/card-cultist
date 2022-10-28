@@ -1,6 +1,6 @@
 import CanvasTextLayer from "../../../../models/canvasLayers/CanvasTextLayer";
 import CanvasTextConfig from "../../../../models/CanvasTextConfig";
-import { COLUMN_WIDTH, HEADER_2_FONT_SIZE, HEADER_2_START_TOP } from "../../campaignGuideConstants";
+import { HEADER_2_FONT_SIZE, HEADER_2_START_TOP } from "../../campaignGuideConstants";
 import Widget from "../Widget";
 import Header2WidgetView from "./Header2WidgetView";
 
@@ -19,7 +19,7 @@ export default class Header2Widget extends Widget {
         );
     }
 
-    draw(context, x, y, isFirst, campaignGuide) {
+    draw(context, x, y, isFirst, campaignGuide, PAGE) {
         const layer = new CanvasTextLayer(
             new CanvasTextConfig()
                 .withText(this.text)
@@ -30,7 +30,7 @@ export default class Header2Widget extends Widget {
                         (isFirst ? HEADER_2_START_TOP : HEADER_2_FONT_SIZE) +
                         this.yNudge
                 )
-                .withWidth(COLUMN_WIDTH)
+                .withWidth(PAGE.COLUMN_WIDTH)
                 .withFontSize(HEADER_2_FONT_SIZE)
                 .withFontFamily("Teutonic")
                 .withColor(campaignGuide.colorTheme)

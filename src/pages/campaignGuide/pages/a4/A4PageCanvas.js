@@ -4,11 +4,11 @@ import CanvasImageLayer from "../../../../models/canvasLayers/CanvasImageLayer";
 import CanvasTextLayer from "../../../../models/canvasLayers/CanvasTextLayer";
 import CanvasTextConfig, { TEXTALIGN } from "../../../../models/CanvasTextConfig";
 import ImageTransform from "../../../../models/ImageTransform";
-import { PAGE_NUMBER_FONT_SIZE, SQUARE } from "../../campaignGuideConstants";
+import { PAGE_NUMBER_FONT_SIZE, A4 } from "../../campaignGuideConstants";
 
 // TODO update page numbers to use number font for cards
 
-export default function SquarePageCanvas({ page, pageNumber, campaign }) {
+export default function A4PageCanvas({ page, pageNumber, campaign }) {
     const [loadedImages, loadPublicImage] = useLoadedImages();
 
     const canvasRef = useRef(null);
@@ -33,8 +33,8 @@ export default function SquarePageCanvas({ page, pageNumber, campaign }) {
             new CanvasTextLayer(
                 new CanvasTextConfig()
                     .withText(pageNumber + "")
-                    .withX(SQUARE.WIDTH / 2)
-                    .withY(SQUARE.PAGE_NUMBER_Y)
+                    .withX(A4.WIDTH / 2)
+                    .withY(A4.PAGE_NUMBER_Y)
                     .withFontSize(PAGE_NUMBER_FONT_SIZE)
                     .withFontFamily("Teutonic")
                     .withAlign(TEXTALIGN.CENTER)
@@ -46,9 +46,9 @@ export default function SquarePageCanvas({ page, pageNumber, campaign }) {
         <div className="canvas-container">
             <canvas
                 ref={canvasRef}
-                className="preview square"
-                width={SQUARE.WIDTH}
-                height={SQUARE.HEIGHT}
+                className="preview a4"
+                width={A4.WIDTH}
+                height={A4.HEIGHT}
                 onLoad={() => refreshCanvas()}
             />
             <div className="loaded-images">{loadedImages}</div>
@@ -63,15 +63,15 @@ export default function SquarePageCanvas({ page, pageNumber, campaign }) {
         pageNumberLayer && pageNumberLayer.draw(context);
 
         const leftWidgets = page.leftColumnWidgets;
-        let y = SQUARE.TOP_MARGIN;
+        let y = A4.TOP_MARGIN;
         for (let i = 0; i < leftWidgets.length; i++) {
-            y = leftWidgets[i].draw(context, SQUARE.LEFT_COLUMN_X, y, i === 0, campaign.campaignGuide, SQUARE).y;
+            y = leftWidgets[i].draw(context, A4.LEFT_COLUMN_X, y, i === 0, campaign.campaignGuide, A4).y;
         }
 
         const rightWidgets = page.rightColumnWidgets;
-        y = SQUARE.TOP_MARGIN;
+        y = A4.TOP_MARGIN;
         for (let i = 0; i < rightWidgets.length; i++) {
-            y = rightWidgets[i].draw(context, SQUARE.RIGHT_COLUMN_X, y, i === 0, campaign.campaignGuide, SQUARE).y;
+            y = rightWidgets[i].draw(context, A4.RIGHT_COLUMN_X, y, i === 0, campaign.campaignGuide, A4).y;
         }
     }
 }

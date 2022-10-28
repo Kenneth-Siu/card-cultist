@@ -1,7 +1,6 @@
 import CanvasTextLayer from "../../../../models/canvasLayers/CanvasTextLayer";
 import CanvasTextConfig, { TEXTALIGN } from "../../../../models/CanvasTextConfig";
 import {
-    COLUMN_WIDTH,
     DECO_BOX,
     PARAGRAPH_FONT_SIZE,
     PARAGRAPH_LINE_HEIGHT,
@@ -32,33 +31,33 @@ export default class DecoBoxWidget extends Widget {
         );
     }
 
-    draw(context, baseX, baseY, isFirst) {
+    draw(context, baseX, baseY, isFirst, _campaignGuide, PAGE) {
         context.save();
 
         const x = baseX + this.xNudge;
         const y = baseY + (isFirst ? 0 : DECO_BOX.INTER_WIDGET_MARGIN) + this.yNudge;
 
-        const transparentTitleBox = this.drawTitle(context, x, y, true);
-        const transparentSubtitleBox = this.drawSubtitle(context, x, transparentTitleBox.y, true);
-        const transparentTextBox = this.drawText(context, x, transparentSubtitleBox.y, true);
+        const transparentTitleBox = this.drawTitle(context, x, y, PAGE, true);
+        const transparentSubtitleBox = this.drawSubtitle(context, x, transparentTitleBox.y, PAGE, true);
+        const transparentTextBox = this.drawText(context, x, transparentSubtitleBox.y, PAGE, true);
 
         const endY = transparentTextBox.y;
 
-        const backgroundBox = this.drawBackground(context, x, y, endY);
-        this.drawTopBracket(context, x, y);
-        this.drawBottomBracket(context, x, backgroundBox.y);
-        const titleBox = this.drawTitle(context, x, y);
-        const subtitleBox = this.drawSubtitle(context, x, titleBox.y);
-        this.drawTitleUnderline(context, x, subtitleBox.y, subtitleBox.w || titleBox.w);
-        this.drawText(context, x, subtitleBox.y);
+        const backgroundBox = this.drawBackground(context, x, y, endY, PAGE);
+        this.drawTopBracket(context, x, y, PAGE);
+        this.drawBottomBracket(context, x, backgroundBox.y, PAGE);
+        const titleBox = this.drawTitle(context, x, y, PAGE);
+        const subtitleBox = this.drawSubtitle(context, x, titleBox.y, PAGE);
+        this.drawTitleUnderline(context, x, subtitleBox.y, subtitleBox.w || titleBox.w, PAGE);
+        this.drawText(context, x, subtitleBox.y, PAGE);
 
         return backgroundBox;
     }
 
-    drawBackground(context, x, y, contentEndY) {
+    drawBackground(context, x, y, contentEndY, PAGE) {
         context.save();
 
-        const boxW = COLUMN_WIDTH;
+        const boxW = PAGE.COLUMN_WIDTH;
         const boxH = contentEndY + DECO_BOX.PADDING - y;
         context.shadowColor = this.color;
         context.shadowBlur = DECO_BOX.BLUR_DISTANCE;
@@ -73,7 +72,7 @@ export default class DecoBoxWidget extends Widget {
         return { y: y + boxH, w: boxW };
     }
 
-    drawTopBracket(context, x, y) {
+    drawTopBracket(context, x, y, PAGE) {
         if (!this.topBracket) {
             return;
         }
@@ -82,7 +81,7 @@ export default class DecoBoxWidget extends Widget {
         context.fillRect(
             x + DECO_BOX.BRACKET.LEFT,
             y,
-            COLUMN_WIDTH - DECO_BOX.BRACKET.LEFT - DECO_BOX.BRACKET.RIGHT,
+            PAGE.COLUMN_WIDTH - DECO_BOX.BRACKET.LEFT - DECO_BOX.BRACKET.RIGHT,
             DECO_BOX.BRACKET.THICKNESS
         );
 
@@ -91,7 +90,7 @@ export default class DecoBoxWidget extends Widget {
                 .withText("c")
                 .withX(x + DECO_BOX.FLEUR.LEFT)
                 .withY(y + DECO_BOX.FLEUR.SIZE + DECO_BOX.FLEUR.TOP)
-                .withWidth(COLUMN_WIDTH - DECO_BOX.FLEUR.LEFT - DECO_BOX.FLEUR.RIGHT)
+                .withWidth(PAGE.COLUMN_WIDTH - DECO_BOX.FLEUR.LEFT - DECO_BOX.FLEUR.RIGHT)
                 .withFontSize(DECO_BOX.FLEUR.SIZE)
                 .withFontFamily("AHCampaignFleurs")
                 .withAlign(TEXTALIGN.LEFT)
@@ -105,7 +104,7 @@ export default class DecoBoxWidget extends Widget {
                 .withText("d")
                 .withX(x + DECO_BOX.FLEUR.LEFT)
                 .withY(y + DECO_BOX.FLEUR.SIZE + DECO_BOX.FLEUR.TOP)
-                .withWidth(COLUMN_WIDTH - DECO_BOX.FLEUR.LEFT - DECO_BOX.FLEUR.RIGHT)
+                .withWidth(PAGE.COLUMN_WIDTH - DECO_BOX.FLEUR.LEFT - DECO_BOX.FLEUR.RIGHT)
                 .withFontSize(DECO_BOX.FLEUR.SIZE)
                 .withFontFamily("AHCampaignFleurs")
                 .withAlign(TEXTALIGN.RIGHT)
@@ -117,7 +116,7 @@ export default class DecoBoxWidget extends Widget {
         context.restore();
     }
 
-    drawBottomBracket(context, x, y) {
+    drawBottomBracket(context, x, y, PAGE) {
         if (!this.bottomBracket) {
             return;
         }
@@ -126,7 +125,7 @@ export default class DecoBoxWidget extends Widget {
         context.fillRect(
             x + DECO_BOX.BRACKET.LEFT,
             y,
-            COLUMN_WIDTH - DECO_BOX.BRACKET.LEFT - DECO_BOX.BRACKET.RIGHT,
+            PAGE.COLUMN_WIDTH - DECO_BOX.BRACKET.LEFT - DECO_BOX.BRACKET.RIGHT,
             DECO_BOX.BRACKET.THICKNESS
         );
 
@@ -135,7 +134,7 @@ export default class DecoBoxWidget extends Widget {
                 .withText("a")
                 .withX(x + DECO_BOX.FLEUR.LEFT)
                 .withY(y - DECO_BOX.FLEUR.BOTTOM)
-                .withWidth(COLUMN_WIDTH - DECO_BOX.FLEUR.LEFT - DECO_BOX.FLEUR.RIGHT)
+                .withWidth(PAGE.COLUMN_WIDTH - DECO_BOX.FLEUR.LEFT - DECO_BOX.FLEUR.RIGHT)
                 .withFontSize(DECO_BOX.FLEUR.SIZE)
                 .withFontFamily("AHCampaignFleurs")
                 .withAlign(TEXTALIGN.LEFT)
@@ -149,7 +148,7 @@ export default class DecoBoxWidget extends Widget {
                 .withText("b")
                 .withX(x + DECO_BOX.FLEUR.LEFT)
                 .withY(y - DECO_BOX.FLEUR.BOTTOM)
-                .withWidth(COLUMN_WIDTH - DECO_BOX.FLEUR.LEFT - DECO_BOX.FLEUR.RIGHT)
+                .withWidth(PAGE.COLUMN_WIDTH - DECO_BOX.FLEUR.LEFT - DECO_BOX.FLEUR.RIGHT)
                 .withFontSize(DECO_BOX.FLEUR.SIZE)
                 .withFontFamily("AHCampaignFleurs")
                 .withAlign(TEXTALIGN.RIGHT)
@@ -161,7 +160,7 @@ export default class DecoBoxWidget extends Widget {
         context.restore();
     }
 
-    drawTitle(context, x, y, isTransparent) {
+    drawTitle(context, x, y, PAGE, isTransparent) {
         if (!this.title) {
             return { y, w: 0 };
         }
@@ -171,7 +170,7 @@ export default class DecoBoxWidget extends Widget {
                 .withText(this.title)
                 .withX(x + DECO_BOX.PADDING)
                 .withY(y + DECO_BOX.PADDING + Math.round(HEADER_2_FONT_SIZE / 2))
-                .withWidth(COLUMN_WIDTH - DECO_BOX.PADDING * 2)
+                .withWidth(PAGE.COLUMN_WIDTH - DECO_BOX.PADDING * 2)
                 .withFontSize(HEADER_2_FONT_SIZE)
                 .withFontFamily("Teutonic")
                 .withAlign(TEXTALIGN.CENTER)
@@ -181,7 +180,7 @@ export default class DecoBoxWidget extends Widget {
         return titleLayer.draw(context);
     }
 
-    drawSubtitle(context, x, y, isTransparent) {
+    drawSubtitle(context, x, y, PAGE, isTransparent) {
         if (!this.subtitle) {
             return { y, w: 0 };
         }
@@ -196,7 +195,7 @@ export default class DecoBoxWidget extends Widget {
                         DECO_BOX.SUBTITLE.TOP +
                         (this.title ? DECO_BOX.SUBTITLE.INTER_TITLE_MARGIN : DECO_BOX.PADDING)
                 )
-                .withWidth(COLUMN_WIDTH - DECO_BOX.PADDING * 2)
+                .withWidth(PAGE.COLUMN_WIDTH - DECO_BOX.PADDING * 2)
                 .withFontSize(DECO_BOX.SUBTITLE.FONT_SIZE)
                 .withFontFamily("Teutonic")
                 .withAlign(TEXTALIGN.CENTER)
@@ -206,7 +205,7 @@ export default class DecoBoxWidget extends Widget {
         return subtitleLayer.draw(context);
     }
 
-    drawTitleUnderline(context, x, y, w) {
+    drawTitleUnderline(context, x, y, w, PAGE) {
         if (!this.title && !this.subtitle) {
             return;
         }
@@ -214,13 +213,18 @@ export default class DecoBoxWidget extends Widget {
         context.save();
 
         context.fillStyle = this.color;
-        context.fillRect(x + COLUMN_WIDTH / 2 - w / 2, y + TITLE_UNDERLINE.OFFSET, w, TITLE_UNDERLINE.THICKNESS);
-        context.fillRect(x + COLUMN_WIDTH / 2 - w / 2, y + TITLE_UNDERLINE.SECOND_OFFSET, w, TITLE_UNDERLINE.THICKNESS);
+        context.fillRect(x + PAGE.COLUMN_WIDTH / 2 - w / 2, y + TITLE_UNDERLINE.OFFSET, w, TITLE_UNDERLINE.THICKNESS);
+        context.fillRect(
+            x + PAGE.COLUMN_WIDTH / 2 - w / 2,
+            y + TITLE_UNDERLINE.SECOND_OFFSET,
+            w,
+            TITLE_UNDERLINE.THICKNESS
+        );
 
         context.restore();
     }
 
-    drawText(context, x, y, inTransparent) {
+    drawText(context, x, y, PAGE, inTransparent) {
         const textLayer = new CanvasTextLayer(
             new CanvasTextConfig()
                 .withText(this.text)
@@ -230,7 +234,7 @@ export default class DecoBoxWidget extends Widget {
                         Math.round(PARAGRAPH_FONT_SIZE / 2) +
                         (this.title || this.subtitle ? DECO_BOX.PARAGRAPH_INTER_MARGIN : DECO_BOX.PADDING)
                 )
-                .withWidth(COLUMN_WIDTH - DECO_BOX.PADDING * 2)
+                .withWidth(PAGE.COLUMN_WIDTH - DECO_BOX.PADDING * 2)
                 .withFontSize(PARAGRAPH_FONT_SIZE)
                 .withLineHeight(PARAGRAPH_LINE_HEIGHT)
                 .withColor(inTransparent ? "transparent" : "black")

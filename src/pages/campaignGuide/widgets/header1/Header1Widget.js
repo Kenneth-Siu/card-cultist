@@ -1,7 +1,6 @@
 import CanvasTextLayer from "../../../../models/canvasLayers/CanvasTextLayer";
 import CanvasTextConfig from "../../../../models/CanvasTextConfig";
 import {
-    COLUMN_WIDTH,
     HEADER_1_FONT_SIZE,
     HEADER_1_START_TOP,
     TITLE_UNDERLINE,
@@ -25,7 +24,7 @@ export default class Header1Widget extends Widget {
         );
     }
 
-    draw(context, x, y, isFirst, campaignGuide) {
+    draw(context, x, y, isFirst, campaignGuide, PAGE) {
         const text = new CanvasTextLayer(
             new CanvasTextConfig()
                 .withText(this.text)
@@ -36,7 +35,7 @@ export default class Header1Widget extends Widget {
                         (isFirst ? HEADER_1_START_TOP : HEADER_1_FONT_SIZE) +
                         this.yNudge
                 )
-                .withWidth(COLUMN_WIDTH)
+                .withWidth(PAGE.COLUMN_WIDTH)
                 .withFontSize(HEADER_1_FONT_SIZE)
                 .withFontFamily("Teutonic")
                 .withColor(campaignGuide.colorTheme)
@@ -46,8 +45,8 @@ export default class Header1Widget extends Widget {
         context.save();
 
         context.fillStyle = campaignGuide.colorTheme;
-        context.fillRect(x, result.y + TITLE_UNDERLINE.OFFSET, COLUMN_WIDTH, TITLE_UNDERLINE.THICKNESS);
-        context.fillRect(x, result.y + TITLE_UNDERLINE.SECOND_OFFSET, COLUMN_WIDTH, TITLE_UNDERLINE.THICKNESS);
+        context.fillRect(x, result.y + TITLE_UNDERLINE.OFFSET, PAGE.COLUMN_WIDTH, TITLE_UNDERLINE.THICKNESS);
+        context.fillRect(x, result.y + TITLE_UNDERLINE.SECOND_OFFSET, PAGE.COLUMN_WIDTH, TITLE_UNDERLINE.THICKNESS);
 
         context.restore();
 

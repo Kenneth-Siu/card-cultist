@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { jsPDF } from "jspdf";
 import listOfPageTypes from "./pages/listOfPageTypes";
 import "./CampaignGuideView.scss";
-import { CAMPAIGN_GUIDE_SQUARE_HEIGHT, CAMPAIGN_GUIDE_SQUARE_WIDTH } from "./campaignGuideConstants";
+import { SQUARE } from "./campaignGuideConstants";
 
 export default function CampaignGuide({ campaign, setCampaign }) {
     const [newPageType, setNewPageType] = useState(listOfPageTypes[0].type);
@@ -37,13 +37,13 @@ export default function CampaignGuide({ campaign, setCampaign }) {
         const pdf = new jsPDF({
             unit: "px",
             hotfixes: ["px_scaling"],
-            format: [CAMPAIGN_GUIDE_SQUARE_WIDTH, CAMPAIGN_GUIDE_SQUARE_HEIGHT],
+            format: [SQUARE.WIDTH, SQUARE.HEIGHT],
         });
         document.querySelectorAll(".campaign-guide-page canvas").forEach((page, index) => {
             if (index !== 0) {
                 pdf.addPage();
             }
-            pdf.addImage(page, "PNG", 0, 0, CAMPAIGN_GUIDE_SQUARE_WIDTH, CAMPAIGN_GUIDE_SQUARE_HEIGHT);
+            pdf.addImage(page, "PNG", 0, 0, SQUARE.WIDTH, SQUARE.HEIGHT);
         });
         pdf.save("campaignGuide.pdf");
     }
