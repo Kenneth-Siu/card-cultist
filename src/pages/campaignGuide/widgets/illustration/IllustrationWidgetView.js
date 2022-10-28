@@ -45,6 +45,7 @@ export default function IllustrationWidgetView({ widget, page, campaign, setCamp
                     onChange={(event) => setIllustrationRotation(parseFloat(event.target.value))}
                 />
             </div>
+            <div className="loaded-images">{loadedImages}</div>
         </WidgetView>
     );
 

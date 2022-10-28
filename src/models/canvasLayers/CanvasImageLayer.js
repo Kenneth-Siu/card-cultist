@@ -19,6 +19,6 @@ export default class CanvasImageLayer extends CanvasLayer {
         context.drawImage(this.imageRef, 0, 0);
 
         context.restore();
-        return this.y + this.imageRef.height * this.scale;
+        return { y: this.y + this.imageRef.height * this.scale, w: this.imageRef.width * this.scale };
     }
 }

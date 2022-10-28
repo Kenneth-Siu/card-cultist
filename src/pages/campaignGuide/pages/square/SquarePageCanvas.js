@@ -40,7 +40,7 @@ export default function SquarePageCanvas({ page, pageNumber, campaign }) {
         setPageNumberLayer(
             new CanvasTextLayer(
                 new CanvasTextConfig()
-                    .withText(pageNumber + 1 + "")
+                    .withText(pageNumber + "")
                     .withX(CAMPAIGN_GUIDE_SQUARE_WIDTH / 2)
                     .withY(PAGE_NUMBER_Y)
                     .withFontSize(PAGE_NUMBER_FONT_SIZE)
