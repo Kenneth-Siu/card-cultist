@@ -59,7 +59,7 @@ async function saveLastOpened(event, filePath) {
 
 async function chooseImage() {
     const { cancelled, filePaths } = await dialog.showOpenDialog({
-        filters: [{ name: "Images", extensions: ["jpg", "jpeg", "png"] }],
+        filters: [{ name: "Images", extensions: ["jpg", "jpeg", "png", "svg"] }],
     });
     if (cancelled) {
         return;

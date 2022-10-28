@@ -19,6 +19,8 @@ export default class CanvasImageLayer extends CanvasLayer {
         context.drawImage(this.imageRef, 0, 0);
 
         context.restore();
+
+        // TODO y breaks for SVGs
         return { y: this.y + this.imageRef.height * this.scale, w: this.imageRef.width * this.scale };
     }
 }
