@@ -6,6 +6,8 @@ export default function WidgetView({ widget, page, campaign, setCampaign, childr
             <div className="heading-container">
                 <label>{widget.type}</label>
                 <div className="widget-toolbar">
+                    <button onClick={() => swapUp()}>⬆</button>
+                    <button onClick={() => swapDown()}>⬇</button>
                     <button
                         onClick={() => {
                             setXNudge(0);
@@ -24,6 +26,16 @@ export default function WidgetView({ widget, page, campaign, setCampaign, childr
             {children}
         </div>
     );
+
+    function swapUp() {
+        page.swapWidgetUp(widget);
+        setCampaign(campaign.clone());
+    }
+
+    function swapDown() {
+        page.swapWidgetDown(widget);
+        setCampaign(campaign.clone());
+    }
 
     function getNudge(event) {
         return event.ctrlKey || event.metaKey ? 10 : event.shiftKey ? 100 : 1;
