@@ -28,7 +28,7 @@ export default class IllustrationWidget extends Widget {
 
     draw(context, x, y) {
         if (!this.path || !IllustrationWidget.dictionary[this.id]) {
-            return y;
+            return { y, w: 0 };
         }
         const layer = new CanvasImageLayer(
             IllustrationWidget.dictionary[this.id],

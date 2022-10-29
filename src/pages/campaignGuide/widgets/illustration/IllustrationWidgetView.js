@@ -23,7 +23,6 @@ export default function IllustrationWidgetView({ widget, page, campaign, setCamp
             className="illustration-widget-view"
         >
             <div className="input-container">
-                <label>Illustration</label>
                 <button onClick={() => setIllustration()}>Load Image</button>
             </div>
             <div className="input-container">

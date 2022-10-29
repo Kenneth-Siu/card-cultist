@@ -6,6 +6,13 @@ export const HEADER_2_FONT_SIZE = 64;
 export const HEADER_1_START_TOP = 10;
 export const HEADER_2_START_TOP = 10;
 export const HEADER_1_BOTTOM_MARGIN = 10;
+
+export const SYMBOLS_ROW = Object.freeze({
+    SYMBOL_SIZE: 110,
+    TOP_MARGIN: 25,
+    BOTTOM_MARGIN: -10,
+});
+
 export const TITLE_UNDERLINE = Object.freeze({
     THICKNESS: 2,
     OFFSET: 12,

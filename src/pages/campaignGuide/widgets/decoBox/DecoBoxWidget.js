@@ -13,8 +13,8 @@ import DecoBoxWidgetView from "./DecoBoxWidgetView";
 export default class DecoBoxWidget extends Widget {
     static type = "Deco Box";
 
-    constructor(widgetOrId, campaignGuide) {
-        super(widgetOrId, DecoBoxWidget.type);
+    constructor(widgetOrId, campaignGuide, type) {
+        super(widgetOrId, type || DecoBoxWidget.type);
         const widget = typeof widgetOrId === "number" || !widgetOrId ? {} : widgetOrId;
 
         this.color = widget.color || (campaignGuide && campaignGuide.colorTheme) || "#000000";
