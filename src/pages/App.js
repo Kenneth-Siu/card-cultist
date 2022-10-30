@@ -32,9 +32,6 @@ export default function App() {
             <p style={{ fontFamily: "AHCampaignFleurs", color: "transparent", position: "fixed", top: "-100px" }}>a</p>
             <p style={{ fontFamily: "AHCardTextSymbols", color: "transparent", position: "fixed", top: "-100px" }}>a</p>
             <Switch>
-                <Route exact={true} path="/">
-                    <CampaignView campaign={campaign} setCampaign={setCampaign} />
-                </Route>
                 <Route exact={true} path="/campaign-guide">
                     <CampaignGuideView campaign={campaign} setCampaign={setCampaign} />
                 </Route>
@@ -43,6 +40,9 @@ export default function App() {
                 </Route>
                 <Route exact={true} path="/card-set/:cardSetId/card/:id">
                     <CardView campaign={campaign} setCampaign={setCampaign} />
+                </Route>
+                <Route path="/">
+                    <CampaignView campaign={campaign} setCampaign={setCampaign} />
                 </Route>
             </Switch>
         </>

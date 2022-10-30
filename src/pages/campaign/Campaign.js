@@ -1,3 +1,4 @@
+import remove from "lodash.remove";
 import generateId from "../../helpers/generateId";
 import CampaignGuide from "../campaignGuide/CampaignGuide";
 import CardSet from "../cardSet/CardSet";
@@ -31,5 +32,9 @@ export default class Campaign {
 
     getCardSet(id) {
         return this.cardSets.find((cardSet) => cardSet.id === id);
+    }
+
+    deleteCardSet(id) {
+        remove(this.cardSets, (cardSet) => cardSet.id === id);
     }
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import useLoadedImages from "../../helpers/useLoadedImages";
 import "./CardSetView.scss";
 
@@ -13,6 +13,7 @@ const ttsMinColumns = 2;
 
 export default function CardSet({ campaign, setCampaign }) {
     const [loadedImages, loadPublicImage, loadFileSystemImage] = useLoadedImages();
+    const history = useHistory();
 
     const params = useParams();
     const id = parseInt(params.id);
@@ -55,6 +56,7 @@ export default function CardSet({ campaign, setCampaign }) {
                     <canvas ref={ttsBackCanvas} />
                 </div>
             </div>
+            <button onClick={() => deleteSet()}>Delete Set</button>
         </main>
     );
 
@@ -66,6 +68,13 @@ export default function CardSet({ campaign, setCampaign }) {
     async function setSetSymbol() {
         const path = await window.fs.chooseIcon();
         cardSet.symbol = path;
+        setCampaign(campaign.clone());
+    }
+
+    function deleteSet() {
+        campaign.deleteCardSet(id);
+        console.log(history);
+        history.push("/");
         setCampaign(campaign.clone());
     }
 
