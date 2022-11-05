@@ -1,6 +1,5 @@
 export default class CanvasLayer {
-    constructor(type, x, y) {
-        this.type = type;
+    constructor(x, y) {
         this.x = x;
         this.y = y;
     }

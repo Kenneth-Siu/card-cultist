@@ -4,6 +4,12 @@ export const TEXTALIGN = {
     CENTER: "center",
 };
 
+export const UNDERLINE = {
+    NONE: "none",
+    SINGLE: "single",
+    DOUBLE: "double",
+};
+
 export default class CanvasTextConfig {
     constructor() {
         this.text = "";
@@ -21,6 +27,7 @@ export default class CanvasTextConfig {
         this.cardTitle = "";
         this.cardSubtitle = "";
         this.highlightColor = "";
+        this.underline = UNDERLINE.NONE;
     }
 
     withText(text) {
@@ -95,6 +102,11 @@ export default class CanvasTextConfig {
 
     withHighlightColor(highlightColor) {
         this.highlightColor = highlightColor;
+        return this;
+    }
+
+    withUnderline(underline) {
+        this.underline = underline;
         return this;
     }
 }

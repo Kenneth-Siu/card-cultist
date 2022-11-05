@@ -2,7 +2,7 @@ import CanvasLayer from "./CanvasLayer";
 
 export default class CanvasImageLayer extends CanvasLayer {
     constructor(imageRef, imageTransform, invertColors) {
-        super("image", (imageTransform && imageTransform.x) || 0, (imageTransform && imageTransform.y) || 0);
+        super((imageTransform && imageTransform.x) || 0, (imageTransform && imageTransform.y) || 0);
         this.imageRef = imageRef;
         this.scale = (imageTransform && imageTransform.scale) || 1;
         this.rotation = (imageTransform && imageTransform.rotation) || 0;
@@ -20,7 +20,6 @@ export default class CanvasImageLayer extends CanvasLayer {
 
         context.restore();
 
-        // TODO y breaks for SVGs
         return { y: this.y + this.imageRef.height * this.scale, w: this.imageRef.width * this.scale };
     }
 }
