@@ -17,6 +17,8 @@ export class CanvasTextWriter {
         this.lineHeight = canvasTextConfig.lineHeight;
         this.italic = canvasTextConfig.italic;
         this.bold = canvasTextConfig.bold;
+        this.strokeStyle = canvasTextConfig.strokeStyle;
+        this.strokeWidth = canvasTextConfig.strokeWidth;
         this.indent = 0;
         this.color = this.configColor;
         this.x = this.boxX;
@@ -145,6 +147,11 @@ export class CanvasTextWriter {
         }`;
         this.canvasContext.fillStyle = this.color;
         this.canvasContext.fillText(text, this.x, this.y);
+        if (this.strokeWidth > 0) {
+            this.canvasContext.strokeStyle = this.strokeStyle;
+            this.canvasContext.lineWidth = this.strokeWidth;
+            this.canvasContext.strokeText(text, this.x, this.y);
+        }
         this.x += this.canvasContext.measureText(text).width;
     }
 

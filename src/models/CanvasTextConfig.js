@@ -28,6 +28,8 @@ export default class CanvasTextConfig {
         this.cardSubtitle = "";
         this.highlightColor = "";
         this.underline = UNDERLINE.NONE;
+        this.strokeStyle = "black";
+        this.strokeWidth = 0;
     }
 
     withText(text) {
@@ -107,6 +109,16 @@ export default class CanvasTextConfig {
 
     withUnderline(underline) {
         this.underline = underline;
+        return this;
+    }
+
+    withStrokeStyle(strokeStyle) {
+        this.strokeStyle = strokeStyle;
+        return this;
+    }
+
+    withStrokeWidth(strokeWidth) {
+        this.strokeWidth = strokeWidth;
         return this;
     }
 }
