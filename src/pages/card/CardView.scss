@@ -7,6 +7,10 @@
 
     canvas {
         width: 375px;
+
+        &.landscape {
+            width: 525px;
+        }
     }
 
     textarea {

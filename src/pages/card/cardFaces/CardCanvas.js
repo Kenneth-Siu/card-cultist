@@ -10,6 +10,11 @@ const TRANSFORM = {
     ROTATE: "rotate",
 };
 
+export const ORIENTATION = {
+    LANDSCAPE: "landscape",
+    PORTRAIT: "portrait",
+};
+
 const throttledHandleMove = throttle((event, transformState, startIllustrationTransform, setIllustrationTransform) => {
     if (transformState.mouseStart) {
         if (event.ctrlKey || event.metaKey) {
@@ -89,9 +94,9 @@ export default function CardCanvas({
         <div className="canvas-container">
             <canvas
                 ref={canvasRef}
-                className="preview"
-                width={orientation === "landscape" ? "1050" : CARD_PORTRAIT_WIDTH}
-                height={orientation === "landscape" ? "750" : CARD_PORTRAIT_HEIGHT}
+                className={`preview ${orientation}`}
+                width={orientation === ORIENTATION.LANDSCAPE ? CARD_PORTRAIT_HEIGHT : CARD_PORTRAIT_WIDTH}
+                height={orientation === ORIENTATION.LANDSCAPE ? CARD_PORTRAIT_WIDTH : CARD_PORTRAIT_HEIGHT}
                 onLoad={() => refreshCanvas()}
                 {...mouseProps}
             />
