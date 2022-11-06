@@ -8,6 +8,7 @@ import StartColor from "./atoms/instructions/StartColor";
 import EndColor from "./atoms/instructions/EndColor";
 
 const shorthands = {
+    "---": "—",
     "--": "–",
     "Revelation -- ": "<b>Revelation – </b>",
     "Revelation - ": "<b>Revelation – </b>",
