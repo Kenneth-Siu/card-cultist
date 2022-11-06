@@ -33,10 +33,10 @@ export default function A4PageCanvas({ page, pageNumber, campaign }) {
             new CanvasTextLayer(
                 new CanvasTextConfig()
                     .withText(pageNumber + "")
-                    .withX(A4.WIDTH / 2)
+                    .withX(A4.WIDTH / 2 - 2)
                     .withY(A4.PAGE_NUMBER_Y)
                     .withFontSize(PAGE_NUMBER_FONT_SIZE)
-                    .withFontFamily("Teutonic")
+                    .withFontFamily("AHCardTextSymbols")
                     .withAlign(TEXTALIGN.CENTER)
             )
         );

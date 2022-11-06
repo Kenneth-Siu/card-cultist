@@ -87,12 +87,12 @@ export default class DecoBoxWidget extends Widget {
 
         const fleurLayerTopLeft = new CanvasTextLayer(
             new CanvasTextConfig()
-                .withText("c")
+                .withText("}")
                 .withX(x + DECO_BOX.FLEUR.LEFT)
                 .withY(y + DECO_BOX.FLEUR.SIZE + DECO_BOX.FLEUR.TOP)
                 .withWidth(PAGE.COLUMN_WIDTH - DECO_BOX.FLEUR.LEFT - DECO_BOX.FLEUR.RIGHT)
                 .withFontSize(DECO_BOX.FLEUR.SIZE)
-                .withFontFamily("AHCampaignFleurs")
+                .withFontFamily("AHCardTextSymbols")
                 .withAlign(TEXTALIGN.LEFT)
                 .withColor(this.color)
         );
@@ -101,12 +101,12 @@ export default class DecoBoxWidget extends Widget {
 
         const fleurLayerTopRight = new CanvasTextLayer(
             new CanvasTextConfig()
-                .withText("d")
+                .withText("~")
                 .withX(x + DECO_BOX.FLEUR.LEFT)
                 .withY(y + DECO_BOX.FLEUR.SIZE + DECO_BOX.FLEUR.TOP)
                 .withWidth(PAGE.COLUMN_WIDTH - DECO_BOX.FLEUR.LEFT - DECO_BOX.FLEUR.RIGHT)
                 .withFontSize(DECO_BOX.FLEUR.SIZE)
-                .withFontFamily("AHCampaignFleurs")
+                .withFontFamily("AHCardTextSymbols")
                 .withAlign(TEXTALIGN.RIGHT)
                 .withColor(this.color)
         );
@@ -131,12 +131,12 @@ export default class DecoBoxWidget extends Widget {
 
         const fleurLayerTopLeft = new CanvasTextLayer(
             new CanvasTextConfig()
-                .withText("a")
+                .withText("{")
                 .withX(x + DECO_BOX.FLEUR.LEFT)
                 .withY(y - DECO_BOX.FLEUR.BOTTOM)
                 .withWidth(PAGE.COLUMN_WIDTH - DECO_BOX.FLEUR.LEFT - DECO_BOX.FLEUR.RIGHT)
                 .withFontSize(DECO_BOX.FLEUR.SIZE)
-                .withFontFamily("AHCampaignFleurs")
+                .withFontFamily("AHCardTextSymbols")
                 .withAlign(TEXTALIGN.LEFT)
                 .withColor(this.color)
         );
@@ -145,12 +145,12 @@ export default class DecoBoxWidget extends Widget {
 
         const fleurLayerTopRight = new CanvasTextLayer(
             new CanvasTextConfig()
-                .withText("b")
+                .withText("|")
                 .withX(x + DECO_BOX.FLEUR.LEFT)
                 .withY(y - DECO_BOX.FLEUR.BOTTOM)
                 .withWidth(PAGE.COLUMN_WIDTH - DECO_BOX.FLEUR.LEFT - DECO_BOX.FLEUR.RIGHT)
                 .withFontSize(DECO_BOX.FLEUR.SIZE)
-                .withFontFamily("AHCampaignFleurs")
+                .withFontFamily("AHCardTextSymbols")
                 .withAlign(TEXTALIGN.RIGHT)
                 .withColor(this.color)
         );

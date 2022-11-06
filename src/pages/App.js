@@ -29,7 +29,6 @@ export default function App() {
         <>
             <title>{campaign ? `${campaign.title} · ` : ""}Card Cultist</title>
             {campaign && <NavBar campaign={campaign} setCampaign={setCampaign} />}
-            <p style={{ fontFamily: "AHCampaignFleurs", color: "transparent", position: "fixed", top: "-100px" }}>a</p>
             <p style={{ fontFamily: "AHCardTextSymbols", color: "transparent", position: "fixed", top: "-100px" }}>a</p>
             <Switch>
                 <Route exact={true} path="/campaign-guide">

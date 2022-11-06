@@ -45,7 +45,7 @@ export const DECO_BOX = Object.freeze({
 });
 export const DEFAULT_CAMPAIGN_GUIDE_COLOR_THEME = "rgb(38,73,59)";
 
-export const PAGE_NUMBER_FONT_SIZE = 72;
+export const PAGE_NUMBER_FONT_SIZE = 50;
 export const FRONT_PAGE_TITLE_FONT_SIZE = 88;
 
 export const SQUARE = Object.freeze({
