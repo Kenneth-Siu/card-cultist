@@ -2,7 +2,7 @@ import CanvasTextConfig from "../../../CanvasTextConfig";
 import CanvasLayer from "../../CanvasLayer";
 import CanvasTextLayer from "../../CanvasTextLayer";
 
-export default class AgendaBackSectionsLayer extends CanvasLayer {
+export default class AgendaActBackSectionsLayer extends CanvasLayer {
     constructor(config) {
         super(config.x, config.y);
         this.config = config;

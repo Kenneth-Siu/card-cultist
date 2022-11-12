@@ -1,6 +1,6 @@
 import CanvasTextConfig from "../../../CanvasTextConfig";
 
-export default class AgendaBackSectionsConfig extends CanvasTextConfig {
+export default class AgendaActBackSectionsConfig extends CanvasTextConfig {
     constructor() {
         super();
         this.header1 = "";
