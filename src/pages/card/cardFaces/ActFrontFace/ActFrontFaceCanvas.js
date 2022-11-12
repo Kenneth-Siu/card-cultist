@@ -9,6 +9,7 @@ import { isSvgPath } from "../../../../helpers/isSvgPath";
 import { transformSvgOnCanvas } from "../../../../helpers/transformSvgOnCanvas";
 import { CARD_PORTRAIT_HEIGHT, CARD_PORTRAIT_WIDTH } from "../../cardConstants";
 import ActFrontFace from "./ActFrontFace";
+import hyphen from "../../../../../public/overlays/AHLCG-Cost--.png";
 
 export default function ActFrontFaceCanvas({ face, cardSet, campaign, setIllustrationTransform }) {
     const [loadedImages, loadPublicImage, loadFileSystemImage] = useLoadedImages();
@@ -120,21 +121,26 @@ export default function ActFrontFaceCanvas({ face, cardSet, campaign, setIllustr
         );
     }, [face.title, face.text, face.textFontSize]);
 
-    useEffect(() => {
-        setClueThresholdLayer(
-            new CanvasTextLayer(
-                new CanvasTextConfig()
-                    .withText(face.threshold + (face.isPer ? "<raised=16><size=30>r</size></raised>" : ""))
-                    .withX(528 + (face.threshold.includes("*") ? 4 : 0) + (face.isPer ? 4 : 0))
-                    .withY(662)
-                    .withFontSize(52)
-                    .withFontFamily("AHCardTextSymbols")
-                    .withColor("white")
-                    .withAlign(TEXTALIGN.CENTER)
-                    .withStrokeStyle("black")
-                    .withStrokeWidth(2)
-            )
-        );
+    useEffect(async () => {
+        if (face.threshold === "-") {
+            const image = await loadPublicImage(hyphen);
+            setClueThresholdLayer(image ? new CanvasImageLayer(image, new ImageTransform({ x: 504, y: 630, scale: 2 })) : null);
+        } else {
+            setClueThresholdLayer(
+                new CanvasTextLayer(
+                    new CanvasTextConfig()
+                        .withText(face.threshold + (face.isPer ? "<raised=16><size=30>r</size></raised>" : ""))
+                        .withX(528 + (face.threshold.includes("*") ? 4 : 0) + (face.isPer ? 4 : 0))
+                        .withY(662)
+                        .withFontSize(52)
+                        .withFontFamily("AHCardTextSymbols")
+                        .withColor("white")
+                        .withAlign(TEXTALIGN.CENTER)
+                        .withStrokeStyle("black")
+                        .withStrokeWidth(2)
+                )
+            );
+        }
     }, [face.threshold, face.isPer]);
 
     useEffect(() => {
