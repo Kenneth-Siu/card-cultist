@@ -8,8 +8,14 @@ export default class CanvasTextLayer extends CanvasLayer {
         this.canvasTextConfig = canvasTextConfig;
     }
 
-    draw(context) {
-        let { y, w } = new CanvasTextWriter(context, this.canvasTextConfig).write();
+    draw(context, prevY) {
+        const startY = this.canvasTextConfig.y + (this.usePrevY ? prevY : 0);
+        
+        let { y, w } = new CanvasTextWriter(context, {
+            ...Object.assign({}, this.canvasTextConfig),
+            y: startY,
+        }).write();
+
         const x =
             this.canvasTextConfig.align === TEXTALIGN.LEFT
                 ? this.canvasTextConfig.x

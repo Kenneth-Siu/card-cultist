@@ -9,9 +9,11 @@ export default class CanvasImageLayer extends CanvasLayer {
         this.invertColors = invertColors || false;
     }
 
-    draw(context) {
+    draw(context, prevY) {
+        const startY = this.y + (this.usePrevY ? prevY : 0);
+
         context.save();
-        context.translate(this.x, this.y);
+        context.translate(this.x, startY);
         context.rotate((this.rotation * Math.PI) / 180);
         context.scale(this.scale, this.scale);
         context.filter = `invert(${this.invertColors ? 1 : 0})`;
@@ -20,6 +22,6 @@ export default class CanvasImageLayer extends CanvasLayer {
 
         context.restore();
 
-        return { y: this.y + this.imageRef.height * this.scale, w: this.imageRef.width * this.scale };
+        return { y: startY + this.imageRef.height * this.scale, w: this.imageRef.width * this.scale };
     }
 }

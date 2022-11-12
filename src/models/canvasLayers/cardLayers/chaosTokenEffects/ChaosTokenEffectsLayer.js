@@ -21,7 +21,9 @@ export default class ChaosTokenEffectsLayer extends CanvasLayer {
         this.elderThingText = canvasTextConfig.elderThingText;
     }
 
-    draw(context) {
+    draw(context, prevY) {
+        const startY = this.canvasTextConfig.y + (this.usePrevY ? prevY : 0);
+
         const numberOfSections =
             Math.min(1, this.skullText.length) +
             Math.min(1, this.cultistText.length) +
@@ -29,10 +31,10 @@ export default class ChaosTokenEffectsLayer extends CanvasLayer {
             Math.min(1, this.elderThingText.length);
 
         if (numberOfSections === 0) {
-            return { y: this.canvasTextConfig.y, w: 0 };
+            return { y: startY, w: 0 };
         }
 
-        let currentY = this.canvasTextConfig.y;
+        let currentY = startY;
         const TOKEN_WIDTH = 82;
         const GUTTER_WIDTH = 14;
         const ACTUAL_LINE_HEIGHT = 0.57 * this.canvasTextConfig.lineHeight;
@@ -40,21 +42,21 @@ export default class ChaosTokenEffectsLayer extends CanvasLayer {
         const textW = this.canvasTextConfig.width - TOKEN_WIDTH - GUTTER_WIDTH;
 
         const centerPoints = [
-            [this.canvasTextConfig.y + this.canvasTextConfig.height / 2],
+            [startY + this.canvasTextConfig.height / 2],
             [
-                this.canvasTextConfig.y + this.canvasTextConfig.height / 3,
-                this.canvasTextConfig.y + (2 * this.canvasTextConfig.height) / 3,
+                startY + this.canvasTextConfig.height / 3,
+                startY + (2 * this.canvasTextConfig.height) / 3,
             ],
             [
-                this.canvasTextConfig.y + this.canvasTextConfig.height / 6,
-                this.canvasTextConfig.y + this.canvasTextConfig.height / 2,
-                this.canvasTextConfig.y + (5 * this.canvasTextConfig.height) / 6,
+                startY + this.canvasTextConfig.height / 6,
+                startY + this.canvasTextConfig.height / 2,
+                startY + (5 * this.canvasTextConfig.height) / 6,
             ],
             [
-                this.canvasTextConfig.y + this.canvasTextConfig.height / 8,
-                this.canvasTextConfig.y + (3 * this.canvasTextConfig.height) / 8,
-                this.canvasTextConfig.y + (5 * this.canvasTextConfig.height) / 8,
-                this.canvasTextConfig.y + (7 * this.canvasTextConfig.height) / 8,
+                startY + this.canvasTextConfig.height / 8,
+                startY + (3 * this.canvasTextConfig.height) / 8,
+                startY + (5 * this.canvasTextConfig.height) / 8,
+                startY + (7 * this.canvasTextConfig.height) / 8,
             ],
         ];
 
@@ -155,6 +157,6 @@ export default class ChaosTokenEffectsLayer extends CanvasLayer {
             ).draw(context);
         }
 
-        return { y: this.canvasTextConfig.y + this.canvasTextConfig.height, w: this.canvasTextConfig.width };
+        return { y: startY + this.canvasTextConfig.height, w: this.canvasTextConfig.width };
     }
 }

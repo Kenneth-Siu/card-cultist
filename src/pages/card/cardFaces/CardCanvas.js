@@ -107,9 +107,10 @@ export default function CardCanvas({
     function refreshCanvas() {
         const context = canvasRef.current.getContext("2d");
         context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-        canvasLayers.forEach((canvasLayer) => {
-            canvasLayer && canvasLayer.draw(context);
-        });
+        canvasLayers.reduce((prevY, canvasLayer) => {
+            const box = canvasLayer && canvasLayer.draw(context, prevY);
+            return box ? box.y : 0;
+        }, 0);
     }
 
     function startIllustrationTransform(event) {
