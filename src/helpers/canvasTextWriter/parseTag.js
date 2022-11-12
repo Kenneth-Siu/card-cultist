@@ -1,11 +1,15 @@
 import AHSymbol from "./atoms/AHSymbol";
 import EndBold from "./atoms/instructions/EndBold";
 import EndColor from "./atoms/instructions/EndColor";
+import EndFontSize from "./atoms/instructions/EndFontSize";
 import EndItalic from "./atoms/instructions/EndItalic";
+import EndRaised from "./atoms/instructions/EndRaised";
 import EndTrait from "./atoms/instructions/EndTrait";
 import StartBold from "./atoms/instructions/StartBold";
 import StartColor from "./atoms/instructions/StartColor";
+import StartFontSize from "./atoms/instructions/StartFontSize";
 import StartItalic from "./atoms/instructions/StartItalic";
+import StartRaised from "./atoms/instructions/StartRaised";
 import StartTrait from "./atoms/instructions/StartTrait";
 
 export const bulletAHSymbol = new AHSymbol("w");
@@ -64,8 +68,9 @@ const instructionDictionary = {
     "</b>": EndBold,
     "<t>": StartTrait,
     "</t>": EndTrait,
-    // Start color requires extra processing
     "</color>": EndColor,
+    "</size>": EndFontSize,
+    "</raised>": EndRaised,
 };
 
 const textReplacementDictionary = {
@@ -88,6 +93,12 @@ export default function parseTag(tag, highlightColor) {
     }
     if (tag.startsWith("<color=")) {
         return [new StartColor(tag.substring(7, tag.length - 1))];
+    }
+    if (tag.startsWith("<size=")) {
+        return [new StartFontSize(tag.substring(6, tag.length - 1))];
+    }
+    if (tag.startsWith("<raised=")) {
+        return [new StartRaised(tag.substring(8, tag.length - 1))];
     }
 
     if (instructionDictionary[tag]) {

@@ -124,8 +124,8 @@ export default function ActFrontFaceCanvas({ face, cardSet, campaign, setIllustr
         setClueThresholdLayer(
             new CanvasTextLayer(
                 new CanvasTextConfig()
-                    .withText(face.threshold + (face.isPer ? "r" : ""))
-                    .withX(528 + (face.threshold.includes("*") ? 4 : 0))
+                    .withText(face.threshold + (face.isPer ? "<raised=16><size=30>r</size></raised>" : ""))
+                    .withX(528 + (face.threshold.includes("*") ? 4 : 0) + (face.isPer ? 4 : 0))
                     .withY(662)
                     .withFontSize(52)
                     .withFontFamily("AHCardTextSymbols")

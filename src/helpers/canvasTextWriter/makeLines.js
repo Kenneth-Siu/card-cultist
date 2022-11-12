@@ -7,6 +7,7 @@ export default function makeLines(atoms, context, { width, fontSize, fontFamily,
     let italic = false;
     let bold = false;
     let indent = 0;
+    let currentFontSize = fontSize;
 
     atoms.forEach((atom) => {
         atom.addToLine({
@@ -19,8 +20,12 @@ export default function makeLines(atoms, context, { width, fontSize, fontFamily,
             setBold,
             startIndent,
             endIndent,
+            setFontSize,
+            endFontSize,
             setColor: () => {},
             endColor: () => {},
+            setRaised: () => {},
+            endRaised: () => {},
         });
         if (line.length > 1 && typeof line[line.length - 1] === "string" && typeof line[line.length - 2] === "string") {
             const text = line.pop();
@@ -39,12 +44,12 @@ export default function makeLines(atoms, context, { width, fontSize, fontFamily,
     }
 
     function getTextWidth(atom) {
-        context.font = `${italic ? "italic " : ""}${bold ? "bold " : ""}${fontSize}px ${fontFamily}`;
+        context.font = `${italic ? "italic " : ""}${bold ? "bold " : ""}${currentFontSize}px ${fontFamily}`;
         return context.measureText(atom).width;
     }
 
     function getSymbolWidth(atom) {
-        context.font = `${fontSize}px AHCardTextSymbols`;
+        context.font = `${currentFontSize}px AHCardTextSymbols`;
         return context.measureText(atom).width;
     }
 
@@ -76,5 +81,13 @@ export default function makeLines(atoms, context, { width, fontSize, fontFamily,
 
     function endIndent() {
         indent = 0;
+    }
+
+    function setFontSize(value) {
+        currentFontSize = value;
+    }
+
+    function endFontSize() {
+        currentFontSize = fontSize;
     }
 }
