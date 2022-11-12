@@ -10,6 +10,7 @@ import EndColor from "./atoms/instructions/EndColor";
 const shorthands = {
     "---": "—",
     "--": "–",
+    "->": "→",
     "Revelation -- ": "<b>Revelation – </b>",
     "Revelation - ": "<b>Revelation – </b>",
     "Forced -- ": "<b>Forced – </b>",

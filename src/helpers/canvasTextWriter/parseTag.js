@@ -75,6 +75,8 @@ const textReplacementDictionary = {
     "<pre>": "<b>Prey – </b>",
     "<spa>": "<b>Spawn – </b>",
     "<hau>": "<b>Haunted – </b>",
+    "<res>": "<b>(→R",
+    "</res>": ")</b>",
 };
 
 export default function parseTag(tag, highlightColor) {
@@ -87,6 +89,7 @@ export default function parseTag(tag, highlightColor) {
     if (tag.startsWith("<color=")) {
         return [new StartColor(tag.substring(7, tag.length - 1))];
     }
+
     if (instructionDictionary[tag]) {
         return [new instructionDictionary[tag]()];
     }
