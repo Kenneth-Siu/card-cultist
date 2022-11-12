@@ -1,4 +1,4 @@
-import { TEXTALIGN } from "../../models/CanvasTextConfig";
+import { TEXTALIGN, TEXTDIRECTION } from "../../models/CanvasTextConfig";
 import { PARAGRAPH_SPACING } from "../../pages/campaignGuide/campaignGuideConstants";
 import makeLines from "./makeLines";
 import splitIntoAtoms from "./splitIntoAtoms";
@@ -23,6 +23,7 @@ export class CanvasTextWriter {
         this.color = this.configColor;
         this.x = this.boxX;
         this.y = this.boxY;
+        this.textDirection = canvasTextConfig.textDirection;
 
         const atoms = splitIntoAtoms(this.text, canvasTextConfig);
         this.lines = makeLines(atoms, this.canvasContext, canvasTextConfig);
@@ -30,6 +31,9 @@ export class CanvasTextWriter {
 
     write() {
         this.canvasContext.save();
+        if (this.textDirection === TEXTDIRECTION.UP) {
+            this.canvasContext.rotate(-Math.PI / 2);
+        }
         this.canvasContext.textAlign = TEXTALIGN.LEFT;
         let maxLineWidth = 0;
 

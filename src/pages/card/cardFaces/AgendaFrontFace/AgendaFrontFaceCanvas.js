@@ -72,7 +72,7 @@ export default function AgendaFrontFaceCanvas({ face, cardSet, campaign, setIllu
         const image = await loadFileSystemImage(face.encounterSetSymbol || cardSet.symbol);
         const transform = isSvgPath(face.encounterSetSymbol || cardSet.symbol)
             ? transformSvgOnCanvas(
-                  { h: CARD_PORTRAIT_HEIGHT, w: CARD_PORTRAIT_WIDTH },
+                  { h: CARD_PORTRAIT_WIDTH, w: CARD_PORTRAIT_HEIGHT },
                   { h: image.height, w: image.width },
                   58
               )
@@ -190,7 +190,7 @@ export default function AgendaFrontFaceCanvas({ face, cardSet, campaign, setIllu
         const image = await loadFileSystemImage(face.campaignSymbol || campaign.symbol);
         const transform = isSvgPath(face.campaignSymbol || campaign.symbol)
             ? transformSvgOnCanvas(
-                  { h: CARD_PORTRAIT_HEIGHT, w: CARD_PORTRAIT_WIDTH },
+                  { h: CARD_PORTRAIT_WIDTH, w: CARD_PORTRAIT_HEIGHT },
                   { h: image.height, w: image.width },
                   28
               )

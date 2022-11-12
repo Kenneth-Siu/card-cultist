@@ -10,6 +10,11 @@ export const UNDERLINE = {
     DOUBLE: "double",
 };
 
+export const TEXTDIRECTION = {
+    RIGHT: "right",
+    UP: "up",
+};
+
 export default class CanvasTextConfig {
     constructor() {
         this.text = "";
@@ -30,6 +35,7 @@ export default class CanvasTextConfig {
         this.underline = UNDERLINE.NONE;
         this.strokeStyle = "black";
         this.strokeWidth = 0;
+        this.textDirection = TEXTDIRECTION.RIGHT;
     }
 
     withText(text) {
@@ -119,6 +125,11 @@ export default class CanvasTextConfig {
 
     withStrokeWidth(strokeWidth) {
         this.strokeWidth = strokeWidth;
+        return this;
+    }
+
+    withTextDirection(textDirection) {
+        this.textDirection = textDirection;
         return this;
     }
 }
