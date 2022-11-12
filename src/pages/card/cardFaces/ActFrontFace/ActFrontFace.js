@@ -1,20 +1,20 @@
 import React from "react";
-import treachery from "../../../../../public/templates/scenario/agendaFront.png";
-import AgendaFrontFaceView from "./AgendaFrontFaceView";
-import AgendaFrontFaceCanvas from "./AgendaFrontFaceCanvas";
+import actFront from "../../../../../public/templates/scenario/actFront.png";
+import ActFrontFaceView from "./ActFrontFaceView";
+import ActFrontFaceCanvas from "./ActFrontFaceCanvas";
 import AgendaActFrontFace from "../_AgendaActFrontFace/_AgendaActFrontFace";
 
-export default class AgendaFrontFace extends AgendaActFrontFace {
-    static type = "Agenda Front";
-    static frame = treachery;
+export default class ActFrontFace extends AgendaActFrontFace {
+    static type = "Act Front";
+    static frame = actFront;
 
     constructor(face) {
-        super(face, AgendaFrontFace.type, AgendaFrontFace.frame);
+        super(face, ActFrontFace.type, ActFrontFace.frame);
     }
 
     getView(typeSelect, cardSet, campaign, setCampaign) {
         return (
-            <AgendaFrontFaceView
+            <ActFrontFaceView
                 typeSelect={typeSelect}
                 face={this}
                 cardSet={cardSet}
@@ -26,7 +26,7 @@ export default class AgendaFrontFace extends AgendaActFrontFace {
 
     getCanvas(cardId, cardSet, campaign, setIllustrationTransform) {
         return (
-            <AgendaFrontFaceCanvas
+            <ActFrontFaceCanvas
                 face={this}
                 cardSet={cardSet}
                 campaign={campaign}

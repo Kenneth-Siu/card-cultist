@@ -1,4 +1,5 @@
 import ActBackFace from "./ActBackFace/ActBackFace";
+import ActFrontFace from "./ActFrontFace/ActFrontFace";
 import AgendaBackFace from "./AgendaBackFace/AgendaBackFace";
 import AgendaFrontFace from "./AgendaFrontFace/AgendaFrontFace";
 import CardFace from "./BlankFace/CardFace";
@@ -10,6 +11,7 @@ const listOfCardFaces = [
     ChaosTokenEffectsFace,
     AgendaFrontFace,
     AgendaBackFace,
+    ActFrontFace,
     ActBackFace,
     TreacheryFace,
     CardFace,
