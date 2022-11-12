@@ -35,7 +35,7 @@ export default class ChaosTokenEffectsLayer extends CanvasLayer {
         }
 
         let currentY = startY;
-        const TOKEN_WIDTH = 82;
+        const TOKEN_WIDTH = 96;
         const GUTTER_WIDTH = 14;
         const ACTUAL_LINE_HEIGHT = 0.57 * this.config.lineHeight;
         const textX = this.config.x + TOKEN_WIDTH + GUTTER_WIDTH;
