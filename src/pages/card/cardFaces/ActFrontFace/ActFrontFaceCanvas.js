@@ -137,7 +137,7 @@ export default function ActFrontFaceCanvas({ face, cardSet, campaign, setIllustr
                         .withColor("white")
                         .withAlign(TEXTALIGN.CENTER)
                         .withStrokeStyle("black")
-                        .withStrokeWidth(2)
+                        .withStrokeWidth(4)
                 )
             );
         }

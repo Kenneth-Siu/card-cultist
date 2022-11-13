@@ -1,12 +1,11 @@
 import React from "react";
 import ChaosTokenEffectsFaceCanvas from "./ChaosTokenEffectsFaceCanvas";
 import "../FaceView.scss";
-import "./ChaosTokenEffectsFaceView.scss";
 import ChaosTokenEffectsFace from "./ChaosTokenEffectsFace";
 
 export default function ChaosTokenEffectsFaceView({ typeSelect, face, cardSet, campaign, setCampaign }) {
     return (
-        <div className="face-view chaos-tokens-face-view">
+        <div className="face-view">
             <ChaosTokenEffectsFaceCanvas face={face} cardSet={cardSet} campaign={campaign} />
             <div className="form-container">
                 {typeSelect}

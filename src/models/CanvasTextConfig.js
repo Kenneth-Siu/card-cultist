@@ -4,6 +4,11 @@ export const TEXTALIGN = {
     CENTER: "center",
 };
 
+export const VERTICAL_TEXTALIGN = {
+    TOP: "top",
+    BOTTOM: "BOTTOM",
+};
+
 export const UNDERLINE = {
     NONE: "none",
     SINGLE: "single",
@@ -25,6 +30,7 @@ export default class CanvasTextConfig {
         this.fontSize = 34;
         this.fontFamily = "Amiri";
         this.align = TEXTALIGN.LEFT;
+        this.verticalAlign = VERTICAL_TEXTALIGN.TOP;
         this.bold = false;
         this.italic = false;
         this.color = "black";
@@ -75,6 +81,11 @@ export default class CanvasTextConfig {
 
     withAlign(align) {
         this.align = align;
+        return this;
+    }
+
+    withVerticalAlign(verticalAlign) {
+        this.verticalAlign = verticalAlign;
         return this;
     }
 

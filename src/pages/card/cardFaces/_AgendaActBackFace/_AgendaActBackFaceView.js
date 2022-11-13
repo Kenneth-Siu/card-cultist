@@ -1,10 +1,9 @@
 import React from "react";
 import "../FaceView.scss";
-import "./_AgendaActBackFaceView.scss";
 
 export default function AgendaActBackFaceView({ typeSelect, canvas, face, campaign, setCampaign }) {
     return (
-        <div className="face-view agenda-act-back-face-view">
+        <div className="face-view">
             {canvas}
             <div className="form-container">
                 {typeSelect}

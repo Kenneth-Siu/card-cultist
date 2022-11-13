@@ -139,7 +139,7 @@ export default function AgendaFrontFaceCanvas({ face, cardSet, campaign, setIllu
                         .withColor("white")
                         .withAlign(TEXTALIGN.CENTER)
                         .withStrokeStyle("black")
-                        .withStrokeWidth(2)
+                        .withStrokeWidth(4)
                 )
             );
         }
