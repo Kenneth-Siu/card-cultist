@@ -59,6 +59,7 @@ const symbolDictionary = {
     "<sealc>": new AHSymbol("D", 0.1, -0.05, 0.15),
     "<seald>": new AHSymbol("E", 0.1, -0.05, 0.15),
     "<seale>": new AHSymbol("F", 0.1, -0.05, 0.15),
+    "<star>": new AHSymbol("*"),
 };
 
 const instructionDictionary = {
