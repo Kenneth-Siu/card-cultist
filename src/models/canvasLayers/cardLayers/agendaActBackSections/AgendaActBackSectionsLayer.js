@@ -27,16 +27,19 @@ export default class AgendaActBackSectionsLayer extends CanvasLayer {
             .withX(this.config.x)
             .withWidth(this.config.width)
             .withFontSize(this.config.fontSize)
+            .withLineHeight(this.config.lineHeight)
             .withBold();
         this.storyConfig = new CanvasTextConfig()
             .withX(this.config.x + STORY_INDENT)
             .withWidth(this.config.width - STORY_INDENT)
             .withFontSize(this.config.fontSize)
+            .withLineHeight(this.config.lineHeight)
             .withItalic();
         this.textConfig = new CanvasTextConfig()
             .withX(this.config.x)
             .withWidth(this.config.width)
-            .withFontSize(this.config.fontSize);
+            .withFontSize(this.config.fontSize)
+            .withLineHeight(this.config.lineHeight);
 
         let currentY = this.config.y;
 
