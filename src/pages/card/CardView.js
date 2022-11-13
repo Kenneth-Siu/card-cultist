@@ -66,13 +66,13 @@ export default function CardView({ campaign, setCampaign }) {
 
     function setFrontFaceType(faceType) {
         card.frontFace.type = faceType;
-        card.frontFace.cardType = faceType;
+        card.frontFace.cardType = null;
         card.frontFace = getCardFaceClassInstance(card.frontFace);
         setCampaign(campaign.clone());
     }
     function setBackFaceType(faceType) {
         card.backFace.type = faceType;
-        card.backFace.cardType = faceType;
+        card.backFace.cardType = null;
         card.backFace = getCardFaceClassInstance(card.backFace);
         setCampaign(campaign.clone());
     }

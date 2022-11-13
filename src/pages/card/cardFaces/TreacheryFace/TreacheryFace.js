@@ -18,7 +18,7 @@ export default class TreacheryFace extends CardFace {
         this.encounterSetSymbol = face.encounterSetSymbol || null;
         this.illustration = face.illustration || null;
         this.illustrationTransform = new ImageTransform(face.illustrationTransform);
-        this.cardType = face.cardType || TreacheryFace.type;
+        this.cardType = face.cardType === null ? "Treachery" : face.cardType || "";
         this.title = face.title || "";
         this.traits = face.traits || "";
         this.text = face.text || "";

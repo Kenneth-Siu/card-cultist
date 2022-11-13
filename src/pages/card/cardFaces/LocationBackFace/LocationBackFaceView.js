@@ -1,12 +1,12 @@
 import React from "react";
-import LocationFrontFaceCanvas from "./LocationFrontFaceCanvas";
+import LocationBackFaceCanvas from "./LocationBackFaceCanvas";
 import { connectionSymbols } from "../../../../models/canvasLayers/cardLayers/connectionSymbol/connectionSymbols";
 import "../FaceView.scss";
 
-export default function LocationFrontFaceView({ typeSelect, face, cardSet, campaign, setCampaign }) {
+export default function LocationBackFaceView({ typeSelect, face, cardSet, campaign, setCampaign }) {
     return (
         <div className="face-view">
-            <LocationFrontFaceCanvas
+            <LocationBackFaceCanvas
                 face={face}
                 cardSet={cardSet}
                 campaign={campaign}
@@ -79,20 +79,6 @@ export default function LocationFrontFaceView({ typeSelect, face, cardSet, campa
                 </div>
 
                 <div className="input-container">
-                    <label>Shroud</label>
-                    <input type="text" value={face.shroud} onChange={(event) => setShroud(event.target.value)} />
-                </div>
-
-                <div className="input-container">
-                    <label>Clues</label>
-                    <input type="text" value={face.clues} onChange={(event) => setClues(event.target.value)} />
-                    <label>
-                        Per investigator?
-                        <input type="checkbox" checked={face.cluesIsPer} onChange={() => toggleCluesIsPer()} />
-                    </label>
-                </div>
-
-                <div className="input-container">
                     <label>Traits</label>
                     <input type="text" value={face.traits} onChange={(event) => setTraits(event.target.value)} />
                 </div>
@@ -112,11 +98,6 @@ export default function LocationFrontFaceView({ typeSelect, face, cardSet, campa
                         </label>
                     </div>
                     <textarea value={face.text} onChange={(event) => setText(event.target.value)} />
-                </div>
-
-                <div className="input-container">
-                    <label>Victory</label>
-                    <textarea value={face.victory} onChange={(event) => setVictory(event.target.value)} />
                 </div>
 
                 <div className="input-container">
@@ -195,32 +176,8 @@ export default function LocationFrontFaceView({ typeSelect, face, cardSet, campa
                 </div>
 
                 <div className="input-container">
-                    <label>Encounter Set ID</label>
-                    <input
-                        type="text"
-                        value={face.encounterSetId}
-                        onChange={(event) => setEncounterSetId(event.target.value)}
-                    />
-                    /
-                    <input
-                        type="text"
-                        value={face.encounterSetMaxId}
-                        onChange={(event) => setEncounterSetMaxId(event.target.value)}
-                    />
-                </div>
-
-                <div className="input-container">
                     <label>Campaign Symbol</label>
                     <button onClick={() => setCampaignSymbol()}>Load Image</button>
-                </div>
-
-                <div className="input-container">
-                    <label>Campaign Set ID</label>
-                    <input
-                        type="text"
-                        value={face.campaignSetId}
-                        onChange={(event) => setCampaignSetId(event.target.value)}
-                    />
                 </div>
             </div>
         </div>
@@ -241,21 +198,6 @@ export default function LocationFrontFaceView({ typeSelect, face, cardSet, campa
         setCampaign(campaign.clone());
     }
 
-    function setShroud(shroud) {
-        face.shroud = shroud;
-        setCampaign(campaign.clone());
-    }
-
-    function setClues(clues) {
-        face.clues = clues;
-        setCampaign(campaign.clone());
-    }
-
-    function toggleCluesIsPer() {
-        face.cluesIsPer = !face.cluesIsPer;
-        setCampaign(campaign.clone());
-    }
-
     function setTraits(traits) {
         face.traits = traits;
         setCampaign(campaign.clone());
@@ -268,11 +210,6 @@ export default function LocationFrontFaceView({ typeSelect, face, cardSet, campa
 
     function setTextFontSize(fontSize) {
         face.textFontSize = fontSize;
-        setCampaign(campaign.clone());
-    }
-
-    function setVictory(victory) {
-        face.victory = victory;
         setCampaign(campaign.clone());
     }
 
@@ -318,21 +255,6 @@ export default function LocationFrontFaceView({ typeSelect, face, cardSet, campa
 
     function setCopyrightInformation(copyrightInformation) {
         face.copyrightInformation = copyrightInformation;
-        setCampaign(campaign.clone());
-    }
-
-    function setEncounterSetId(encounterSetId) {
-        face.encounterSetId = encounterSetId;
-        setCampaign(campaign.clone());
-    }
-
-    function setEncounterSetMaxId(encounterSetMaxId) {
-        face.encounterSetMaxId = encounterSetMaxId;
-        setCampaign(campaign.clone());
-    }
-
-    function setCampaignSetId(campaignSetId) {
-        face.campaignSetId = campaignSetId;
         setCampaign(campaign.clone());
     }
 

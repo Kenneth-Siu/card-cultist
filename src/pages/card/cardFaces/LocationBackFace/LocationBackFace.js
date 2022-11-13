@@ -1,19 +1,19 @@
 import React from "react";
 import CardFace from "../BlankFace/CardFace";
-import location from "../../../../../public/templates/locations/locationFront.png";
-import locationSubtitle from "../../../../../public/templates/locations/locationSubtitleFront.png";
-import LocationFrontFaceView from "./LocationFrontFaceView";
+import location from "../../../../../public/templates/locations/locationBack.png";
+import locationSubtitle from "../../../../../public/templates/locations/locationSubtitleBack.png";
+import LocationBackFaceView from "./LocationBackFaceView";
 import ImageTransform from "../../../../models/ImageTransform";
-import LocationFrontFaceCanvas from "./LocationFrontFaceCanvas";
+import LocationBackFaceCanvas from "./LocationBackFaceCanvas";
 import { noConnectionSymbol } from "../../../../models/canvasLayers/cardLayers/connectionSymbol/connectionSymbols";
 
-export default class LocationFrontFace extends CardFace {
-    static type = "Location Front";
+export default class LocationBackFace extends CardFace {
+    static type = "Location Back";
     static frame = location;
     static frameSubtitle = locationSubtitle;
 
     constructor(face) {
-        super(face, LocationFrontFace.type);
+        super(face, LocationBackFace.type);
         if (!face) {
             face = {};
         }
@@ -23,12 +23,8 @@ export default class LocationFrontFace extends CardFace {
         this.illustrationTransform = new ImageTransform(face.illustrationTransform);
         this.encounterSetSymbol = face.encounterSetSymbol || null;
         this.cardType = face.cardType === null ? "Location" : face.cardType || "";
-        this.shroud = face.shroud || "";
-        this.clues = face.clues || "";
-        this.cluesIsPer = face.cluesIsPer || false;
         this.traits = face.traits || "";
         this.text = face.text || "";
-        this.victory = face.victory || "";
         this.textFontSize = face.textFontSize || 34;
         this.connectionSymbol = face.connectionSymbol || noConnectionSymbol.name;
         this.connection1 = face.connection1 || noConnectionSymbol.name;
@@ -38,16 +34,13 @@ export default class LocationFrontFace extends CardFace {
         this.connection5 = face.connection5 || noConnectionSymbol.name;
         this.connection6 = face.connection6 || noConnectionSymbol.name;
         this.illustrator = face.illustrator || "";
-        this.encounterSetId = face.encounterSetId || "";
-        this.encounterSetMaxId = face.encounterSetMaxId || "";
         this.copyrightInformation = face.copyrightInformation || "";
         this.campaignSymbol = face.campaignSymbol || null;
-        this.campaignSetId = face.campaignSetId || "";
     }
 
     getView(typeSelect, cardSet, campaign, setCampaign) {
         return (
-            <LocationFrontFaceView
+            <LocationBackFaceView
                 typeSelect={typeSelect}
                 face={this}
                 cardSet={cardSet}
@@ -59,7 +52,7 @@ export default class LocationFrontFace extends CardFace {
 
     getCanvas(cardId, cardSet, campaign, setIllustrationTransform) {
         return (
-            <LocationFrontFaceCanvas
+            <LocationBackFaceCanvas
                 face={this}
                 cardSet={cardSet}
                 campaign={campaign}

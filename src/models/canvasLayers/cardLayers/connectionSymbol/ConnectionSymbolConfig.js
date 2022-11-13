@@ -1,7 +1,7 @@
 import {
     connectionSymbols,
     noConnectionSymbol,
-} from "../../../../pages/card/cardFaces/LocationFrontFace/connectionSymbols";
+} from "./connectionSymbols";
 import CanvasTextConfig from "../../../CanvasTextConfig";
 
 export default class ConnectionSymbolConfig extends CanvasTextConfig {

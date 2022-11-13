@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import useLoadedImages from "../../../../helpers/useLoadedImages";
 import CanvasImageLayer from "../../../../models/canvasLayers/CanvasImageLayer";
 import CanvasTextLayer from "../../../../models/canvasLayers/CanvasTextLayer";
-import CanvasTextConfig, { TEXTALIGN, VERTICAL_TEXTALIGN } from "../../../../models/CanvasTextConfig";
+import CanvasTextConfig, { TEXTALIGN } from "../../../../models/CanvasTextConfig";
 import ImageTransform from "../../../../models/ImageTransform";
-import LocationFrontFace from "./LocationFrontFace";
+import LocationBackFace from "./LocationBackFace";
 import CardCanvas from "../CardCanvas";
 import { isSvgPath } from "../../../../helpers/isSvgPath";
 import { transformSvgOnCanvas } from "../../../../helpers/transformSvgOnCanvas";
@@ -17,7 +17,7 @@ import ConnectionSymbolLayer from "../../../../models/canvasLayers/cardLayers/co
 import ConnectionSymbolConfig from "../../../../models/canvasLayers/cardLayers/connectionSymbol/ConnectionSymbolConfig";
 import connectionSymbolBackground from "../../../../../public/overlays/AHLCG-LocationCircle.png";
 
-export default function LocationFrontFaceCanvas({ face, cardSet, campaign, setIllustrationTransform }) {
+export default function LocationBackFaceCanvas({ face, cardSet, campaign, setIllustrationTransform }) {
     const [loadedImages, loadPublicImage, loadFileSystemImage] = useLoadedImages();
 
     const [illustrationLayer, setIllustrationLayer] = useState(null);
@@ -25,13 +25,10 @@ export default function LocationFrontFaceCanvas({ face, cardSet, campaign, setIl
     const [connectionSymbolBackgroundLayer, setConnectionSymbolBackgroundLayer] = useState(null);
     const [encounterSetSymbolLayer, setEncounterSetSymbolLayer] = useState(null);
     const [cardTypeLayer, setCardTypeLayer] = useState(null);
-    const [shroudLayer, setShroudLayer] = useState(null);
-    const [cluesLayer, setCluesLayer] = useState(null);
     const [titleLayer, setTitleLayer] = useState(null);
     const [subtitleLayer, setSubtitleLayer] = useState(null);
     const [traitsLayer, setTraitsLayer] = useState(null);
     const [textLayer, setTextLayer] = useState(null);
-    const [victoryLayer, setVictoryLayer] = useState(null);
     const [connectionSymbolLayer, setConnectionSymbolLayer] = useState(null);
     const [connection1Layer, setConnection1Layer] = useState(null);
     const [connection2Layer, setConnection2Layer] = useState(null);
@@ -41,9 +38,7 @@ export default function LocationFrontFaceCanvas({ face, cardSet, campaign, setIl
     const [connection6Layer, setConnection6Layer] = useState(null);
     const [illustratorLayer, setIllustratorLayer] = useState(null);
     const [copyrightInformationLayer, setCopyrightInformationLayer] = useState(null);
-    const [encounterSetIdLayer, setEncounterSetIdLayer] = useState(null);
     const [campaignSymbolLayer, setCampaignSymbolLayer] = useState(null);
-    const [campaignSetIdLayer, setCampaignSetIdLayer] = useState(null);
 
     const canvasLayers = [
         illustrationLayer,
@@ -53,11 +48,8 @@ export default function LocationFrontFaceCanvas({ face, cardSet, campaign, setIl
         subtitleLayer,
         encounterSetSymbolLayer,
         cardTypeLayer,
-        shroudLayer,
-        cluesLayer,
         traitsLayer,
         textLayer,
-        victoryLayer,
         connectionSymbolLayer,
         connection1Layer,
         connection2Layer,
@@ -67,9 +59,7 @@ export default function LocationFrontFaceCanvas({ face, cardSet, campaign, setIl
         connection6Layer,
         illustratorLayer,
         copyrightInformationLayer,
-        encounterSetIdLayer,
         campaignSymbolLayer,
-        campaignSetIdLayer,
     ];
 
     useEffect(async () => {
@@ -90,13 +80,13 @@ export default function LocationFrontFaceCanvas({ face, cardSet, campaign, setIl
         if (face.subtitle) {
             setFrameLayer(
                 new CanvasImageLayer(
-                    await loadPublicImage(LocationFrontFace.frameSubtitle),
+                    await loadPublicImage(LocationBackFace.frameSubtitle),
                     new ImageTransform({ scale: 2 })
                 )
             );
         } else {
             setFrameLayer(
-                new CanvasImageLayer(await loadPublicImage(LocationFrontFace.frame), new ImageTransform({ scale: 2 }))
+                new CanvasImageLayer(await loadPublicImage(LocationBackFace.frame), new ImageTransform({ scale: 2 }))
             );
         }
     }, [!!face.subtitle]);
@@ -177,38 +167,6 @@ export default function LocationFrontFaceCanvas({ face, cardSet, campaign, setIl
         );
     }, [face.cardType]);
 
-    useEffect(async () => {
-        setShroudLayer(
-            new CanvasTextLayer(
-                new CanvasTextConfig()
-                    .withText(face.shroud)
-                    .withX(70)
-                    .withY(584)
-                    .withFontSize(52)
-                    .withFontFamily("AHCardTextSymbols")
-                    .withColor("#FEF1DB")
-                    .withAlign(TEXTALIGN.CENTER)
-            )
-        );
-    }, [face.shroud]);
-
-    useEffect(async () => {
-        setCluesLayer(
-            new CanvasTextLayer(
-                new CanvasTextConfig()
-                    .withText(face.clues + (face.cluesIsPer ? "<raised=16><size=30>r</size></raised>" : ""))
-                    .withX(684 + (face.cluesIsPer ? 4 : 0))
-                    .withY(584)
-                    .withFontSize(52)
-                    .withFontFamily("AHCardTextSymbols")
-                    .withColor("black")
-                    .withAlign(TEXTALIGN.CENTER)
-                    .withStrokeStyle("white")
-                    .withStrokeWidth(3)
-            )
-        );
-    }, [face.clues, face.cluesIsPer]);
-
     useEffect(() => {
         setTraitsLayer(
             new CanvasTextLayer(
@@ -228,9 +186,9 @@ export default function LocationFrontFaceCanvas({ face, cardSet, campaign, setIl
         setTextLayer(
             new CanvasTextLayer(
                 new CanvasTextConfig()
-                    .withText(face.text)
+                    .withText(face.text - (face.traits ? 0 : 6))
                     .withX(40)
-                    .withY(658 - (face.traits ? 0 : 6))
+                    .withY(658)
                     .withWidth(670)
                     .withFontSize(face.textFontSize)
                     .withCardTitle(face.title)
@@ -238,23 +196,6 @@ export default function LocationFrontFaceCanvas({ face, cardSet, campaign, setIl
             )
         );
     }, [face.title, face.subtitle, face.traits, face.text, face.textFontSize]);
-
-    useEffect(() => {
-        setVictoryLayer(
-            new CanvasTextLayer(
-                new CanvasTextConfig()
-                    .withText(face.victory)
-                    .withX(40)
-                    .withY(660)
-                    .withWidth(686)
-                    .withHeight(286)
-                    .withFontSize(face.textFontSize)
-                    .withBold()
-                    .withAlign(TEXTALIGN.RIGHT)
-                    .withVerticalAlign(VERTICAL_TEXTALIGN.BOTTOM)
-            )
-        );
-    }, [face.victory, face.textFontSize]);
 
     useEffect(async () => {
         setConnectionSymbolLayer(
@@ -325,28 +266,6 @@ export default function LocationFrontFaceCanvas({ face, cardSet, campaign, setIl
         );
     }, [face.copyrightInformation]);
 
-    useEffect(() => {
-        const text =
-            face.encounterSetId || face.encounterSetMaxId
-                ? face.encounterSetId +
-                  String.fromCharCode(8202) +
-                  "/" +
-                  String.fromCharCode(8202) +
-                  face.encounterSetMaxId
-                : "";
-        setEncounterSetIdLayer(
-            new CanvasTextLayer(
-                new CanvasTextConfig()
-                    .withText(text)
-                    .withX(602)
-                    .withY(1042)
-                    .withFontSize(18)
-                    .withAlign(TEXTALIGN.RIGHT)
-                    .withColor("white")
-            )
-        );
-    }, [face.encounterSetId, face.encounterSetMaxId]);
-
     useEffect(async () => {
         const image = await loadFileSystemImage(face.campaignSymbol || campaign.symbol);
         const transform = isSvgPath(face.campaignSymbol || campaign.symbol)
@@ -370,20 +289,6 @@ export default function LocationFrontFaceCanvas({ face, cardSet, campaign, setIl
                 : null
         );
     }, [face.campaignSymbol, campaign.symbol]);
-
-    useEffect(() => {
-        setCampaignSetIdLayer(
-            new CanvasTextLayer(
-                new CanvasTextConfig()
-                    .withText(face.campaignSetId)
-                    .withX(716)
-                    .withY(1042)
-                    .withFontSize(18)
-                    .withAlign(TEXTALIGN.RIGHT)
-                    .withColor("white")
-            )
-        );
-    }, [face.campaignSetId]);
 
     return (
         <CardCanvas
