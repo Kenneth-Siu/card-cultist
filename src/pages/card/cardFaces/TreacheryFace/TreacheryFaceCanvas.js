@@ -127,9 +127,10 @@ export default function TreacheryFaceCanvas({ face, cardSet, campaign, setIllust
                     .withText(face.text)
                     .withX(62)
                     .withY(743)
-                    .withWidth(650)
+                    .withWidth(626)
                     .withFontSize(face.textFontSize)
                     .withCardTitle(face.title)
+                    .withLineHeight(1.05)
             )
         );
     }, [face.title, face.text, face.textFontSize]);

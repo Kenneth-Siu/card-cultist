@@ -8,9 +8,11 @@ import EnemyFace from "./EnemyFace/EnemyFace";
 import LocationBackFace from "./LocationBackFace/LocationBackFace";
 import LocationFrontFace from "./LocationFrontFace/LocationFrontFace";
 import MythosFace from "./MythosFace/MythosFace";
+import StoryFace from "./StoryFace/StoryFace";
 import TreacheryFace from "./TreacheryFace/TreacheryFace";
 
 const listOfCardFaces = [
+    CardFace,
     ChaosTokenEffectsFace,
     AgendaFrontFace,
     AgendaBackFace,
@@ -20,7 +22,7 @@ const listOfCardFaces = [
     LocationBackFace,
     EnemyFace,
     TreacheryFace,
-    CardFace,
+    StoryFace,
     MythosFace,
 ];
 
