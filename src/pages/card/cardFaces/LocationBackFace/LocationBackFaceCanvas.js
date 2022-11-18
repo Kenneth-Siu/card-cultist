@@ -186,9 +186,9 @@ export default function LocationBackFaceCanvas({ face, cardSet, campaign, setIll
         setTextLayer(
             new CanvasTextLayer(
                 new CanvasTextConfig()
-                    .withText(face.text - (face.traits ? 0 : 6))
+                    .withText(face.text)
                     .withX(40)
-                    .withY(658)
+                    .withY(660 - (face.traits ? 0 : 6))
                     .withWidth(670)
                     .withFontSize(face.textFontSize)
                     .withCardTitle(face.title)

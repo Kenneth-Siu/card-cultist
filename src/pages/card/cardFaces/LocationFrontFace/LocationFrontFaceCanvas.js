@@ -230,7 +230,7 @@ export default function LocationFrontFaceCanvas({ face, cardSet, campaign, setIl
                 new CanvasTextConfig()
                     .withText(face.text)
                     .withX(40)
-                    .withY(658 - (face.traits ? 0 : 6))
+                    .withY(660 - (face.traits ? 0 : 6))
                     .withWidth(670)
                     .withFontSize(face.textFontSize)
                     .withCardTitle(face.title)

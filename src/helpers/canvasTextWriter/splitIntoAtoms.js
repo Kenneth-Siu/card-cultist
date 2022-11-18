@@ -23,6 +23,8 @@ const shorthands = {
     "Spawn - ": "<b>Spawn – </b>",
     "Haunted -- ": "<b>Haunted – </b>",
     "Haunted - ": "<b>Haunted – </b>",
+    "Dungeon -- ": "<b>Dungeon – </b>",
+    "Dungeon - ": "<b>Dungeon – </b>",
 };
 
 /*
