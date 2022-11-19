@@ -35,4 +35,8 @@ export default class AgendaFrontFace extends AgendaActFrontFace {
             />
         );
     }
+
+    getEmoji() {
+        return "📕";
+    }
 }

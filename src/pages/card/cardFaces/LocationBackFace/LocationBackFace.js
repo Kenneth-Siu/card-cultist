@@ -61,4 +61,8 @@ export default class LocationBackFace extends CardFace {
             />
         );
     }
+
+    getEmoji() {
+        return "🏠";
+    }
 }

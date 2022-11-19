@@ -21,4 +21,8 @@ export default class Card {
         }
         return "CARD_ID#" + this.id;
     }
+
+    getEmoji() {
+        return this.frontFace.getEmoji() || this.backFace.getEmoji() || "";
+    }
 }

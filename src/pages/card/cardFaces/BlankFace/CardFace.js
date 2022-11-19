@@ -18,4 +18,8 @@ export default class CardFace {
     getCanvas(cardId) {
         return <BlankFaceCanvas key={cardId} />;
     }
+
+    getEmoji() {
+        return "";
+    }
 }

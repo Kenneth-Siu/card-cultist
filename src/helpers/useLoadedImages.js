@@ -25,15 +25,15 @@ export default function useLoadedImages() {
         if (!path) {
             return undefined;
         }
-        const data = await window.fs.openImage(path);
-        const src = await getSrcFromData(path, data);
+        const src = await getImageSrc(path);
         return await loadPublicImage(src);
     }
 
     return [loadedImages, loadPublicImage, loadFileSystemImage];
 }
 
-async function getSrcFromData(path, data) {
+export async function getImageSrc(path) {
+    const data = await window.fs.openImage(path);
     if (isSvgPath(path)) {
         return "data:image/svg+xml; charset=utf8, " + encodeURIComponent(await new Blob([data]).text());
     }

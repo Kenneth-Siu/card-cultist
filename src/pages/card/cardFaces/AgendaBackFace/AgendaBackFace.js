@@ -27,4 +27,8 @@ export default class AgendaBackFace extends AgendaActBackFace {
     getCanvas(cardId, cardSet) {
         return <AgendaBackFaceCanvas face={this} cardSet={cardSet} key={cardId} />;
     }
+
+    getEmoji() {
+        return "📕";
+    }
 }

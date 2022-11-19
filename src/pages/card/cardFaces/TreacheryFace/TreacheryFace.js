@@ -53,4 +53,8 @@ export default class TreacheryFace extends CardFace {
             />
         );
     }
+
+    getEmoji() {
+        return "🗡";
+    }
 }

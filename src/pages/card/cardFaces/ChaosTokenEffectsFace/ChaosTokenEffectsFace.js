@@ -60,4 +60,8 @@ export default class ChaosTokenEffectsFace extends CardFace {
             />
         );
     }
+
+    getEmoji() {
+        return "💀";
+    }
 }

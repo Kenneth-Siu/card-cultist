@@ -2,7 +2,12 @@
 
 @font-face {
     font-family: "AHCardTextSymbols";
-    src: url("../../public/AHCardTextSymbols.ttf") format("truetype");
+    src: url("../../public/AHCardTextSymbols.ttf");
+}
+
+@font-face {
+    font-family: "NotoColorEmoji-Regular";
+    src: url("../../public/NotoColorEmoji-Regular.ttf");
 }
 
 html {

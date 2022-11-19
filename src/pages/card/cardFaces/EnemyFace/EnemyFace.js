@@ -68,4 +68,8 @@ export default class EnemyFace extends CardFace {
             />
         );
     }
+
+    getEmoji() {
+        return "👹";
+    }
 }

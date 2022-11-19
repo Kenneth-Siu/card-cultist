@@ -43,4 +43,8 @@ export default class StoryFace extends CardFace {
     getCanvas(cardId, cardSet, campaign) {
         return <StoryFaceCanvas face={this} cardSet={cardSet} campaign={campaign} key={cardId} />;
     }
+
+    getEmoji() {
+        return "📜";
+    }
 }

@@ -1,29 +1,63 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
+import hash from "../../helpers/hash";
+import { getImageSrc } from "../../helpers/useLoadedImages";
 import "./NavBar.scss";
 
 export default function NavBar({ campaign, setCampaign }) {
     const history = useHistory();
+    const [campaignSymbolSrc, setCampaignSymbolSrc] = useState(null);
+    const [cardSetSymbolSrcs, setCardSetSymbolSrcs] = useState({});
+
+    useEffect(() => {
+        (async () => {
+            if (campaign.symbol) {
+                setCampaignSymbolSrc(await getImageSrc(campaign.symbol));
+            }
+        })();
+    }, [campaign.symbol]);
+
+    useEffect(() => {
+        (async () => {
+            const symbols = Object.assign({}, cardSetSymbolSrcs);
+            await Promise.all(
+                campaign.cardSets.map(async (cardSet) => {
+                    if (cardSet.symbol) {
+                        symbols[cardSet.id] = await getImageSrc(cardSet.symbol);
+                    }
+                })
+            );
+            setCardSetSymbolSrcs(symbols);
+        })();
+    }, [hash(campaign.cardSets.map((cardSet) => cardSet.symbol))]);
 
     return (
         <nav id="nav-bar">
             <ol>
                 <li>
-                    <Link to="/">{campaign.title}</Link>
+                    <Link to="/">
+                        <img src={campaignSymbolSrc} />
+                        {campaign.title}
+                    </Link>
                 </li>
                 <li>
-                    <Link to="/campaign-guide">Campaign Guide</Link>
+                    <Link to="/campaign-guide">
+                        <span className="emoji">✒</span>
+                        <span>Campaign Guide</span>
+                    </Link>
                 </li>
                 {campaign.cardSets.map((cardSet) => (
                     <li key={cardSet.id}>
                         <Link to={`/card-set/${cardSet.id}`}>
-                            {cardSet.title ? cardSet.title : `(No title – ID ${cardSet.id})`}
+                            <img src={cardSetSymbolSrcs[cardSet.id]} />
+                            {cardSet.getTitle()}
                         </Link>
                         <ol>
                             {cardSet.cards.map((card) => (
                                 <li key={card.id}>
                                     <Link to={`/card-set/${cardSet.id}/card/${card.id}`}>
-                                        {card.getTitle() ? card.getTitle() : `(No title – ID ${card.id})`}
+                                        <span className="emoji">{`${card.getEmoji()}`}</span>
+                                        <span>{`${card.getTitle()}`}</span>
                                     </Link>
                                 </li>
                             ))}

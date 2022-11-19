@@ -1,25 +1,53 @@
 @import "../../helpers/scss/colors.scss";
 
 $nav-padding: 0.25rem;
-$indented-nav-padding: 1rem + $nav-padding;
+$indented-nav-padding: 1.25rem + $nav-padding;
 
 #nav-bar {
     flex-grow: 0;
     font-size: 0.95rem;
+    background-color: lighten($color-2, 3%);
+    padding: 0.3rem;
+
+    img {
+        height: 1rem;
+        width: 1rem;
+        line-height: 1;
+        margin-right: 0.25rem;
+        filter: invert(1);
+    }
 
     a {
         color: $color-1;
         padding: $nav-padding;
         flex-grow: 1;
         text-decoration: none;
+        display: flex;
+        align-items: center;
         &:hover {
             background-color: rgba(255, 255, 255, 0.1);
+        }
+    }
+
+    > ol > li {
+        border-top: 1px rgba(255, 255, 255, 0.4) solid;
+        padding-top: 0.2rem;
+        padding-bottom: 0.2rem;
+
+        &:last-child {
+            border-bottom: 1px rgba(255, 255, 255, 0.4) solid;
         }
     }
 
     li {
         display: flex;
         flex-direction: column;
+    }
+
+    .emoji {
+        font-family: NotoColorEmoji-Regular;
+        font-size: 0.8rem;
+        margin-right: 0.25rem;
     }
 
     > ol > li {
