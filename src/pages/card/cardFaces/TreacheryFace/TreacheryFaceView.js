@@ -1,10 +1,11 @@
 import React from "react";
 import TreacheryFaceCanvas from "./TreacheryFaceCanvas";
 import "../FaceView.scss";
+import Container from "../../../../components/container/Container";
 
 export default function TreacheryFaceView({ typeSelect, face, cardSet, campaign, setCampaign }) {
     return (
-        <div className="face-view">
+        <Container className="face-view">
             <TreacheryFaceCanvas
                 face={face}
                 cardSet={cardSet}
@@ -141,7 +142,7 @@ export default function TreacheryFaceView({ typeSelect, face, cardSet, campaign,
                     />
                 </div>
             </div>
-        </div>
+        </Container>
     );
 
     function setCardType(cardType) {

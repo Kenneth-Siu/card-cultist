@@ -1,11 +1,12 @@
 import React from "react";
 import ChaosTokenEffectsFaceCanvas from "./ChaosTokenEffectsFaceCanvas";
-import "../FaceView.scss";
+import Container from "../../../../components/container/Container";
 import ChaosTokenEffectsFace from "./ChaosTokenEffectsFace";
+import "../FaceView.scss";
 
 export default function ChaosTokenEffectsFaceView({ typeSelect, face, cardSet, campaign, setCampaign }) {
     return (
-        <div className="face-view">
+        <Container className="face-view">
             <ChaosTokenEffectsFaceCanvas face={face} cardSet={cardSet} campaign={campaign} />
             <div className="form-container">
                 {typeSelect}
@@ -112,7 +113,7 @@ export default function ChaosTokenEffectsFaceView({ typeSelect, face, cardSet, c
                     />
                 </div>
             </div>
-        </div>
+        </Container>
     );
 
     function setTitle(title) {

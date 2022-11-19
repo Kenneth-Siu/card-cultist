@@ -1,6 +1,9 @@
+@import "../../../helpers/scss/colors.scss";
+
 .face-view {
     display: flex;
     align-items: flex-start;
+    max-width: 1180px;
 
     .canvas-container {
         flex-grow: 0;

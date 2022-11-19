@@ -12,7 +12,7 @@
     }
 }
 
-@mixin underlining-link($color: $color-1) {
+@mixin underlining-link($color: $grayscale-9) {
     text-decoration: none;
     color: $color;
 

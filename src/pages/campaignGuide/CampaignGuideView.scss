@@ -1,6 +1,10 @@
 .campaign-guide-page {
     padding: 0.5rem;
 
+    .page-view:not(:last-child) {
+        margin-bottom: 0.5rem;
+    }
+
     .editor-container {
         display: flex;
     }

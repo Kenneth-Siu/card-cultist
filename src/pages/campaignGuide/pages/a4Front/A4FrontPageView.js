@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import A4FrontPageCanvas from "./A4FrontPageCanvas";
 import listOfWidgetTypes from "../../widgets/listOfWidgetTypes";
+import Container from "../../../../components/container/Container";
 
 export default function A4FrontPageView({ page, pageNumber, campaign, setCampaign }) {
     const [newLeftWidgetType, setNewLeftWidgetType] = useState(listOfWidgetTypes[0].type);
     const [newRightWidgetType, setNewRightWidgetType] = useState(listOfWidgetTypes[0].type);
 
     return (
-        <div className="page-view">
+        <Container className="page-view">
             <button onClick={() => deletePage()}>Delete Page</button>
             <input type="text" value={page.title} onChange={(event) => setTitle(event.target.value)} />
             <div className="editor-container">
@@ -47,7 +48,7 @@ export default function A4FrontPageView({ page, pageNumber, campaign, setCampaig
                     </div>
                 </div>
             </div>
-        </div>
+        </Container>
     );
 
     function deletePage() {

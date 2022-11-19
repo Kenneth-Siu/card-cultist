@@ -1,10 +1,11 @@
 import React from "react";
 import StoryFaceCanvas from "./StoryFaceCanvas";
+import Container from "../../../../components/container/Container";
 import "../FaceView.scss";
 
 export default function StoryFaceView({ typeSelect, face, cardSet, campaign, setCampaign }) {
     return (
-        <div className="face-view">
+        <Container className="face-view">
             <StoryFaceCanvas face={face} cardSet={cardSet} />
             <div className="form-container">
                 {typeSelect}
@@ -80,7 +81,7 @@ export default function StoryFaceView({ typeSelect, face, cardSet, campaign, set
                     <input type="text" value={face.cardType} onChange={(event) => setCardType(event.target.value)} />
                 </div>
             </div>
-        </div>
+        </Container>
     );
 
     function setTitle(title) {

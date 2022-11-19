@@ -27,40 +27,36 @@ export default function CardView({ campaign, setCampaign }) {
                 <button onClick={() => exportCard("image/png", "png")}>Export PNG</button>
                 <button onClick={() => exportCard("image/jpeg", "jpg", 0.9)}>Export JPG</button>
             </div>
-            <div className="front-face-view-container">
-                {card.frontFace.getView(
-                    <div className="input-container">
-                        <label>Card Face</label>
-                        <select value={card.frontFace.type} onChange={(event) => setFrontFaceType(event.target.value)}>
-                            {listOfCardFaces.map((cardFace) => (
-                                <option key={cardFace.type} value={cardFace.type}>
-                                    {cardFace.type}
-                                </option>
-                            ))}
-                        </select>
-                    </div>,
-                    cardSet,
-                    campaign,
-                    setCampaign
-                )}
-            </div>
-            <div className="back-face-view-container">
-                {card.backFace.getView(
-                    <div className="input-container">
-                        <label>Card Face</label>
-                        <select value={card.backFace.type} onChange={(event) => setBackFaceType(event.target.value)}>
-                            {listOfCardFaces.map((cardFace) => (
-                                <option key={cardFace.type} value={cardFace.type}>
-                                    {cardFace.type}
-                                </option>
-                            ))}
-                        </select>
-                    </div>,
-                    cardSet,
-                    campaign,
-                    setCampaign
-                )}
-            </div>
+            {card.frontFace.getView(
+                <div className="input-container">
+                    <label>Card Face</label>
+                    <select value={card.frontFace.type} onChange={(event) => setFrontFaceType(event.target.value)}>
+                        {listOfCardFaces.map((cardFace) => (
+                            <option key={cardFace.type} value={cardFace.type}>
+                                {cardFace.type}
+                            </option>
+                        ))}
+                    </select>
+                </div>,
+                cardSet,
+                campaign,
+                setCampaign
+            )}
+            {card.backFace.getView(
+                <div className="input-container">
+                    <label>Card Face</label>
+                    <select value={card.backFace.type} onChange={(event) => setBackFaceType(event.target.value)}>
+                        {listOfCardFaces.map((cardFace) => (
+                            <option key={cardFace.type} value={cardFace.type}>
+                                {cardFace.type}
+                            </option>
+                        ))}
+                    </select>
+                </div>,
+                cardSet,
+                campaign,
+                setCampaign
+            )}
         </main>
     );
 
@@ -78,7 +74,7 @@ export default function CardView({ campaign, setCampaign }) {
     }
 
     function exportCard(imageType, extension, quality) {
-        document.querySelector(".front-face-view-container canvas").toBlob(
+        document.querySelector(".face-view:nth-child(2) canvas").toBlob(
             (canvasBlob) => {
                 return canvasBlob.arrayBuffer().then((arrayBuffer) => {
                     return window.fs.exportCardImage(
@@ -92,7 +88,7 @@ export default function CardView({ campaign, setCampaign }) {
             imageType,
             quality
         );
-        document.querySelector(".back-face-view-container canvas").toBlob(
+        document.querySelector(".face-view:nth-child(3) canvas").toBlob(
             (canvasBlob) => {
                 return canvasBlob.arrayBuffer().then((arrayBuffer) => {
                     return window.fs.exportCardImage(

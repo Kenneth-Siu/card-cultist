@@ -1,7 +1,15 @@
 .card-page {
     padding: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 
-    .front-face-view-container {
+    > div {
+        min-width: 51%;
+        flex-grow: 1;
+    }
+
+    .face-view:nth-child(2) {
         margin-bottom: 0.5rem;
     }
 

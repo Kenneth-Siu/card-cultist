@@ -28,7 +28,7 @@ export default class CanvasTextConfig {
         this.width = 0;
         this.height = 0;
         this.fontSize = 34;
-        this.fontFamily = "Amiri";
+        this.fontFamily = "Arno";
         this.align = TEXTALIGN.LEFT;
         this.verticalAlign = VERTICAL_TEXTALIGN.TOP;
         this.bold = false;

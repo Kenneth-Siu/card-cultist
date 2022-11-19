@@ -1,11 +1,12 @@
 import React from "react";
 import LocationBackFaceCanvas from "./LocationBackFaceCanvas";
 import { connectionSymbols } from "../../../../models/canvasLayers/cardLayers/connectionSymbol/connectionSymbols";
+import Container from "../../../../components/container/Container";
 import "../FaceView.scss";
 
 export default function LocationBackFaceView({ typeSelect, face, cardSet, campaign, setCampaign }) {
     return (
-        <div className="face-view">
+        <Container className="face-view">
             <LocationBackFaceCanvas
                 face={face}
                 cardSet={cardSet}
@@ -180,7 +181,7 @@ export default function LocationBackFaceView({ typeSelect, face, cardSet, campai
                     <button onClick={() => setCampaignSymbol()}>Load Image</button>
                 </div>
             </div>
-        </div>
+        </Container>
     );
 
     function setTitle(title) {

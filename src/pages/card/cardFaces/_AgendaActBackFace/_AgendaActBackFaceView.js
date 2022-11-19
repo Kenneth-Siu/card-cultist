@@ -1,9 +1,10 @@
 import React from "react";
+import Container from "../../../../components/container/Container";
 import "../FaceView.scss";
 
 export default function AgendaActBackFaceView({ typeSelect, canvas, face, campaign, setCampaign }) {
     return (
-        <div className="face-view">
+        <Container className="face-view">
             {canvas}
             <div className="form-container">
                 {typeSelect}
@@ -79,7 +80,7 @@ export default function AgendaActBackFaceView({ typeSelect, canvas, face, campai
                     <textarea value={face.text3} onChange={(event) => setText3(event.target.value)} />
                 </div>
             </div>
-        </div>
+        </Container>
     );
 
     function setNumber(number) {

@@ -6,7 +6,7 @@ $indented-nav-padding: 1.25rem + $nav-padding;
 #nav-bar {
     flex-grow: 0;
     font-size: 0.95rem;
-    background-color: lighten($color-2, 3%);
+    background-color: $grayscale-2;
     padding: 0.3rem;
 
     img {
@@ -18,24 +18,24 @@ $indented-nav-padding: 1.25rem + $nav-padding;
     }
 
     a {
-        color: $color-1;
+        color: $grayscale-9;
         padding: $nav-padding;
         flex-grow: 1;
         text-decoration: none;
         display: flex;
         align-items: center;
         &:hover {
-            background-color: rgba(255, 255, 255, 0.1);
+            background-color: $grayscale-3;
         }
     }
 
     > ol > li {
-        border-top: 1px rgba(255, 255, 255, 0.4) solid;
+        border-top: 1px $grayscale-4 solid;
         padding-top: 0.2rem;
         padding-bottom: 0.2rem;
 
         &:last-child {
-            border-bottom: 1px rgba(255, 255, 255, 0.4) solid;
+            border-bottom: 1px $grayscale-4 solid;
         }
     }
 

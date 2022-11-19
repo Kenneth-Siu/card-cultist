@@ -1,10 +1,11 @@
 import React from "react";
 import EnemyFaceCanvas from "./EnemyFaceCanvas";
+import Container from "../../../../components/container/Container";
 import "../FaceView.scss";
 
 export default function EnemyFaceView({ typeSelect, face, cardSet, campaign, setCampaign }) {
     return (
-        <div className="face-view">
+        <Container className="face-view">
             <EnemyFaceCanvas
                 face={face}
                 cardSet={cardSet}
@@ -198,7 +199,7 @@ export default function EnemyFaceView({ typeSelect, face, cardSet, campaign, set
                     />
                 </div>
             </div>
-        </div>
+        </Container>
     );
 
     function setCardType(cardType) {

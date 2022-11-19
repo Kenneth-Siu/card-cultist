@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Container from "../../../../components/container/Container";
 import listOfWidgetTypes from "../../widgets/listOfWidgetTypes";
 import SquareFrontPageCanvas from "./SquareFrontPageCanvas";
 
@@ -7,7 +8,7 @@ export default function SquareFrontPageView({ page, campaign, setCampaign }) {
     const [newRightWidgetType, setNewRightWidgetType] = useState(listOfWidgetTypes[0].type);
 
     return (
-        <div className="page-view">
+        <Container className="page-view">
             <button onClick={() => deletePage()}>Delete Page</button>
             <input type="text" value={page.title} onChange={(event) => setTitle(event.target.value)} />
             <div className="editor-container">
@@ -47,7 +48,7 @@ export default function SquareFrontPageView({ page, campaign, setCampaign }) {
                     </div>
                 </div>
             </div>
-        </div>
+        </Container>
     );
 
     function deletePage() {

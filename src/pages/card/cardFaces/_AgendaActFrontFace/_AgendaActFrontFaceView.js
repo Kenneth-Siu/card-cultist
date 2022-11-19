@@ -1,9 +1,10 @@
 import React from "react";
+import Container from "../../../../components/container/Container";
 import "../FaceView.scss";
 
 export default function AgendaActFrontFaceView({ typeSelect, canvas, face, campaign, setCampaign }) {
     return (
-        <div className="face-view">
+        <Container className="face-view">
             {canvas}
             <div className="form-container">
                 {typeSelect}
@@ -147,7 +148,7 @@ export default function AgendaActFrontFaceView({ typeSelect, canvas, face, campa
                     />
                 </div>
             </div>
-        </div>
+        </Container>
     );
 
     function setNumber(number) {

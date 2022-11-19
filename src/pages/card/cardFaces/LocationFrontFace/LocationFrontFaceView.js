@@ -1,11 +1,12 @@
 import React from "react";
 import LocationFrontFaceCanvas from "./LocationFrontFaceCanvas";
 import { connectionSymbols } from "../../../../models/canvasLayers/cardLayers/connectionSymbol/connectionSymbols";
+import Container from "../../../../components/container/Container";
 import "../FaceView.scss";
 
 export default function LocationFrontFaceView({ typeSelect, face, cardSet, campaign, setCampaign }) {
     return (
-        <div className="face-view">
+        <Container className="face-view">
             <LocationFrontFaceCanvas
                 face={face}
                 cardSet={cardSet}
@@ -223,7 +224,7 @@ export default function LocationFrontFaceView({ typeSelect, face, cardSet, campa
                     />
                 </div>
             </div>
-        </div>
+        </Container>
     );
 
     function setTitle(title) {
