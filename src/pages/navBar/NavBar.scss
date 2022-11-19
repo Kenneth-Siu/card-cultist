@@ -30,11 +30,10 @@ $indented-nav-padding: 1.25rem + $nav-padding;
     }
 
     > ol > li {
-        border-top: 1px $grayscale-4 solid;
         padding-top: 0.2rem;
         padding-bottom: 0.2rem;
 
-        &:last-child {
+        &:not(:last-child) {
             border-bottom: 1px $grayscale-4 solid;
         }
     }

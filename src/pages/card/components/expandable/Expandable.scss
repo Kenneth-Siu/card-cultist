@@ -1,0 +1,37 @@
+@import "../../../../helpers/scss/colors.scss";
+
+.expandable {
+    .height-transitioning {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.2s;
+    }
+
+    &.expanded .height-transitioning {
+        max-height: 1vh;
+    }
+
+    .display-none {
+        display: none;
+    }
+
+    .display-block {
+        display: block;
+    }
+
+    .less-more-button {
+        border: 2px $grayscale-5 dashed;
+        border-radius: 1rem;
+        background: none;
+        color: $grayscale-5;
+        font-weight: bold;
+        width: 100%;
+        padding: 0.5rem;
+        cursor: pointer;
+        margin-top: 0.5rem;
+
+        &:hover {
+            background-color: $grayscale-2;
+        }
+    }
+}
