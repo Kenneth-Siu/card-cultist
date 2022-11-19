@@ -44,6 +44,11 @@ body {
     background-color: $grayscale-1;
 }
 
+.emoji {
+    font-family: NotoColorEmoji-Regular;
+    font-size: 0.8em;
+}
+
 div#root {
     display: flex;
     nav {

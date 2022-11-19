@@ -1,0 +1,76 @@
+@import "../../../../helpers/scss/colors.scss";
+
+.illustration-view {
+    margin-top: 0.5rem;
+    height: 4rem;
+    display: flex;
+    justify-content: space-between;
+
+    > div {
+        flex-grow: 0;
+    }
+
+    .load-image-button {
+        width: 10rem;
+        height: 100%;
+        flex-grow: 0;
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        background: none;
+        border: 2px $grayscale-5 dashed;
+        border-radius: 0.5rem;
+        color: $grayscale-9;
+        padding: 1rem;
+        cursor: pointer;
+
+        &:hover {
+            background-color: $grayscale-2;
+        }
+
+        .emoji {
+            font-size: 2rem;
+        }
+    }
+
+    .transform-container {
+        width: 11rem;
+        flex-grow: 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-content: center;
+
+        .row {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        label.text {
+            width: 4.5rem;
+            text-align: right;
+        }
+        input {
+            width: 5rem;
+        }
+        svg {
+            font-size: 1.4rem;
+        }
+    }
+
+    .illustrator-container {
+        width: 11rem;
+        flex-grow: 0;
+        height: 100%;
+        display: flex;
+        align-content: center;
+
+        label {
+            align-self: center;
+
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.2rem;
+        }
+    }
+}

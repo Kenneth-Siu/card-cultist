@@ -2,6 +2,7 @@ import React from "react";
 import StoryFaceCanvas from "./StoryFaceCanvas";
 import Container from "../../../../components/container/Container";
 import "../FaceView.scss";
+import Expandable from "../../components/expandable/Expandable";
 
 export default function StoryFaceView({ typeSelect, face, cardSet, campaign, setCampaign }) {
     return (
@@ -13,11 +14,6 @@ export default function StoryFaceView({ typeSelect, face, cardSet, campaign, set
                 <div className="input-container">
                     <label>Title</label>
                     <input type="text" value={face.title} onChange={(event) => setTitle(event.target.value)} />
-                </div>
-
-                <div className="input-container">
-                    <label>Encounter Set Symbol</label>
-                    <button onClick={() => setEncounterSetSymbol()}>Load Image</button>
                 </div>
 
                 <div className="input-container">
@@ -76,10 +72,21 @@ export default function StoryFaceView({ typeSelect, face, cardSet, campaign, set
                     <textarea value={face.text3} onChange={(event) => setText3(event.target.value)} />
                 </div>
 
-                <div className="input-container">
-                    <label>Card Type</label>
-                    <input type="text" value={face.cardType} onChange={(event) => setCardType(event.target.value)} />
-                </div>
+                <Expandable maxHeight={"3rem"}>
+                    <div className="input-container">
+                        <label>Encounter Set Symbol</label>
+                        <button onClick={() => setEncounterSetSymbol()}>Load Image</button>
+                    </div>
+
+                    <div className="input-container">
+                        <label>Card Type</label>
+                        <input
+                            type="text"
+                            value={face.cardType}
+                            onChange={(event) => setCardType(event.target.value)}
+                        />
+                    </div>
+                </Expandable>
             </div>
         </Container>
     );

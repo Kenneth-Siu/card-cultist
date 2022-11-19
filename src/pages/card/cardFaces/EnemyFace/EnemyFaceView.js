@@ -2,6 +2,8 @@ import React from "react";
 import EnemyFaceCanvas from "./EnemyFaceCanvas";
 import Container from "../../../../components/container/Container";
 import "../FaceView.scss";
+import Expandable from "../../components/expandable/Expandable";
+import Illustration from "../../components/illustration/Illustration";
 
 export default function EnemyFaceView({ typeSelect, face, cardSet, campaign, setCampaign }) {
     return (
@@ -99,105 +101,66 @@ export default function EnemyFaceView({ typeSelect, face, cardSet, campaign, set
                     />
                 </div>
 
-                <div className="input-container">
-                    <label>Encounter Set Symbol</label>
-                    <button onClick={() => setEncounterSetSymbol()}>Load Image</button>
-                </div>
+                <Illustration
+                    face={face}
+                    campaign={campaign}
+                    setCampaign={setCampaign}
+                    setIllustrationTransform={setIllustrationTransform}
+                />
 
-                <div className="input-container">
-                    <label>Card Type</label>
-                    <input type="text" value={face.cardType} onChange={(event) => setCardType(event.target.value)} />
-                </div>
+                <Expandable maxHeight={"8rem"}>
+                    <div className="input-container">
+                        <label>Encounter Set Symbol</label>
+                        <button onClick={() => setEncounterSetSymbol()}>Load Image</button>
+                    </div>
 
-                <div className="input-container">
-                    <label>Illustration</label>
-                    <button onClick={() => setIllustration()}>Load Image</button>
-                </div>
+                    <div className="input-container">
+                        <label>Card Type</label>
+                        <input
+                            type="text"
+                            value={face.cardType}
+                            onChange={(event) => setCardType(event.target.value)}
+                        />
+                    </div>
 
-                <div className="input-container">
-                    <label>X Position</label>
-                    <input
-                        type="number"
-                        step="1"
-                        value={face.illustrationTransform.x}
-                        onChange={(event) => setIllustrationX(parseInt(event.target.value))}
-                    />
-                </div>
-                <div className="input-container">
-                    <label>Y Position</label>
-                    <input
-                        type="number"
-                        step="1"
-                        value={face.illustrationTransform.y}
-                        onChange={(event) => setIllustrationY(parseInt(event.target.value))}
-                    />
-                </div>
-                <div className="input-container">
-                    <label>Scale</label>
-                    <input
-                        type="number"
-                        step="0.01"
-                        min="0.01"
-                        value={(face.illustrationTransform.scale * 100).toFixed(2)}
-                        onChange={(event) => setIllustrationScale(parseFloat(event.target.value / 100))}
-                    />
-                </div>
-                <div className="input-container">
-                    <label>Rotation</label>
-                    <input
-                        type="number"
-                        step="0.1"
-                        value={face.illustrationTransform.rotation.toFixed(1)}
-                        onChange={(event) => setIllustrationRotation(parseFloat(event.target.value))}
-                    />
-                </div>
+                    <div className="input-container">
+                        <label>Copyright Information</label>
+                        <input
+                            type="text"
+                            value={face.copyrightInformation}
+                            onChange={(event) => setCopyrightInformation(event.target.value)}
+                        />
+                    </div>
 
-                <div className="input-container">
-                    <label>Illustrator</label>
-                    <input
-                        type="text"
-                        value={face.illustrator}
-                        onChange={(event) => setIllustrator(event.target.value)}
-                    />
-                </div>
+                    <div className="input-container">
+                        <label>Encounter Set ID</label>
+                        <input
+                            type="text"
+                            value={face.encounterSetId}
+                            onChange={(event) => setEncounterSetId(event.target.value)}
+                        />
+                        /
+                        <input
+                            type="text"
+                            value={face.encounterSetMaxId}
+                            onChange={(event) => setEncounterSetMaxId(event.target.value)}
+                        />
+                    </div>
 
-                <div className="input-container">
-                    <label>Copyright Information</label>
-                    <input
-                        type="text"
-                        value={face.copyrightInformation}
-                        onChange={(event) => setCopyrightInformation(event.target.value)}
-                    />
-                </div>
+                    <div className="input-container">
+                        <label>Campaign Symbol</label>
+                        <button onClick={() => setCampaignSymbol()}>Load Image</button>
+                    </div>
 
-                <div className="input-container">
-                    <label>Encounter Set ID</label>
-                    <input
-                        type="text"
-                        value={face.encounterSetId}
-                        onChange={(event) => setEncounterSetId(event.target.value)}
-                    />
-                    /
-                    <input
-                        type="text"
-                        value={face.encounterSetMaxId}
-                        onChange={(event) => setEncounterSetMaxId(event.target.value)}
-                    />
-                </div>
-
-                <div className="input-container">
-                    <label>Campaign Symbol</label>
-                    <button onClick={() => setCampaignSymbol()}>Load Image</button>
-                </div>
-
-                <div className="input-container">
-                    <label>Campaign Set ID</label>
-                    <input
-                        type="text"
-                        value={face.campaignSetId}
-                        onChange={(event) => setCampaignSetId(event.target.value)}
-                    />
-                </div>
+                    <div className="input-container">
+                        <label>Campaign Set ID</label>
+                        <input
+                            type="text"
+                            value={face.campaignSetId}
+                            onChange={(event) => setCampaignSetId(event.target.value)}
+                        />
+                    </div>
+                </Expandable>
             </div>
         </Container>
     );

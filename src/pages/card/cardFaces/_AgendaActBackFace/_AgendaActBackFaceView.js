@@ -1,5 +1,6 @@
 import React from "react";
 import Container from "../../../../components/container/Container";
+import Expandable from "../../components/expandable/Expandable";
 import "../FaceView.scss";
 
 export default function AgendaActBackFaceView({ typeSelect, canvas, face, campaign, setCampaign }) {
@@ -79,6 +80,13 @@ export default function AgendaActBackFaceView({ typeSelect, canvas, face, campai
                     <label>Text 3</label>
                     <textarea value={face.text3} onChange={(event) => setText3(event.target.value)} />
                 </div>
+
+                <Expandable maxHeight={"2rem"}>
+                    <div className="input-container">
+                        <label>Encounter Set Symbol</label>
+                        <button onClick={() => setEncounterSetSymbol()}>Load Image</button>
+                    </div>
+                </Expandable>
             </div>
         </Container>
     );

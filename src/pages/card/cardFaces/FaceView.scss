@@ -20,24 +20,23 @@
 
     .input-container {
         display: flex;
+
+        label {
+            width: 10rem;
+            text-align: right;
+            margin-right: 0.5rem;
+            flex-grow: 0;
+        }
+        input {
+            flex-grow: 1;
+        }
+        textarea {
+            height: 6rem;
+            resize: vertical;
+            flex-grow: 1;
+        }
     }
 
-    label {
-        width: 10rem;
-        text-align: right;
-        margin-right: 0.5rem;
-        flex-grow: 0;
-    }
-
-    input {
-        flex-grow: 1;
-    }
-
-    textarea {
-        height: 6rem;
-        resize: vertical;
-        flex-grow: 1;
-    }
     .text-label-container {
         width: 10rem;
         text-align: right;

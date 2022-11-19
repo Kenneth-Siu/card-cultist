@@ -3,6 +3,7 @@ import ChaosTokenEffectsFaceCanvas from "./ChaosTokenEffectsFaceCanvas";
 import Container from "../../../../components/container/Container";
 import ChaosTokenEffectsFace from "./ChaosTokenEffectsFace";
 import "../FaceView.scss";
+import Expandable from "../../components/expandable/Expandable";
 
 export default function ChaosTokenEffectsFaceView({ typeSelect, face, cardSet, campaign, setCampaign }) {
     return (
@@ -74,44 +75,45 @@ export default function ChaosTokenEffectsFaceView({ typeSelect, face, cardSet, c
                         onChange={(event) => setElderThingText(event.target.value)}
                     />
                 </div>
+                <Expandable maxHeight={"6rem"}>
+                    <div className="input-container">
+                        <label>Copyright Information</label>
+                        <input
+                            type="text"
+                            value={face.copyrightInformation}
+                            onChange={(event) => setCopyrightInformation(event.target.value)}
+                        />
+                    </div>
 
-                <div className="input-container">
-                    <label>Copyright Information</label>
-                    <input
-                        type="text"
-                        value={face.copyrightInformation}
-                        onChange={(event) => setCopyrightInformation(event.target.value)}
-                    />
-                </div>
+                    <div className="input-container">
+                        <label>Encounter Set ID</label>
+                        <input
+                            type="text"
+                            value={face.encounterSetId}
+                            onChange={(event) => setEncounterSetId(event.target.value)}
+                        />
+                        /
+                        <input
+                            type="text"
+                            value={face.encounterSetMaxId}
+                            onChange={(event) => setEncounterSetMaxId(event.target.value)}
+                        />
+                    </div>
 
-                <div className="input-container">
-                    <label>Encounter Set ID</label>
-                    <input
-                        type="text"
-                        value={face.encounterSetId}
-                        onChange={(event) => setEncounterSetId(event.target.value)}
-                    />
-                    /
-                    <input
-                        type="text"
-                        value={face.encounterSetMaxId}
-                        onChange={(event) => setEncounterSetMaxId(event.target.value)}
-                    />
-                </div>
+                    <div className="input-container">
+                        <label>Campaign Symbol</label>
+                        <button onClick={() => setCampaignSymbol()}>Load Image</button>
+                    </div>
 
-                <div className="input-container">
-                    <label>Campaign Symbol</label>
-                    <button onClick={() => setCampaignSymbol()}>Load Image</button>
-                </div>
-
-                <div className="input-container">
-                    <label>Campaign Set ID</label>
-                    <input
-                        type="text"
-                        value={face.campaignSetId}
-                        onChange={(event) => setCampaignSetId(event.target.value)}
-                    />
-                </div>
+                    <div className="input-container">
+                        <label>Campaign Set ID</label>
+                        <input
+                            type="text"
+                            value={face.campaignSetId}
+                            onChange={(event) => setCampaignSetId(event.target.value)}
+                        />
+                    </div>
+                </Expandable>
             </div>
         </Container>
     );

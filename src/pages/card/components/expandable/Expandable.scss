@@ -1,14 +1,18 @@
 @import "../../../../helpers/scss/colors.scss";
 
 .expandable {
+    margin-top: 0.5rem;
+
     .height-transitioning {
         max-height: 0;
         overflow: hidden;
-        transition: max-height 0.2s;
+        margin-bottom: 0;
+        transition: max-height 0.2s, margin-bottom 0.2s;
     }
 
     &.expanded .height-transitioning {
         max-height: 1vh;
+        margin-bottom: 0.5rem;
     }
 
     .display-none {
@@ -28,7 +32,6 @@
         width: 100%;
         padding: 0.5rem;
         cursor: pointer;
-        margin-top: 0.5rem;
 
         &:hover {
             background-color: $grayscale-2;

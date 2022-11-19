@@ -4,6 +4,7 @@ import { connectionSymbols } from "../../../../models/canvasLayers/cardLayers/co
 import Container from "../../../../components/container/Container";
 import "../FaceView.scss";
 import Expandable from "../../components/expandable/Expandable";
+import Illustration from "../../components/illustration/Illustration";
 
 export default function LocationFrontFaceView({ typeSelect, face, cardSet, campaign, setCampaign }) {
     return (
@@ -25,49 +26,6 @@ export default function LocationFrontFaceView({ typeSelect, face, cardSet, campa
                 <div className="input-container">
                     <label>Subtitle</label>
                     <input type="text" value={face.subtitle} onChange={(event) => setSubtitle(event.target.value)} />
-                </div>
-
-                <div className="input-container">
-                    <label>Illustration</label>
-                    <button onClick={() => setIllustration()}>Load Image</button>
-                </div>
-
-                <div className="input-container">
-                    <label>X Position</label>
-                    <input
-                        type="number"
-                        step="1"
-                        value={face.illustrationTransform.x}
-                        onChange={(event) => setIllustrationX(parseInt(event.target.value))}
-                    />
-                </div>
-                <div className="input-container">
-                    <label>Y Position</label>
-                    <input
-                        type="number"
-                        step="1"
-                        value={face.illustrationTransform.y}
-                        onChange={(event) => setIllustrationY(parseInt(event.target.value))}
-                    />
-                </div>
-                <div className="input-container">
-                    <label>Scale</label>
-                    <input
-                        type="number"
-                        step="0.01"
-                        min="0.01"
-                        value={(face.illustrationTransform.scale * 100).toFixed(2)}
-                        onChange={(event) => setIllustrationScale(parseFloat(event.target.value / 100))}
-                    />
-                </div>
-                <div className="input-container">
-                    <label>Rotation</label>
-                    <input
-                        type="number"
-                        step="0.1"
-                        value={face.illustrationTransform.rotation.toFixed(1)}
-                        onChange={(event) => setIllustrationRotation(parseFloat(event.target.value))}
-                    />
                 </div>
 
                 <div className="input-container">
@@ -168,14 +126,12 @@ export default function LocationFrontFaceView({ typeSelect, face, cardSet, campa
                     </select>
                 </div>
 
-                <div className="input-container">
-                    <label>Illustrator</label>
-                    <input
-                        type="text"
-                        value={face.illustrator}
-                        onChange={(event) => setIllustrator(event.target.value)}
-                    />
-                </div>
+                <Illustration
+                    face={face}
+                    campaign={campaign}
+                    setCampaign={setCampaign}
+                    setIllustrationTransform={setIllustrationTransform}
+                />
 
                 <Expandable maxHeight={"8rem"}>
                     <div className="input-container">
@@ -319,11 +275,6 @@ export default function LocationFrontFaceView({ typeSelect, face, cardSet, campa
         setCampaign(campaign.clone());
     }
 
-    function setIllustrator(illustrator) {
-        face.illustrator = illustrator;
-        setCampaign(campaign.clone());
-    }
-
     function setCopyrightInformation(copyrightInformation) {
         face.copyrightInformation = copyrightInformation;
         setCampaign(campaign.clone());
@@ -356,30 +307,8 @@ export default function LocationFrontFaceView({ typeSelect, face, cardSet, campa
         setCampaign(campaign.clone());
     }
 
-    async function setIllustration() {
-        const path = await window.fs.chooseImage();
-        face.illustration = path;
-        setCampaign(campaign.clone());
-    }
-
     function setIllustrationTransform(transform) {
         face.illustrationTransform = transform;
         setCampaign(campaign.clone());
-    }
-
-    function setIllustrationX(x) {
-        setIllustrationTransform(face.illustrationTransform.withX(x));
-    }
-
-    function setIllustrationY(y) {
-        setIllustrationTransform(face.illustrationTransform.withY(y));
-    }
-
-    function setIllustrationScale(scale) {
-        setIllustrationTransform(face.illustrationTransform.withScale(scale));
-    }
-
-    function setIllustrationRotation(rotation) {
-        setIllustrationTransform(face.illustrationTransform.withRotation(rotation));
     }
 }
