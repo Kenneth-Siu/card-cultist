@@ -1,0 +1,65 @@
+@import "../../../../helpers/scss/colors.scss";
+
+.connection-picker {
+    position: relative;
+
+    .connection-picker-button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0.25rem;
+
+        &:hover {
+            background-color: $grayscale-2;
+        }
+
+        img {
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 1vw;
+        }
+
+        div.placeholder {
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 1vw;
+            border: 2px $grayscale-7 solid;
+        }
+    }
+
+    .connection-picker-select {
+        position: absolute;
+        background-color: $grayscale-3;
+        top: 0;
+        padding: 0.25rem;
+        border-radius: 1em;
+        border: 1px $grayscale-7 solid;
+        width: calc(6.5rem + 2px);
+        z-index: 1;
+
+        button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.25rem;
+            line-height: 0;
+
+            &:hover {
+                background-color: $grayscale-4;
+            }
+        }
+
+        img {
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 1vw;
+        }
+
+        div.placeholder {
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 1vw;
+            border: 2px $grayscale-7 solid;
+        }
+    }
+}

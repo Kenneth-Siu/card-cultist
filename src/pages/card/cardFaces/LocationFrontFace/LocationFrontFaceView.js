@@ -5,6 +5,7 @@ import Container from "../../../../components/container/Container";
 import "../FaceView.scss";
 import Expandable from "../../components/expandable/Expandable";
 import Illustration from "../../components/illustration/Illustration";
+import ConnectionPicker from "../../components/connectionPicker/ConnectionPicker";
 
 export default function LocationFrontFaceView({ typeSelect, face, cardSet, campaign, setCampaign }) {
     return (
@@ -70,60 +71,18 @@ export default function LocationFrontFaceView({ typeSelect, face, cardSet, campa
                 </div>
 
                 <div className="input-container">
-                    <label>Connection Symbol</label>
-                    <select value={face.connectionSymbol} onChange={(event) => setConnectionSymbol(event.target.value)}>
-                        {connectionSymbols.map((symbol) => (
-                            <option key={symbol.name} value={symbol.name}>
-                                {symbol.name}
-                            </option>
-                        ))}
-                    </select>
+                    <label className="v-centered">Connection Symbol</label>
+                    <ConnectionPicker connection={face.connectionSymbol} setConnection={setConnectionSymbol} />
                 </div>
 
                 <div className="input-container">
-                    <label>Connections</label>
-                    <select value={face.connection1} onChange={(event) => setConnection1(event.target.value)}>
-                        {connectionSymbols.map((symbol) => (
-                            <option key={symbol.name} value={symbol.name}>
-                                {symbol.name}
-                            </option>
-                        ))}
-                    </select>
-                    <select value={face.connection2} onChange={(event) => setConnection2(event.target.value)}>
-                        {connectionSymbols.map((symbol) => (
-                            <option key={symbol.name} value={symbol.name}>
-                                {symbol.name}
-                            </option>
-                        ))}
-                    </select>
-                    <select value={face.connection3} onChange={(event) => setConnection3(event.target.value)}>
-                        {connectionSymbols.map((symbol) => (
-                            <option key={symbol.name} value={symbol.name}>
-                                {symbol.name}
-                            </option>
-                        ))}
-                    </select>
-                    <select value={face.connection4} onChange={(event) => setConnection4(event.target.value)}>
-                        {connectionSymbols.map((symbol) => (
-                            <option key={symbol.name} value={symbol.name}>
-                                {symbol.name}
-                            </option>
-                        ))}
-                    </select>
-                    <select value={face.connection5} onChange={(event) => setConnection5(event.target.value)}>
-                        {connectionSymbols.map((symbol) => (
-                            <option key={symbol.name} value={symbol.name}>
-                                {symbol.name}
-                            </option>
-                        ))}
-                    </select>
-                    <select value={face.connection6} onChange={(event) => setConnection6(event.target.value)}>
-                        {connectionSymbols.map((symbol) => (
-                            <option key={symbol.name} value={symbol.name}>
-                                {symbol.name}
-                            </option>
-                        ))}
-                    </select>
+                    <label className="v-centered">Connections</label>
+                    <ConnectionPicker connection={face.connection1} setConnection={setConnection1} />
+                    <ConnectionPicker connection={face.connection2} setConnection={setConnection2} />
+                    <ConnectionPicker connection={face.connection3} setConnection={setConnection3} />
+                    <ConnectionPicker connection={face.connection4} setConnection={setConnection4} />
+                    <ConnectionPicker connection={face.connection5} setConnection={setConnection5} />
+                    <ConnectionPicker connection={face.connection6} setConnection={setConnection6} />
                 </div>
 
                 <Illustration
