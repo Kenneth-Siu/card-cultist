@@ -13,10 +13,13 @@ export default class CardSet {
         this.cards = this.cards.map((card) => new Card(card));
     }
 
-    addCard() {
+    addCard(card) {
         const id = generateId(this.cards);
-        const card = new Card(id);
-        this.cards.push(card);
+        if (card) {
+            this.cards.push(new Card({ ...card, id }));
+        } else {
+            this.cards.push(new Card(id));
+        }
         return id;
     }
 

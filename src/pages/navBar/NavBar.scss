@@ -27,6 +27,12 @@ $indented-nav-padding: 1.25rem + $nav-padding;
         &:hover {
             background-color: $grayscale-3;
         }
+        &.active {
+            background-color: $highlight-1;
+            &.deselected {
+                background-color: $grayscale-4;
+            }
+        }
     }
 
     > ol > li {
@@ -34,7 +40,7 @@ $indented-nav-padding: 1.25rem + $nav-padding;
         padding-bottom: 0.2rem;
 
         &:not(:last-child) {
-            border-bottom: 1px $grayscale-4 solid;
+            border-bottom: 1px $grayscale-5 solid;
         }
     }
 
