@@ -3,6 +3,7 @@ import StoryFaceCanvas from "./StoryFaceCanvas";
 import Container from "../../../../components/container/Container";
 import "../FaceView.scss";
 import Expandable from "../../components/expandable/Expandable";
+import InputContainer from "../../components/inputContainer/InputContainer";
 
 export default function StoryFaceView({ typeSelect, face, cardSet, campaign, setCampaign }) {
     return (
@@ -11,13 +12,8 @@ export default function StoryFaceView({ typeSelect, face, cardSet, campaign, set
             <div className="form-container">
                 {typeSelect}
 
-                <div className="input-container">
-                    <label>Title</label>
-                    <input type="text" value={face.title} onChange={(event) => setTitle(event.target.value)} />
-                </div>
-
-                <div className="input-container">
-                    <label>Font Size</label>
+                <InputContainer label="Title" type="text" value={face.title} setValue={setTitle} />
+                <InputContainer label="Font Size">
                     <input
                         type="number"
                         value={face.textFontSize.toFixed(1)}
@@ -25,67 +21,34 @@ export default function StoryFaceView({ typeSelect, face, cardSet, campaign, set
                         min="1"
                         onChange={(event) => setTextFontSize(parseFloat(event.target.value))}
                     />
-                </div>
-
-                <div className="input-container">
-                    <label>Header 1</label>
-                    <input type="text" value={face.header1} onChange={(event) => setHeader1(event.target.value)} />
-                </div>
-
-                <div className="input-container">
-                    <label>Story 1</label>
+                </InputContainer>
+                <InputContainer label="Header 1" type="text" value={face.header1} setValue={setHeader1} />
+                <InputContainer label="Story 1">
                     <textarea value={face.story1} onChange={(event) => setStory1(event.target.value)} />
-                </div>
-
-                <div className="input-container">
-                    <label>Text 1</label>
+                </InputContainer>
+                <InputContainer label="Text 1">
                     <textarea value={face.text1} onChange={(event) => setText1(event.target.value)} />
-                </div>
-
-                <div className="input-container">
-                    <label>Header 2</label>
-                    <input type="text" value={face.header2} onChange={(event) => setHeader2(event.target.value)} />
-                </div>
-
-                <div className="input-container">
-                    <label>Story 2</label>
+                </InputContainer>
+                <InputContainer label="Header 2" type="text" value={face.header2} setValue={setHeader2} />
+                <InputContainer label="Story 2">
                     <textarea value={face.story2} onChange={(event) => setStory2(event.target.value)} />
-                </div>
-
-                <div className="input-container">
-                    <label>Text 2</label>
+                </InputContainer>
+                <InputContainer label="Text 2">
                     <textarea value={face.text2} onChange={(event) => setText2(event.target.value)} />
-                </div>
-
-                <div className="input-container">
-                    <label>Header 3</label>
-                    <input type="text" value={face.header3} onChange={(event) => setHeader3(event.target.value)} />
-                </div>
-
-                <div className="input-container">
-                    <label>Story 3</label>
+                </InputContainer>
+                <InputContainer label="Header 3" type="text" value={face.header3} setValue={setHeader3} />
+                <InputContainer label="Story 3">
                     <textarea value={face.story3} onChange={(event) => setStory3(event.target.value)} />
-                </div>
-
-                <div className="input-container">
-                    <label>Text 3</label>
+                </InputContainer>
+                <InputContainer label="Text 3">
                     <textarea value={face.text3} onChange={(event) => setText3(event.target.value)} />
-                </div>
+                </InputContainer>
 
                 <Expandable maxHeight={"3rem"}>
-                    <div className="input-container">
-                        <label>Encounter Set Symbol</label>
+                    <InputContainer label="Encounter Set Symbol">
                         <button onClick={() => setEncounterSetSymbol()}>Load Image</button>
-                    </div>
-
-                    <div className="input-container">
-                        <label>Card Type</label>
-                        <input
-                            type="text"
-                            value={face.cardType}
-                            onChange={(event) => setCardType(event.target.value)}
-                        />
-                    </div>
+                    </InputContainer>
+                    <InputContainer label="Card Type" type="text" value={face.cardType} setValue={setCardType} />
                 </Expandable>
             </div>
         </Container>

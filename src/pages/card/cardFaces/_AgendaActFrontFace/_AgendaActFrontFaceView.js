@@ -2,6 +2,7 @@ import React from "react";
 import Container from "../../../../components/container/Container";
 import Expandable from "../../components/expandable/Expandable";
 import Illustration from "../../components/illustration/Illustration";
+import InputContainer from "../../components/inputContainer/InputContainer";
 import "../FaceView.scss";
 
 export default function AgendaActFrontFaceView({ typeSelect, canvas, face, campaign, setCampaign }) {
@@ -11,41 +12,27 @@ export default function AgendaActFrontFaceView({ typeSelect, canvas, face, campa
             <div className="form-container">
                 {typeSelect}
 
-                <div className="input-container">
-                    <label>Number</label>
-                    <input type="text" value={face.number} onChange={(event) => setNumber(event.target.value)} />
-                </div>
-
-                <div className="input-container">
-                    <label>Title</label>
-                    <input type="text" value={face.title} onChange={(event) => setTitle(event.target.value)} />
-                </div>
-
-                <div className="input-container">
-                    <div className="text-label-container">
-                        <label>Text</label>
-                        <label className="font-size-label">
-                            Font Size
-                            <input
-                                type="number"
-                                value={face.textFontSize.toFixed(1)}
-                                step="0.1"
-                                min="1"
-                                onChange={(event) => setTextFontSize(parseFloat(event.target.value))}
-                            />
-                        </label>
-                    </div>
+                <InputContainer label="Number" type="text" value={face.number} setValue={setNumber} />
+                <InputContainer label="Title" type="text" value={face.title} setValue={setTitle} />
+                <InputContainer label="Font Size">
+                    <input
+                        type="number"
+                        value={face.textFontSize.toFixed(1)}
+                        step="0.1"
+                        min="1"
+                        onChange={(event) => setTextFontSize(parseFloat(event.target.value))}
+                    />
+                </InputContainer>
+                <InputContainer label="Text">
                     <textarea value={face.text} onChange={(event) => setText(event.target.value)} />
-                </div>
-
-                <div className="input-container">
-                    <label>Threshold</label>
+                </InputContainer>
+                <InputContainer label="Threshold">
                     <input type="text" value={face.threshold} onChange={(event) => setThreshold(event.target.value)} />
                     <label>
                         Per investigator?
                         <input type="checkbox" checked={face.isPer} onChange={() => toggleIsPer()} />
                     </label>
-                </div>
+                </InputContainer>
 
                 <Illustration
                     face={face}
@@ -55,22 +42,16 @@ export default function AgendaActFrontFaceView({ typeSelect, canvas, face, campa
                 />
 
                 <Expandable maxHeight={"7rem"}>
-                    <div className="input-container">
-                        <label>Encounter Set Symbol</label>
+                    <InputContainer label="Encounter Set Symbol">
                         <button onClick={() => setEncounterSetSymbol()}>Load Image</button>
-                    </div>
-
-                    <div className="input-container">
-                        <label>Copyright Information</label>
-                        <input
-                            type="text"
-                            value={face.copyrightInformation}
-                            onChange={(event) => setCopyrightInformation(event.target.value)}
-                        />
-                    </div>
-
-                    <div className="input-container">
-                        <label>Encounter Set ID</label>
+                    </InputContainer>
+                    <InputContainer
+                        label="Copyright Information"
+                        type="text"
+                        value={face.copyrightInformation}
+                        setValue={setCopyrightInformation}
+                    />
+                    <InputContainer label="Encounter Set ID" childId="set-id">
                         <input
                             type="text"
                             value={face.encounterSetId}
@@ -82,21 +63,16 @@ export default function AgendaActFrontFaceView({ typeSelect, canvas, face, campa
                             value={face.encounterSetMaxId}
                             onChange={(event) => setEncounterSetMaxId(event.target.value)}
                         />
-                    </div>
-
-                    <div className="input-container">
-                        <label>Campaign Symbol</label>
+                    </InputContainer>
+                    <InputContainer label="Campaign Symbol">
                         <button onClick={() => setCampaignSymbol()}>Load Image</button>
-                    </div>
-
-                    <div className="input-container">
-                        <label>Campaign Set ID</label>
-                        <input
-                            type="text"
-                            value={face.campaignSetId}
-                            onChange={(event) => setCampaignSetId(event.target.value)}
-                        />
-                    </div>
+                    </InputContainer>
+                    <InputContainer
+                        label="Campaign Set ID"
+                        type="text"
+                        value={face.campaignSetId}
+                        setValue={setCampaignSetId}
+                    />
                 </Expandable>
             </div>
         </Container>

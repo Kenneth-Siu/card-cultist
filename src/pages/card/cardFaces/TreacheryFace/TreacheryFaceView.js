@@ -4,6 +4,7 @@ import "../FaceView.scss";
 import Container from "../../../../components/container/Container";
 import Illustration from "../../components/illustration/Illustration";
 import Expandable from "../../components/expandable/Expandable";
+import InputContainer from "../../components/inputContainer/InputContainer";
 
 export default function TreacheryFaceView({ typeSelect, face, cardSet, campaign, setCampaign }) {
     return (
@@ -17,32 +18,20 @@ export default function TreacheryFaceView({ typeSelect, face, cardSet, campaign,
             <div className="form-container">
                 {typeSelect}
 
-                <div className="input-container">
-                    <label>Title</label>
-                    <input type="text" value={face.title} onChange={(event) => setTitle(event.target.value)} />
-                </div>
-
-                <div className="input-container">
-                    <label>Traits</label>
-                    <input type="text" value={face.traits} onChange={(event) => setTraits(event.target.value)} />
-                </div>
-
-                <div className="input-container">
-                    <div className="text-label-container">
-                        <label>Text</label>
-                        <label className="font-size-label">
-                            Font Size
-                            <input
-                                type="number"
-                                value={face.textFontSize.toFixed(1)}
-                                step="0.1"
-                                min="1"
-                                onChange={(event) => setTextFontSize(parseFloat(event.target.value))}
-                            />
-                        </label>
-                    </div>
+                <InputContainer label="Title" type="text" value={face.title} setValue={setTitle} />
+                <InputContainer label="Traits" type="text" value={face.traits} setValue={setTraits} />
+                <InputContainer label="Font Size">
+                    <input
+                        type="number"
+                        value={face.textFontSize.toFixed(1)}
+                        step="0.1"
+                        min="1"
+                        onChange={(event) => setTextFontSize(parseFloat(event.target.value))}
+                    />
+                </InputContainer>
+                <InputContainer label="Text">
                     <textarea value={face.text} onChange={(event) => setText(event.target.value)} />
-                </div>
+                </InputContainer>
 
                 <Illustration
                     face={face}
@@ -52,31 +41,17 @@ export default function TreacheryFaceView({ typeSelect, face, cardSet, campaign,
                 />
 
                 <Expandable maxHeight={"8rem"}>
-                    <div className="input-container">
-                        <label>Encounter Set Symbol</label>
+                    <InputContainer label="Encounter Set Symbol">
                         <button onClick={() => setEncounterSetSymbol()}>Load Image</button>
-                    </div>
-
-                    <div className="input-container">
-                        <label>Card Type</label>
-                        <input
-                            type="text"
-                            value={face.cardType}
-                            onChange={(event) => setCardType(event.target.value)}
-                        />
-                    </div>
-
-                    <div className="input-container">
-                        <label>Copyright Information</label>
-                        <input
-                            type="text"
-                            value={face.copyrightInformation}
-                            onChange={(event) => setCopyrightInformation(event.target.value)}
-                        />
-                    </div>
-
-                    <div className="input-container">
-                        <label>Encounter Set ID</label>
+                    </InputContainer>
+                    <InputContainer label="Card Type" type="text" value={face.cardType} setValue={setCardType} />
+                    <InputContainer
+                        label="Copyright Information"
+                        type="text"
+                        value={face.copyrightInformation}
+                        setValue={setCopyrightInformation}
+                    />
+                    <InputContainer label="Encounter Set ID" childId="set-id">
                         <input
                             type="text"
                             value={face.encounterSetId}
@@ -88,21 +63,16 @@ export default function TreacheryFaceView({ typeSelect, face, cardSet, campaign,
                             value={face.encounterSetMaxId}
                             onChange={(event) => setEncounterSetMaxId(event.target.value)}
                         />
-                    </div>
-
-                    <div className="input-container">
-                        <label>Campaign Symbol</label>
+                    </InputContainer>
+                    <InputContainer label="Campaign Symbol">
                         <button onClick={() => setCampaignSymbol()}>Load Image</button>
-                    </div>
-
-                    <div className="input-container">
-                        <label>Campaign Set ID</label>
-                        <input
-                            type="text"
-                            value={face.campaignSetId}
-                            onChange={(event) => setCampaignSetId(event.target.value)}
-                        />
-                    </div>
+                    </InputContainer>
+                    <InputContainer
+                        label="Campaign Set ID"
+                        type="text"
+                        value={face.campaignSetId}
+                        setValue={setCampaignSetId}
+                    />
                 </Expandable>
             </div>
         </Container>

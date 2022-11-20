@@ -2,8 +2,9 @@ import React from "react";
 import ChaosTokenEffectsFaceCanvas from "./ChaosTokenEffectsFaceCanvas";
 import Container from "../../../../components/container/Container";
 import ChaosTokenEffectsFace from "./ChaosTokenEffectsFace";
-import "../FaceView.scss";
 import Expandable from "../../components/expandable/Expandable";
+import InputContainer from "../../components/inputContainer/InputContainer";
+import "../FaceView.scss";
 
 export default function ChaosTokenEffectsFaceView({ typeSelect, face, cardSet, campaign, setCampaign }) {
     return (
@@ -11,19 +12,8 @@ export default function ChaosTokenEffectsFaceView({ typeSelect, face, cardSet, c
             <ChaosTokenEffectsFaceCanvas face={face} cardSet={cardSet} campaign={campaign} />
             <div className="form-container">
                 {typeSelect}
-
-                <div className="input-container">
-                    <label>Encounter Set Symbol</label>
-                    <button onClick={() => setEncounterSetSymbol()}>Load Image</button>
-                </div>
-
-                <div className="input-container">
-                    <label>Title</label>
-                    <input type="text" value={face.title} onChange={(event) => setTitle(event.target.value)} />
-                </div>
-
-                <div className="input-container">
-                    <label>Difficulty</label>
+                <InputContainer label="Title" type="text" value={face.title} setValue={setTitle} />
+                <InputContainer label="Difficulty">
                     <select value={face.difficulty} onChange={(event) => setDifficulty(event.target.value)}>
                         {ChaosTokenEffectsFace.DIFFICULTY.map((difficulty) => (
                             <option key={difficulty} value={difficulty}>
@@ -31,10 +21,8 @@ export default function ChaosTokenEffectsFaceView({ typeSelect, face, cardSet, c
                             </option>
                         ))}
                     </select>
-                </div>
-
-                <div className="input-container">
-                    <label>Text Font Size</label>
+                </InputContainer>
+                <InputContainer label="Font Size">
                     <input
                         type="number"
                         value={face.textFontSize.toFixed(1)}
@@ -42,51 +30,28 @@ export default function ChaosTokenEffectsFaceView({ typeSelect, face, cardSet, c
                         min="1"
                         onChange={(event) => setTextFontSize(parseFloat(event.target.value))}
                     />
-                </div>
+                </InputContainer>
+                <InputContainer label="Skull" type="text" value={face.skullText} setValue={setSkullText} />
+                <InputContainer label="Cultist" type="text" value={face.cultistText} setValue={setCultistText} />
+                <InputContainer label="Tablet" type="text" value={face.tabletText} setValue={setTabletText} />
+                <InputContainer
+                    label="Elder Thing"
+                    type="text"
+                    value={face.elderThingText}
+                    setValue={setElderThingText}
+                />
 
-                <div className="input-container">
-                    <label>Skull</label>
-                    <input type="text" value={face.skullText} onChange={(event) => setSkullText(event.target.value)} />
-                </div>
-
-                <div className="input-container">
-                    <label>Cultist</label>
-                    <input
+                <Expandable maxHeight={"8rem"}>
+                    <InputContainer label="Encounter Set Symbol">
+                        <button onClick={() => setEncounterSetSymbol()}>Load Image</button>
+                    </InputContainer>
+                    <InputContainer
+                        label="Copyright Information"
                         type="text"
-                        value={face.cultistText}
-                        onChange={(event) => setCultistText(event.target.value)}
+                        value={face.copyrightInformation}
+                        setValue={setCopyrightInformation}
                     />
-                </div>
-
-                <div className="input-container">
-                    <label>Tablet</label>
-                    <input
-                        type="text"
-                        value={face.tabletText}
-                        onChange={(event) => setTabletText(event.target.value)}
-                    />
-                </div>
-
-                <div className="input-container">
-                    <label>Elder Thing</label>
-                    <input
-                        type="text"
-                        value={face.elderThingText}
-                        onChange={(event) => setElderThingText(event.target.value)}
-                    />
-                </div>
-                <Expandable maxHeight={"6rem"}>
-                    <div className="input-container">
-                        <label>Copyright Information</label>
-                        <input
-                            type="text"
-                            value={face.copyrightInformation}
-                            onChange={(event) => setCopyrightInformation(event.target.value)}
-                        />
-                    </div>
-
-                    <div className="input-container">
-                        <label>Encounter Set ID</label>
+                    <InputContainer label="Encounter Set ID" childId="set-id">
                         <input
                             type="text"
                             value={face.encounterSetId}
@@ -98,21 +63,16 @@ export default function ChaosTokenEffectsFaceView({ typeSelect, face, cardSet, c
                             value={face.encounterSetMaxId}
                             onChange={(event) => setEncounterSetMaxId(event.target.value)}
                         />
-                    </div>
-
-                    <div className="input-container">
-                        <label>Campaign Symbol</label>
+                    </InputContainer>
+                    <InputContainer label="Campaign Symbol">
                         <button onClick={() => setCampaignSymbol()}>Load Image</button>
-                    </div>
-
-                    <div className="input-container">
-                        <label>Campaign Set ID</label>
-                        <input
-                            type="text"
-                            value={face.campaignSetId}
-                            onChange={(event) => setCampaignSetId(event.target.value)}
-                        />
-                    </div>
+                    </InputContainer>
+                    <InputContainer
+                        label="Campaign Set ID"
+                        type="text"
+                        value={face.campaignSetId}
+                        setValue={setCampaignSetId}
+                    />
                 </Expandable>
             </div>
         </Container>

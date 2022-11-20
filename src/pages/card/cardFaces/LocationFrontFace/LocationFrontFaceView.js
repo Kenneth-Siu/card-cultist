@@ -1,11 +1,11 @@
 import React from "react";
 import LocationFrontFaceCanvas from "./LocationFrontFaceCanvas";
-import { connectionSymbols } from "../../../../models/canvasLayers/cardLayers/connectionSymbol/connectionSymbols";
 import Container from "../../../../components/container/Container";
-import "../FaceView.scss";
 import Expandable from "../../components/expandable/Expandable";
 import Illustration from "../../components/illustration/Illustration";
 import ConnectionPicker from "../../components/connectionPicker/ConnectionPicker";
+import InputContainer from "../../components/inputContainer/InputContainer";
+import "../FaceView.scss";
 
 export default function LocationFrontFaceView({ typeSelect, face, cardSet, campaign, setCampaign }) {
     return (
@@ -18,72 +18,47 @@ export default function LocationFrontFaceView({ typeSelect, face, cardSet, campa
             />
             <div className="form-container">
                 {typeSelect}
-
-                <div className="input-container">
-                    <label>Title</label>
-                    <input type="text" value={face.title} onChange={(event) => setTitle(event.target.value)} />
-                </div>
-
-                <div className="input-container">
-                    <label>Subtitle</label>
-                    <input type="text" value={face.subtitle} onChange={(event) => setSubtitle(event.target.value)} />
-                </div>
-
-                <div className="input-container">
-                    <label>Shroud</label>
-                    <input type="text" value={face.shroud} onChange={(event) => setShroud(event.target.value)} />
-                </div>
-
-                <div className="input-container">
-                    <label>Clues</label>
+                <InputContainer label="Title" type="text" value={face.title} setValue={setTitle} />
+                <InputContainer label="Subtitle" type="text" value={face.subtitle} setValue={setSubtitle} />
+                <InputContainer label="Shroud" type="text" value={face.shroud} setValue={setShroud} />
+                <InputContainer label="Clues">
                     <input type="text" value={face.clues} onChange={(event) => setClues(event.target.value)} />
                     <label>
                         Per investigator?
                         <input type="checkbox" checked={face.cluesIsPer} onChange={() => toggleCluesIsPer()} />
                     </label>
-                </div>
-
-                <div className="input-container">
-                    <label>Traits</label>
-                    <input type="text" value={face.traits} onChange={(event) => setTraits(event.target.value)} />
-                </div>
-
-                <div className="input-container">
-                    <div className="text-label-container">
-                        <label>Text</label>
-                        <label className="font-size-label">
-                            Font Size
-                            <input
-                                type="number"
-                                value={face.textFontSize.toFixed(1)}
-                                step="0.1"
-                                min="1"
-                                onChange={(event) => setTextFontSize(parseFloat(event.target.value))}
-                            />
-                        </label>
-                    </div>
+                </InputContainer>
+                <InputContainer label="Traits" type="text" value={face.traits} setValue={setTraits} />
+                <InputContainer label="Font Size">
+                    <input
+                        type="number"
+                        value={face.textFontSize.toFixed(1)}
+                        step="0.1"
+                        min="1"
+                        onChange={(event) => setTextFontSize(parseFloat(event.target.value))}
+                    />
+                </InputContainer>
+                <InputContainer label="Text">
                     <textarea value={face.text} onChange={(event) => setText(event.target.value)} />
-                </div>
-
-                <div className="input-container">
-                    <label>Victory</label>
-                    <textarea className="small" value={face.victory} onChange={(event) => setVictory(event.target.value)} />
-                </div>
-
-                <div className="input-container">
-                    <label className="v-centered">Connection Symbol</label>
+                </InputContainer>
+                <InputContainer label="Victory">
+                    <textarea
+                        className="small"
+                        value={face.victory}
+                        onChange={(event) => setVictory(event.target.value)}
+                    />
+                </InputContainer>
+                <InputContainer label="Connection Symbol" vCentered>
                     <ConnectionPicker connection={face.connectionSymbol} setConnection={setConnectionSymbol} />
-                </div>
-
-                <div className="input-container">
-                    <label className="v-centered">Connections</label>
+                </InputContainer>
+                <InputContainer label="Connections" vCentered>
                     <ConnectionPicker connection={face.connection1} setConnection={setConnection1} />
                     <ConnectionPicker connection={face.connection2} setConnection={setConnection2} />
                     <ConnectionPicker connection={face.connection3} setConnection={setConnection3} />
                     <ConnectionPicker connection={face.connection4} setConnection={setConnection4} />
                     <ConnectionPicker connection={face.connection5} setConnection={setConnection5} />
                     <ConnectionPicker connection={face.connection6} setConnection={setConnection6} />
-                </div>
+                </InputContainer>
 
                 <Illustration
                     face={face}
@@ -93,31 +68,17 @@ export default function LocationFrontFaceView({ typeSelect, face, cardSet, campa
                 />
 
                 <Expandable maxHeight={"8rem"}>
-                    <div className="input-container">
-                        <label>Card Type</label>
-                        <input
-                            type="text"
-                            value={face.cardType}
-                            onChange={(event) => setCardType(event.target.value)}
-                        />
-                    </div>
-
-                    <div className="input-container">
-                        <label>Encounter Set Symbol</label>
+                    <InputContainer label="Encounter Set Symbol">
                         <button onClick={() => setEncounterSetSymbol()}>Load Image</button>
-                    </div>
-
-                    <div className="input-container">
-                        <label>Copyright Information</label>
-                        <input
-                            type="text"
-                            value={face.copyrightInformation}
-                            onChange={(event) => setCopyrightInformation(event.target.value)}
-                        />
-                    </div>
-
-                    <div className="input-container">
-                        <label>Encounter Set ID</label>
+                    </InputContainer>
+                    <InputContainer label="Card Type" type="text" value={face.cardType} setValue={setCardType} />
+                    <InputContainer
+                        label="Copyright Information"
+                        type="text"
+                        value={face.copyrightInformation}
+                        setValue={setCopyrightInformation}
+                    />
+                    <InputContainer label="Encounter Set ID" childId="set-id">
                         <input
                             type="text"
                             value={face.encounterSetId}
@@ -129,21 +90,16 @@ export default function LocationFrontFaceView({ typeSelect, face, cardSet, campa
                             value={face.encounterSetMaxId}
                             onChange={(event) => setEncounterSetMaxId(event.target.value)}
                         />
-                    </div>
-
-                    <div className="input-container">
-                        <label>Campaign Symbol</label>
+                    </InputContainer>
+                    <InputContainer label="Campaign Symbol">
                         <button onClick={() => setCampaignSymbol()}>Load Image</button>
-                    </div>
-
-                    <div className="input-container">
-                        <label>Campaign Set ID</label>
-                        <input
-                            type="text"
-                            value={face.campaignSetId}
-                            onChange={(event) => setCampaignSetId(event.target.value)}
-                        />
-                    </div>
+                    </InputContainer>
+                    <InputContainer
+                        label="Campaign Set ID"
+                        type="text"
+                        value={face.campaignSetId}
+                        setValue={setCampaignSetId}
+                    />
                 </Expandable>
             </div>
         </Container>

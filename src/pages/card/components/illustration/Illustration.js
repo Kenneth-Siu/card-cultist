@@ -17,10 +17,10 @@ export default function Illustration({ face, campaign, setCampaign, setIllustrat
 
             <div className="transform-container">
                 <div className="row">
-                    <label className="text" htmlFor="x">
+                    <label className="text">
                         X Position
                     </label>
-                    <label htmlFor="x">
+                    <label>
                         <ArrowForwardIcon />
                     </label>
                     <input
@@ -32,10 +32,10 @@ export default function Illustration({ face, campaign, setCampaign, setIllustrat
                     />
                 </div>
                 <div className="row">
-                    <label className="text" htmlFor="y">
+                    <label className="text">
                         Y Position
                     </label>
-                    <label htmlFor="y">
+                    <label>
                         <ArrowDownwardIcon />
                     </label>
                     <input
@@ -49,10 +49,10 @@ export default function Illustration({ face, campaign, setCampaign, setIllustrat
             </div>
             <div className="transform-container">
                 <div className="row">
-                    <label className="text" htmlFor="scale">
+                    <label className="text">
                         Scale
                     </label>
-                    <label htmlFor="scale">
+                    <label>
                         <ZoomOutMapIcon />
                     </label>
                     <input
@@ -65,10 +65,10 @@ export default function Illustration({ face, campaign, setCampaign, setIllustrat
                     />
                 </div>
                 <div className="row">
-                    <label className="text" htmlFor="rotation">
+                    <label className="text">
                         Rotation
                     </label>
-                    <label htmlFor="rotation">
+                    <label>
                         <RotateRightIcon />
                     </label>
                     <input
