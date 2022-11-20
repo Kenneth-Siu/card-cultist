@@ -3,7 +3,7 @@
 .face-view {
     display: flex;
     align-items: flex-start;
-    max-width: 1300px;
+    max-width: 1160px;
     gap: 1rem;
 
     .canvas-container {
@@ -41,6 +41,9 @@
             height: 6rem;
             resize: vertical;
             flex-grow: 1;
+        }
+        textarea.small {
+            height: 3rem;
         }
     }
 

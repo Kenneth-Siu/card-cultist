@@ -74,7 +74,7 @@ export default function EnemyFaceView({ typeSelect, face, cardSet, campaign, set
 
                 <div className="input-container">
                     <label>Victory</label>
-                    <textarea value={face.victory} onChange={(event) => setVictory(event.target.value)} />
+                    <textarea className="small" value={face.victory} onChange={(event) => setVictory(event.target.value)} />
                 </div>
 
                 <div className="input-container">
