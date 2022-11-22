@@ -92,7 +92,7 @@ export default function NavBar({ campaign, setCampaign }) {
                         onClick={() => setDeselected(false)}
                     >
                         <img src={campaignSymbolSrc} />
-                        {campaign.title}
+                        <span>{campaign.title}</span>
                     </NavLink>
                 </li>
                 <li>
@@ -119,7 +119,7 @@ export default function NavBar({ campaign, setCampaign }) {
                             onClick={() => setSelectedEntity({ cardSetId: cardSet.id })}
                         >
                             <img src={cardSetSymbolSrcs[cardSet.id]} />
-                            {cardSet.getTitle()}
+                            <span>{cardSet.getTitle()}</span>
                         </NavLink>
                         <ol>
                             {cardSet.cards.map((card) => (

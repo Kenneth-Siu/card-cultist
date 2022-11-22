@@ -51,9 +51,7 @@ body {
 
 div#root {
     display: flex;
-    nav {
-        flex-shrink: 0;
-    }
+    padding-left: 15rem;
     main {
         flex-grow: 1;
     }
