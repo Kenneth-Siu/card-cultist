@@ -1,46 +1,51 @@
 import React from "react";
 import TreacheryFaceCanvas from "./TreacheryFaceCanvas";
-import "../FaceView.scss";
-import Container from "../../../../components/container/Container";
 import Illustration from "../../components/illustration/Illustration";
-import Expandable from "../../components/expandable/Expandable";
 import InputContainer from "../../components/inputContainer/InputContainer";
+import BaseFaceView from "../BaseFaceView";
+import "../FaceView.scss";
 
-export default function TreacheryFaceView({ typeSelect, face, cardSet, campaign, setCampaign }) {
+export default function TreacheryFaceView({ listOfCardFaces, face, cardSet, campaign, setCampaign }) {
     return (
-        <Container className="face-view">
-            <TreacheryFaceCanvas
-                face={face}
-                cardSet={cardSet}
-                campaign={campaign}
-                setIllustrationTransform={setIllustrationTransform}
-            />
-            <div className="form-container">
-                {typeSelect}
-
-                <InputContainer label="Title" type="text" value={face.title} setValue={setTitle} />
-                <InputContainer label="Traits" type="text" value={face.traits} setValue={setTraits} />
-                <InputContainer label="Font Size">
-                    <input
-                        type="number"
-                        value={face.textFontSize.toFixed(1)}
-                        step="0.1"
-                        min="1"
-                        onChange={(event) => setTextFontSize(parseFloat(event.target.value))}
-                    />
-                </InputContainer>
-                <InputContainer label="Text">
-                    <textarea value={face.text} onChange={(event) => setText(event.target.value)} />
-                </InputContainer>
-
-                <Illustration
+        <BaseFaceView
+            listOfCardFaces={listOfCardFaces}
+            face={face}
+            canvas={
+                <TreacheryFaceCanvas
                     face={face}
+                    cardSet={cardSet}
                     campaign={campaign}
-                    setCampaign={setCampaign}
                     setIllustrationTransform={setIllustrationTransform}
                 />
+            }
+            fields={
+                <>
+                    <InputContainer label="Title" type="text" value={face.title} setValue={setTitle} />
+                    <InputContainer label="Traits" type="text" value={face.traits} setValue={setTraits} />
+                    <InputContainer label="Font Size">
+                        <input
+                            type="number"
+                            value={face.textFontSize.toFixed(1)}
+                            step="0.1"
+                            min="1"
+                            onChange={(event) => setTextFontSize(parseFloat(event.target.value))}
+                        />
+                    </InputContainer>
+                    <InputContainer label="Text">
+                        <textarea value={face.text} onChange={(event) => setText(event.target.value)} />
+                    </InputContainer>
 
-                <Expandable maxHeight={"8rem"}>
+                    <Illustration
+                        face={face}
+                        campaign={campaign}
+                        setCampaign={setCampaign}
+                        setIllustrationTransform={setIllustrationTransform}
+                    />
+                </>
+            }
+            expandableHeight="8rem"
+            expandableFields={
+                <>
                     <InputContainer label="Encounter Set Symbol">
                         <button onClick={() => setEncounterSetSymbol()}>Load Image</button>
                     </InputContainer>
@@ -73,9 +78,11 @@ export default function TreacheryFaceView({ typeSelect, face, cardSet, campaign,
                         value={face.campaignSetId}
                         setValue={setCampaignSetId}
                     />
-                </Expandable>
-            </div>
-        </Container>
+                </>
+            }
+            campaign={campaign}
+            setCampaign={setCampaign}
+        />
     );
 
     function setCardType(cardType) {

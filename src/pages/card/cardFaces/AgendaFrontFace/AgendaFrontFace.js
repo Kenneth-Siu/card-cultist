@@ -12,10 +12,10 @@ export default class AgendaFrontFace extends AgendaActFrontFace {
         super(face, AgendaFrontFace.type, AgendaFrontFace.frame);
     }
 
-    getView(typeSelect, cardSet, campaign, setCampaign) {
+    getView(listOfCardFaces, cardSet, campaign, setCampaign) {
         return (
             <AgendaFrontFaceView
-                typeSelect={typeSelect}
+                listOfCardFaces={listOfCardFaces}
                 face={this}
                 cardSet={cardSet}
                 campaign={campaign}

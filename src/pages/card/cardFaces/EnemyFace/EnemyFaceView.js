@@ -1,88 +1,94 @@
 import React from "react";
 import EnemyFaceCanvas from "./EnemyFaceCanvas";
-import Container from "../../../../components/container/Container";
-import "../FaceView.scss";
-import Expandable from "../../components/expandable/Expandable";
 import Illustration from "../../components/illustration/Illustration";
 import InputContainer from "../../components/inputContainer/InputContainer";
+import BaseFaceView from "../BaseFaceView";
+import "../FaceView.scss";
 
-export default function EnemyFaceView({ typeSelect, face, cardSet, campaign, setCampaign }) {
+export default function EnemyFaceView({ listOfCardFaces, face, cardSet, campaign, setCampaign }) {
     return (
-        <Container className="face-view">
-            <EnemyFaceCanvas
-                face={face}
-                cardSet={cardSet}
-                campaign={campaign}
-                setIllustrationTransform={setIllustrationTransform}
-            />
-            <div className="form-container">
-                {typeSelect}
-                <InputContainer label="Title">
-                    <input type="text" value={face.title} onChange={(event) => setTitle(event.target.value)} />
-                    <label>
-                        Unique?
-                        <input type="checkbox" checked={face.isUnique} onChange={() => toggleIsUnique()} />
-                    </label>
-                </InputContainer>
-                <InputContainer label="Subtitle" type="text" value={face.subtitle} setValue={setSubtitle} />
-                <InputContainer label="Fight" type="text" value={face.fight} setValue={setFight} />
-                <InputContainer label="Health">
-                    <input type="text" value={face.health} onChange={(event) => setHealth(event.target.value)} />
-                    <label>
-                        Per investigator?
-                        <input type="checkbox" checked={face.healthIsPer} onChange={() => toggleHealthIsPer()} />
-                    </label>
-                </InputContainer>
-                <InputContainer label="Evade" type="text" value={face.evade} setValue={setEvade} />
-                <InputContainer label="Traits" type="text" value={face.traits} setValue={setTraits} />
-                <InputContainer label="Font Size">
-                    <input
-                        type="number"
-                        value={face.textFontSize.toFixed(1)}
-                        step="0.1"
-                        min="1"
-                        onChange={(event) => setTextFontSize(parseFloat(event.target.value))}
-                    />
-                </InputContainer>
-                <InputContainer label="Text">
-                    <textarea value={face.text} onChange={(event) => setText(event.target.value)} />
-                </InputContainer>
-                <InputContainer label="Victory">
-                    <textarea
-                        className="small"
-                        value={face.victory}
-                        onChange={(event) => setVictory(event.target.value)}
-                    />
-                </InputContainer>
-                <InputContainer label="Damage">
-                    <input
-                        type="number"
-                        value={face.damage}
-                        step="1"
-                        min="0"
-                        max="5"
-                        onChange={(event) => setDamage(parseInt(event.target.value))}
-                    />
-                </InputContainer>
-                <InputContainer label="Horror">
-                    <input
-                        type="number"
-                        value={face.horror}
-                        step="1"
-                        min="0"
-                        max="5"
-                        onChange={(event) => setHorror(parseInt(event.target.value))}
-                    />
-                </InputContainer>
-
-                <Illustration
+        <BaseFaceView
+            listOfCardFaces={listOfCardFaces}
+            face={face}
+            canvas={
+                <EnemyFaceCanvas
                     face={face}
+                    cardSet={cardSet}
                     campaign={campaign}
-                    setCampaign={setCampaign}
                     setIllustrationTransform={setIllustrationTransform}
                 />
+            }
+            fields={
+                <>
+                    <InputContainer label="Title">
+                        <input type="text" value={face.title} onChange={(event) => setTitle(event.target.value)} />
+                        <label>
+                            Unique?
+                            <input type="checkbox" checked={face.isUnique} onChange={() => toggleIsUnique()} />
+                        </label>
+                    </InputContainer>
+                    <InputContainer label="Subtitle" type="text" value={face.subtitle} setValue={setSubtitle} />
+                    <InputContainer label="Fight" type="text" value={face.fight} setValue={setFight} />
+                    <InputContainer label="Health">
+                        <input type="text" value={face.health} onChange={(event) => setHealth(event.target.value)} />
+                        <label>
+                            Per investigator?
+                            <input type="checkbox" checked={face.healthIsPer} onChange={() => toggleHealthIsPer()} />
+                        </label>
+                    </InputContainer>
+                    <InputContainer label="Evade" type="text" value={face.evade} setValue={setEvade} />
+                    <InputContainer label="Traits" type="text" value={face.traits} setValue={setTraits} />
+                    <InputContainer label="Font Size">
+                        <input
+                            type="number"
+                            value={face.textFontSize.toFixed(1)}
+                            step="0.1"
+                            min="1"
+                            onChange={(event) => setTextFontSize(parseFloat(event.target.value))}
+                        />
+                    </InputContainer>
+                    <InputContainer label="Text">
+                        <textarea value={face.text} onChange={(event) => setText(event.target.value)} />
+                    </InputContainer>
+                    <InputContainer label="Victory">
+                        <textarea
+                            className="small"
+                            value={face.victory}
+                            onChange={(event) => setVictory(event.target.value)}
+                        />
+                    </InputContainer>
+                    <InputContainer label="Damage">
+                        <input
+                            type="number"
+                            value={face.damage}
+                            step="1"
+                            min="0"
+                            max="5"
+                            onChange={(event) => setDamage(parseInt(event.target.value))}
+                        />
+                    </InputContainer>
+                    <InputContainer label="Horror">
+                        <input
+                            type="number"
+                            value={face.horror}
+                            step="1"
+                            min="0"
+                            max="5"
+                            onChange={(event) => setHorror(parseInt(event.target.value))}
+                        />
+                    </InputContainer>
 
-                <Expandable maxHeight={"8rem"}>
+                    <Illustration
+                        face={face}
+                        campaign={campaign}
+                        setCampaign={setCampaign}
+                        setIllustrationTransform={setIllustrationTransform}
+                    />
+                </>
+            }
+            expandableHeight="8rem"
+            expandableFields={
+                <>
                     <InputContainer label="Encounter Set Symbol">
                         <button onClick={() => setEncounterSetSymbol()}>Load Image</button>
                     </InputContainer>
@@ -115,9 +121,11 @@ export default function EnemyFaceView({ typeSelect, face, cardSet, campaign, set
                         value={face.campaignSetId}
                         setValue={setCampaignSetId}
                     />
-                </Expandable>
-            </div>
-        </Container>
+                </>
+            }
+            campaign={campaign}
+            setCampaign={setCampaign}
+        />
     );
 
     function setCardType(cardType) {

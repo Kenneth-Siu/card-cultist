@@ -12,8 +12,15 @@ export default class MythosFace extends CardFace {
         super(face, MythosFace.type);
     }
 
-    getView(typeSelect) {
-        return <MythosFaceView typeSelect={typeSelect} />;
+    getView(listOfCardFaces, cardSet, campaign, setCampaign) {
+        return (
+            <MythosFaceView
+                face={this}
+                listOfCardFaces={listOfCardFaces}
+                campaign={campaign}
+                setCampaign={setCampaign}
+            />
+        );
     }
 
     getCanvas(cardId) {

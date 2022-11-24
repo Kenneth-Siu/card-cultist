@@ -3,10 +3,10 @@ import AgendaBackFaceCanvas from "./AgendaBackFaceCanvas";
 import AgendaActBackFaceView from "../_AgendaActBackFace/_AgendaActBackFaceView";
 import "../FaceView.scss";
 
-export default function AgendaBackFaceView({ typeSelect, face, cardSet, campaign, setCampaign }) {
+export default function AgendaBackFaceView({ listOfCardFaces, face, cardSet, campaign, setCampaign }) {
     return (
         <AgendaActBackFaceView
-            typeSelect={typeSelect}
+            listOfCardFaces={listOfCardFaces}
             canvas={<AgendaBackFaceCanvas face={face} cardSet={cardSet} />}
             face={face}
             campaign={campaign}

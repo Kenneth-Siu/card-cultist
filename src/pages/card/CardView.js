@@ -38,53 +38,10 @@ export default function CardView({ campaign, setCampaign }) {
                     <span className="emoji">🗑</span> Delete
                 </IconButton>
             </Container>
-            {card.frontFace.getView(
-                <div className="input-container">
-                    <label>Card Face</label>
-                    <select value={card.frontFace.type} onChange={(event) => setFrontFaceType(event.target.value)}>
-                        {listOfCardFaces.map((cardFace) => (
-                            <option key={cardFace.type} value={cardFace.type}>
-                                {cardFace.type}
-                            </option>
-                        ))}
-                    </select>
-                </div>,
-                cardSet,
-                campaign,
-                setCampaign
-            )}
-            {card.backFace.getView(
-                <div className="input-container">
-                    <label>Card Face</label>
-                    <select value={card.backFace.type} onChange={(event) => setBackFaceType(event.target.value)}>
-                        {listOfCardFaces.map((cardFace) => (
-                            <option key={cardFace.type} value={cardFace.type}>
-                                {cardFace.type}
-                            </option>
-                        ))}
-                    </select>
-                </div>,
-                cardSet,
-                campaign,
-                setCampaign
-            )}
+            {card.frontFace.getView(listOfCardFaces, cardSet, campaign, setCampaign)}
+            {card.backFace.getView(listOfCardFaces, cardSet, campaign, setCampaign)}
         </main>
     );
-
-    function setFrontFaceType(faceType) {
-        card.frontFace.type = faceType;
-        card.frontFace.cardType = null;
-        card.frontFace.subType = null;
-        card.frontFace = getCardFaceClassInstance(card.frontFace);
-        setCampaign(campaign.clone());
-    }
-    function setBackFaceType(faceType) {
-        card.backFace.type = faceType;
-        card.backFace.cardType = null;
-        card.backFace.subType = null;
-        card.backFace = getCardFaceClassInstance(card.backFace);
-        setCampaign(campaign.clone());
-    }
 
     function exportCard(imageType, extension, quality) {
         document.querySelector(".face-view:nth-child(2) canvas").toBlob(

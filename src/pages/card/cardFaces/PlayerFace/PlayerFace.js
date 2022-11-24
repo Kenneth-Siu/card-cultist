@@ -12,8 +12,15 @@ export default class PlayerFace extends CardFace {
         super(face, PlayerFace.type);
     }
 
-    getView(typeSelect) {
-        return <PlayerFaceView typeSelect={typeSelect} />;
+    getView(listOfCardFaces, cardSet, campaign, setCampaign) {
+        return (
+            <PlayerFaceView
+                face={this}
+                listOfCardFaces={listOfCardFaces}
+                campaign={campaign}
+                setCampaign={setCampaign}
+            />
+        );
     }
 
     getCanvas(cardId) {

@@ -13,7 +13,7 @@ import star from "../../../../../public/overlays/AHLCG-LocStar.png";
 import quotationMark from "../../../../../public/overlays/AHLCG-LocQuote.png";
 import clover from "../../../../../public/overlays/AHLCG-LocClover.png";
 
-export const noConnectionSymbol = { name: "None" };
+export const noConnectionSymbol = { name: "" };
 
 export const connectionSymbols = [
     noConnectionSymbol,

@@ -3,10 +3,10 @@ import ActFrontFaceCanvas from "./ActFrontFaceCanvas";
 import AgendaActFrontFaceView from "../_AgendaActFrontFace/_AgendaActFrontFaceView";
 import "../FaceView.scss";
 
-export default function ActFrontFaceView({ typeSelect, face, cardSet, campaign, setCampaign }) {
+export default function ActFrontFaceView({ listOfCardFaces, face, cardSet, campaign, setCampaign }) {
     return (
         <AgendaActFrontFaceView
-            typeSelect={typeSelect}
+            listOfCardFaces={listOfCardFaces}
             canvas={
                 <ActFrontFaceCanvas
                     face={face}

@@ -1,58 +1,64 @@
 import React from "react";
 import LocationBackFaceCanvas from "./LocationBackFaceCanvas";
-import Container from "../../../../components/container/Container";
-import Expandable from "../../components/expandable/Expandable";
 import Illustration from "../../components/illustration/Illustration";
 import ConnectionPicker from "../../components/connectionPicker/ConnectionPicker";
 import InputContainer from "../../components/inputContainer/InputContainer";
+import BaseFaceView from "../BaseFaceView";
 import "../FaceView.scss";
 
-export default function LocationBackFaceView({ typeSelect, face, cardSet, campaign, setCampaign }) {
+export default function LocationBackFaceView({ listOfCardFaces, face, cardSet, campaign, setCampaign }) {
     return (
-        <Container className="face-view">
-            <LocationBackFaceCanvas
-                face={face}
-                cardSet={cardSet}
-                campaign={campaign}
-                setIllustrationTransform={setIllustrationTransform}
-            />
-            <div className="form-container">
-                {typeSelect}
-                <InputContainer label="Title" type="text" value={face.title} setValue={setTitle} />
-                <InputContainer label="Subtitle" type="text" value={face.subtitle} setValue={setSubtitle} />
-                <InputContainer label="Traits" type="text" value={face.traits} setValue={setTraits} />
-                <InputContainer label="Font Size">
-                    <input
-                        type="number"
-                        value={face.textFontSize.toFixed(1)}
-                        step="0.1"
-                        min="1"
-                        onChange={(event) => setTextFontSize(parseFloat(event.target.value))}
-                    />
-                </InputContainer>
-                <InputContainer label="Text">
-                    <textarea value={face.text} onChange={(event) => setText(event.target.value)} />
-                </InputContainer>
-                <InputContainer label="Connection Symbol" vCentered>
-                    <ConnectionPicker connection={face.connectionSymbol} setConnection={setConnectionSymbol} />
-                </InputContainer>
-                <InputContainer label="Connections" vCentered>
-                    <ConnectionPicker connection={face.connection1} setConnection={setConnection1} />
-                    <ConnectionPicker connection={face.connection2} setConnection={setConnection2} />
-                    <ConnectionPicker connection={face.connection3} setConnection={setConnection3} />
-                    <ConnectionPicker connection={face.connection4} setConnection={setConnection4} />
-                    <ConnectionPicker connection={face.connection5} setConnection={setConnection5} />
-                    <ConnectionPicker connection={face.connection6} setConnection={setConnection6} />
-                </InputContainer>
-
-                <Illustration
+        <BaseFaceView
+            listOfCardFaces={listOfCardFaces}
+            face={face}
+            canvas={
+                <LocationBackFaceCanvas
                     face={face}
+                    cardSet={cardSet}
                     campaign={campaign}
-                    setCampaign={setCampaign}
                     setIllustrationTransform={setIllustrationTransform}
                 />
+            }
+            fields={
+                <>
+                    <InputContainer label="Title" type="text" value={face.title} setValue={setTitle} />
+                    <InputContainer label="Subtitle" type="text" value={face.subtitle} setValue={setSubtitle} />
+                    <InputContainer label="Traits" type="text" value={face.traits} setValue={setTraits} />
+                    <InputContainer label="Font Size">
+                        <input
+                            type="number"
+                            value={face.textFontSize.toFixed(1)}
+                            step="0.1"
+                            min="1"
+                            onChange={(event) => setTextFontSize(parseFloat(event.target.value))}
+                        />
+                    </InputContainer>
+                    <InputContainer label="Text">
+                        <textarea value={face.text} onChange={(event) => setText(event.target.value)} />
+                    </InputContainer>
+                    <InputContainer label="Connection Symbol" vCentered>
+                        <ConnectionPicker connection={face.connectionSymbol} setConnection={setConnectionSymbol} />
+                    </InputContainer>
+                    <InputContainer label="Connections" vCentered>
+                        <ConnectionPicker connection={face.connection1} setConnection={setConnection1} />
+                        <ConnectionPicker connection={face.connection2} setConnection={setConnection2} />
+                        <ConnectionPicker connection={face.connection3} setConnection={setConnection3} />
+                        <ConnectionPicker connection={face.connection4} setConnection={setConnection4} />
+                        <ConnectionPicker connection={face.connection5} setConnection={setConnection5} />
+                        <ConnectionPicker connection={face.connection6} setConnection={setConnection6} />
+                    </InputContainer>
 
-                <Expandable maxHeight={"6rem"}>
+                    <Illustration
+                        face={face}
+                        campaign={campaign}
+                        setCampaign={setCampaign}
+                        setIllustrationTransform={setIllustrationTransform}
+                    />
+                </>
+            }
+            expandableHeight="6rem"
+            expandableFields={
+                <>
                     <InputContainer label="Encounter Set Symbol">
                         <button onClick={() => setEncounterSetSymbol()}>Load Image</button>
                     </InputContainer>
@@ -66,9 +72,11 @@ export default function LocationBackFaceView({ typeSelect, face, cardSet, campai
                     <InputContainer label="Campaign Symbol">
                         <button onClick={() => setCampaignSymbol()}>Load Image</button>
                     </InputContainer>
-                </Expandable>
-            </div>
-        </Container>
+                </>
+            }
+            campaign={campaign}
+            setCampaign={setCampaign}
+        />
     );
 
     function setTitle(title) {

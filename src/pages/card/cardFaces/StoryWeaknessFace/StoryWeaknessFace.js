@@ -33,10 +33,10 @@ export default class StoryWeaknessFace extends CardFace {
         this.campaignSetId = face.campaignSetId || "";
     }
 
-    getView(typeSelect, cardSet, campaign, setCampaign) {
+    getView(listOfCardFaces, cardSet, campaign, setCampaign) {
         return (
             <StoryWeaknessFaceView
-                typeSelect={typeSelect}
+                listOfCardFaces={listOfCardFaces}
                 face={this}
                 cardSet={cardSet}
                 campaign={campaign}
@@ -58,6 +58,14 @@ export default class StoryWeaknessFace extends CardFace {
     }
 
     getEmoji() {
-        return "☠";
+        return "🧪";
+    }
+
+    autofill(other) {
+        this.autofillField("title", other);
+        this.autofillField("traits", other);
+        this.autofillField("text", other);
+        this.autofillField("encounterSetSymbol", other);
+        this.autofillIllustration(other);
     }
 }

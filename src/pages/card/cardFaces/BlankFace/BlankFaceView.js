@@ -1,13 +1,16 @@
 import React from "react";
 import BlankFaceCanvas from "./BlankFaceCanvas";
-import Container from "../../../../components/container/Container";
+import BaseFaceView from "../BaseFaceView";
 import "../FaceView.scss";
 
-export default function BlankFaceView({ typeSelect }) {
+export default function BlankFaceView({ listOfCardFaces, face, campaign, setCampaign }) {
     return (
-        <Container className="face-view">
-            <BlankFaceCanvas />
-            <div className="form-container">{typeSelect}</div>
-        </Container>
+        <BaseFaceView
+            listOfCardFaces={listOfCardFaces}
+            face={face}
+            canvas={<BlankFaceCanvas />}
+            campaign={campaign}
+            setCampaign={setCampaign}
+        />
     );
 }

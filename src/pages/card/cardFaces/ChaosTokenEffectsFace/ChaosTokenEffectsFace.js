@@ -22,7 +22,6 @@ export default class ChaosTokenEffectsFace extends CardFace {
         if (!face) {
             face = {};
         }
-        this.campaignSymbol = face.campaignSymbol || null;
         this.encounterSetSymbol = face.encounterSetSymbol || null;
         this.title = face.title || "";
         this.difficulty = face.difficulty || ChaosTokenEffectsFace.DIFFICULTY[0];
@@ -34,13 +33,14 @@ export default class ChaosTokenEffectsFace extends CardFace {
         this.copyrightInformation = face.copyrightInformation || "";
         this.encounterSetId = face.encounterSetId || "";
         this.encounterSetMaxId = face.encounterSetMaxId || "";
+        this.campaignSymbol = face.campaignSymbol || null;
         this.campaignSetId = face.campaignSetId || "";
     }
 
-    getView(typeSelect, cardSet, campaign, setCampaign) {
+    getView(listOfCardFaces, cardSet, campaign, setCampaign) {
         return (
             <ChaosTokenEffectsFaceView
-                typeSelect={typeSelect}
+                listOfCardFaces={listOfCardFaces}
                 face={this}
                 cardSet={cardSet}
                 campaign={campaign}
@@ -63,5 +63,14 @@ export default class ChaosTokenEffectsFace extends CardFace {
 
     getEmoji() {
         return "💀";
+    }
+
+    autofill(other) {
+        this.autofillField("encounterSetSymbol", other);
+        this.autofillField("title", other);
+        this.autofillField("skullText", other);
+        this.autofillField("cultistText", other);
+        this.autofillField("tabletText", other);
+        this.autofillField("elderThingText", other);
     }
 }

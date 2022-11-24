@@ -20,7 +20,7 @@ export default class EnemyFace extends CardFace {
         if (!face) {
             face = {};
         }
-        this.isUnique = face.isUnique || "";
+        this.isUnique = face.isUnique || false;
         this.title = face.title || "";
         this.subtitle = face.subtitle || "";
         this.fight = face.fight || "";
@@ -45,10 +45,10 @@ export default class EnemyFace extends CardFace {
         this.campaignSetId = face.campaignSetId || "";
     }
 
-    getView(typeSelect, cardSet, campaign, setCampaign) {
+    getView(listOfCardFaces, cardSet, campaign, setCampaign) {
         return (
             <EnemyFaceView
-                typeSelect={typeSelect}
+                listOfCardFaces={listOfCardFaces}
                 face={this}
                 cardSet={cardSet}
                 campaign={campaign}
@@ -71,5 +71,22 @@ export default class EnemyFace extends CardFace {
 
     getEmoji() {
         return "👹";
+    }
+
+    autofill(other) {
+        this.autofillField("isUnique", other);
+        this.autofillField("title", other);
+        this.autofillField("subtitle", other);
+        this.autofillField("fight", other);
+        this.autofillField("health", other);
+        this.autofillField("healthIsPer", other);
+        this.autofillField("evade", other);
+        this.autofillField("traits", other);
+        this.autofillField("text", other);
+        this.autofillField("victory", other);
+        this.autofillField("damage", other);
+        this.autofillField("horror", other);
+        this.autofillField("encounterSetSymbol", other);
+        this.autofillIllustration(other);
     }
 }

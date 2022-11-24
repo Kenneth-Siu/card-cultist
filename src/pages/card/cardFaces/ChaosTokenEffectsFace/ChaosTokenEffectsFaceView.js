@@ -1,47 +1,51 @@
 import React from "react";
 import ChaosTokenEffectsFaceCanvas from "./ChaosTokenEffectsFaceCanvas";
-import Container from "../../../../components/container/Container";
 import ChaosTokenEffectsFace from "./ChaosTokenEffectsFace";
-import Expandable from "../../components/expandable/Expandable";
 import InputContainer from "../../components/inputContainer/InputContainer";
+import BaseFaceView from "../BaseFaceView";
 import "../FaceView.scss";
 
-export default function ChaosTokenEffectsFaceView({ typeSelect, face, cardSet, campaign, setCampaign }) {
+export default function ChaosTokenEffectsFaceView({ listOfCardFaces, face, cardSet, campaign, setCampaign }) {
     return (
-        <Container className="face-view">
-            <ChaosTokenEffectsFaceCanvas face={face} cardSet={cardSet} campaign={campaign} />
-            <div className="form-container">
-                {typeSelect}
-                <InputContainer label="Title" type="text" value={face.title} setValue={setTitle} />
-                <InputContainer label="Difficulty">
-                    <select value={face.difficulty} onChange={(event) => setDifficulty(event.target.value)}>
-                        {ChaosTokenEffectsFace.DIFFICULTY.map((difficulty) => (
-                            <option key={difficulty} value={difficulty}>
-                                {difficulty}
-                            </option>
-                        ))}
-                    </select>
-                </InputContainer>
-                <InputContainer label="Font Size">
-                    <input
-                        type="number"
-                        value={face.textFontSize.toFixed(1)}
-                        step="0.1"
-                        min="1"
-                        onChange={(event) => setTextFontSize(parseFloat(event.target.value))}
+        <BaseFaceView
+            listOfCardFaces={listOfCardFaces}
+            face={face}
+            canvas={<ChaosTokenEffectsFaceCanvas face={face} cardSet={cardSet} campaign={campaign} />}
+            fields={
+                <>
+                    <InputContainer label="Title" type="text" value={face.title} setValue={setTitle} />
+                    <InputContainer label="Difficulty">
+                        <select value={face.difficulty} onChange={(event) => setDifficulty(event.target.value)}>
+                            {ChaosTokenEffectsFace.DIFFICULTY.map((difficulty) => (
+                                <option key={difficulty} value={difficulty}>
+                                    {difficulty}
+                                </option>
+                            ))}
+                        </select>
+                    </InputContainer>
+                    <InputContainer label="Font Size">
+                        <input
+                            type="number"
+                            value={face.textFontSize.toFixed(1)}
+                            step="0.1"
+                            min="1"
+                            onChange={(event) => setTextFontSize(parseFloat(event.target.value))}
+                        />
+                    </InputContainer>
+                    <InputContainer label="Skull" type="text" value={face.skullText} setValue={setSkullText} />
+                    <InputContainer label="Cultist" type="text" value={face.cultistText} setValue={setCultistText} />
+                    <InputContainer label="Tablet" type="text" value={face.tabletText} setValue={setTabletText} />
+                    <InputContainer
+                        label="Elder Thing"
+                        type="text"
+                        value={face.elderThingText}
+                        setValue={setElderThingText}
                     />
-                </InputContainer>
-                <InputContainer label="Skull" type="text" value={face.skullText} setValue={setSkullText} />
-                <InputContainer label="Cultist" type="text" value={face.cultistText} setValue={setCultistText} />
-                <InputContainer label="Tablet" type="text" value={face.tabletText} setValue={setTabletText} />
-                <InputContainer
-                    label="Elder Thing"
-                    type="text"
-                    value={face.elderThingText}
-                    setValue={setElderThingText}
-                />
-
-                <Expandable maxHeight={"8rem"}>
+                </>
+            }
+            expandableHeight="8rem"
+            expandableFields={
+                <>
                     <InputContainer label="Encounter Set Symbol">
                         <button onClick={() => setEncounterSetSymbol()}>Load Image</button>
                     </InputContainer>
@@ -73,9 +77,11 @@ export default function ChaosTokenEffectsFaceView({ typeSelect, face, cardSet, c
                         value={face.campaignSetId}
                         setValue={setCampaignSetId}
                     />
-                </Expandable>
-            </div>
-        </Container>
+                </>
+            }
+            campaign={campaign}
+            setCampaign={setCampaign}
+        />
     );
 
     function setTitle(title) {

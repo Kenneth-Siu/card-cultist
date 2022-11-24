@@ -28,10 +28,10 @@ export default class StoryFace extends CardFace {
         this.cardType = face.cardType === null ? "Story" : face.cardType || "";
     }
 
-    getView(typeSelect, cardSet, campaign, setCampaign) {
+    getView(listOfCardFaces, cardSet, campaign, setCampaign) {
         return (
             <StoryFaceView
-                typeSelect={typeSelect}
+                listOfCardFaces={listOfCardFaces}
                 face={this}
                 cardSet={cardSet}
                 campaign={campaign}

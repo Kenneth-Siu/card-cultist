@@ -1,73 +1,79 @@
 import React from "react";
 import LocationFrontFaceCanvas from "./LocationFrontFaceCanvas";
-import Container from "../../../../components/container/Container";
-import Expandable from "../../components/expandable/Expandable";
 import Illustration from "../../components/illustration/Illustration";
 import ConnectionPicker from "../../components/connectionPicker/ConnectionPicker";
 import InputContainer from "../../components/inputContainer/InputContainer";
+import BaseFaceView from "../BaseFaceView";
 import "../FaceView.scss";
 
-export default function LocationFrontFaceView({ typeSelect, face, cardSet, campaign, setCampaign }) {
+export default function LocationFrontFaceView({ listOfCardFaces, face, cardSet, campaign, setCampaign }) {
     return (
-        <Container className="face-view">
-            <LocationFrontFaceCanvas
-                face={face}
-                cardSet={cardSet}
-                campaign={campaign}
-                setIllustrationTransform={setIllustrationTransform}
-            />
-            <div className="form-container">
-                {typeSelect}
-                <InputContainer label="Title" type="text" value={face.title} setValue={setTitle} />
-                <InputContainer label="Subtitle" type="text" value={face.subtitle} setValue={setSubtitle} />
-                <InputContainer label="Shroud" type="text" value={face.shroud} setValue={setShroud} />
-                <InputContainer label="Clues">
-                    <input type="text" value={face.clues} onChange={(event) => setClues(event.target.value)} />
-                    <label>
-                        Per investigator?
-                        <input type="checkbox" checked={face.cluesIsPer} onChange={() => toggleCluesIsPer()} />
-                    </label>
-                </InputContainer>
-                <InputContainer label="Traits" type="text" value={face.traits} setValue={setTraits} />
-                <InputContainer label="Font Size">
-                    <input
-                        type="number"
-                        value={face.textFontSize.toFixed(1)}
-                        step="0.1"
-                        min="1"
-                        onChange={(event) => setTextFontSize(parseFloat(event.target.value))}
-                    />
-                </InputContainer>
-                <InputContainer label="Text">
-                    <textarea value={face.text} onChange={(event) => setText(event.target.value)} />
-                </InputContainer>
-                <InputContainer label="Victory">
-                    <textarea
-                        className="small"
-                        value={face.victory}
-                        onChange={(event) => setVictory(event.target.value)}
-                    />
-                </InputContainer>
-                <InputContainer label="Connection Symbol" vCentered>
-                    <ConnectionPicker connection={face.connectionSymbol} setConnection={setConnectionSymbol} />
-                </InputContainer>
-                <InputContainer label="Connections" vCentered>
-                    <ConnectionPicker connection={face.connection1} setConnection={setConnection1} />
-                    <ConnectionPicker connection={face.connection2} setConnection={setConnection2} />
-                    <ConnectionPicker connection={face.connection3} setConnection={setConnection3} />
-                    <ConnectionPicker connection={face.connection4} setConnection={setConnection4} />
-                    <ConnectionPicker connection={face.connection5} setConnection={setConnection5} />
-                    <ConnectionPicker connection={face.connection6} setConnection={setConnection6} />
-                </InputContainer>
-
-                <Illustration
+        <BaseFaceView
+            listOfCardFaces={listOfCardFaces}
+            face={face}
+            canvas={
+                <LocationFrontFaceCanvas
                     face={face}
+                    cardSet={cardSet}
                     campaign={campaign}
-                    setCampaign={setCampaign}
                     setIllustrationTransform={setIllustrationTransform}
                 />
+            }
+            fields={
+                <>
+                    <InputContainer label="Title" type="text" value={face.title} setValue={setTitle} />
+                    <InputContainer label="Subtitle" type="text" value={face.subtitle} setValue={setSubtitle} />
+                    <InputContainer label="Shroud" type="text" value={face.shroud} setValue={setShroud} />
+                    <InputContainer label="Clues">
+                        <input type="text" value={face.clues} onChange={(event) => setClues(event.target.value)} />
+                        <label>
+                            Per investigator?
+                            <input type="checkbox" checked={face.cluesIsPer} onChange={() => toggleCluesIsPer()} />
+                        </label>
+                    </InputContainer>
+                    <InputContainer label="Traits" type="text" value={face.traits} setValue={setTraits} />
+                    <InputContainer label="Font Size">
+                        <input
+                            type="number"
+                            value={face.textFontSize.toFixed(1)}
+                            step="0.1"
+                            min="1"
+                            onChange={(event) => setTextFontSize(parseFloat(event.target.value))}
+                        />
+                    </InputContainer>
+                    <InputContainer label="Text">
+                        <textarea value={face.text} onChange={(event) => setText(event.target.value)} />
+                    </InputContainer>
+                    <InputContainer label="Victory">
+                        <textarea
+                            className="small"
+                            value={face.victory}
+                            onChange={(event) => setVictory(event.target.value)}
+                        />
+                    </InputContainer>
+                    <InputContainer label="Connection Symbol" vCentered>
+                        <ConnectionPicker connection={face.connectionSymbol} setConnection={setConnectionSymbol} />
+                    </InputContainer>
+                    <InputContainer label="Connections" vCentered>
+                        <ConnectionPicker connection={face.connection1} setConnection={setConnection1} />
+                        <ConnectionPicker connection={face.connection2} setConnection={setConnection2} />
+                        <ConnectionPicker connection={face.connection3} setConnection={setConnection3} />
+                        <ConnectionPicker connection={face.connection4} setConnection={setConnection4} />
+                        <ConnectionPicker connection={face.connection5} setConnection={setConnection5} />
+                        <ConnectionPicker connection={face.connection6} setConnection={setConnection6} />
+                    </InputContainer>
 
-                <Expandable maxHeight={"8rem"}>
+                    <Illustration
+                        face={face}
+                        campaign={campaign}
+                        setCampaign={setCampaign}
+                        setIllustrationTransform={setIllustrationTransform}
+                    />
+                </>
+            }
+            expandableHeight="8rem"
+            expandableFields={
+                <>
                     <InputContainer label="Encounter Set Symbol">
                         <button onClick={() => setEncounterSetSymbol()}>Load Image</button>
                     </InputContainer>
@@ -100,9 +106,11 @@ export default function LocationFrontFaceView({ typeSelect, face, cardSet, campa
                         value={face.campaignSetId}
                         setValue={setCampaignSetId}
                     />
-                </Expandable>
-            </div>
-        </Container>
+                </>
+            }
+            campaign={campaign}
+            setCampaign={setCampaign}
+        />
     );
 
     function setTitle(title) {

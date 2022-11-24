@@ -38,10 +38,10 @@ export default class LocationBackFace extends CardFace {
         this.campaignSymbol = face.campaignSymbol || null;
     }
 
-    getView(typeSelect, cardSet, campaign, setCampaign) {
+    getView(listOfCardFaces, cardSet, campaign, setCampaign) {
         return (
             <LocationBackFaceView
-                typeSelect={typeSelect}
+                listOfCardFaces={listOfCardFaces}
                 face={this}
                 cardSet={cardSet}
                 campaign={campaign}
@@ -64,5 +64,22 @@ export default class LocationBackFace extends CardFace {
 
     getEmoji() {
         return "🏠";
+    }
+
+    autofill(other) {
+        this.autofillField("title", other);
+        this.autofillField("subtitle", other);
+        this.autofillField("traits", other);
+        this.autofillField("text", other);
+        this.autofillField("victory", other);
+        this.autofillField("encounterSetSymbol", other);
+        this.autofillField("connectionSymbol", other);
+        this.autofillField("connection1", other);
+        this.autofillField("connection2", other);
+        this.autofillField("connection3", other);
+        this.autofillField("connection4", other);
+        this.autofillField("connection5", other);
+        this.autofillField("connection6", other);
+        this.autofillIllustration(other);
     }
 }

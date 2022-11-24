@@ -30,10 +30,10 @@ export default class TreacheryFace extends CardFace {
         this.campaignSetId = face.campaignSetId || "";
     }
 
-    getView(typeSelect, cardSet, campaign, setCampaign) {
+    getView(listOfCardFaces, cardSet, campaign, setCampaign) {
         return (
             <TreacheryFaceView
-                typeSelect={typeSelect}
+                listOfCardFaces={listOfCardFaces}
                 face={this}
                 cardSet={cardSet}
                 campaign={campaign}
@@ -56,5 +56,13 @@ export default class TreacheryFace extends CardFace {
 
     getEmoji() {
         return "🗡";
+    }
+
+    autofill(other) {
+        this.autofillField("title", other);
+        this.autofillField("traits", other);
+        this.autofillField("text", other);
+        this.autofillField("encounterSetSymbol", other);
+        this.autofillIllustration(other);
     }
 }

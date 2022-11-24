@@ -1,13 +1,16 @@
 import React from "react";
 import MythosFaceCanvas from "./MythosFaceCanvas";
-import Container from "../../../../components/container/Container";
+import BaseFaceView from "../BaseFaceView";
 import "../FaceView.scss";
 
-export default function MythosFaceView({ typeSelect }) {
+export default function MythosFaceView({ listOfCardFaces, face, campaign, setCampaign }) {
     return (
-        <Container className="face-view">
-            <MythosFaceCanvas />
-            <div className="form-container">{typeSelect}</div>
-        </Container>
+        <BaseFaceView
+            listOfCardFaces={listOfCardFaces}
+            face={face}
+            canvas={<MythosFaceCanvas />}
+            campaign={campaign}
+            setCampaign={setCampaign}
+        />
     );
 }

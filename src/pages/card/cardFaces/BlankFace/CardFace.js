@@ -11,8 +11,15 @@ export default class CardFace {
         Object.assign(this, face);
     }
 
-    getView(typeSelect) {
-        return <BlankFaceView typeSelect={typeSelect} />;
+    getView(listOfCardFaces, cardSet, campaign, setCampaign) {
+        return (
+            <BlankFaceView
+                listOfCardFaces={listOfCardFaces}
+                face={this}
+                campaign={campaign}
+                setCampaign={setCampaign}
+            />
+        );
     }
 
     getCanvas(cardId) {
@@ -21,5 +28,19 @@ export default class CardFace {
 
     getEmoji() {
         return "";
+    }
+
+    autofillIllustration(other) {
+        if (!this.illustration && other.illustration) {
+            this.illustration = other.illustration;
+            this.illustrationTransform = new ImageTransform(other.illustrationTransform);
+            this.illustrator = other.illustrator;
+        }
+    }
+
+    autofillField(fieldName, other) {
+        if (!this[fieldName] && other[fieldName]) {
+            this[fieldName] = other[fieldName];
+        }
     }
 }
