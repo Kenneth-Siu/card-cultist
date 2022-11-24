@@ -1,5 +1,7 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
+import Container from "../../components/container/Container";
+import IconButton from "../../components/iconButton/IconButton";
 import getCardFaceClassInstance from "../../helpers/getCardFaceClassInstance";
 import listOfCardFaces from "./cardFaces/listOfCardFaces";
 import "./CardView.scss";
@@ -13,6 +15,8 @@ export default function CardView({ campaign, setCampaign }) {
     const cardSet = campaign.getCardSet(cardSetId);
     const card = cardSet.getCard(id);
 
+    const history = useHistory();
+
     if (!card) {
         return (
             <main className="card-page">
@@ -23,10 +27,17 @@ export default function CardView({ campaign, setCampaign }) {
 
     return (
         <main className="card-page">
-            <div>
-                <button onClick={() => exportCard("image/png", "png")}>Export PNG</button>
-                <button onClick={() => exportCard("image/jpeg", "jpg", 0.9)}>Export JPG</button>
-            </div>
+            <Container className="toolbar">
+                <IconButton onClick={() => exportCard("image/png", "png")}>
+                    <span className="emoji">💾</span> Export PNG
+                </IconButton>
+                <IconButton onClick={() => exportCard("image/jpeg", "jpg", 0.9)}>
+                    <span className="emoji">💾</span> Export JPG
+                </IconButton>
+                <IconButton onClick={() => deleteCard()}>
+                    <span className="emoji">🗑</span> Delete
+                </IconButton>
+            </Container>
             {card.frontFace.getView(
                 <div className="input-container">
                     <label>Card Face</label>
@@ -104,5 +115,11 @@ export default function CardView({ campaign, setCampaign }) {
             imageType,
             quality
         );
+    }
+
+    function deleteCard() {
+        cardSet.deleteCard(id);
+        history.push(`/card-set/${cardSetId}`);
+        setCampaign(campaign.clone());
     }
 }

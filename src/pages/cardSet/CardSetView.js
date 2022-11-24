@@ -73,7 +73,6 @@ export default function CardSet({ campaign, setCampaign }) {
 
     function deleteSet() {
         campaign.deleteCardSet(id);
-        console.log(history);
         history.push("/");
         setCampaign(campaign.clone());
     }

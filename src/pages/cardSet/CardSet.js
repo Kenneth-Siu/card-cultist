@@ -1,3 +1,4 @@
+import remove from "lodash.remove";
 import generateId from "../../helpers/generateId";
 import Card from "../card/Card";
 
@@ -29,5 +30,9 @@ export default class CardSet {
 
     getTitle() {
         return this.title || "SET_ID#" + this.id;
+    }
+
+    deleteCard(id) {
+        remove(this.cards, (card) => card.id === id);
     }
 }

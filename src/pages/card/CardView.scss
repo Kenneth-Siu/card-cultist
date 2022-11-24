@@ -3,14 +3,22 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    gap: 0.5rem;
+
+    .toolbar {
+        display: flex;
+        gap: 0.5rem;
+        padding: 0.3rem;
+
+        .icon-button {
+            gap: 0.3rem;
+        }
+    }
 
     > div {
         min-width: 51%;
         flex-grow: 1;
-    }
-
-    .face-view:nth-child(2) {
-        margin-bottom: 0.5rem;
+        max-width: 1300px;
     }
 
     canvas {

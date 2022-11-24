@@ -1,0 +1,16 @@
+@import "../../helpers/scss/colors.scss";
+
+.icon-button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: $grayscale-9;
+    padding: 0.5em 0.8em;
+    border-radius: 100em;
+    display: flex;
+    align-items: center;
+
+    &:hover {
+        background: transparentize($grayscale-9, 0.9);
+    }
+}
