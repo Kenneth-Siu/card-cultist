@@ -12,11 +12,13 @@ export default class ActBackFace extends AgendaActBackFace {
         super(face, ActBackFace.type, ActBackFace.frame);
     }
 
-    getView(listOfCardFaces, cardSet, campaign, setCampaign) {
+    getView(faceDirection, listOfCardFaces, otherFace, cardSet, campaign, setCampaign) {
         return (
             <ActBackFaceView
+                faceDirection={faceDirection}
                 listOfCardFaces={listOfCardFaces}
                 face={this}
+                otherFace={otherFace}
                 cardSet={cardSet}
                 campaign={campaign}
                 setCampaign={setCampaign}

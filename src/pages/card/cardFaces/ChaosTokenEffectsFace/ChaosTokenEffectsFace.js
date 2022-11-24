@@ -37,11 +37,13 @@ export default class ChaosTokenEffectsFace extends CardFace {
         this.campaignSetId = face.campaignSetId || "";
     }
 
-    getView(listOfCardFaces, cardSet, campaign, setCampaign) {
+    getView(faceDirection, listOfCardFaces, otherFace, cardSet, campaign, setCampaign) {
         return (
             <ChaosTokenEffectsFaceView
+                faceDirection={faceDirection}
                 listOfCardFaces={listOfCardFaces}
                 face={this}
+                otherFace={otherFace}
                 cardSet={cardSet}
                 campaign={campaign}
                 setCampaign={setCampaign}

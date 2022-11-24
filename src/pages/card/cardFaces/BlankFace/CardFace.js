@@ -1,4 +1,5 @@
 import React from "react";
+import ImageTransform from "../../../../models/ImageTransform";
 import BlankFaceCanvas from "./BlankFaceCanvas";
 import BlankFaceView from "./BlankFaceView";
 
@@ -11,11 +12,13 @@ export default class CardFace {
         Object.assign(this, face);
     }
 
-    getView(listOfCardFaces, cardSet, campaign, setCampaign) {
+    getView(faceDirection, listOfCardFaces, otherFace, cardSet, campaign, setCampaign) {
         return (
             <BlankFaceView
+                faceDirection={faceDirection}
                 listOfCardFaces={listOfCardFaces}
                 face={this}
+                otherFace={otherFace}
                 campaign={campaign}
                 setCampaign={setCampaign}
             />

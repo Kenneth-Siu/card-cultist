@@ -6,11 +6,13 @@ import InputContainer from "../../components/inputContainer/InputContainer";
 import BaseFaceView from "../BaseFaceView";
 import "../FaceView.scss";
 
-export default function LocationBackFaceView({ listOfCardFaces, face, cardSet, campaign, setCampaign }) {
+export default function LocationBackFaceView({ faceDirection, listOfCardFaces, otherFace, face, cardSet, campaign, setCampaign }) {
     return (
         <BaseFaceView
+            faceDirection={faceDirection}
             listOfCardFaces={listOfCardFaces}
             face={face}
+            otherFace={otherFace}
             canvas={
                 <LocationBackFaceCanvas
                     face={face}

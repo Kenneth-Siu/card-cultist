@@ -3,11 +3,13 @@ import BlankFaceCanvas from "./BlankFaceCanvas";
 import BaseFaceView from "../BaseFaceView";
 import "../FaceView.scss";
 
-export default function BlankFaceView({ listOfCardFaces, face, campaign, setCampaign }) {
+export default function BlankFaceView({ faceDirection, listOfCardFaces, otherFace, face, campaign, setCampaign }) {
     return (
         <BaseFaceView
+            faceDirection={faceDirection}
             listOfCardFaces={listOfCardFaces}
             face={face}
+            otherFace={otherFace}
             canvas={<BlankFaceCanvas />}
             campaign={campaign}
             setCampaign={setCampaign}

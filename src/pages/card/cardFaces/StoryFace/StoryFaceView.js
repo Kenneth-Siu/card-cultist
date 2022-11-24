@@ -4,11 +4,13 @@ import InputContainer from "../../components/inputContainer/InputContainer";
 import BaseFaceView from "../BaseFaceView";
 import "../FaceView.scss";
 
-export default function StoryFaceView({ listOfCardFaces, face, cardSet, campaign, setCampaign }) {
+export default function StoryFaceView({ faceDirection, listOfCardFaces, otherFace, face, cardSet, campaign, setCampaign }) {
     return (
         <BaseFaceView
+            faceDirection={faceDirection}
             listOfCardFaces={listOfCardFaces}
             face={face}
+            otherFace={otherFace}
             canvas={<StoryFaceCanvas face={face} cardSet={cardSet} />}
             fields={
                 <>

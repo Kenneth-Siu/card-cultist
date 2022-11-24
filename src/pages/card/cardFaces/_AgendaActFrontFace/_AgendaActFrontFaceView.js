@@ -4,11 +4,13 @@ import InputContainer from "../../components/inputContainer/InputContainer";
 import BaseFaceView from "../BaseFaceView";
 import "../FaceView.scss";
 
-export default function AgendaActFrontFaceView({ listOfCardFaces, canvas, face, campaign, setCampaign }) {
+export default function AgendaActFrontFaceView({ faceDirection, listOfCardFaces, otherFace, canvas, face, campaign, setCampaign }) {
     return (
         <BaseFaceView
+            faceDirection={faceDirection}
             listOfCardFaces={listOfCardFaces}
             face={face}
+            otherFace={otherFace}
             canvas={canvas}
             fields={
                 <>

@@ -2,7 +2,7 @@ import React from "react";
 import { useHistory, useParams } from "react-router-dom";
 import Container from "../../components/container/Container";
 import IconButton from "../../components/iconButton/IconButton";
-import getCardFaceClassInstance from "../../helpers/getCardFaceClassInstance";
+import { FACE_DIRECTION } from "./cardConstants";
 import listOfCardFaces from "./cardFaces/listOfCardFaces";
 import "./CardView.scss";
 
@@ -38,8 +38,8 @@ export default function CardView({ campaign, setCampaign }) {
                     <span className="emoji">🗑</span> Delete
                 </IconButton>
             </Container>
-            {card.frontFace.getView(listOfCardFaces, cardSet, campaign, setCampaign)}
-            {card.backFace.getView(listOfCardFaces, cardSet, campaign, setCampaign)}
+            {card.frontFace.getView(FACE_DIRECTION.FRONT, listOfCardFaces, card.backFace, cardSet, campaign, setCampaign)}
+            {card.backFace.getView(FACE_DIRECTION.BACK, listOfCardFaces, card.frontFace, cardSet, campaign, setCampaign)}
         </main>
     );
 

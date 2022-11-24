@@ -12,10 +12,11 @@ export default class PlayerFace extends CardFace {
         super(face, PlayerFace.type);
     }
 
-    getView(listOfCardFaces, cardSet, campaign, setCampaign) {
+    getView(faceDirection, listOfCardFaces, otherFace, cardSet, campaign, setCampaign) {
         return (
             <PlayerFaceView
                 face={this}
+                faceDirection={faceDirection}
                 listOfCardFaces={listOfCardFaces}
                 campaign={campaign}
                 setCampaign={setCampaign}

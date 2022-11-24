@@ -5,11 +5,13 @@ import InputContainer from "../../components/inputContainer/InputContainer";
 import BaseFaceView from "../BaseFaceView";
 import "../FaceView.scss";
 
-export default function TreacheryFaceView({ listOfCardFaces, face, cardSet, campaign, setCampaign }) {
+export default function TreacheryFaceView({ faceDirection, listOfCardFaces, otherFace, face, cardSet, campaign, setCampaign }) {
     return (
         <BaseFaceView
+            faceDirection={faceDirection}
             listOfCardFaces={listOfCardFaces}
             face={face}
+            otherFace={otherFace}
             canvas={
                 <TreacheryFaceCanvas
                     face={face}
