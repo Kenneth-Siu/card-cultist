@@ -174,7 +174,7 @@ export default function LocationBackFaceCanvas({ face, cardSet, campaign, setIll
                     .withText(face.traits)
                     .withX(374)
                     .withY(624)
-                    .withFontSize(28)
+                    .withFontSize(30)
                     .withAlign(TEXTALIGN.CENTER)
                     .withBold()
                     .withItalic()

@@ -4,19 +4,21 @@ import CanvasImageLayer from "../../../../models/canvasLayers/CanvasImageLayer";
 import CanvasTextLayer from "../../../../models/canvasLayers/CanvasTextLayer";
 import CanvasTextConfig, { TEXTALIGN } from "../../../../models/CanvasTextConfig";
 import ImageTransform from "../../../../models/ImageTransform";
-import TreacheryFace from "./TreacheryFace";
+import StoryWeaknessFace from "./StoryWeaknessFace";
 import CardCanvas from "../CardCanvas";
 import { isSvgPath } from "../../../../helpers/isSvgPath";
 import { transformSvgOnCanvas } from "../../../../helpers/transformSvgOnCanvas";
 import { CARD_PORTRAIT_HEIGHT, CARD_PORTRAIT_WIDTH } from "../../cardConstants";
 
-export default function TreacheryFaceCanvas({ face, cardSet, campaign, setIllustrationTransform }) {
+export default function StoryWeaknessFaceCanvas({ face, cardSet, campaign, setIllustrationTransform }) {
     const [loadedImages, loadPublicImage, loadFileSystemImage] = useLoadedImages();
 
     const [illustrationLayer, setIllustrationLayer] = useState(null);
+    const [encounterSetIconFrameLayer, setEncounterSetIconFrameLayer] = useState(null);
     const [frameLayer, setFrameLayer] = useState(null);
     const [encounterSetSymbolLayer, setEncounterSetSymbolLayer] = useState(null);
     const [cardTypeLayer, setCardTypeLayer] = useState(null);
+    const [subTypeLayer, setSubTypeLayer] = useState(null);
     const [titleLayer, setTitleLayer] = useState(null);
     const [traitsLayer, setTraitsLayer] = useState(null);
     const [textLayer, setTextLayer] = useState(null);
@@ -29,8 +31,10 @@ export default function TreacheryFaceCanvas({ face, cardSet, campaign, setIllust
     const canvasLayers = [
         illustrationLayer,
         frameLayer,
+        encounterSetIconFrameLayer,
         encounterSetSymbolLayer,
         cardTypeLayer,
+        subTypeLayer,
         titleLayer,
         traitsLayer,
         textLayer,
@@ -50,7 +54,16 @@ export default function TreacheryFaceCanvas({ face, cardSet, campaign, setIllust
 
     useEffect(async () => {
         setFrameLayer(
-            new CanvasImageLayer(await loadPublicImage(TreacheryFace.frame), new ImageTransform({ scale: 2 }))
+            new CanvasImageLayer(await loadPublicImage(StoryWeaknessFace.frame), new ImageTransform({ scale: 2 }))
+        );
+    }, []);
+
+    useEffect(async () => {
+        setEncounterSetIconFrameLayer(
+            new CanvasImageLayer(
+                await loadPublicImage(StoryWeaknessFace.encounterSetIconFrame),
+                new ImageTransform({ x: 312, y: 486, scale: 2 })
+            )
         );
     }, []);
 
@@ -92,6 +105,20 @@ export default function TreacheryFaceCanvas({ face, cardSet, campaign, setIllust
     }, [face.cardType]);
 
     useEffect(() => {
+        setSubTypeLayer(
+            new CanvasTextLayer(
+                new CanvasTextConfig()
+                    .withText(face.subType.toUpperCase())
+                    .withX(374)
+                    .withY(692)
+                    .withFontSize(24)
+                    .withAlign(TEXTALIGN.CENTER)
+                    .withBold()
+            )
+        );
+    }, [face.subType]);
+
+    useEffect(() => {
         setTitleLayer(
             new CanvasTextLayer(
                 new CanvasTextConfig()
@@ -111,7 +138,7 @@ export default function TreacheryFaceCanvas({ face, cardSet, campaign, setIllust
                 new CanvasTextConfig()
                     .withText(face.traits)
                     .withX(374)
-                    .withY(701)
+                    .withY(733)
                     .withFontSize(30)
                     .withAlign(TEXTALIGN.CENTER)
                     .withBold()
@@ -126,7 +153,7 @@ export default function TreacheryFaceCanvas({ face, cardSet, campaign, setIllust
                 new CanvasTextConfig()
                     .withText(face.text)
                     .withX(62)
-                    .withY(743)
+                    .withY(770)
                     .withWidth(626)
                     .withFontSize(face.textFontSize)
                     .withCardTitle(face.title)

@@ -1,6 +1,6 @@
 export const PARAGRAPH_FONT_SIZE = 35;
 export const PARAGRAPH_LINE_HEIGHT = 1.32;
-export const PARAGRAPH_SPACING = 0.4;
+export const PARAGRAPH_SPACING = 0.3;
 export const HEADER_1_FONT_SIZE = 70;
 export const HEADER_2_FONT_SIZE = 64;
 export const HEADER_1_START_TOP = 10;

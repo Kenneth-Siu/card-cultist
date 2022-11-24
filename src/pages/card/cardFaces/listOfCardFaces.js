@@ -8,7 +8,9 @@ import EnemyFace from "./EnemyFace/EnemyFace";
 import LocationBackFace from "./LocationBackFace/LocationBackFace";
 import LocationFrontFace from "./LocationFrontFace/LocationFrontFace";
 import MythosFace from "./MythosFace/MythosFace";
+import PlayerFace from "./PlayerFace/PlayerFace";
 import StoryFace from "./StoryFace/StoryFace";
+import StoryWeaknessFace from "./StoryWeaknessFace/StoryWeaknessFace";
 import TreacheryFace from "./TreacheryFace/TreacheryFace";
 
 const listOfCardFaces = [
@@ -23,7 +25,9 @@ const listOfCardFaces = [
     EnemyFace,
     TreacheryFace,
     StoryFace,
+    StoryWeaknessFace,
     MythosFace,
+    PlayerFace,
 ];
 
 export default listOfCardFaces;

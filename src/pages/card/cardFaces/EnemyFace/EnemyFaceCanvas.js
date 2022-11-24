@@ -169,7 +169,7 @@ export default function EnemyFaceCanvas({ face, cardSet, campaign, setIllustrati
                     .withText(face.traits)
                     .withX(374)
                     .withY(232)
-                    .withFontSize(28)
+                    .withFontSize(30)
                     .withAlign(TEXTALIGN.CENTER)
                     .withBold()
                     .withItalic()
