@@ -11,6 +11,11 @@
 }
 
 @font-face {
+    font-family: "Teutonic";
+    src: url("../../public/teutonic.regular.ttf");
+}
+
+@font-face {
     font-family: "Arno";
     src: url("../../public/c623e89c-55e3-4c64-ac16-5d25f81c16d0.woff2");
 }
@@ -32,8 +37,9 @@
 }
 
 html {
-    font-family: -apple-system, "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "Noto Sans",
-        sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-family: -apple-system, "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue",
+        "Arial", "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji";
     font-size: 16px;
 }
 
