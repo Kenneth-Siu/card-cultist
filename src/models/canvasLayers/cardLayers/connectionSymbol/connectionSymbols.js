@@ -1,17 +1,17 @@
-import circle from "../../../../../public/overlays/AHLCG-LocCircle.png";
-import square from "../../../../../public/overlays/AHLCG-LocSquare.png";
-import triangle from "../../../../../public/overlays/AHLCG-LocTriangle.png";
-import cross from "../../../../../public/overlays/AHLCG-LocCross.png";
-import diamond from "../../../../../public/overlays/AHLCG-LocDiamond.png";
-import slash from "../../../../../public/overlays/AHLCG-LocSlash.png";
-import t from "../../../../../public/overlays/AHLCG-LocT.png";
-import hourglass from "../../../../../public/overlays/AHLCG-LocHourglass.png";
-import moon from "../../../../../public/overlays/AHLCG-LocMoon.png";
-import doubleSlash from "../../../../../public/overlays/AHLCG-LocDoubleSlash.png";
-import heart from "../../../../../public/overlays/AHLCG-LocHeart.png";
-import star from "../../../../../public/overlays/AHLCG-LocStar.png";
-import quotationMark from "../../../../../public/overlays/AHLCG-LocQuote.png";
-import clover from "../../../../../public/overlays/AHLCG-LocClover.png";
+import circle from "../../../../../public/templates/locationConnections/circle.png";
+import square from "../../../../../public/templates/locationConnections/square.png";
+import triangle from "../../../../../public/templates/locationConnections/triangle.png";
+import cross from "../../../../../public/templates/locationConnections/cross.png";
+import diamond from "../../../../../public/templates/locationConnections/diamond.png";
+import slash from "../../../../../public/templates/locationConnections/slash.png";
+import t from "../../../../../public/templates/locationConnections/t.png";
+import hourglass from "../../../../../public/templates/locationConnections/hourglass.png";
+import moon from "../../../../../public/templates/locationConnections/moon.png";
+import doubleSlash from "../../../../../public/templates/locationConnections/doubleSlash.png";
+import heart from "../../../../../public/templates/locationConnections/heart.png";
+import star from "../../../../../public/templates/locationConnections/star.png";
+import quotationMark from "../../../../../public/templates/locationConnections/quote.png";
+import clover from "../../../../../public/templates/locationConnections/clover.png";
 
 export const noConnectionSymbol = { name: "" };
 

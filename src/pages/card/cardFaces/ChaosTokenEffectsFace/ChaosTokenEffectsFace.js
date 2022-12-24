@@ -3,10 +3,10 @@ import CardFace from "../BlankFace/CardFace";
 import chaosBag from "../../../../../public/templates/scenario/chaosBag.png";
 import ChaosTokenEffectsFaceView from "./ChaosTokenEffectsFaceView";
 import ChaosTokenEffectsFaceCanvas from "./ChaosTokenEffectsFaceCanvas";
-import skullTokenImage from "../../../../../public/overlays/AHLCG-ChaosSkull.png";
-import cultistTokenImage from "../../../../../public/overlays/AHLCG-ChaosCultist.png";
-import tabletTokenImage from "../../../../../public/overlays/AHLCG-ChaosTablet.png";
-import elderThingTokenImage from "../../../../../public/overlays/AHLCG-ChaosElderThing.png";
+import skullTokenImage from "../../../../../public/templates/chaosTokens/skull.png";
+import cultistTokenImage from "../../../../../public/templates/chaosTokens/cultist.png";
+import tabletTokenImage from "../../../../../public/templates/chaosTokens/tablet.png";
+import elderThingTokenImage from "../../../../../public/templates/chaosTokens/elderThing.png";
 
 export default class ChaosTokenEffectsFace extends CardFace {
     static type = "Chaos Token Effects";
