@@ -30,7 +30,7 @@ export default class TreacheryFace extends CardFace {
         this.campaignSetId = face.campaignSetId || "";
     }
 
-    getView(faceDirection, listOfCardFaces, otherFace, cardSet, campaign, setCampaign) {
+    getView(faceDirection, listOfCardFaces, otherFace, cardSet) {
         return (
             <TreacheryFaceView
                 faceDirection={faceDirection}
@@ -38,8 +38,6 @@ export default class TreacheryFace extends CardFace {
                 face={this}
                 otherFace={otherFace}
                 cardSet={cardSet}
-                campaign={campaign}
-                setCampaign={setCampaign}
             />
         );
     }

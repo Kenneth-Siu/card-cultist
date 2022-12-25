@@ -1,27 +1,23 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
+import { CampaignContext } from "../../../../components/CampaignContext";
 import useLoadedImages from "../../../../helpers/useLoadedImages";
 import WidgetView from "../WidgetView";
 import IllustrationWidget from "./IllustrationWidget";
 
-export default function IllustrationWidgetView({ widget, page, campaign, setCampaign }) {
+export default function IllustrationWidgetView({ widget, page }) {
+    const { refreshCampaign } = useContext(CampaignContext);
     const [loadedImages, loadPublicImage, loadFileSystemImage] = useLoadedImages();
 
     useEffect(async () => {
         if (widget.path) {
             const image = await loadFileSystemImage(widget.path);
             IllustrationWidget.dictionary[widget.id] = image;
-            setCampaign(campaign.clone());
+            refreshCampaign();
         }
     }, []);
 
     return (
-        <WidgetView
-            widget={widget}
-            page={page}
-            campaign={campaign}
-            setCampaign={setCampaign}
-            className="illustration-widget-view"
-        >
+        <WidgetView widget={widget} page={page} className="illustration-widget-view">
             <div className="input-container">
                 <button onClick={() => setIllustration()}>Load Image</button>
             </div>
@@ -53,12 +49,12 @@ export default function IllustrationWidgetView({ widget, page, campaign, setCamp
         widget.path = path;
         const image = await loadFileSystemImage(path);
         IllustrationWidget.dictionary[widget.id] = image;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function setIllustrationTransform(transform) {
         widget.transform = transform;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function setIllustrationScale(scale) {

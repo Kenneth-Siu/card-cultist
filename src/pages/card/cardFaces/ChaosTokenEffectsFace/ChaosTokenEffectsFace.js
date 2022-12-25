@@ -37,7 +37,7 @@ export default class ChaosTokenEffectsFace extends CardFace {
         this.campaignSetId = face.campaignSetId || "";
     }
 
-    getView(faceDirection, listOfCardFaces, otherFace, cardSet, campaign, setCampaign) {
+    getView(faceDirection, listOfCardFaces, otherFace, cardSet) {
         return (
             <ChaosTokenEffectsFaceView
                 faceDirection={faceDirection}
@@ -45,18 +45,15 @@ export default class ChaosTokenEffectsFace extends CardFace {
                 face={this}
                 otherFace={otherFace}
                 cardSet={cardSet}
-                campaign={campaign}
-                setCampaign={setCampaign}
             />
         );
     }
 
-    getCanvas(cardId, cardSet, campaign, setIllustrationTransform) {
+    getCanvas(cardId, cardSet, setIllustrationTransform) {
         return (
             <ChaosTokenEffectsFaceCanvas
                 face={this}
                 cardSet={cardSet}
-                campaign={campaign}
                 setIllustrationTransform={setIllustrationTransform}
                 key={cardId}
             />

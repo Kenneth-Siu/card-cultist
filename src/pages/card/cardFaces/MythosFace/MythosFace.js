@@ -12,14 +12,12 @@ export default class MythosFace extends CardFace {
         super(face, MythosFace.type);
     }
 
-    getView(faceDirection, listOfCardFaces, otherFace, cardSet, campaign, setCampaign) {
+    getView(faceDirection, listOfCardFaces, otherFace, cardSet) {
         return (
             <MythosFaceView
                 face={this}
                 faceDirection={faceDirection}
                 listOfCardFaces={listOfCardFaces}
-                campaign={campaign}
-                setCampaign={setCampaign}
             />
         );
     }

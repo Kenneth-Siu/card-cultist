@@ -45,7 +45,7 @@ export default class LocationFrontFace extends CardFace {
         this.campaignSetId = face.campaignSetId || "";
     }
 
-    getView(faceDirection, listOfCardFaces, otherFace, cardSet, campaign, setCampaign) {
+    getView(faceDirection, listOfCardFaces, otherFace, cardSet) {
         return (
             <LocationFrontFaceView
                 faceDirection={faceDirection}
@@ -53,18 +53,15 @@ export default class LocationFrontFace extends CardFace {
                 face={this}
                 otherFace={otherFace}
                 cardSet={cardSet}
-                campaign={campaign}
-                setCampaign={setCampaign}
             />
         );
     }
 
-    getCanvas(cardId, cardSet, campaign, setIllustrationTransform) {
+    getCanvas(cardId, cardSet, setIllustrationTransform) {
         return (
             <LocationFrontFaceCanvas
                 face={this}
                 cardSet={cardSet}
-                campaign={campaign}
                 setIllustrationTransform={setIllustrationTransform}
                 key={cardId}
             />

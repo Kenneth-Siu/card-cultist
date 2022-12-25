@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import RotateRightIcon from "@mui/icons-material/RotateRight";
 import ZoomOutMapIcon from "@mui/icons-material/ZoomOutMap";
 import "./Illustration.scss";
+import { CampaignContext } from "../../../../components/CampaignContext";
 
-export default function Illustration({ face, campaign, setCampaign, setIllustrationTransform }) {
+export default function Illustration({ face, setIllustrationTransform }) {
+    const { refreshCampaign } = useContext(CampaignContext);
     return (
         <div className="illustration-view">
             <div>
@@ -17,9 +19,7 @@ export default function Illustration({ face, campaign, setCampaign, setIllustrat
 
             <div className="transform-container">
                 <div className="row">
-                    <label className="text">
-                        X Position
-                    </label>
+                    <label className="text">X Position</label>
                     <label>
                         <ArrowForwardIcon />
                     </label>
@@ -32,9 +32,7 @@ export default function Illustration({ face, campaign, setCampaign, setIllustrat
                     />
                 </div>
                 <div className="row">
-                    <label className="text">
-                        Y Position
-                    </label>
+                    <label className="text">Y Position</label>
                     <label>
                         <ArrowDownwardIcon />
                     </label>
@@ -49,9 +47,7 @@ export default function Illustration({ face, campaign, setCampaign, setIllustrat
             </div>
             <div className="transform-container">
                 <div className="row">
-                    <label className="text">
-                        Scale
-                    </label>
+                    <label className="text">Scale</label>
                     <label>
                         <ZoomOutMapIcon />
                     </label>
@@ -65,9 +61,7 @@ export default function Illustration({ face, campaign, setCampaign, setIllustrat
                     />
                 </div>
                 <div className="row">
-                    <label className="text">
-                        Rotation
-                    </label>
+                    <label className="text">Rotation</label>
                     <label>
                         <RotateRightIcon />
                     </label>
@@ -83,11 +77,7 @@ export default function Illustration({ face, campaign, setCampaign, setIllustrat
             <div className="illustrator-container">
                 <label>
                     <span>Illustrator</span>
-                    <input
-                        type="text"
-                        value={face.illustrator}
-                        onChange={(event) => setIllustrator(event.target.value)}
-                    />
+                    <input type="text" value={face.illustrator} onChange={(event) => setIllustrator(event.target.value)} />
                 </label>
             </div>
         </div>
@@ -96,7 +86,7 @@ export default function Illustration({ face, campaign, setCampaign, setIllustrat
     async function setIllustration() {
         const path = await window.fs.chooseImage();
         face.illustration = path;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function setIllustrationX(x) {
@@ -117,6 +107,6 @@ export default function Illustration({ face, campaign, setCampaign, setIllustrat
 
     function setIllustrator(illustrator) {
         face.illustrator = illustrator;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 }

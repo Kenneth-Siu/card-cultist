@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
+import { CampaignContext } from "../../../../components/CampaignContext";
 import Illustration from "../../components/illustration/Illustration";
 import InputContainer from "../../components/inputContainer/InputContainer";
 import BaseFaceView from "../BaseFaceView";
 import "../FaceView.scss";
 
-export default function AgendaActFrontFaceView({ faceDirection, listOfCardFaces, otherFace, canvas, face, campaign, setCampaign }) {
+export default function AgendaActFrontFaceView({ faceDirection, listOfCardFaces, otherFace, canvas, face }) {
+    const { refreshCampaign } = useContext(CampaignContext);
     return (
         <BaseFaceView
             faceDirection={faceDirection}
@@ -29,23 +31,14 @@ export default function AgendaActFrontFaceView({ faceDirection, listOfCardFaces,
                         <textarea value={face.text} onChange={(event) => setText(event.target.value)} />
                     </InputContainer>
                     <InputContainer label="Threshold">
-                        <input
-                            type="text"
-                            value={face.threshold}
-                            onChange={(event) => setThreshold(event.target.value)}
-                        />
+                        <input type="text" value={face.threshold} onChange={(event) => setThreshold(event.target.value)} />
                         <label>
                             Per investigator?
                             <input type="checkbox" checked={face.isPer} onChange={() => toggleIsPer()} />
                         </label>
                     </InputContainer>
 
-                    <Illustration
-                        face={face}
-                        campaign={campaign}
-                        setCampaign={setCampaign}
-                        setIllustrationTransform={setIllustrationTransform}
-                    />
+                    <Illustration face={face} setIllustrationTransform={setIllustrationTransform} />
                 </>
             }
             expandableHeight="7rem"
@@ -54,132 +47,85 @@ export default function AgendaActFrontFaceView({ faceDirection, listOfCardFaces,
                     <InputContainer label="Encounter Set Symbol">
                         <button onClick={() => setEncounterSetSymbol()}>Load Image</button>
                     </InputContainer>
-                    <InputContainer
-                        label="Copyright Information"
-                        type="text"
-                        value={face.copyrightInformation}
-                        setValue={setCopyrightInformation}
-                    />
+                    <InputContainer label="Copyright Information" type="text" value={face.copyrightInformation} setValue={setCopyrightInformation} />
                     <InputContainer label="Encounter Set ID" childId="set-id">
-                        <input
-                            type="text"
-                            value={face.encounterSetId}
-                            onChange={(event) => setEncounterSetId(event.target.value)}
-                        />
+                        <input type="text" value={face.encounterSetId} onChange={(event) => setEncounterSetId(event.target.value)} />
                         /
-                        <input
-                            type="text"
-                            value={face.encounterSetMaxId}
-                            onChange={(event) => setEncounterSetMaxId(event.target.value)}
-                        />
+                        <input type="text" value={face.encounterSetMaxId} onChange={(event) => setEncounterSetMaxId(event.target.value)} />
                     </InputContainer>
                     <InputContainer label="Campaign Symbol">
                         <button onClick={() => setCampaignSymbol()}>Load Image</button>
                     </InputContainer>
-                    <InputContainer
-                        label="Campaign Set ID"
-                        type="text"
-                        value={face.campaignSetId}
-                        setValue={setCampaignSetId}
-                    />
+                    <InputContainer label="Campaign Set ID" type="text" value={face.campaignSetId} setValue={setCampaignSetId} />
                 </>
             }
-            campaign={campaign}
-            setCampaign={setCampaign}
         />
     );
 
     function setNumber(number) {
         face.number = number;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function setTitle(title) {
         face.title = title;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function setText(text) {
         face.text = text;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function setThreshold(threshold) {
         face.threshold = threshold;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function toggleIsPer() {
         face.isPer = !face.isPer;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function setTextFontSize(fontSize) {
         face.textFontSize = fontSize;
-        setCampaign(campaign.clone());
-    }
-
-    function setIllustrator(illustrator) {
-        face.illustrator = illustrator;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function setCopyrightInformation(copyrightInformation) {
         face.copyrightInformation = copyrightInformation;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function setEncounterSetId(encounterSetId) {
         face.encounterSetId = encounterSetId;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function setEncounterSetMaxId(encounterSetMaxId) {
         face.encounterSetMaxId = encounterSetMaxId;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function setCampaignSetId(campaignSetId) {
         face.campaignSetId = campaignSetId;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     async function setEncounterSetSymbol() {
         const path = await window.fs.chooseIcon();
         face.encounterSetSymbol = path;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     async function setCampaignSymbol() {
         const path = await window.fs.chooseIcon();
         face.campaignSymbol = path;
-        setCampaign(campaign.clone());
-    }
-
-    async function setIllustration() {
-        const path = await window.fs.chooseImage();
-        face.illustration = path;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function setIllustrationTransform(transform) {
         face.illustrationTransform = transform;
-        setCampaign(campaign.clone());
-    }
-
-    function setIllustrationX(x) {
-        setIllustrationTransform(face.illustrationTransform.withX(x));
-    }
-
-    function setIllustrationY(y) {
-        setIllustrationTransform(face.illustrationTransform.withY(y));
-    }
-
-    function setIllustrationScale(scale) {
-        setIllustrationTransform(face.illustrationTransform.withScale(scale));
-    }
-
-    function setIllustrationRotation(rotation) {
-        setIllustrationTransform(face.illustrationTransform.withRotation(rotation));
+        refreshCampaign();
     }
 }

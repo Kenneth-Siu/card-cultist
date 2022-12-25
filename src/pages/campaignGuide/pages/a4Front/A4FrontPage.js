@@ -11,15 +11,7 @@ export default class A4FrontPage extends Page {
         super(pageOrId, A4FrontPage.type, A4FrontPage.background);
     }
 
-    getView(campaign, setCampaign, pageNumber) {
-        return (
-            <A4FrontPageView
-                key={this.id}
-                page={this}
-                pageNumber={pageNumber}
-                campaign={campaign}
-                setCampaign={setCampaign}
-            />
-        );
+    getView(pageNumber) {
+        return <A4FrontPageView key={this.id} page={this} pageNumber={pageNumber} />;
     }
 }

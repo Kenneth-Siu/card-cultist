@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { CampaignContext } from "../../../../components/CampaignContext";
 import useLoadedImages from "../../../../helpers/useLoadedImages";
 import CanvasImageLayer from "../../../../models/canvasLayers/CanvasImageLayer";
 import CanvasTextLayer from "../../../../models/canvasLayers/CanvasTextLayer";
@@ -6,7 +7,8 @@ import CanvasTextConfig, { TEXTALIGN } from "../../../../models/CanvasTextConfig
 import ImageTransform from "../../../../models/ImageTransform";
 import { FRONT_PAGE_TITLE_FONT_SIZE, SQUARE } from "../../campaignGuideConstants";
 
-export default function SquareFrontPageCanvas({ page, campaign }) {
+export default function SquareFrontPageCanvas({ page }) {
+    const { campaign } = useContext(CampaignContext);
     const [loadedImages, loadPublicImage] = useLoadedImages();
 
     const canvasRef = useRef(null);

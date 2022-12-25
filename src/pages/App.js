@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Route, Switch } from "react-router-dom";
+import { CampaignContext } from "../components/CampaignContext";
 import CampaignView from "./campaign/CampaignView";
 import CampaignGuideView from "./campaignGuide/CampaignGuideView";
 import NavBar from "./navBar/NavBar";
@@ -26,28 +27,28 @@ export default function App() {
     }, []);
 
     return (
-        <>
+        <CampaignContext.Provider value={{ campaign, refreshCampaign: () => setCampaign(campaign.clone()) }}>
             <title>{campaign ? `${campaign.title} · ` : ""}Card Cultist</title>
-            {campaign && <NavBar campaign={campaign} setCampaign={setCampaign} />}
+            {campaign && <NavBar />}
             <p style={{ fontFamily: "AHCardTextSymbols", color: "transparent", position: "fixed", top: "-100px" }}>a</p>
             <p style={{ fontFamily: "NotoColorEmoji-Regular", color: "transparent", position: "fixed", top: "-100px" }}>📚</p>
             <p style={{ fontFamily: "Arno", color: "transparent", position: "fixed", top: "-100px" }}>a</p>
             <p style={{ fontFamily: "Teutonic", color: "transparent", position: "fixed", top: "-100px" }}>a</p>
             <Switch>
                 <Route exact={true} path="/campaign-guide">
-                    <CampaignGuideView campaign={campaign} setCampaign={setCampaign} />
+                    <CampaignGuideView />
                 </Route>
                 <Route exact={true} path="/card-set/:id">
-                    <CardSetView campaign={campaign} setCampaign={setCampaign} />
+                    <CardSetView />
                 </Route>
                 <Route exact={true} path="/card-set/:cardSetId/card/:id">
-                    <CardView campaign={campaign} setCampaign={setCampaign} />
+                    <CardView />
                 </Route>
                 <Route path="/">
-                    <CampaignView campaign={campaign} setCampaign={setCampaign} />
+                    <CampaignView />
                 </Route>
             </Switch>
-        </>
+        </CampaignContext.Provider>
     );
 
     function initEffectSaveKeyboardShortcut() {

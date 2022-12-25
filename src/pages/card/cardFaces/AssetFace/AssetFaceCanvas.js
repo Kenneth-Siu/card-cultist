@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import useLoadedImages from "../../../../helpers/useLoadedImages";
 import CanvasImageLayer from "../../../../models/canvasLayers/CanvasImageLayer";
 import CanvasTextLayer from "../../../../models/canvasLayers/CanvasTextLayer";
@@ -14,8 +14,10 @@ import sanityIcons from "../../../../../public/templates/sanity/sanity";
 import slotIcons from "../../../../../public/templates/slots/slots";
 import skillIcons from "../../../../../public/templates/skillIcons/skillIcons";
 import skillIconFrame from "../../../../../public/templates/skillBoxes/neutral.png";
+import { CampaignContext } from "../../../../components/CampaignContext";
 
-export default function AssetFaceCanvas({ face, cardSet, campaign, setIllustrationTransform }) {
+export default function AssetFaceCanvas({ face, cardSet, setIllustrationTransform }) {
+    const { campaign } = useContext(CampaignContext);
     const [loadedImages, loadPublicImage, loadFileSystemImage] = useLoadedImages();
 
     const [illustrationLayer, setIllustrationLayer] = useState(null);

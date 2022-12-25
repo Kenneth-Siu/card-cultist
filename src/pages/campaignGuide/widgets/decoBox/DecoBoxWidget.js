@@ -25,9 +25,9 @@ export default class DecoBoxWidget extends Widget {
         this.bottomBracket = widget.bottomBracket || false;
     }
 
-    getView(page, campaign, setCampaign) {
+    getView(page) {
         return (
-            <DecoBoxWidgetView key={this.id} widget={this} page={page} campaign={campaign} setCampaign={setCampaign} />
+            <DecoBoxWidgetView key={this.id} widget={this} page={page} />
         );
     }
 

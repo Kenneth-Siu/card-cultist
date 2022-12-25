@@ -1,5 +1,6 @@
-import React, { useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { useHistory, useParams } from "react-router-dom";
+import { CampaignContext } from "../../components/CampaignContext";
 import useLoadedImages from "../../helpers/useLoadedImages";
 import "./CardSetView.scss";
 
@@ -11,7 +12,8 @@ const ttsMinRows = 2;
 const ttsMaxColumns = 10;
 const ttsMinColumns = 2;
 
-export default function CardSet({ campaign, setCampaign }) {
+export default function CardSet() {
+    const { campaign, refreshCampaign } = useContext(CampaignContext);
     const [loadedImages, loadPublicImage, loadFileSystemImage] = useLoadedImages();
     const history = useHistory();
 
@@ -62,19 +64,19 @@ export default function CardSet({ campaign, setCampaign }) {
 
     function setTitle(title) {
         cardSet.title = title;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     async function setSetSymbol() {
         const path = await window.fs.chooseIcon();
         cardSet.symbol = path;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function deleteSet() {
         campaign.deleteCardSet(id);
         history.push("/");
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function exportAllCards(imageType, extension, quality) {

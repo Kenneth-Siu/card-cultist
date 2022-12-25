@@ -17,16 +17,8 @@ export default class SymbolsRowWidget extends Widget {
         this.spacing = widget.spacing || 0;
     }
 
-    getView(page, campaign, setCampaign) {
-        return (
-            <SymbolsRowWidgetView
-                key={this.id}
-                widget={this}
-                page={page}
-                campaign={campaign}
-                setCampaign={setCampaign}
-            />
-        );
+    getView(page) {
+        return <SymbolsRowWidgetView key={this.id} widget={this} page={page} />;
     }
 
     draw(context, x, y, _isFirst, _campaignGuide, PAGE) {
@@ -42,25 +34,15 @@ export default class SymbolsRowWidget extends Widget {
                 return;
             }
             const transform = isSvgPath(path)
-                ? transformSvgOnCanvas(
-                      { h: PAGE.HEIGHT, w: PAGE.WIDTH },
-                      { h: image.height, w: image.width },
-                      SYMBOLS_ROW.SYMBOL_SIZE
-                  )
+                ? transformSvgOnCanvas({ h: PAGE.HEIGHT, w: PAGE.WIDTH }, { h: image.height, w: image.width }, SYMBOLS_ROW.SYMBOL_SIZE)
                 : null;
 
             const layer = new CanvasImageLayer(
                 image,
                 new ImageTransform()
-                    .withX(
-                        startingX +
-                            index * (SYMBOLS_ROW.SYMBOL_SIZE + this.spacing) +
-                            (transform ? transform.xNudge : 0)
-                    )
+                    .withX(startingX + index * (SYMBOLS_ROW.SYMBOL_SIZE + this.spacing) + (transform ? transform.xNudge : 0))
                     .withY(y + SYMBOLS_ROW.TOP_MARGIN + this.yNudge + (transform ? transform.yNudge : 0))
-                    .withScale(
-                        (transform && transform.scale) || SYMBOLS_ROW.SYMBOL_SIZE / Math.max(image.height, image.width)
-                    )
+                    .withScale((transform && transform.scale) || SYMBOLS_ROW.SYMBOL_SIZE / Math.max(image.height, image.width))
             );
             layer.draw(context);
         });

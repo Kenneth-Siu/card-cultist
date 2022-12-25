@@ -12,7 +12,7 @@ export default class SquareFrontPage extends Page {
         this.title = page.title || "";
     }
 
-    getView(campaign, setCampaign) {
-        return <SquareFrontPageView key={this.id} page={this} campaign={campaign} setCampaign={setCampaign} />;
+    getView() {
+        return <SquareFrontPageView key={this.id} page={this} />;
     }
 }

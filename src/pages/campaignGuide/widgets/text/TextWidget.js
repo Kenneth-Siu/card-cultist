@@ -13,8 +13,8 @@ export default class TextWidget extends Widget {
         this.text = widget.text || "";
     }
 
-    getView(page, campaign, setCampaign) {
-        return <TextWidgetView key={this.id} widget={this} page={page} campaign={campaign} setCampaign={setCampaign} />;
+    getView(page) {
+        return <TextWidgetView key={this.id} widget={this} page={page} />;
     }
 
     draw(context, x, y, isFirst, campaignGuide, PAGE) {

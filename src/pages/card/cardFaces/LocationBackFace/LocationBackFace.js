@@ -38,7 +38,7 @@ export default class LocationBackFace extends CardFace {
         this.campaignSymbol = face.campaignSymbol || null;
     }
 
-    getView(faceDirection, listOfCardFaces, otherFace, cardSet, campaign, setCampaign) {
+    getView(faceDirection, listOfCardFaces, otherFace, cardSet) {
         return (
             <LocationBackFaceView
                 faceDirection={faceDirection}
@@ -46,18 +46,15 @@ export default class LocationBackFace extends CardFace {
                 face={this}
                 otherFace={otherFace}
                 cardSet={cardSet}
-                campaign={campaign}
-                setCampaign={setCampaign}
             />
         );
     }
 
-    getCanvas(cardId, cardSet, campaign, setIllustrationTransform) {
+    getCanvas(cardId, cardSet, setIllustrationTransform) {
         return (
             <LocationBackFaceCanvas
                 face={this}
                 cardSet={cardSet}
-                campaign={campaign}
                 setIllustrationTransform={setIllustrationTransform}
                 key={cardId}
             />

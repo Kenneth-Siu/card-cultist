@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import useLoadedImages from "../../../../helpers/useLoadedImages";
 import CanvasImageLayer from "../../../../models/canvasLayers/CanvasImageLayer";
 import CanvasTextLayer from "../../../../models/canvasLayers/CanvasTextLayer";
@@ -10,8 +10,10 @@ import { isSvgPath } from "../../../../helpers/isSvgPath";
 import { transformSvgOnCanvas } from "../../../../helpers/transformSvgOnCanvas";
 import { CARD_PORTRAIT_HEIGHT, CARD_PORTRAIT_WIDTH } from "../../cardConstants";
 import hyphen from "../../../../../public/overlays/AHLCG-Cost--.png";
+import { CampaignContext } from "../../../../components/CampaignContext";
 
-export default function AgendaFrontFaceCanvas({ face, cardSet, campaign, setIllustrationTransform }) {
+export default function AgendaFrontFaceCanvas({ face, cardSet, setIllustrationTransform }) {
+    const { campaign } = useContext(CampaignContext);
     const [loadedImages, loadPublicImage, loadFileSystemImage] = useLoadedImages();
 
     const [illustrationLayer, setIllustrationLayer] = useState(null);

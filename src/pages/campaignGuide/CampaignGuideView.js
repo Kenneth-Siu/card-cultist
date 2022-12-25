@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { jsPDF } from "jspdf";
 import listOfPageTypes from "./pages/listOfPageTypes";
 import "./CampaignGuideView.scss";
+import { CampaignContext } from "../../components/CampaignContext";
 
-export default function CampaignGuide({ campaign, setCampaign }) {
+export default function CampaignGuide() {
+    const { campaign, refreshCampaign } = useContext(CampaignContext);
     const [newPageType, setNewPageType] = useState(listOfPageTypes[0].type);
 
     return (
@@ -12,7 +14,7 @@ export default function CampaignGuide({ campaign, setCampaign }) {
                 <button onClick={() => downloadPDF()}>Export as PDF</button>
             </div>
             <div>
-                {campaign.campaignGuide.pages.map((page, index) => page.getView(campaign, setCampaign, index + 1))}
+                {campaign.campaignGuide.pages.map((page, index) => page.getView(index + 1))}
                 <select value={newPageType} onChange={(event) => setNewPageType(event.target.value)}>
                     {listOfPageTypes.map((pageType) => (
                         <option key={pageType.type} value={pageType.type}>
@@ -29,17 +31,14 @@ export default function CampaignGuide({ campaign, setCampaign }) {
 
     function addPage() {
         campaign.campaignGuide.addPage(newPageType);
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function downloadPDF() {
         const pdf = new jsPDF({
             unit: "px",
             hotfixes: ["px_scaling"],
-            format: [
-                document.querySelector(".campaign-guide-page canvas").width,
-                document.querySelector(".campaign-guide-page canvas").height,
-            ],
+            format: [document.querySelector(".campaign-guide-page canvas").width, document.querySelector(".campaign-guide-page canvas").height],
         });
         document.querySelectorAll(".campaign-guide-page canvas").forEach((page, index) => {
             if (index !== 0) {

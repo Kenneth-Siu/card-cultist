@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Container from "../../../components/container/Container";
 import getCardFaceClassInstance from "../../../helpers/getCardFaceClassInstance";
 import InputContainer from "../components/inputContainer/InputContainer";
@@ -6,19 +6,10 @@ import Expandable from "../components/expandable/Expandable";
 import "./FaceView.scss";
 import { FACE_DIRECTION } from "../cardConstants";
 import IconButton from "../../../components/iconButton/IconButton";
+import { CampaignContext } from "../../../components/CampaignContext";
 
-export default function BaseFaceView({
-    faceDirection,
-    listOfCardFaces,
-    face,
-    otherFace,
-    canvas,
-    fields,
-    expandableHeight,
-    expandableFields,
-    campaign,
-    setCampaign,
-}) {
+export default function BaseFaceView({ faceDirection, listOfCardFaces, face, otherFace, canvas, fields, expandableHeight, expandableFields }) {
+    const { refreshCampaign } = useContext(CampaignContext);
     return (
         <Container className="face-view">
             <div className="header">
@@ -49,7 +40,7 @@ export default function BaseFaceView({
 
     function autofill() {
         face.autofill(otherFace);
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function setFaceType(faceType) {
@@ -57,6 +48,6 @@ export default function BaseFaceView({
         face.cardType = null;
         face.subType = null;
         face = getCardFaceClassInstance(face);
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 }

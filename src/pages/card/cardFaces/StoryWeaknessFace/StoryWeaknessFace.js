@@ -33,7 +33,7 @@ export default class StoryWeaknessFace extends CardFace {
         this.campaignSetId = face.campaignSetId || "";
     }
 
-    getView(faceDirection, listOfCardFaces, otherFace, cardSet, campaign, setCampaign) {
+    getView(faceDirection, listOfCardFaces, otherFace, cardSet) {
         return (
             <StoryWeaknessFaceView
                 faceDirection={faceDirection}
@@ -41,18 +41,15 @@ export default class StoryWeaknessFace extends CardFace {
                 face={this}
                 otherFace={otherFace}
                 cardSet={cardSet}
-                campaign={campaign}
-                setCampaign={setCampaign}
             />
         );
     }
 
-    getCanvas(cardId, cardSet, campaign, setIllustrationTransform) {
+    getCanvas(cardId, cardSet, setIllustrationTransform) {
         return (
             <StoryWeaknessFaceCanvas
                 face={this}
                 cardSet={cardSet}
-                campaign={campaign}
                 setIllustrationTransform={setIllustrationTransform}
                 key={cardId}
             />

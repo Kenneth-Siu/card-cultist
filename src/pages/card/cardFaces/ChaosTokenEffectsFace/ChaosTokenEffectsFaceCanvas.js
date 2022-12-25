@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import useLoadedImages from "../../../../helpers/useLoadedImages";
 import CanvasImageLayer from "../../../../models/canvasLayers/CanvasImageLayer";
 import CanvasTextLayer from "../../../../models/canvasLayers/CanvasTextLayer";
@@ -11,8 +11,10 @@ import { transformSvgOnCanvas } from "../../../../helpers/transformSvgOnCanvas";
 import { CARD_PORTRAIT_HEIGHT, CARD_PORTRAIT_WIDTH } from "../../cardConstants";
 import ChaosTokenEffectsLayer from "../../../../models/canvasLayers/cardLayers/chaosTokenEffects/ChaosTokenEffectsLayer";
 import ChaosTokenEffectsConfig from "../../../../models/canvasLayers/cardLayers/chaosTokenEffects/ChaosTokenEffectsConfig";
+import { CampaignContext } from "../../../../components/CampaignContext";
 
-export default function ChaosTokenEffectsFaceCanvas({ face, cardSet, campaign }) {
+export default function ChaosTokenEffectsFaceCanvas({ face, cardSet }) {
+    const { campaign } = useContext(CampaignContext);
     const [loadedImages, loadPublicImage, loadFileSystemImage] = useLoadedImages();
 
     const [frameLayer, setFrameLayer] = useState(null);

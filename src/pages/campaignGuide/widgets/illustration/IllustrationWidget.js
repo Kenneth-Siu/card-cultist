@@ -14,26 +14,15 @@ export default class IllustrationWidget extends Widget {
         this.transform = new ImageTransform(widget.transform);
     }
 
-    getView(page, campaign, setCampaign) {
-        return (
-            <IllustrationWidgetView
-                key={this.id}
-                widget={this}
-                page={page}
-                campaign={campaign}
-                setCampaign={setCampaign}
-            />
-        );
+    getView(page) {
+        return <IllustrationWidgetView key={this.id} widget={this} page={page} />;
     }
 
     draw(context, x, y) {
         if (!this.path || !IllustrationWidget.dictionary[this.id]) {
             return { y, w: 0 };
         }
-        const layer = new CanvasImageLayer(
-            IllustrationWidget.dictionary[this.id],
-            this.transform.withX(x + this.xNudge).withY(y + this.yNudge)
-        );
+        const layer = new CanvasImageLayer(IllustrationWidget.dictionary[this.id], this.transform.withX(x + this.xNudge).withY(y + this.yNudge));
         return layer.draw(context);
     }
 }

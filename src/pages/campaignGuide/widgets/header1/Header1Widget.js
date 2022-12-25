@@ -18,9 +18,9 @@ export default class Header1Widget extends Widget {
         this.text = widget.text || "";
     }
 
-    getView(page, campaign, setCampaign) {
+    getView(page) {
         return (
-            <Header1WidgetView key={this.id} widget={this} page={page} campaign={campaign} setCampaign={setCampaign} />
+            <Header1WidgetView key={this.id} widget={this} page={page} />
         );
     }
 

@@ -13,9 +13,9 @@ export default class Header2Widget extends Widget {
         this.text = widget.text || "";
     }
 
-    getView(page, campaign, setCampaign) {
+    getView(page) {
         return (
-            <Header2WidgetView key={this.id} widget={this} page={page} campaign={campaign} setCampaign={setCampaign} />
+            <Header2WidgetView key={this.id} widget={this} page={page} />
         );
     }
 

@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useHistory, useParams } from "react-router-dom";
+import { CampaignContext } from "../../components/CampaignContext";
 import Container from "../../components/container/Container";
 import IconButton from "../../components/iconButton/IconButton";
 import { FACE_DIRECTION } from "./cardConstants";
 import listOfCardFaces from "./cardFaces/listOfCardFaces";
 import "./CardView.scss";
 
-export default function CardView({ campaign, setCampaign }) {
+export default function CardView() {
+    const { campaign, refreshCampaign } = useContext(CampaignContext);
     const params = useParams();
 
     const id = parseInt(params.id);
@@ -38,8 +40,8 @@ export default function CardView({ campaign, setCampaign }) {
                     <span className="emoji">🗑</span> Delete
                 </IconButton>
             </Container>
-            {card.frontFace.getView(FACE_DIRECTION.FRONT, listOfCardFaces, card.backFace, cardSet, campaign, setCampaign)}
-            {card.backFace.getView(FACE_DIRECTION.BACK, listOfCardFaces, card.frontFace, cardSet, campaign, setCampaign)}
+            {card.frontFace.getView(FACE_DIRECTION.FRONT, listOfCardFaces, card.backFace, cardSet)}
+            {card.backFace.getView(FACE_DIRECTION.BACK, listOfCardFaces, card.frontFace, cardSet)}
         </main>
     );
 
@@ -77,6 +79,6 @@ export default function CardView({ campaign, setCampaign }) {
     function deleteCard() {
         cardSet.deleteCard(id);
         history.push(`/card-set/${cardSetId}`);
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 }

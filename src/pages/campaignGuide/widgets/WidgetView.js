@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
+import { CampaignContext } from "../../../components/CampaignContext";
 
-export default function WidgetView({ widget, page, campaign, setCampaign, children, className }) {
+export default function WidgetView({ widget, page, children, className }) {
+    const { refreshCampaign } = useContext(CampaignContext);
     return (
         <div className={`widget-view ${className}`}>
             <div className="heading-container">
@@ -29,12 +31,12 @@ export default function WidgetView({ widget, page, campaign, setCampaign, childr
 
     function swapUp() {
         page.swapWidgetUp(widget);
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function swapDown() {
         page.swapWidgetDown(widget);
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function getNudge(event) {
@@ -43,16 +45,16 @@ export default function WidgetView({ widget, page, campaign, setCampaign, childr
 
     function setXNudge(xNudge) {
         widget.xNudge = xNudge;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function setYNudge(yNudge) {
         widget.yNudge = yNudge;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function deleteWidget() {
         page.deleteWidget(widget);
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 }

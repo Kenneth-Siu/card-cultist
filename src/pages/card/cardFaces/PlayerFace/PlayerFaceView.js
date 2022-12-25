@@ -3,7 +3,7 @@ import PlayerFaceCanvas from "./PlayerFaceCanvas";
 import BaseFaceView from "../BaseFaceView";
 import "../FaceView.scss";
 
-export default function PlayerFaceView({ faceDirection, listOfCardFaces, otherFace, face, campaign, setCampaign }) {
+export default function PlayerFaceView({ faceDirection, listOfCardFaces, otherFace, face }) {
     return (
         <BaseFaceView
             faceDirection={faceDirection}
@@ -11,8 +11,6 @@ export default function PlayerFaceView({ faceDirection, listOfCardFaces, otherFa
             face={face}
             otherFace={otherFace}
             canvas={<PlayerFaceCanvas />}
-            campaign={campaign}
-            setCampaign={setCampaign}
         />
     );
 }

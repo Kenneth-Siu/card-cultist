@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import useLoadedImages from "../../../../helpers/useLoadedImages";
 import CanvasImageLayer from "../../../../models/canvasLayers/CanvasImageLayer";
 import CanvasTextLayer from "../../../../models/canvasLayers/CanvasTextLayer";
@@ -16,8 +16,10 @@ import {
 import ConnectionSymbolLayer from "../../../../models/canvasLayers/cardLayers/connectionSymbol/ConnectionSymbolLayer";
 import ConnectionSymbolConfig from "../../../../models/canvasLayers/cardLayers/connectionSymbol/ConnectionSymbolConfig";
 import connectionSymbolBackground from "../../../../../public/overlays/AHLCG-LocationCircle.png";
+import { CampaignContext } from "../../../../components/CampaignContext";
 
-export default function LocationBackFaceCanvas({ face, cardSet, campaign, setIllustrationTransform }) {
+export default function LocationBackFaceCanvas({ face, cardSet, setIllustrationTransform }) {
+    const { campaign } = useContext(CampaignContext);
     const [loadedImages, loadPublicImage, loadFileSystemImage] = useLoadedImages();
 
     const [illustrationLayer, setIllustrationLayer] = useState(null);

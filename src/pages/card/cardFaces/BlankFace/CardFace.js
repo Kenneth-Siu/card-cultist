@@ -12,15 +12,13 @@ export default class CardFace {
         Object.assign(this, face);
     }
 
-    getView(faceDirection, listOfCardFaces, otherFace, cardSet, campaign, setCampaign) {
+    getView(faceDirection, listOfCardFaces, otherFace, cardSet) {
         return (
             <BlankFaceView
                 faceDirection={faceDirection}
                 listOfCardFaces={listOfCardFaces}
                 face={this}
                 otherFace={otherFace}
-                campaign={campaign}
-                setCampaign={setCampaign}
             />
         );
     }

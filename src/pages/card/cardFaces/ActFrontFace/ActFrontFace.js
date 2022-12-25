@@ -12,7 +12,7 @@ export default class ActFrontFace extends AgendaActFrontFace {
         super(face, ActFrontFace.type, ActFrontFace.frame);
     }
 
-    getView(faceDirection, listOfCardFaces, otherFace, cardSet, campaign, setCampaign) {
+    getView(faceDirection, listOfCardFaces, otherFace, cardSet) {
         return (
             <ActFrontFaceView
                 faceDirection={faceDirection}
@@ -20,18 +20,15 @@ export default class ActFrontFace extends AgendaActFrontFace {
                 face={this}
                 otherFace={otherFace}
                 cardSet={cardSet}
-                campaign={campaign}
-                setCampaign={setCampaign}
             />
         );
     }
 
-    getCanvas(cardId, cardSet, campaign, setIllustrationTransform) {
+    getCanvas(cardId, cardSet, setIllustrationTransform) {
         return (
             <ActFrontFaceCanvas
                 face={this}
                 cardSet={cardSet}
-                campaign={campaign}
                 setIllustrationTransform={setIllustrationTransform}
                 key={cardId}
             />

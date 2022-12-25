@@ -1,11 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import useLoadedImages from "../../../../helpers/useLoadedImages";
 import WidgetView from "../WidgetView";
 import SymbolsRowWidget from "./SymbolsRowWidget";
 import remove from "lodash.remove";
 import "./SymbolsRowWidgetView.scss";
+import { CampaignContext } from "../../../../components/CampaignContext";
 
-export default function SymbolsRowWidgetView({ widget, page, campaign, setCampaign }) {
+export default function SymbolsRowWidgetView({ widget, page }) {
+    const { refreshCampaign } = useContext(CampaignContext);
     const [loadedImages, loadPublicImage, loadFileSystemImage] = useLoadedImages();
 
     useEffect(async () => {
@@ -16,26 +18,14 @@ export default function SymbolsRowWidgetView({ widget, page, campaign, setCampai
                 return;
             })
         );
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }, []);
 
     return (
-        <WidgetView
-            widget={widget}
-            page={page}
-            campaign={campaign}
-            setCampaign={setCampaign}
-            className="symbols-row-widget-view"
-        >
+        <WidgetView widget={widget} page={page} className="symbols-row-widget-view">
             <div className="input-container">
                 <label>Spacing</label>
-                <input
-                    type="number"
-                    step="1"
-                    min="0"
-                    value={widget.spacing}
-                    onChange={(event) => setSpacing(parseInt(event.target.value))}
-                />
+                <input type="number" step="1" min="0" value={widget.spacing} onChange={(event) => setSpacing(parseInt(event.target.value))} />
             </div>
             <div className="input-container">
                 {widget.paths.map((path) => (
@@ -52,12 +42,12 @@ export default function SymbolsRowWidgetView({ widget, page, campaign, setCampai
 
     function setSpacing(spacing) {
         widget.spacing = spacing;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     async function deleteSymbol(path) {
         remove(widget.paths, (widgetPath) => widgetPath === path);
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     async function addSymbol() {
@@ -65,6 +55,6 @@ export default function SymbolsRowWidgetView({ widget, page, campaign, setCampai
         widget.paths.push(path);
         const image = await loadFileSystemImage(path);
         SymbolsRowWidget.dictionary[path] = image;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 }

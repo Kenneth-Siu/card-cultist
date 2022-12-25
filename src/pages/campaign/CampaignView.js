@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { CampaignContext } from "../../components/CampaignContext";
 import useLoadedImages from "../../helpers/useLoadedImages";
 import Campaign from "./Campaign";
 import "./CampaignView.scss";
 
-export default function CampaignView({ campaign, setCampaign }) {
+export default function CampaignView() {
+    const { campaign, refreshCampaign } = useContext(CampaignContext);
     const [newCampaignTitle, setNewCampaignTitle] = useState("");
 
     const [loadedImages, loadPublicImage, loadFileSystemImage] = useLoadedImages();
@@ -24,16 +26,12 @@ export default function CampaignView({ campaign, setCampaign }) {
                 </div>
             ) : (
                 <div>
-                    <input
-                        type="text"
-                        value={newCampaignTitle}
-                        onChange={(event) => setNewCampaignTitle(event.target.value)}
-                    />
+                    <input type="text" value={newCampaignTitle} onChange={(event) => setNewCampaignTitle(event.target.value)} />
                     <button
                         onClick={async () => {
-                            const newCampaign = new Campaign();
-                            newCampaign.title = newCampaignTitle;
-                            setCampaign(newCampaign);
+                            campaign = new Campaign();
+                            campaign.title = newCampaignTitle;
+                            refreshCampaign();
                         }}
                     >
                         New campaign
@@ -43,7 +41,8 @@ export default function CampaignView({ campaign, setCampaign }) {
                             // TODO Failure handling
                             const openedCampaign = await window.fs.openCampaign();
                             if (openedCampaign) {
-                                setCampaign(new Campaign(openedCampaign));
+                                campaign = new Campaign(openedCampaign);
+                                refreshCampaign();
                             }
                         }}
                     >
@@ -56,12 +55,12 @@ export default function CampaignView({ campaign, setCampaign }) {
 
     function setTitle(title) {
         campaign.title = title;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     async function setCampaignSymbol() {
         const path = await window.fs.chooseIcon();
         campaign.symbol = path;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 }

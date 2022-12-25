@@ -1,15 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
+import { CampaignContext } from "../../../../components/CampaignContext";
 import WidgetView from "../WidgetView";
 
-export default function DecoBoxWidgetView({ widget, page, campaign, setCampaign }) {
+export default function DecoBoxWidgetView({ widget, page }) {
+    const { refreshCampaign } = useContext(CampaignContext);
     return (
-        <WidgetView
-            widget={widget}
-            page={page}
-            campaign={campaign}
-            setCampaign={setCampaign}
-            className="deco-box-widget-view"
-        >
+        <WidgetView widget={widget} page={page} className="deco-box-widget-view">
             <label>
                 Top bracket: <input type="checkbox" checked={widget.topBracket} onChange={() => toggleTopBracket()} />
             </label>
@@ -18,39 +14,38 @@ export default function DecoBoxWidgetView({ widget, page, campaign, setCampaign 
             <input type="text" value={widget.subtitle} onChange={(event) => setSubtitle(event.target.value)} />
             <textarea value={widget.text} onChange={(event) => setText(event.target.value)} />
             <label>
-                Bottom bracket:{" "}
-                <input type="checkbox" checked={widget.bottomBracket} onChange={() => toggleBottomBracket()} />
+                Bottom bracket: <input type="checkbox" checked={widget.bottomBracket} onChange={() => toggleBottomBracket()} />
             </label>
         </WidgetView>
     );
 
     function toggleTopBracket() {
         widget.topBracket = !widget.topBracket;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function setColor(color) {
         widget.color = color;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function setTitle(title) {
         widget.title = title;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function setSubtitle(subtitle) {
         widget.subtitle = subtitle;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function setText(text) {
         widget.text = text;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function toggleBottomBracket() {
         widget.bottomBracket = !widget.bottomBracket;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 }

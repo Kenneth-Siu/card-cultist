@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import StoryFaceCanvas from "./StoryFaceCanvas";
 import InputContainer from "../../components/inputContainer/InputContainer";
 import BaseFaceView from "../BaseFaceView";
 import "../FaceView.scss";
+import { CampaignContext } from "../../../../components/CampaignContext";
 
-export default function StoryFaceView({ faceDirection, listOfCardFaces, otherFace, face, cardSet, campaign, setCampaign }) {
+export default function StoryFaceView({ faceDirection, listOfCardFaces, otherFace, face, cardSet }) {
+    const { refreshCampaign } = useContext(CampaignContext);
     return (
         <BaseFaceView
             faceDirection={faceDirection}
@@ -56,74 +58,72 @@ export default function StoryFaceView({ faceDirection, listOfCardFaces, otherFac
                     <InputContainer label="Card Type" type="text" value={face.cardType} setValue={setCardType} />
                 </>
             }
-            campaign={campaign}
-            setCampaign={setCampaign}
         />
     );
 
     function setTitle(title) {
         face.title = title;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     async function setEncounterSetSymbol() {
         const path = await window.fs.chooseIcon();
         face.encounterSetSymbol = path;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function setHeader1(header1) {
         face.header1 = header1;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function setHeader2(header2) {
         face.header2 = header2;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function setHeader3(header3) {
         face.header3 = header3;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function setStory1(story1) {
         face.story1 = story1;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function setStory2(story2) {
         face.story2 = story2;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function setStory3(story3) {
         face.story3 = story3;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function setText1(text1) {
         face.text1 = text1;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function setText2(text2) {
         face.text2 = text2;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function setText3(text3) {
         face.text3 = text3;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function setTextFontSize(fontSize) {
         face.textFontSize = fontSize;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function setCardType(cardType) {
         face.cardType = cardType;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 }

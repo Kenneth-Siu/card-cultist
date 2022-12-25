@@ -11,15 +11,7 @@ export default class A4Page extends Page {
         super(pageOrId, A4Page.type, A4Page.background);
     }
 
-    getView(campaign, setCampaign, pageNumber) {
-        return (
-            <A4PageView
-                key={this.id}
-                page={this}
-                pageNumber={pageNumber}
-                campaign={campaign}
-                setCampaign={setCampaign}
-            />
-        );
+    getView(pageNumber) {
+        return <A4PageView key={this.id} page={this} pageNumber={pageNumber} />;
     }
 }

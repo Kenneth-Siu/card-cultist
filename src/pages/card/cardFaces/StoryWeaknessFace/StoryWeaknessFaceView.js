@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import StoryWeaknessFaceCanvas from "./StoryWeaknessFaceCanvas";
 import Illustration from "../../components/illustration/Illustration";
 import InputContainer from "../../components/inputContainer/InputContainer";
 import BaseFaceView from "../BaseFaceView";
 import "../FaceView.scss";
+import { CampaignContext } from "../../../../components/CampaignContext";
 
-export default function StoryWeaknessFaceView({ faceDirection, listOfCardFaces, otherFace, face, cardSet, campaign, setCampaign }) {
+export default function StoryWeaknessFaceView({ faceDirection, listOfCardFaces, otherFace, face, cardSet }) {
+    const { refreshCampaign } = useContext(CampaignContext);
     return (
         <BaseFaceView
             faceDirection={faceDirection}
@@ -16,7 +18,6 @@ export default function StoryWeaknessFaceView({ faceDirection, listOfCardFaces, 
                 <StoryWeaknessFaceCanvas
                     face={face}
                     cardSet={cardSet}
-                    campaign={campaign}
                     setIllustrationTransform={setIllustrationTransform}
                 />
             }
@@ -39,8 +40,6 @@ export default function StoryWeaknessFaceView({ faceDirection, listOfCardFaces, 
 
                     <Illustration
                         face={face}
-                        campaign={campaign}
-                        setCampaign={setCampaign}
                         setIllustrationTransform={setIllustrationTransform}
                     />
                 </>
@@ -83,75 +82,73 @@ export default function StoryWeaknessFaceView({ faceDirection, listOfCardFaces, 
                     />
                 </>
             }
-            campaign={campaign}
-            setCampaign={setCampaign}
         />
     );
 
     function setCardType(cardType) {
         face.cardType = cardType;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function setCardSubType(subType) {
         face.subType = subType;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function setTitle(title) {
         face.title = title;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function setTraits(traits) {
         face.traits = traits;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function setText(text) {
         face.text = text;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function setTextFontSize(fontSize) {
         face.textFontSize = fontSize;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function setCopyrightInformation(copyrightInformation) {
         face.copyrightInformation = copyrightInformation;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function setEncounterSetId(encounterSetId) {
         face.encounterSetId = encounterSetId;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function setEncounterSetMaxId(encounterSetMaxId) {
         face.encounterSetMaxId = encounterSetMaxId;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function setCampaignSetId(campaignSetId) {
         face.campaignSetId = campaignSetId;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     async function setEncounterSetSymbol() {
         const path = await window.fs.chooseIcon();
         face.encounterSetSymbol = path;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     async function setCampaignSymbol() {
         const path = await window.fs.chooseIcon();
         face.campaignSymbol = path;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function setIllustrationTransform(transform) {
         face.illustrationTransform = transform;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 }

@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { NavLink, useHistory } from "react-router-dom";
+import { CampaignContext } from "../../components/CampaignContext";
 import hash from "../../helpers/hash";
 import { getImageSrc } from "../../helpers/useLoadedImages";
 import "./NavBar.scss";
 
-export default function NavBar({ campaign, setCampaign }) {
+export default function NavBar() {
     const history = useHistory();
+    const { campaign, refreshCampaign } = useContext(CampaignContext);
     const [campaignSymbolSrc, setCampaignSymbolSrc] = useState(null);
     const [cardSetSymbolSrcs, setCardSetSymbolSrcs] = useState({});
     const [selectedEntity, setSelectedEntity] = useState(null);
@@ -38,17 +40,11 @@ export default function NavBar({ campaign, setCampaign }) {
         function clickCallback(event) {
             if (
                 !(event.target.classList.contains("selectable") && event.target.classList.contains("nav-link")) &&
-                !(
-                    event.target.parentElement.classList.contains("selectable") &&
-                    event.target.parentElement.classList.contains("nav-link")
-                )
+                !(event.target.parentElement.classList.contains("selectable") && event.target.parentElement.classList.contains("nav-link"))
             ) {
                 setSelectedEntity(null);
 
-                if (
-                    !event.target.classList.contains("nav-link") &&
-                    !event.target.parentElement.classList.contains("nav-link")
-                ) {
+                if (!event.target.classList.contains("nav-link") && !event.target.parentElement.classList.contains("nav-link")) {
                     setDeselected(true);
                 }
             }
@@ -63,7 +59,7 @@ export default function NavBar({ campaign, setCampaign }) {
                     ?.cards.find((card) => card.id === copiedCard.cardId);
                 if (cardToAdd) {
                     campaign.cardSets.find((cardSet) => cardSet.id === selectedEntity.cardSetId)?.addCard(cardToAdd);
-                    setCampaign(campaign.clone());
+                    refreshCampaign();
                 }
             }
         }
@@ -113,9 +109,7 @@ export default function NavBar({ campaign, setCampaign }) {
                             exact
                             to={`/card-set/${cardSet.id}`}
                             activeClassName={`active ${deselected ? "deselected" : ""}`}
-                            className={`nav-link selectable ${
-                                selectedEntity?.cardSetId === cardSet.id && !selectedEntity?.cardId ? "selected" : ""
-                            }`}
+                            className={`nav-link selectable ${selectedEntity?.cardSetId === cardSet.id && !selectedEntity?.cardId ? "selected" : ""}`}
                             onClick={() => setSelectedEntity({ cardSetId: cardSet.id })}
                         >
                             <img src={cardSetSymbolSrcs[cardSet.id]} />
@@ -129,10 +123,7 @@ export default function NavBar({ campaign, setCampaign }) {
                                         to={`/card-set/${cardSet.id}/card/${card.id}`}
                                         activeClassName={`active ${deselected ? "deselected" : ""}`}
                                         className={`nav-link selectable ${
-                                            selectedEntity?.cardSetId === cardSet.id &&
-                                            selectedEntity?.cardId === card.id
-                                                ? "selected"
-                                                : ""
+                                            selectedEntity?.cardSetId === cardSet.id && selectedEntity?.cardId === card.id ? "selected" : ""
                                         }`}
                                         onClick={() => setSelectedEntity({ cardSetId: cardSet.id, cardId: card.id })}
                                     >
@@ -160,13 +151,13 @@ export default function NavBar({ campaign, setCampaign }) {
 
     function addCard(cardSet) {
         const cardId = cardSet.addCard();
-        setCampaign(campaign.clone());
+        refreshCampaign();
         history.push(`/card-set/${cardSet.id}/card/${cardId}`);
     }
 
     function addCardSet() {
         const cardSetId = campaign.addCardSet();
-        setCampaign(campaign.clone());
+        refreshCampaign();
         history.push(`/card-set/${cardSetId}`);
     }
 }

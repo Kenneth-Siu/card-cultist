@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import A4FrontPageCanvas from "./A4FrontPageCanvas";
 import listOfWidgetTypes from "../../widgets/listOfWidgetTypes";
 import Container from "../../../../components/container/Container";
+import { CampaignContext } from "../../../../components/CampaignContext";
 
-export default function A4FrontPageView({ page, pageNumber, campaign, setCampaign }) {
+export default function A4FrontPageView({ page, pageNumber }) {
+    const { campaign, refreshCampaign } = useContext(CampaignContext);
     const [newLeftWidgetType, setNewLeftWidgetType] = useState(listOfWidgetTypes[0].type);
     const [newRightWidgetType, setNewRightWidgetType] = useState(listOfWidgetTypes[0].type);
 
@@ -12,14 +14,11 @@ export default function A4FrontPageView({ page, pageNumber, campaign, setCampaig
             <button onClick={() => deletePage()}>Delete Page</button>
             <input type="text" value={page.title} onChange={(event) => setTitle(event.target.value)} />
             <div className="editor-container">
-                <A4FrontPageCanvas page={page} pageNumber={pageNumber} campaign={campaign} />
+                <A4FrontPageCanvas page={page} pageNumber={pageNumber} />
                 <div className="form-container">
                     <div className="left-column">
-                        {page.leftColumnWidgets.map((widget) => widget.getView(page, campaign, setCampaign))}
-                        <select
-                            value={newLeftWidgetType}
-                            onChange={(event) => setNewLeftWidgetType(event.target.value)}
-                        >
+                        {page.leftColumnWidgets.map((widget) => widget.getView(page))}
+                        <select value={newLeftWidgetType} onChange={(event) => setNewLeftWidgetType(event.target.value)}>
                             {listOfWidgetTypes.map((widgetType) => (
                                 <option key={widgetType.type} value={widgetType.type}>
                                     {widgetType.type}
@@ -31,11 +30,8 @@ export default function A4FrontPageView({ page, pageNumber, campaign, setCampaig
                         </button>
                     </div>
                     <div className="right-column">
-                        {page.rightColumnWidgets.map((widget) => widget.getView(page, campaign, setCampaign))}
-                        <select
-                            value={newRightWidgetType}
-                            onChange={(event) => setNewRightWidgetType(event.target.value)}
-                        >
+                        {page.rightColumnWidgets.map((widget) => widget.getView(page))}
+                        <select value={newRightWidgetType} onChange={(event) => setNewRightWidgetType(event.target.value)}>
                             {listOfWidgetTypes.map((widgetType) => (
                                 <option key={widgetType.type} value={widgetType.type}>
                                     {widgetType.type}
@@ -53,21 +49,21 @@ export default function A4FrontPageView({ page, pageNumber, campaign, setCampaig
 
     function deletePage() {
         campaign.campaignGuide.deletePage(page);
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function setTitle(title) {
         page.title = title;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function addWidgetToLeftColumn() {
         page.addWidgetToLeftColumn(newLeftWidgetType, campaign.campaignGuide);
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function addWidgetToRightColumn() {
         page.addWidgetToRightColumn(newRightWidgetType, campaign.campaignGuide);
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 }

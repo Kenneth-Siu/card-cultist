@@ -11,14 +11,12 @@ export default class SquarePage extends Page {
         super(pageOrId, SquarePage.type, SquarePage.background);
     }
 
-    getView(campaign, setCampaign, pageNumber) {
+    getView(pageNumber) {
         return (
             <SquarePageView
                 key={this.id}
                 page={this}
                 pageNumber={pageNumber}
-                campaign={campaign}
-                setCampaign={setCampaign}
             />
         );
     }

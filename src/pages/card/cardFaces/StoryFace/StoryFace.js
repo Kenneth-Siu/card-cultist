@@ -28,7 +28,7 @@ export default class StoryFace extends CardFace {
         this.cardType = face.cardType === null ? "Story" : face.cardType || "";
     }
 
-    getView(faceDirection, listOfCardFaces, otherFace, cardSet, campaign, setCampaign) {
+    getView(faceDirection, listOfCardFaces, otherFace, cardSet) {
         return (
             <StoryFaceView
                 faceDirection={faceDirection}
@@ -36,14 +36,12 @@ export default class StoryFace extends CardFace {
                 face={this}
                 otherFace={otherFace}
                 cardSet={cardSet}
-                campaign={campaign}
-                setCampaign={setCampaign}
             />
         );
     }
 
-    getCanvas(cardId, cardSet, campaign) {
-        return <StoryFaceCanvas face={this} cardSet={cardSet} campaign={campaign} key={cardId} />;
+    getCanvas(cardId, cardSet) {
+        return <StoryFaceCanvas face={this} cardSet={cardSet} key={cardId} />;
     }
 
     getEmoji() {

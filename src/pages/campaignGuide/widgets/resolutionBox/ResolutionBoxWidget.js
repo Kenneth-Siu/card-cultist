@@ -12,16 +12,8 @@ export default class ResolutionBoxWidget extends DecoBoxWidget {
         this.subtitle = "until the end of the scenario";
     }
 
-    getView(page, campaign, setCampaign) {
-        return (
-            <ResolutionBoxWidgetView
-                key={this.id}
-                widget={this}
-                page={page}
-                campaign={campaign}
-                setCampaign={setCampaign}
-            />
-        );
+    getView(page) {
+        return <ResolutionBoxWidgetView key={this.id} widget={this} page={page} />;
     }
 
     drawTitle(context, x, y, PAGE, isTransparent) {

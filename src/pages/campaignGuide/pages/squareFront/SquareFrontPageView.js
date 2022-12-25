@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { CampaignContext } from "../../../../components/CampaignContext";
 import Container from "../../../../components/container/Container";
 import listOfWidgetTypes from "../../widgets/listOfWidgetTypes";
 import SquareFrontPageCanvas from "./SquareFrontPageCanvas";
 
-export default function SquareFrontPageView({ page, campaign, setCampaign }) {
+export default function SquareFrontPageView({ page }) {
+    const { campaign, refreshCampaign } = useContext(CampaignContext);
     const [newLeftWidgetType, setNewLeftWidgetType] = useState(listOfWidgetTypes[0].type);
     const [newRightWidgetType, setNewRightWidgetType] = useState(listOfWidgetTypes[0].type);
 
@@ -12,14 +14,11 @@ export default function SquareFrontPageView({ page, campaign, setCampaign }) {
             <button onClick={() => deletePage()}>Delete Page</button>
             <input type="text" value={page.title} onChange={(event) => setTitle(event.target.value)} />
             <div className="editor-container">
-                <SquareFrontPageCanvas page={page} campaign={campaign} />
+                <SquareFrontPageCanvas page={page} />
                 <div className="form-container">
                     <div className="left-column">
-                        {page.leftColumnWidgets.map((widget) => widget.getView(page, campaign, setCampaign))}
-                        <select
-                            value={newLeftWidgetType}
-                            onChange={(event) => setNewLeftWidgetType(event.target.value)}
-                        >
+                        {page.leftColumnWidgets.map((widget) => widget.getView(page))}
+                        <select value={newLeftWidgetType} onChange={(event) => setNewLeftWidgetType(event.target.value)}>
                             {listOfWidgetTypes.map((widgetType) => (
                                 <option key={widgetType.type} value={widgetType.type}>
                                     {widgetType.type}
@@ -31,11 +30,8 @@ export default function SquareFrontPageView({ page, campaign, setCampaign }) {
                         </button>
                     </div>
                     <div className="right-column">
-                        {page.rightColumnWidgets.map((widget) => widget.getView(page, campaign, setCampaign))}
-                        <select
-                            value={newRightWidgetType}
-                            onChange={(event) => setNewRightWidgetType(event.target.value)}
-                        >
+                        {page.rightColumnWidgets.map((widget) => widget.getView(page))}
+                        <select value={newRightWidgetType} onChange={(event) => setNewRightWidgetType(event.target.value)}>
                             {listOfWidgetTypes.map((widgetType) => (
                                 <option key={widgetType.type} value={widgetType.type}>
                                     {widgetType.type}
@@ -53,21 +49,21 @@ export default function SquareFrontPageView({ page, campaign, setCampaign }) {
 
     function deletePage() {
         campaign.campaignGuide.deletePage(page);
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function setTitle(title) {
         page.title = title;
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function addWidgetToLeftColumn() {
         page.addWidgetToLeftColumn(newLeftWidgetType, campaign.campaignGuide);
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 
     function addWidgetToRightColumn() {
         page.addWidgetToRightColumn(newRightWidgetType, campaign.campaignGuide);
-        setCampaign(campaign.clone());
+        refreshCampaign();
     }
 }
