@@ -6,9 +6,11 @@ import InputContainer from "../../components/inputContainer/InputContainer";
 import BaseFaceView from "../BaseFaceView";
 import "../FaceView.scss";
 import { CampaignContext } from "../../../../components/CampaignContext";
+import useViewPropertySetter from "../../components/useViewPropertySetter";
 
 export default function LocationFrontFaceView({ faceDirection, listOfCardFaces, otherFace, face, cardSet }) {
     const { refreshCampaign } = useContext(CampaignContext);
+    const set = useViewPropertySetter(face, refreshCampaign);
     return (
         <BaseFaceView
             faceDirection={faceDirection}
@@ -18,42 +20,42 @@ export default function LocationFrontFaceView({ faceDirection, listOfCardFaces, 
             canvas={<LocationFrontFaceCanvas face={face} cardSet={cardSet} setIllustrationTransform={setIllustrationTransform} />}
             fields={
                 <>
-                    <InputContainer label="Title" type="text" value={face.title} setValue={setTitle} />
-                    <InputContainer label="Subtitle" type="text" value={face.subtitle} setValue={setSubtitle} />
-                    <InputContainer label="Shroud" type="text" value={face.shroud} setValue={setShroud} />
+                    <InputContainer label="Title" type="text" value={face.title} setValue={set("title")} />
+                    <InputContainer label="Subtitle" type="text" value={face.subtitle} setValue={set("subtitle")} />
+                    <InputContainer label="Shroud" type="text" value={face.shroud} setValue={set("shroud")} />
                     <InputContainer label="Clues">
-                        <input type="text" value={face.clues} onChange={(event) => setClues(event.target.value)} />
+                        <input type="text" value={face.clues} onChange={(event) => set("clues")(event.target.value)} />
                         <label>
                             Per investigator?
                             <input type="checkbox" checked={face.cluesIsPer} onChange={() => toggleCluesIsPer()} />
                         </label>
                     </InputContainer>
-                    <InputContainer label="Traits" type="text" value={face.traits} setValue={setTraits} />
+                    <InputContainer label="Traits" type="text" value={face.traits} setValue={set("traits")} />
                     <InputContainer label="Font Size">
                         <input
                             type="number"
                             value={face.textFontSize.toFixed(1)}
                             step="0.1"
                             min="1"
-                            onChange={(event) => setTextFontSize(parseFloat(event.target.value))}
+                            onChange={(event) => set("textFontSize")(parseFloat(event.target.value))}
                         />
                     </InputContainer>
                     <InputContainer label="Text">
-                        <textarea value={face.text} onChange={(event) => setText(event.target.value)} />
+                        <textarea value={face.text} onChange={(event) => set("text")(event.target.value)} />
                     </InputContainer>
                     <InputContainer label="Victory">
-                        <textarea className="small" value={face.victory} onChange={(event) => setVictory(event.target.value)} />
+                        <textarea className="small" value={face.victory} onChange={(event) => set("victory")(event.target.value)} />
                     </InputContainer>
                     <InputContainer label="Connection Symbol" vCentered>
-                        <ConnectionPicker connection={face.connectionSymbol} setConnection={setConnectionSymbol} />
+                        <ConnectionPicker connection={face.connectionSymbol} setConnection={set("connectionSymbol")} />
                     </InputContainer>
                     <InputContainer label="Connections" vCentered>
-                        <ConnectionPicker connection={face.connection1} setConnection={setConnection1} />
-                        <ConnectionPicker connection={face.connection2} setConnection={setConnection2} />
-                        <ConnectionPicker connection={face.connection3} setConnection={setConnection3} />
-                        <ConnectionPicker connection={face.connection4} setConnection={setConnection4} />
-                        <ConnectionPicker connection={face.connection5} setConnection={setConnection5} />
-                        <ConnectionPicker connection={face.connection6} setConnection={setConnection6} />
+                        <ConnectionPicker connection={face.connection1} setConnection={set("connection1")} />
+                        <ConnectionPicker connection={face.connection2} setConnection={set("connection2")} />
+                        <ConnectionPicker connection={face.connection3} setConnection={set("connection3")} />
+                        <ConnectionPicker connection={face.connection4} setConnection={set("connection4")} />
+                        <ConnectionPicker connection={face.connection5} setConnection={set("connection5")} />
+                        <ConnectionPicker connection={face.connection6} setConnection={set("connection6")} />
                     </InputContainer>
 
                     <Illustration face={face} setIllustrationTransform={setIllustrationTransform} />
@@ -65,124 +67,24 @@ export default function LocationFrontFaceView({ faceDirection, listOfCardFaces, 
                     <InputContainer label="Encounter Set Symbol">
                         <button onClick={() => setEncounterSetSymbol()}>Load Image</button>
                     </InputContainer>
-                    <InputContainer label="Card Type" type="text" value={face.cardType} setValue={setCardType} />
-                    <InputContainer label="Copyright Information" type="text" value={face.copyrightInformation} setValue={setCopyrightInformation} />
+                    <InputContainer label="Card Type" type="text" value={face.cardType} setValue={set("cardType")} />
+                    <InputContainer label="Copyright Information" type="text" value={face.copyrightInformation} setValue={set("copyrightInformation")} />
                     <InputContainer label="Encounter Set ID" childId="set-id">
-                        <input type="text" value={face.encounterSetId} onChange={(event) => setEncounterSetId(event.target.value)} />
+                        <input type="text" value={face.encounterSetId} onChange={(event) => set("encounterSetId")(event.target.value)} />
                         /
-                        <input type="text" value={face.encounterSetMaxId} onChange={(event) => setEncounterSetMaxId(event.target.value)} />
+                        <input type="text" value={face.encounterSetMaxId} onChange={(event) => set("encounterSetMaxId")(event.target.value)} />
                     </InputContainer>
                     <InputContainer label="Campaign Symbol">
                         <button onClick={() => setCampaignSymbol()}>Load Image</button>
                     </InputContainer>
-                    <InputContainer label="Campaign Set ID" type="text" value={face.campaignSetId} setValue={setCampaignSetId} />
+                    <InputContainer label="Campaign Set ID" type="text" value={face.campaignSetId} setValue={set("campaignSetId")} />
                 </>
             }
         />
     );
 
-    function setTitle(title) {
-        face.title = title;
-        refreshCampaign();
-    }
-
-    function setSubtitle(subtitle) {
-        face.subtitle = subtitle;
-        refreshCampaign();
-    }
-
-    function setCardType(cardType) {
-        face.cardType = cardType;
-        refreshCampaign();
-    }
-
-    function setShroud(shroud) {
-        face.shroud = shroud;
-        refreshCampaign();
-    }
-
-    function setClues(clues) {
-        face.clues = clues;
-        refreshCampaign();
-    }
-
     function toggleCluesIsPer() {
         face.cluesIsPer = !face.cluesIsPer;
-        refreshCampaign();
-    }
-
-    function setTraits(traits) {
-        face.traits = traits;
-        refreshCampaign();
-    }
-
-    function setText(text) {
-        face.text = text;
-        refreshCampaign();
-    }
-
-    function setTextFontSize(fontSize) {
-        face.textFontSize = fontSize;
-        refreshCampaign();
-    }
-
-    function setVictory(victory) {
-        face.victory = victory;
-        refreshCampaign();
-    }
-
-    function setConnectionSymbol(symbolName) {
-        face.connectionSymbol = symbolName;
-        refreshCampaign();
-    }
-
-    function setConnection1(symbolName) {
-        face.connection1 = symbolName;
-        refreshCampaign();
-    }
-
-    function setConnection2(symbolName) {
-        face.connection2 = symbolName;
-        refreshCampaign();
-    }
-
-    function setConnection3(symbolName) {
-        face.connection3 = symbolName;
-        refreshCampaign();
-    }
-
-    function setConnection4(symbolName) {
-        face.connection4 = symbolName;
-        refreshCampaign();
-    }
-
-    function setConnection5(symbolName) {
-        face.connection5 = symbolName;
-        refreshCampaign();
-    }
-
-    function setConnection6(symbolName) {
-        face.connection6 = symbolName;
-        refreshCampaign();
-    }
-
-    function setCopyrightInformation(copyrightInformation) {
-        face.copyrightInformation = copyrightInformation;
-        refreshCampaign();
-    }
-
-    function setEncounterSetId(encounterSetId) {
-        face.encounterSetId = encounterSetId;
-        refreshCampaign();
-    }
-
-    function setEncounterSetMaxId(encounterSetMaxId) {
-        face.encounterSetMaxId = encounterSetMaxId;
-        refreshCampaign();
-    }
-
-    function setCampaignSetId(campaignSetId) {
-        face.campaignSetId = campaignSetId;
         refreshCampaign();
     }
 

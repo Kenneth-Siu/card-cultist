@@ -5,9 +5,11 @@ import InputContainer from "../../components/inputContainer/InputContainer";
 import BaseFaceView from "../BaseFaceView";
 import "../FaceView.scss";
 import { CampaignContext } from "../../../../components/CampaignContext";
+import useViewPropertySetter from "../../components/useViewPropertySetter";
 
 export default function ChaosTokenEffectsFaceView({ faceDirection, listOfCardFaces, otherFace, face, cardSet }) {
     const { refreshCampaign } = useContext(CampaignContext);
+    const set = useViewPropertySetter(face, refreshCampaign);
     return (
         <BaseFaceView
             faceDirection={faceDirection}
@@ -17,9 +19,9 @@ export default function ChaosTokenEffectsFaceView({ faceDirection, listOfCardFac
             canvas={<ChaosTokenEffectsFaceCanvas face={face} cardSet={cardSet} />}
             fields={
                 <>
-                    <InputContainer label="Title" type="text" value={face.title} setValue={setTitle} />
+                    <InputContainer label="Title" type="text" value={face.title} setValue={set("title")} />
                     <InputContainer label="Difficulty">
-                        <select value={face.difficulty} onChange={(event) => setDifficulty(event.target.value)}>
+                        <select value={face.difficulty} onChange={(event) => set("difficulty")(event.target.value)}>
                             {ChaosTokenEffectsFace.DIFFICULTY.map((difficulty) => (
                                 <option key={difficulty} value={difficulty}>
                                     {difficulty}
@@ -33,13 +35,13 @@ export default function ChaosTokenEffectsFaceView({ faceDirection, listOfCardFac
                             value={face.textFontSize.toFixed(1)}
                             step="0.1"
                             min="1"
-                            onChange={(event) => setTextFontSize(parseFloat(event.target.value))}
+                            onChange={(event) => set("textFontSize")(parseFloat(event.target.value))}
                         />
                     </InputContainer>
-                    <InputContainer label="Skull" type="text" value={face.skullText} setValue={setSkullText} />
-                    <InputContainer label="Cultist" type="text" value={face.cultistText} setValue={setCultistText} />
-                    <InputContainer label="Tablet" type="text" value={face.tabletText} setValue={setTabletText} />
-                    <InputContainer label="Elder Thing" type="text" value={face.elderThingText} setValue={setElderThingText} />
+                    <InputContainer label="Skull" type="text" value={face.skullText} setValue={set("skullText")} />
+                    <InputContainer label="Cultist" type="text" value={face.cultistText} setValue={set("cultistText")} />
+                    <InputContainer label="Tablet" type="text" value={face.tabletText} setValue={set("tabletText")} />
+                    <InputContainer label="Elder Thing" type="text" value={face.elderThingText} setValue={set("elderThingText")} />
                 </>
             }
             expandableHeight="8rem"
@@ -48,75 +50,25 @@ export default function ChaosTokenEffectsFaceView({ faceDirection, listOfCardFac
                     <InputContainer label="Encounter Set Symbol">
                         <button onClick={() => setEncounterSetSymbol()}>Load Image</button>
                     </InputContainer>
-                    <InputContainer label="Copyright Information" type="text" value={face.copyrightInformation} setValue={setCopyrightInformation} />
+                    <InputContainer
+                        label="Copyright Information"
+                        type="text"
+                        value={face.copyrightInformation}
+                        setValue={set("copyrightInformation")}
+                    />
                     <InputContainer label="Encounter Set ID" childId="set-id">
-                        <input type="text" value={face.encounterSetId} onChange={(event) => setEncounterSetId(event.target.value)} />
+                        <input type="text" value={face.encounterSetId} onChange={(event) => set("encounterSetId")(event.target.value)} />
                         /
-                        <input type="text" value={face.encounterSetMaxId} onChange={(event) => setEncounterSetMaxId(event.target.value)} />
+                        <input type="text" value={face.encounterSetMaxId} onChange={(event) => set("encounterSetMaxId")(event.target.value)} />
                     </InputContainer>
                     <InputContainer label="Campaign Symbol">
                         <button onClick={() => setCampaignSymbol()}>Load Image</button>
                     </InputContainer>
-                    <InputContainer label="Campaign Set ID" type="text" value={face.campaignSetId} setValue={setCampaignSetId} />
+                    <InputContainer label="Campaign Set ID" type="text" value={face.campaignSetId} setValue={set("campaignSetId")} />
                 </>
             }
         />
     );
-
-    function setTitle(title) {
-        face.title = title;
-        refreshCampaign();
-    }
-
-    function setDifficulty(difficulty) {
-        face.difficulty = difficulty;
-        refreshCampaign();
-    }
-
-    function setTextFontSize(fontSize) {
-        face.textFontSize = fontSize;
-        refreshCampaign();
-    }
-
-    function setSkullText(skullText) {
-        face.skullText = skullText;
-        refreshCampaign();
-    }
-
-    function setCultistText(cultistText) {
-        face.cultistText = cultistText;
-        refreshCampaign();
-    }
-
-    function setTabletText(tabletText) {
-        face.tabletText = tabletText;
-        refreshCampaign();
-    }
-
-    function setElderThingText(elderThingText) {
-        face.elderThingText = elderThingText;
-        refreshCampaign();
-    }
-
-    function setCopyrightInformation(copyrightInformation) {
-        face.copyrightInformation = copyrightInformation;
-        refreshCampaign();
-    }
-
-    function setEncounterSetId(encounterSetId) {
-        face.encounterSetId = encounterSetId;
-        refreshCampaign();
-    }
-
-    function setEncounterSetMaxId(encounterSetMaxId) {
-        face.encounterSetMaxId = encounterSetMaxId;
-        refreshCampaign();
-    }
-
-    function setCampaignSetId(campaignSetId) {
-        face.campaignSetId = campaignSetId;
-        refreshCampaign();
-    }
 
     async function setEncounterSetSymbol() {
         const path = await window.fs.chooseIcon();

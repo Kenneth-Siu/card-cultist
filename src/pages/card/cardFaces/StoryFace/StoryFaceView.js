@@ -4,9 +4,11 @@ import InputContainer from "../../components/inputContainer/InputContainer";
 import BaseFaceView from "../BaseFaceView";
 import "../FaceView.scss";
 import { CampaignContext } from "../../../../components/CampaignContext";
+import useViewPropertySetter from "../../components/useViewPropertySetter";
 
 export default function StoryFaceView({ faceDirection, listOfCardFaces, otherFace, face, cardSet }) {
     const { refreshCampaign } = useContext(CampaignContext);
+    const set = useViewPropertySetter(face, refreshCampaign);
     return (
         <BaseFaceView
             faceDirection={faceDirection}
@@ -16,36 +18,36 @@ export default function StoryFaceView({ faceDirection, listOfCardFaces, otherFac
             canvas={<StoryFaceCanvas face={face} cardSet={cardSet} />}
             fields={
                 <>
-                    <InputContainer label="Title" type="text" value={face.title} setValue={setTitle} />
+                    <InputContainer label="Title" type="text" value={face.title} setValue={set("title")} />
                     <InputContainer label="Font Size">
                         <input
                             type="number"
                             value={face.textFontSize.toFixed(1)}
                             step="0.1"
                             min="1"
-                            onChange={(event) => setTextFontSize(parseFloat(event.target.value))}
+                            onChange={(event) => set("textFontSize")(parseFloat(event.target.value))}
                         />
                     </InputContainer>
-                    <InputContainer label="Header 1" type="text" value={face.header1} setValue={setHeader1} />
+                    <InputContainer label="Header 1" type="text" value={face.header1} setValue={set("header1")} />
                     <InputContainer label="Story 1">
-                        <textarea value={face.story1} onChange={(event) => setStory1(event.target.value)} />
+                        <textarea value={face.story1} onChange={(event) => set("story1")(event.target.value)} />
                     </InputContainer>
                     <InputContainer label="Text 1">
-                        <textarea value={face.text1} onChange={(event) => setText1(event.target.value)} />
+                        <textarea value={face.text1} onChange={(event) => set("text1")(event.target.value)} />
                     </InputContainer>
-                    <InputContainer label="Header 2" type="text" value={face.header2} setValue={setHeader2} />
+                    <InputContainer label="Header 2" type="text" value={face.header2} setValue={set("header2")} />
                     <InputContainer label="Story 2">
-                        <textarea value={face.story2} onChange={(event) => setStory2(event.target.value)} />
+                        <textarea value={face.story2} onChange={(event) => set("story2")(event.target.value)} />
                     </InputContainer>
                     <InputContainer label="Text 2">
-                        <textarea value={face.text2} onChange={(event) => setText2(event.target.value)} />
+                        <textarea value={face.text2} onChange={(event) => set("text2")(event.target.value)} />
                     </InputContainer>
-                    <InputContainer label="Header 3" type="text" value={face.header3} setValue={setHeader3} />
+                    <InputContainer label="Header 3" type="text" value={face.header3} setValue={set("header3")} />
                     <InputContainer label="Story 3">
-                        <textarea value={face.story3} onChange={(event) => setStory3(event.target.value)} />
+                        <textarea value={face.story3} onChange={(event) => set("story3")(event.target.value)} />
                     </InputContainer>
                     <InputContainer label="Text 3">
-                        <textarea value={face.text3} onChange={(event) => setText3(event.target.value)} />
+                        <textarea value={face.text3} onChange={(event) => set("text3")(event.target.value)} />
                     </InputContainer>
                 </>
             }
@@ -55,75 +57,15 @@ export default function StoryFaceView({ faceDirection, listOfCardFaces, otherFac
                     <InputContainer label="Encounter Set Symbol">
                         <button onClick={() => setEncounterSetSymbol()}>Load Image</button>
                     </InputContainer>
-                    <InputContainer label="Card Type" type="text" value={face.cardType} setValue={setCardType} />
+                    <InputContainer label="Card Type" type="text" value={face.cardType} setValue={set("cardType")} />
                 </>
             }
         />
     );
 
-    function setTitle(title) {
-        face.title = title;
-        refreshCampaign();
-    }
-
     async function setEncounterSetSymbol() {
         const path = await window.fs.chooseIcon();
         face.encounterSetSymbol = path;
-        refreshCampaign();
-    }
-
-    function setHeader1(header1) {
-        face.header1 = header1;
-        refreshCampaign();
-    }
-
-    function setHeader2(header2) {
-        face.header2 = header2;
-        refreshCampaign();
-    }
-
-    function setHeader3(header3) {
-        face.header3 = header3;
-        refreshCampaign();
-    }
-
-    function setStory1(story1) {
-        face.story1 = story1;
-        refreshCampaign();
-    }
-
-    function setStory2(story2) {
-        face.story2 = story2;
-        refreshCampaign();
-    }
-
-    function setStory3(story3) {
-        face.story3 = story3;
-        refreshCampaign();
-    }
-
-    function setText1(text1) {
-        face.text1 = text1;
-        refreshCampaign();
-    }
-
-    function setText2(text2) {
-        face.text2 = text2;
-        refreshCampaign();
-    }
-
-    function setText3(text3) {
-        face.text3 = text3;
-        refreshCampaign();
-    }
-
-    function setTextFontSize(fontSize) {
-        face.textFontSize = fontSize;
-        refreshCampaign();
-    }
-
-    function setCardType(cardType) {
-        face.cardType = cardType;
         refreshCampaign();
     }
 }
