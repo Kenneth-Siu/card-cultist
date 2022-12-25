@@ -222,7 +222,7 @@ export default function LocationFrontFaceCanvas({ face, cardSet, setIllustration
                 new CanvasTextConfig()
                     .withText(face.victory)
                     .withX(40)
-                    .withY(660)
+                    .withY(636)
                     .withWidth(686)
                     .withHeight(286)
                     .withFontSize(face.textFontSize)
