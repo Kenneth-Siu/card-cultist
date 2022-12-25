@@ -9,10 +9,7 @@ import CardCanvas from "../CardCanvas";
 import { isSvgPath } from "../../../../helpers/isSvgPath";
 import { transformSvgOnCanvas } from "../../../../helpers/transformSvgOnCanvas";
 import { CARD_PORTRAIT_HEIGHT, CARD_PORTRAIT_WIDTH } from "../../cardConstants";
-import {
-    connectionSymbols,
-    noConnectionSymbol,
-} from "../../../../models/canvasLayers/cardLayers/connectionSymbol/connectionSymbols";
+import { connectionSymbols, noConnectionSymbol } from "../../../../models/canvasLayers/cardLayers/connectionSymbol/connectionSymbols";
 import ConnectionSymbolLayer from "../../../../models/canvasLayers/cardLayers/connectionSymbol/ConnectionSymbolLayer";
 import ConnectionSymbolConfig from "../../../../models/canvasLayers/cardLayers/connectionSymbol/ConnectionSymbolConfig";
 import connectionSymbolBackground from "../../../../../public/overlays/AHLCG-LocationCircle.png";
@@ -73,33 +70,21 @@ export default function LocationBackFaceCanvas({ face, cardSet, setIllustrationT
 
     useEffect(async () => {
         const image = await loadFileSystemImage(face.illustration);
-        setIllustrationLayer(
-            image ? new CanvasImageLayer(image, new ImageTransform(face.illustrationTransform)) : null
-        );
+        setIllustrationLayer(image ? new CanvasImageLayer(image, new ImageTransform(face.illustrationTransform)) : null);
     }, [face.illustration, ...Object.values(face.illustrationTransform)]);
 
     useEffect(async () => {
         if (face.subtitle) {
-            setFrameLayer(
-                new CanvasImageLayer(
-                    await loadPublicImage(LocationBackFace.frameSubtitle),
-                    new ImageTransform({ scale: 2 })
-                )
-            );
+            setFrameLayer(new CanvasImageLayer(await loadPublicImage(LocationBackFace.frameSubtitle), new ImageTransform({ scale: 2 })));
         } else {
-            setFrameLayer(
-                new CanvasImageLayer(await loadPublicImage(LocationBackFace.frame), new ImageTransform({ scale: 2 }))
-            );
+            setFrameLayer(new CanvasImageLayer(await loadPublicImage(LocationBackFace.frame), new ImageTransform({ scale: 2 })));
         }
     }, [!!face.subtitle]);
 
     useEffect(async () => {
         setConnectionSymbolBackgroundLayer(
             face.connectionSymbol !== noConnectionSymbol.name
-                ? new CanvasImageLayer(
-                      await loadPublicImage(connectionSymbolBackground),
-                      new ImageTransform({ x: 18, y: 2, scale: 2 })
-                  )
+                ? new CanvasImageLayer(await loadPublicImage(connectionSymbolBackground), new ImageTransform({ x: 18, y: 2, scale: 2 }))
                 : null
         );
     }, [face.connectionSymbol]);
@@ -110,7 +95,7 @@ export default function LocationBackFaceCanvas({ face, cardSet, setIllustrationT
                 new CanvasTextConfig()
                     .withText(face.title)
                     .withX(374)
-                    .withY(48)
+                    .withY(8)
                     .withFontSize(52)
                     .withFontFamily("Teutonic")
                     .withAlign(TEXTALIGN.CENTER)
@@ -121,13 +106,7 @@ export default function LocationBackFaceCanvas({ face, cardSet, setIllustrationT
     useEffect(() => {
         setSubtitleLayer(
             new CanvasTextLayer(
-                new CanvasTextConfig()
-                    .withText(face.subtitle)
-                    .withX(374)
-                    .withY(100)
-                    .withFontSize(28)
-                    .withAlign(TEXTALIGN.CENTER)
-                    .withBold()
+                new CanvasTextConfig().withText(face.subtitle).withX(374).withY(80).withFontSize(28).withAlign(TEXTALIGN.CENTER).withBold()
             )
         );
     }, [face.subtitle]);
@@ -135,11 +114,7 @@ export default function LocationBackFaceCanvas({ face, cardSet, setIllustrationT
     useEffect(async () => {
         const image = await loadFileSystemImage(face.encounterSetSymbol || cardSet.symbol);
         const transform = isSvgPath(face.encounterSetSymbol || cardSet.symbol)
-            ? transformSvgOnCanvas(
-                  { h: CARD_PORTRAIT_HEIGHT, w: CARD_PORTRAIT_WIDTH },
-                  { h: image.height, w: image.width },
-                  58
-              )
+            ? transformSvgOnCanvas({ h: CARD_PORTRAIT_HEIGHT, w: CARD_PORTRAIT_WIDTH }, { h: image.height, w: image.width }, 58)
             : null;
         setEncounterSetSymbolLayer(
             image
@@ -161,7 +136,7 @@ export default function LocationBackFaceCanvas({ face, cardSet, setIllustrationT
                 new CanvasTextConfig()
                     .withText(face.cardType.toUpperCase())
                     .withX(374)
-                    .withY(574)
+                    .withY(558)
                     .withFontSize(24)
                     .withAlign(TEXTALIGN.CENTER)
                     .withBold()
@@ -175,7 +150,7 @@ export default function LocationBackFaceCanvas({ face, cardSet, setIllustrationT
                 new CanvasTextConfig()
                     .withText(face.traits)
                     .withX(374)
-                    .withY(624)
+                    .withY(604)
                     .withFontSize(30)
                     .withAlign(TEXTALIGN.CENTER)
                     .withBold()
@@ -190,7 +165,7 @@ export default function LocationBackFaceCanvas({ face, cardSet, setIllustrationT
                 new CanvasTextConfig()
                     .withText(face.text)
                     .withX(40)
-                    .withY(660 - (face.traits ? 0 : 6))
+                    .withY(638 - (face.traits ? 0 : 6))
                     .withWidth(670)
                     .withFontSize(face.textFontSize)
                     .withCardTitle(face.title)
@@ -200,45 +175,31 @@ export default function LocationBackFaceCanvas({ face, cardSet, setIllustrationT
     }, [face.title, face.subtitle, face.traits, face.text, face.textFontSize]);
 
     useEffect(async () => {
-        setConnectionSymbolLayer(
-            new ConnectionSymbolLayer(new ConnectionSymbolConfig(face.connectionSymbol).withX(30.5).withY(13))
-        );
+        setConnectionSymbolLayer(new ConnectionSymbolLayer(new ConnectionSymbolConfig(face.connectionSymbol).withX(30.5).withY(13)));
     }, [face.connectionSymbol]);
 
     useEffect(async () => {
-        setConnection1Layer(
-            new ConnectionSymbolLayer(new ConnectionSymbolConfig(face.connection1).withX(135.5).withY(935.5))
-        );
+        setConnection1Layer(new ConnectionSymbolLayer(new ConnectionSymbolConfig(face.connection1).withX(135.5).withY(935.5)));
     }, [face.connection1]);
 
     useEffect(async () => {
-        setConnection2Layer(
-            new ConnectionSymbolLayer(new ConnectionSymbolConfig(face.connection2).withX(218).withY(920))
-        );
+        setConnection2Layer(new ConnectionSymbolLayer(new ConnectionSymbolConfig(face.connection2).withX(218).withY(920)));
     }, [face.connection2]);
 
     useEffect(async () => {
-        setConnection3Layer(
-            new ConnectionSymbolLayer(new ConnectionSymbolConfig(face.connection3).withX(300.5).withY(913))
-        );
+        setConnection3Layer(new ConnectionSymbolLayer(new ConnectionSymbolConfig(face.connection3).withX(300.5).withY(913)));
     }, [face.connection3]);
 
     useEffect(async () => {
-        setConnection4Layer(
-            new ConnectionSymbolLayer(new ConnectionSymbolConfig(face.connection4).withX(383).withY(913))
-        );
+        setConnection4Layer(new ConnectionSymbolLayer(new ConnectionSymbolConfig(face.connection4).withX(383).withY(913)));
     }, [face.connection4]);
 
     useEffect(async () => {
-        setConnection5Layer(
-            new ConnectionSymbolLayer(new ConnectionSymbolConfig(face.connection5).withX(465.5).withY(920))
-        );
+        setConnection5Layer(new ConnectionSymbolLayer(new ConnectionSymbolConfig(face.connection5).withX(465.5).withY(920)));
     }, [face.connection5]);
 
     useEffect(async () => {
-        setConnection6Layer(
-            new ConnectionSymbolLayer(new ConnectionSymbolConfig(face.connection6).withX(548).withY(935.5))
-        );
+        setConnection6Layer(new ConnectionSymbolLayer(new ConnectionSymbolConfig(face.connection6).withX(548).withY(935.5)));
     }, [face.connection6]);
 
     useEffect(() => {
@@ -247,7 +208,7 @@ export default function LocationBackFaceCanvas({ face, cardSet, setIllustrationT
                 new CanvasTextConfig()
                     .withText(face.illustrator ? "Illus. " + face.illustrator : "")
                     .withX(36)
-                    .withY(1042)
+                    .withY(1026)
                     .withFontSize(18)
                     .withColor("white")
             )
@@ -260,7 +221,7 @@ export default function LocationBackFaceCanvas({ face, cardSet, setIllustrationT
                 new CanvasTextConfig()
                     .withText(face.copyrightInformation)
                     .withX(374)
-                    .withY(1042)
+                    .withY(1026)
                     .withFontSize(18)
                     .withAlign(TEXTALIGN.CENTER)
                     .withColor("white")
@@ -271,11 +232,7 @@ export default function LocationBackFaceCanvas({ face, cardSet, setIllustrationT
     useEffect(async () => {
         const image = await loadFileSystemImage(face.campaignSymbol || campaign.symbol);
         const transform = isSvgPath(face.campaignSymbol || campaign.symbol)
-            ? transformSvgOnCanvas(
-                  { h: CARD_PORTRAIT_HEIGHT, w: CARD_PORTRAIT_WIDTH },
-                  { h: image.height, w: image.width },
-                  28
-              )
+            ? transformSvgOnCanvas({ h: CARD_PORTRAIT_HEIGHT, w: CARD_PORTRAIT_WIDTH }, { h: image.height, w: image.width }, 28)
             : null;
         setCampaignSymbolLayer(
             image

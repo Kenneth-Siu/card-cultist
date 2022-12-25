@@ -1,11 +1,6 @@
 import CanvasTextLayer from "../../../../models/canvasLayers/CanvasTextLayer";
 import CanvasTextConfig from "../../../../models/CanvasTextConfig";
-import {
-    HEADER_1_FONT_SIZE,
-    HEADER_1_START_TOP,
-    TITLE_UNDERLINE,
-    HEADER_1_BOTTOM_MARGIN,
-} from "../../campaignGuideConstants";
+import { TITLE_UNDERLINE, HEADER_1 } from "../../campaignGuideConstants";
 import Widget from "../Widget";
 import Header1WidgetView from "./Header1WidgetView";
 
@@ -19,9 +14,7 @@ export default class Header1Widget extends Widget {
     }
 
     getView(page) {
-        return (
-            <Header1WidgetView key={this.id} widget={this} page={page} />
-        );
+        return <Header1WidgetView key={this.id} widget={this} page={page} />;
     }
 
     draw(context, x, y, isFirst, campaignGuide, PAGE) {
@@ -29,14 +22,9 @@ export default class Header1Widget extends Widget {
             new CanvasTextConfig()
                 .withText(this.text)
                 .withX(x + this.xNudge)
-                .withY(
-                    y +
-                        Math.round(HEADER_1_FONT_SIZE / 2) +
-                        (isFirst ? HEADER_1_START_TOP : HEADER_1_FONT_SIZE) +
-                        this.yNudge
-                )
+                .withY(y + (isFirst ? 0 : HEADER_1.TOP_MARGIN) + this.yNudge)
                 .withWidth(PAGE.COLUMN_WIDTH)
-                .withFontSize(HEADER_1_FONT_SIZE)
+                .withFontSize(HEADER_1.FONT_SIZE)
                 .withFontFamily("Teutonic")
                 .withColor(campaignGuide.colorTheme)
         );
@@ -50,7 +38,7 @@ export default class Header1Widget extends Widget {
 
         context.restore();
 
-        result.y += HEADER_1_BOTTOM_MARGIN;
+        result.y += HEADER_1.BOTTOM_MARGIN;
         return result;
     }
 }

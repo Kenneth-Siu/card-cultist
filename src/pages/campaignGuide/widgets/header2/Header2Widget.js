@@ -1,6 +1,6 @@
 import CanvasTextLayer from "../../../../models/canvasLayers/CanvasTextLayer";
 import CanvasTextConfig from "../../../../models/CanvasTextConfig";
-import { HEADER_2_FONT_SIZE, HEADER_2_START_TOP } from "../../campaignGuideConstants";
+import { HEADER_2 } from "../../campaignGuideConstants";
 import Widget from "../Widget";
 import Header2WidgetView from "./Header2WidgetView";
 
@@ -14,28 +14,28 @@ export default class Header2Widget extends Widget {
     }
 
     getView(page) {
-        return (
-            <Header2WidgetView key={this.id} widget={this} page={page} />
-        );
+        return <Header2WidgetView key={this.id} widget={this} page={page} />;
     }
 
     draw(context, x, y, isFirst, campaignGuide, PAGE) {
+        // context.save();
+        // context.fillStyle = "red";
+        // context.fillRect(x, y, 200, 1);
+        // context.restore();
         const layer = new CanvasTextLayer(
             new CanvasTextConfig()
                 .withText(this.text)
                 .withX(x + this.xNudge)
-                .withY(
-                    y +
-                        Math.round(HEADER_2_FONT_SIZE / 2) +
-                        (isFirst ? HEADER_2_START_TOP : HEADER_2_FONT_SIZE) +
-                        this.yNudge
-                )
+                .withY(y + (isFirst ? 0 : HEADER_2.TOP_MARGIN) + this.yNudge)
                 .withWidth(PAGE.COLUMN_WIDTH)
-                .withFontSize(HEADER_2_FONT_SIZE)
+                .withFontSize(HEADER_2.FONT_SIZE)
                 .withFontFamily("Teutonic")
                 .withColor(campaignGuide.colorTheme)
         );
 
-        return layer.draw(context);
+        const result = layer.draw(context);
+
+        result.y += HEADER_2.BOTTOM_MARGIN;
+        return result;
     }
 }

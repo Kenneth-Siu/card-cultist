@@ -1,6 +1,6 @@
 import CanvasTextLayer from "../../../../models/canvasLayers/CanvasTextLayer";
 import CanvasTextConfig from "../../../../models/CanvasTextConfig";
-import { PARAGRAPH_FONT_SIZE, PARAGRAPH_LINE_HEIGHT } from "../../campaignGuideConstants";
+import { PARAGRAPH } from "../../campaignGuideConstants";
 import Widget from "../Widget";
 import TextWidgetView from "./TextWidgetView";
 
@@ -22,15 +22,10 @@ export default class TextWidget extends Widget {
             new CanvasTextConfig()
                 .withText(this.text)
                 .withX(x + this.xNudge)
-                .withY(
-                    y +
-                        Math.round(PARAGRAPH_FONT_SIZE / 2) +
-                        (isFirst ? 0 : Math.round(PARAGRAPH_LINE_HEIGHT * PARAGRAPH_FONT_SIZE)) +
-                        this.yNudge
-                )
+                .withY(y + this.yNudge)
                 .withWidth(PAGE.COLUMN_WIDTH)
-                .withFontSize(PARAGRAPH_FONT_SIZE)
-                .withLineHeight(PARAGRAPH_LINE_HEIGHT)
+                .withFontSize(PARAGRAPH.FONT_SIZE)
+                .withLineHeight(PARAGRAPH.LINE_HEIGHT)
                 .withHighlightColor(campaignGuide.colorTheme)
         );
 

@@ -5,6 +5,7 @@ import InputContainer from "../../components/inputContainer/InputContainer";
 import BaseFaceView from "../BaseFaceView";
 import "../FaceView.scss";
 import { CampaignContext } from "../../../../components/CampaignContext";
+import useViewPropertySetter from "../../components/useViewPropertySetter";
 
 export default function TreacheryFaceView({ faceDirection, listOfCardFaces, otherFace, face, cardSet }) {
     const { refreshCampaign } = useContext(CampaignContext);
@@ -15,13 +16,7 @@ export default function TreacheryFaceView({ faceDirection, listOfCardFaces, othe
             listOfCardFaces={listOfCardFaces}
             face={face}
             otherFace={otherFace}
-            canvas={
-                <TreacheryFaceCanvas
-                    face={face}
-                    cardSet={cardSet}
-                    setIllustrationTransform={setIllustrationTransform}
-                />
-            }
+            canvas={<TreacheryFaceCanvas face={face} cardSet={cardSet} setIllustrationTransform={setIllustrationTransform} />}
             fields={
                 <>
                     <InputContainer label="Title" type="text" value={face.title} setValue={set("title")} />
@@ -39,10 +34,7 @@ export default function TreacheryFaceView({ faceDirection, listOfCardFaces, othe
                         <textarea value={face.text} onChange={(event) => set("text")(event.target.value)} />
                     </InputContainer>
 
-                    <Illustration
-                        face={face}
-                        setIllustrationTransform={setIllustrationTransform}
-                    />
+                    <Illustration face={face} setIllustrationTransform={setIllustrationTransform} />
                 </>
             }
             expandableHeight="8rem"
@@ -59,27 +51,14 @@ export default function TreacheryFaceView({ faceDirection, listOfCardFaces, othe
                         setValue={set("copyrightInformation")}
                     />
                     <InputContainer label="Encounter Set ID" childId="set-id">
-                        <input
-                            type="text"
-                            value={face.encounterSetId}
-                            onChange={(event) => set("encounterSetId")(event.target.value)}
-                        />
+                        <input type="text" value={face.encounterSetId} onChange={(event) => set("encounterSetId")(event.target.value)} />
                         /
-                        <input
-                            type="text"
-                            value={face.encounterSetMaxId}
-                            onChange={(event) => set("encounterSetMaxId")(event.target.value)}
-                        />
+                        <input type="text" value={face.encounterSetMaxId} onChange={(event) => set("encounterSetMaxId")(event.target.value)} />
                     </InputContainer>
                     <InputContainer label="Campaign Symbol">
                         <button onClick={() => setCampaignSymbol()}>Load Image</button>
                     </InputContainer>
-                    <InputContainer
-                        label="Campaign Set ID"
-                        type="text"
-                        value={face.campaignSetId}
-                        setValue={set("campaignSetId")}
-                    />
+                    <InputContainer label="Campaign Set ID" type="text" value={face.campaignSetId} setValue={set("campaignSetId")} />
                 </>
             }
         />

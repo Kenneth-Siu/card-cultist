@@ -1,32 +1,43 @@
-export const PARAGRAPH_FONT_SIZE = 35;
-export const PARAGRAPH_LINE_HEIGHT = 1.32;
-export const PARAGRAPH_SPACING = 0.3;
-export const HEADER_1_FONT_SIZE = 70;
-export const HEADER_2_FONT_SIZE = 64;
-export const HEADER_1_START_TOP = 10;
-export const HEADER_2_START_TOP = 10;
-export const HEADER_1_BOTTOM_MARGIN = 10;
+export const INTER_WIDGET_MARGIN = 24;
+
+export const PARAGRAPH = Object.freeze({
+    FONT_SIZE: 35,
+    LINE_HEIGHT: 1.32,
+});
+
+export const HEADER_1 = Object.freeze({
+    FONT_SIZE: 70,
+    TOP_MARGIN: 20,
+    BOTTOM_MARGIN: 10,
+});
+
+export const HEADER_2 = Object.freeze({
+    FONT_SIZE: 64,
+    TOP_MARGIN: 20,
+    BOTTOM_MARGIN: 16,
+});
 
 export const SYMBOLS_ROW = Object.freeze({
     SYMBOL_SIZE: 110,
-    TOP_MARGIN: 25,
-    BOTTOM_MARGIN: -10,
 });
 
 export const TITLE_UNDERLINE = Object.freeze({
     THICKNESS: 2,
-    OFFSET: 12,
-    SECOND_OFFSET: 18,
+    OFFSET: -6,
+    SECOND_OFFSET: 0,
 });
+
 export const DECO_BOX = Object.freeze({
     BACKGROUND_ALPHA: 0.175,
-    INTER_WIDGET_MARGIN: 44,
+    TOP_MARGIN: 44,
+    BOTTOM_MARGIN: 44,
     HORIZONTAL_MARGIN: 4,
     BLUR_DISTANCE: 60,
-    PARAGRAPH_INTER_MARGIN: 70,
+    PARAGRAPH_INTER_MARGIN: 40,
+    TITLE_TOP_MARGIN: -20,
     SUBTITLE: Object.freeze({
         FONT_SIZE: 52,
-        INTER_TITLE_MARGIN: 42,
+        INTER_TITLE_MARGIN: 18,
         TOP: -10,
     }),
     PADDING: 70,
@@ -34,8 +45,8 @@ export const DECO_BOX = Object.freeze({
         SIZE: 144,
         LEFT: 8,
         RIGHT: 10,
-        BOTTOM: 2,
-        TOP: -14,
+        BOTTOM: -7,
+        TOP: -5,
     }),
     BRACKET: Object.freeze({
         THICKNESS: 4,
@@ -56,8 +67,8 @@ export const SQUARE = Object.freeze({
     COLUMN_WIDTH: 972,
     WIDTH: 2250,
     HEIGHT: 2250,
-    PAGE_NUMBER_Y: 2208,
-    FRONT_PAGE_TITLE_Y: 634,
+    PAGE_NUMBER_Y: 2160,
+    FRONT_PAGE_TITLE_Y: 566,
 });
 
 export const A4 = Object.freeze({
@@ -68,6 +79,6 @@ export const A4 = Object.freeze({
     COLUMN_WIDTH: 1046,
     WIDTH: 2480,
     HEIGHT: 3508,
-    PAGE_NUMBER_Y: 3462,
-    FRONT_PAGE_TITLE_Y: 696,
+    PAGE_NUMBER_Y: 3418,
+    FRONT_PAGE_TITLE_Y: 624,
 });

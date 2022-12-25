@@ -1,12 +1,6 @@
 import CanvasTextLayer from "../../../../models/canvasLayers/CanvasTextLayer";
 import CanvasTextConfig, { TEXTALIGN } from "../../../../models/CanvasTextConfig";
-import {
-    DECO_BOX,
-    PARAGRAPH_FONT_SIZE,
-    PARAGRAPH_LINE_HEIGHT,
-    HEADER_2_FONT_SIZE,
-    TITLE_UNDERLINE,
-} from "../../campaignGuideConstants";
+import { DECO_BOX, PARAGRAPH, HEADER_2, TITLE_UNDERLINE } from "../../campaignGuideConstants";
 import Widget from "../Widget";
 import DecoBoxWidgetView from "./DecoBoxWidgetView";
 
@@ -26,16 +20,14 @@ export default class DecoBoxWidget extends Widget {
     }
 
     getView(page) {
-        return (
-            <DecoBoxWidgetView key={this.id} widget={this} page={page} />
-        );
+        return <DecoBoxWidgetView key={this.id} widget={this} page={page} />;
     }
 
     draw(context, baseX, baseY, isFirst, _campaignGuide, PAGE) {
         context.save();
 
         const x = baseX + this.xNudge;
-        const y = baseY + (isFirst ? 0 : DECO_BOX.INTER_WIDGET_MARGIN) + this.yNudge;
+        const y = baseY + (isFirst ? 0 : DECO_BOX.TOP_MARGIN) + this.yNudge;
 
         const transparentTitleBox = this.drawTitle(context, x, y, PAGE, true);
         const transparentSubtitleBox = this.drawSubtitle(context, x, transparentTitleBox.y, PAGE, true);
@@ -51,6 +43,7 @@ export default class DecoBoxWidget extends Widget {
         this.drawTitleUnderline(context, x, subtitleBox.y, subtitleBox.w || titleBox.w, PAGE);
         this.drawText(context, x, subtitleBox.y, PAGE);
 
+        backgroundBox.y += DECO_BOX.BOTTOM_MARGIN;
         return backgroundBox;
     }
 
@@ -89,7 +82,7 @@ export default class DecoBoxWidget extends Widget {
             new CanvasTextConfig()
                 .withText("}")
                 .withX(x + DECO_BOX.FLEUR.LEFT)
-                .withY(y + DECO_BOX.FLEUR.SIZE + DECO_BOX.FLEUR.TOP)
+                .withY(y + DECO_BOX.FLEUR.TOP)
                 .withWidth(PAGE.COLUMN_WIDTH - DECO_BOX.FLEUR.LEFT - DECO_BOX.FLEUR.RIGHT)
                 .withFontSize(DECO_BOX.FLEUR.SIZE)
                 .withFontFamily("AHCardTextSymbols")
@@ -103,7 +96,7 @@ export default class DecoBoxWidget extends Widget {
             new CanvasTextConfig()
                 .withText("~")
                 .withX(x + DECO_BOX.FLEUR.LEFT)
-                .withY(y + DECO_BOX.FLEUR.SIZE + DECO_BOX.FLEUR.TOP)
+                .withY(y + DECO_BOX.FLEUR.TOP)
                 .withWidth(PAGE.COLUMN_WIDTH - DECO_BOX.FLEUR.LEFT - DECO_BOX.FLEUR.RIGHT)
                 .withFontSize(DECO_BOX.FLEUR.SIZE)
                 .withFontFamily("AHCardTextSymbols")
@@ -133,7 +126,7 @@ export default class DecoBoxWidget extends Widget {
             new CanvasTextConfig()
                 .withText("{")
                 .withX(x + DECO_BOX.FLEUR.LEFT)
-                .withY(y - DECO_BOX.FLEUR.BOTTOM)
+                .withY(y - DECO_BOX.FLEUR.SIZE - DECO_BOX.FLEUR.BOTTOM)
                 .withWidth(PAGE.COLUMN_WIDTH - DECO_BOX.FLEUR.LEFT - DECO_BOX.FLEUR.RIGHT)
                 .withFontSize(DECO_BOX.FLEUR.SIZE)
                 .withFontFamily("AHCardTextSymbols")
@@ -147,7 +140,7 @@ export default class DecoBoxWidget extends Widget {
             new CanvasTextConfig()
                 .withText("|")
                 .withX(x + DECO_BOX.FLEUR.LEFT)
-                .withY(y - DECO_BOX.FLEUR.BOTTOM)
+                .withY(y - DECO_BOX.FLEUR.SIZE - DECO_BOX.FLEUR.BOTTOM)
                 .withWidth(PAGE.COLUMN_WIDTH - DECO_BOX.FLEUR.LEFT - DECO_BOX.FLEUR.RIGHT)
                 .withFontSize(DECO_BOX.FLEUR.SIZE)
                 .withFontFamily("AHCardTextSymbols")
@@ -169,9 +162,9 @@ export default class DecoBoxWidget extends Widget {
             new CanvasTextConfig()
                 .withText(this.title)
                 .withX(x + DECO_BOX.PADDING)
-                .withY(y + DECO_BOX.PADDING + Math.round(HEADER_2_FONT_SIZE / 2))
+                .withY(y + DECO_BOX.TITLE_TOP_MARGIN + DECO_BOX.PADDING)
                 .withWidth(PAGE.COLUMN_WIDTH - DECO_BOX.PADDING * 2)
-                .withFontSize(HEADER_2_FONT_SIZE)
+                .withFontSize(HEADER_2.FONT_SIZE)
                 .withFontFamily("Teutonic")
                 .withAlign(TEXTALIGN.CENTER)
                 .withColor(isTransparent ? "transparent" : this.color)
@@ -189,12 +182,7 @@ export default class DecoBoxWidget extends Widget {
             new CanvasTextConfig()
                 .withText(this.subtitle)
                 .withX(x + DECO_BOX.PADDING)
-                .withY(
-                    y +
-                        Math.round(DECO_BOX.SUBTITLE.FONT_SIZE / 2) +
-                        DECO_BOX.SUBTITLE.TOP +
-                        (this.title ? DECO_BOX.SUBTITLE.INTER_TITLE_MARGIN : DECO_BOX.PADDING)
-                )
+                .withY(y + DECO_BOX.SUBTITLE.TOP + (this.title ? DECO_BOX.SUBTITLE.INTER_TITLE_MARGIN : DECO_BOX.PADDING))
                 .withWidth(PAGE.COLUMN_WIDTH - DECO_BOX.PADDING * 2)
                 .withFontSize(DECO_BOX.SUBTITLE.FONT_SIZE)
                 .withFontFamily("Teutonic")
@@ -214,12 +202,7 @@ export default class DecoBoxWidget extends Widget {
 
         context.fillStyle = this.color;
         context.fillRect(x + PAGE.COLUMN_WIDTH / 2 - w / 2, y + TITLE_UNDERLINE.OFFSET, w, TITLE_UNDERLINE.THICKNESS);
-        context.fillRect(
-            x + PAGE.COLUMN_WIDTH / 2 - w / 2,
-            y + TITLE_UNDERLINE.SECOND_OFFSET,
-            w,
-            TITLE_UNDERLINE.THICKNESS
-        );
+        context.fillRect(x + PAGE.COLUMN_WIDTH / 2 - w / 2, y + TITLE_UNDERLINE.SECOND_OFFSET, w, TITLE_UNDERLINE.THICKNESS);
 
         context.restore();
     }
@@ -229,14 +212,10 @@ export default class DecoBoxWidget extends Widget {
             new CanvasTextConfig()
                 .withText(this.text)
                 .withX(x + DECO_BOX.PADDING)
-                .withY(
-                    y +
-                        Math.round(PARAGRAPH_FONT_SIZE / 2) +
-                        (this.title || this.subtitle ? DECO_BOX.PARAGRAPH_INTER_MARGIN : DECO_BOX.PADDING)
-                )
+                .withY(y + (this.title || this.subtitle ? DECO_BOX.PARAGRAPH_INTER_MARGIN : DECO_BOX.PADDING))
                 .withWidth(PAGE.COLUMN_WIDTH - DECO_BOX.PADDING * 2)
-                .withFontSize(PARAGRAPH_FONT_SIZE)
-                .withLineHeight(PARAGRAPH_LINE_HEIGHT)
+                .withFontSize(PARAGRAPH.FONT_SIZE)
+                .withLineHeight(PARAGRAPH.LINE_HEIGHT)
                 .withColor(inTransparent ? "transparent" : "black")
                 .withHighlightColor(this.color)
         );

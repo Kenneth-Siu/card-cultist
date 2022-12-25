@@ -41,14 +41,14 @@ export default class SymbolsRowWidget extends Widget {
                 image,
                 new ImageTransform()
                     .withX(startingX + index * (SYMBOLS_ROW.SYMBOL_SIZE + this.spacing) + (transform ? transform.xNudge : 0))
-                    .withY(y + SYMBOLS_ROW.TOP_MARGIN + this.yNudge + (transform ? transform.yNudge : 0))
+                    .withY(y + this.yNudge + (transform ? transform.yNudge : 0))
                     .withScale((transform && transform.scale) || SYMBOLS_ROW.SYMBOL_SIZE / Math.max(image.height, image.width))
             );
             layer.draw(context);
         });
 
         return {
-            y: y + SYMBOLS_ROW.TOP_MARGIN + SYMBOLS_ROW.BOTTOM_MARGIN + this.yNudge + SYMBOLS_ROW.SYMBOL_SIZE,
+            y: y + this.yNudge + SYMBOLS_ROW.SYMBOL_SIZE,
             w: totalWidth,
         };
     }

@@ -5,7 +5,7 @@ import CanvasImageLayer from "../../../../models/canvasLayers/CanvasImageLayer";
 import CanvasTextLayer from "../../../../models/canvasLayers/CanvasTextLayer";
 import CanvasTextConfig, { TEXTALIGN } from "../../../../models/CanvasTextConfig";
 import ImageTransform from "../../../../models/ImageTransform";
-import { PAGE_NUMBER_FONT_SIZE, SQUARE } from "../../campaignGuideConstants";
+import { INTER_WIDGET_MARGIN, PAGE_NUMBER_FONT_SIZE, SQUARE } from "../../campaignGuideConstants";
 
 // TODO update page numbers to use number font for cards
 
@@ -25,9 +25,7 @@ export default function SquarePageCanvas({ page, pageNumber }) {
     }, [backgroundLayer, pageNumberLayer, campaign]);
 
     useEffect(async () => {
-        setBackgroundLayer(
-            new CanvasImageLayer(await loadPublicImage(page.background), new ImageTransform({ scale: 2 }))
-        );
+        setBackgroundLayer(new CanvasImageLayer(await loadPublicImage(page.background), new ImageTransform({ scale: 2 })));
     }, []);
 
     useEffect(() => {
@@ -38,7 +36,7 @@ export default function SquarePageCanvas({ page, pageNumber }) {
                     .withX(SQUARE.WIDTH / 2)
                     .withY(SQUARE.PAGE_NUMBER_Y)
                     .withFontSize(PAGE_NUMBER_FONT_SIZE)
-                    .withFontFamily("Teutonic")
+                    .withFontFamily("AHCardTextSymbols")
                     .withAlign(TEXTALIGN.CENTER)
             )
         );
@@ -46,13 +44,7 @@ export default function SquarePageCanvas({ page, pageNumber }) {
 
     return (
         <div className="canvas-container">
-            <canvas
-                ref={canvasRef}
-                className="preview square"
-                width={SQUARE.WIDTH}
-                height={SQUARE.HEIGHT}
-                onLoad={() => refreshCanvas()}
-            />
+            <canvas ref={canvasRef} className="preview square" width={SQUARE.WIDTH} height={SQUARE.HEIGHT} onLoad={() => refreshCanvas()} />
             <div className="loaded-images">{loadedImages}</div>
         </div>
     );
@@ -67,13 +59,13 @@ export default function SquarePageCanvas({ page, pageNumber }) {
         const leftWidgets = page.leftColumnWidgets;
         let y = SQUARE.TOP_MARGIN;
         for (let i = 0; i < leftWidgets.length; i++) {
-            y = leftWidgets[i].draw(context, SQUARE.LEFT_COLUMN_X, y, i === 0, campaign.campaignGuide, SQUARE).y;
+            y = leftWidgets[i].draw(context, SQUARE.LEFT_COLUMN_X, y, i === 0, campaign.campaignGuide, SQUARE).y + INTER_WIDGET_MARGIN;
         }
 
         const rightWidgets = page.rightColumnWidgets;
         y = SQUARE.TOP_MARGIN;
         for (let i = 0; i < rightWidgets.length; i++) {
-            y = rightWidgets[i].draw(context, SQUARE.RIGHT_COLUMN_X, y, i === 0, campaign.campaignGuide, SQUARE).y;
+            y = rightWidgets[i].draw(context, SQUARE.RIGHT_COLUMN_X, y, i === 0, campaign.campaignGuide, SQUARE).y + INTER_WIDGET_MARGIN;
         }
     }
 }

@@ -50,34 +50,23 @@ export default function StoryWeaknessFaceCanvas({ face, cardSet, setIllustration
 
     useEffect(async () => {
         const image = await loadFileSystemImage(face.illustration);
-        setIllustrationLayer(
-            image ? new CanvasImageLayer(image, new ImageTransform(face.illustrationTransform)) : null
-        );
+        setIllustrationLayer(image ? new CanvasImageLayer(image, new ImageTransform(face.illustrationTransform)) : null);
     }, [face.illustration, ...Object.values(face.illustrationTransform)]);
 
     useEffect(async () => {
-        setFrameLayer(
-            new CanvasImageLayer(await loadPublicImage(StoryWeaknessFace.frame), new ImageTransform({ scale: 2 }))
-        );
+        setFrameLayer(new CanvasImageLayer(await loadPublicImage(StoryWeaknessFace.frame), new ImageTransform({ scale: 2 })));
     }, []);
 
     useEffect(async () => {
         setEncounterSetIconFrameLayer(
-            new CanvasImageLayer(
-                await loadPublicImage(StoryWeaknessFace.encounterSetIconFrame),
-                new ImageTransform({ x: 312, y: 486, scale: 2 })
-            )
+            new CanvasImageLayer(await loadPublicImage(StoryWeaknessFace.encounterSetIconFrame), new ImageTransform({ x: 312, y: 486, scale: 2 }))
         );
     }, []);
 
     useEffect(async () => {
         const image = await loadFileSystemImage(face.encounterSetSymbol || cardSet.symbol);
         const transform = isSvgPath(face.encounterSetSymbol || cardSet.symbol)
-            ? transformSvgOnCanvas(
-                  { h: CARD_PORTRAIT_HEIGHT, w: CARD_PORTRAIT_WIDTH },
-                  { h: image.height, w: image.width },
-                  58
-              )
+            ? transformSvgOnCanvas({ h: CARD_PORTRAIT_HEIGHT, w: CARD_PORTRAIT_WIDTH }, { h: image.height, w: image.width }, 58)
             : null;
         setEncounterSetSymbolLayer(
             image
@@ -99,7 +88,7 @@ export default function StoryWeaknessFaceCanvas({ face, cardSet, setIllustration
                 new CanvasTextConfig()
                     .withText(face.cardType.toUpperCase().split("").join(String.fromCharCode(8202)))
                     .withX(374)
-                    .withY(590)
+                    .withY(573)
                     .withFontSize(24)
                     .withAlign(TEXTALIGN.CENTER)
                     .withBold()
@@ -113,7 +102,7 @@ export default function StoryWeaknessFaceCanvas({ face, cardSet, setIllustration
                 new CanvasTextConfig()
                     .withText(face.subType.toUpperCase())
                     .withX(374)
-                    .withY(692)
+                    .withY(676)
                     .withFontSize(24)
                     .withAlign(TEXTALIGN.CENTER)
                     .withBold()
@@ -127,7 +116,7 @@ export default function StoryWeaknessFaceCanvas({ face, cardSet, setIllustration
                 new CanvasTextConfig()
                     .withText(face.title)
                     .withX(374)
-                    .withY(652)
+                    .withY(616)
                     .withFontSize(46)
                     .withFontFamily("Teutonic")
                     .withAlign(TEXTALIGN.CENTER)
@@ -141,7 +130,7 @@ export default function StoryWeaknessFaceCanvas({ face, cardSet, setIllustration
                 new CanvasTextConfig()
                     .withText(face.traits)
                     .withX(374)
-                    .withY(733)
+                    .withY(716)
                     .withFontSize(30)
                     .withAlign(TEXTALIGN.CENTER)
                     .withBold()
@@ -156,7 +145,7 @@ export default function StoryWeaknessFaceCanvas({ face, cardSet, setIllustration
                 new CanvasTextConfig()
                     .withText(face.text)
                     .withX(62)
-                    .withY(770)
+                    .withY(754)
                     .withWidth(626)
                     .withFontSize(face.textFontSize)
                     .withCardTitle(face.title)
@@ -171,7 +160,7 @@ export default function StoryWeaknessFaceCanvas({ face, cardSet, setIllustration
                 new CanvasTextConfig()
                     .withText(face.illustrator ? "Illus. " + face.illustrator : "")
                     .withX(36)
-                    .withY(1042)
+                    .withY(1026)
                     .withFontSize(18)
                     .withColor("white")
             )
@@ -184,7 +173,7 @@ export default function StoryWeaknessFaceCanvas({ face, cardSet, setIllustration
                 new CanvasTextConfig()
                     .withText(face.copyrightInformation)
                     .withX(374)
-                    .withY(1042)
+                    .withY(1026)
                     .withFontSize(18)
                     .withAlign(TEXTALIGN.CENTER)
                     .withColor("white")
@@ -195,21 +184,11 @@ export default function StoryWeaknessFaceCanvas({ face, cardSet, setIllustration
     useEffect(() => {
         const text =
             face.encounterSetId || face.encounterSetMaxId
-                ? face.encounterSetId +
-                  String.fromCharCode(8202) +
-                  "/" +
-                  String.fromCharCode(8202) +
-                  face.encounterSetMaxId
+                ? face.encounterSetId + String.fromCharCode(8202) + "/" + String.fromCharCode(8202) + face.encounterSetMaxId
                 : "";
         setEncounterSetIdLayer(
             new CanvasTextLayer(
-                new CanvasTextConfig()
-                    .withText(text)
-                    .withX(602)
-                    .withY(1042)
-                    .withFontSize(18)
-                    .withAlign(TEXTALIGN.RIGHT)
-                    .withColor("white")
+                new CanvasTextConfig().withText(text).withX(602).withY(1026).withFontSize(18).withAlign(TEXTALIGN.RIGHT).withColor("white")
             )
         );
     }, [face.encounterSetId, face.encounterSetMaxId]);
@@ -217,11 +196,7 @@ export default function StoryWeaknessFaceCanvas({ face, cardSet, setIllustration
     useEffect(async () => {
         const image = await loadFileSystemImage(face.campaignSymbol || campaign.symbol);
         const transform = isSvgPath(face.campaignSymbol || campaign.symbol)
-            ? transformSvgOnCanvas(
-                  { h: CARD_PORTRAIT_HEIGHT, w: CARD_PORTRAIT_WIDTH },
-                  { h: image.height, w: image.width },
-                  28
-              )
+            ? transformSvgOnCanvas({ h: CARD_PORTRAIT_HEIGHT, w: CARD_PORTRAIT_WIDTH }, { h: image.height, w: image.width }, 28)
             : null;
         setCampaignSymbolLayer(
             image
@@ -244,7 +219,7 @@ export default function StoryWeaknessFaceCanvas({ face, cardSet, setIllustration
                 new CanvasTextConfig()
                     .withText(face.campaignSetId)
                     .withX(716)
-                    .withY(1042)
+                    .withY(1026)
                     .withFontSize(18)
                     .withAlign(TEXTALIGN.RIGHT)
                     .withColor("white")

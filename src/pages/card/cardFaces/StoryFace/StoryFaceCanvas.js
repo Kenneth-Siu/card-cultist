@@ -33,7 +33,7 @@ export default function StoryFaceCanvas({ face, cardSet }) {
                 new CanvasTextConfig()
                     .withText(face.title)
                     .withX(328)
-                    .withY(104)
+                    .withY(70)
                     .withFontSize(46)
                     .withFontFamily("Teutonic")
                     .withAlign(TEXTALIGN.CENTER)
@@ -44,11 +44,7 @@ export default function StoryFaceCanvas({ face, cardSet }) {
     useEffect(async () => {
         const image = await loadFileSystemImage(face.encounterSetSymbol || cardSet.symbol);
         const transform = isSvgPath(face.encounterSetSymbol || cardSet.symbol)
-            ? transformSvgOnCanvas(
-                  { h: CARD_PORTRAIT_WIDTH, w: CARD_PORTRAIT_HEIGHT },
-                  { h: image.height, w: image.width },
-                  76
-              )
+            ? transformSvgOnCanvas({ h: CARD_PORTRAIT_WIDTH, w: CARD_PORTRAIT_HEIGHT }, { h: image.height, w: image.width }, 76)
             : null;
         setEncounterSetSymbolLayer(
             image
@@ -77,8 +73,8 @@ export default function StoryFaceCanvas({ face, cardSet }) {
                     .withHeader3(face.header3)
                     .withStory3(face.story3)
                     .withText3(face.text3)
-                    .withX(72)
-                    .withY(222)
+                    .withX(74)
+                    .withY(218)
                     .withWidth(606)
                     .withFontSize(face.textFontSize)
                     .withLineHeight(1.1)
@@ -105,7 +101,7 @@ export default function StoryFaceCanvas({ face, cardSet }) {
                 new CanvasTextConfig()
                     .withText(face.cardType.toUpperCase())
                     .withX(374)
-                    .withY(1036)
+                    .withY(1018)
                     .withFontSize(24)
                     .withAlign(TEXTALIGN.CENTER)
                     .withBold()

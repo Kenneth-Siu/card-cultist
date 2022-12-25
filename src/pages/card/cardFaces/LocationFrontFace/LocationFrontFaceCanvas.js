@@ -105,7 +105,7 @@ export default function LocationFrontFaceCanvas({ face, cardSet, setIllustration
                 new CanvasTextConfig()
                     .withText(face.title)
                     .withX(374)
-                    .withY(48)
+                    .withY(8)
                     .withFontSize(52)
                     .withFontFamily("Teutonic")
                     .withAlign(TEXTALIGN.CENTER)
@@ -116,7 +116,7 @@ export default function LocationFrontFaceCanvas({ face, cardSet, setIllustration
     useEffect(() => {
         setSubtitleLayer(
             new CanvasTextLayer(
-                new CanvasTextConfig().withText(face.subtitle).withX(374).withY(100).withFontSize(28).withAlign(TEXTALIGN.CENTER).withBold()
+                new CanvasTextConfig().withText(face.subtitle).withX(374).withY(80).withFontSize(28).withAlign(TEXTALIGN.CENTER).withBold()
             )
         );
     }, [face.subtitle]);
@@ -146,7 +146,7 @@ export default function LocationFrontFaceCanvas({ face, cardSet, setIllustration
                 new CanvasTextConfig()
                     .withText(face.cardType.toUpperCase())
                     .withX(374)
-                    .withY(574)
+                    .withY(558)
                     .withFontSize(24)
                     .withAlign(TEXTALIGN.CENTER)
                     .withBold()
@@ -160,10 +160,10 @@ export default function LocationFrontFaceCanvas({ face, cardSet, setIllustration
                 new CanvasTextConfig()
                     .withText(face.shroud)
                     .withX(70)
-                    .withY(584)
+                    .withY(536)
                     .withFontSize(52)
                     .withFontFamily("AHCardTextSymbols")
-                    .withColor("#FEF1DB")
+                    .withColor("white")
                     .withAlign(TEXTALIGN.CENTER)
             )
         );
@@ -173,9 +173,9 @@ export default function LocationFrontFaceCanvas({ face, cardSet, setIllustration
         setCluesLayer(
             new CanvasTextLayer(
                 new CanvasTextConfig()
-                    .withText(face.clues + (face.cluesIsPer ? "<raised=16><size=30>r</size></raised>" : ""))
+                    .withText(face.clues + (face.cluesIsPer ? "<raised=-8><size=34>r</size></raised>" : ""))
                     .withX(684 + (face.cluesIsPer ? 4 : 0))
-                    .withY(584)
+                    .withY(536)
                     .withFontSize(52)
                     .withFontFamily("AHCardTextSymbols")
                     .withColor("black")
@@ -192,7 +192,7 @@ export default function LocationFrontFaceCanvas({ face, cardSet, setIllustration
                 new CanvasTextConfig()
                     .withText(face.traits)
                     .withX(374)
-                    .withY(624)
+                    .withY(604)
                     .withFontSize(30)
                     .withAlign(TEXTALIGN.CENTER)
                     .withBold()
@@ -207,7 +207,7 @@ export default function LocationFrontFaceCanvas({ face, cardSet, setIllustration
                 new CanvasTextConfig()
                     .withText(face.text)
                     .withX(40)
-                    .withY(660 - (face.traits ? 0 : 6))
+                    .withY(638 - (face.traits ? 0 : 6))
                     .withWidth(670)
                     .withFontSize(face.textFontSize)
                     .withCardTitle(face.title)
@@ -267,7 +267,7 @@ export default function LocationFrontFaceCanvas({ face, cardSet, setIllustration
                 new CanvasTextConfig()
                     .withText(face.illustrator ? "Illus. " + face.illustrator : "")
                     .withX(36)
-                    .withY(1042)
+                    .withY(1026)
                     .withFontSize(18)
                     .withColor("white")
             )
@@ -280,7 +280,7 @@ export default function LocationFrontFaceCanvas({ face, cardSet, setIllustration
                 new CanvasTextConfig()
                     .withText(face.copyrightInformation)
                     .withX(374)
-                    .withY(1042)
+                    .withY(1026)
                     .withFontSize(18)
                     .withAlign(TEXTALIGN.CENTER)
                     .withColor("white")
@@ -295,7 +295,7 @@ export default function LocationFrontFaceCanvas({ face, cardSet, setIllustration
                 : "";
         setEncounterSetIdLayer(
             new CanvasTextLayer(
-                new CanvasTextConfig().withText(text).withX(602).withY(1042).withFontSize(18).withAlign(TEXTALIGN.RIGHT).withColor("white")
+                new CanvasTextConfig().withText(text).withX(602).withY(1026).withFontSize(18).withAlign(TEXTALIGN.RIGHT).withColor("white")
             )
         );
     }, [face.encounterSetId, face.encounterSetMaxId]);
@@ -326,7 +326,7 @@ export default function LocationFrontFaceCanvas({ face, cardSet, setIllustration
                 new CanvasTextConfig()
                     .withText(face.campaignSetId)
                     .withX(716)
-                    .withY(1042)
+                    .withY(1026)
                     .withFontSize(18)
                     .withAlign(TEXTALIGN.RIGHT)
                     .withColor("white")

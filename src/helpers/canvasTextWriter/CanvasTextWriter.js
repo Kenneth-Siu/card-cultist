@@ -1,7 +1,8 @@
 import { TEXTALIGN, TEXTDIRECTION, VERTICAL_TEXTALIGN } from "../../models/CanvasTextConfig";
-import { PARAGRAPH_SPACING } from "../../pages/campaignGuide/campaignGuideConstants";
 import makeLines from "./makeLines";
 import splitIntoAtoms from "./splitIntoAtoms";
+
+export const PARAGRAPH_SPACING = 0.3;
 
 export class CanvasTextWriter {
     constructor(canvasContext, canvasTextConfig) {
@@ -35,6 +36,7 @@ export class CanvasTextWriter {
 
     write() {
         this.canvasContext.save();
+        this.canvasContext.textBaseline = "top";
         if (this.textDirection === TEXTDIRECTION.UP) {
             this.canvasContext.rotate(-Math.PI / 2);
         }
@@ -58,6 +60,7 @@ export class CanvasTextWriter {
             this.carryOutLineFeed(line);
         }
 
+        this.y += this.fontSize;
         this.canvasContext.restore();
         return { y: this.y, w: maxLineWidth };
     }
@@ -100,8 +103,7 @@ export class CanvasTextWriter {
     }
 
     alignLine(lineWidth) {
-        const alignmentIndent =
-            this.align !== TEXTALIGN.LEFT ? (this.boxW - lineWidth) * (this.align === TEXTALIGN.RIGHT ? 1 : 0.5) : 0;
+        const alignmentIndent = this.align !== TEXTALIGN.LEFT ? (this.boxW - lineWidth) * (this.align === TEXTALIGN.RIGHT ? 1 : 0.5) : 0;
         this.x = this.boxX + alignmentIndent + (TEXTALIGN.LEFT ? this.indent : 0);
     }
 
@@ -127,9 +129,7 @@ export class CanvasTextWriter {
     }
 
     getTextWidth(text) {
-        this.canvasContext.font = `${this.italic ? "italic " : ""}${this.bold ? "bold " : ""}${this.fontSize}px ${
-            this.fontFamily
-        }`;
+        this.canvasContext.font = `${this.italic ? "italic " : ""}${this.bold ? "bold " : ""}${this.fontSize}px ${this.fontFamily}`;
         return this.canvasContext.measureText(text).width;
     }
 
@@ -181,9 +181,7 @@ export class CanvasTextWriter {
     }
 
     writeText(text) {
-        this.canvasContext.font = `${this.italic ? "italic " : ""}${this.bold ? "bold " : ""}${this.fontSize}px ${
-            this.fontFamily
-        }`;
+        this.canvasContext.font = `${this.italic ? "italic " : ""}${this.bold ? "bold " : ""}${this.fontSize}px ${this.fontFamily}`;
         if (this.strokeWidth > 0) {
             this.canvasContext.strokeStyle = this.strokeStyle;
             this.canvasContext.lineWidth = this.strokeWidth;
@@ -197,15 +195,8 @@ export class CanvasTextWriter {
     writeSymbols(text, nudgeFactorSize, nudgeFactorX, nudgeFactorY, nudgeFactorWidth) {
         this.canvasContext.font = `${this.fontSize + this.fontSize * nudgeFactorSize}px AHCardTextSymbols`;
         this.canvasContext.fillStyle = this.color;
-        this.canvasContext.fillText(
-            text,
-            this.x + this.fontSize * nudgeFactorX,
-            this.y - this.raisedBy + this.fontSize * nudgeFactorY
-        );
-        this.x +=
-            this.canvasContext.measureText(text).width +
-            2 * (this.fontSize * nudgeFactorX) +
-            this.fontSize * nudgeFactorWidth;
+        this.canvasContext.fillText(text, this.x + this.fontSize * nudgeFactorX, this.y - this.raisedBy + this.fontSize * nudgeFactorY);
+        this.x += this.canvasContext.measureText(text).width + 2 * (this.fontSize * nudgeFactorX) + this.fontSize * nudgeFactorWidth;
     }
 
     allFutureLinesEmpty(currentLineIndex) {

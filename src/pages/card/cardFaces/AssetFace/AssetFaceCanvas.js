@@ -84,30 +84,16 @@ export default function AssetFaceCanvas({ face, cardSet, setIllustrationTransfor
 
     useEffect(async () => {
         const image = await loadFileSystemImage(face.illustration);
-        setIllustrationLayer(
-            image
-                ? new CanvasImageLayer(image, new ImageTransform(face.illustrationTransform))
-                : null
-        );
+        setIllustrationLayer(image ? new CanvasImageLayer(image, new ImageTransform(face.illustrationTransform)) : null);
     }, [face.illustration, ...Object.values(face.illustrationTransform)]);
 
     useEffect(async () => {
-        setFrameLayer(
-            new CanvasImageLayer(
-                await loadPublicImage(AssetFace.frame),
-                new ImageTransform({ scale: 2 })
-            )
-        );
+        setFrameLayer(new CanvasImageLayer(await loadPublicImage(AssetFace.frame), new ImageTransform({ scale: 2 })));
     }, []);
 
     useEffect(async () => {
         setSubtitleFrameLayer(
-            face.subtitle
-                ? new CanvasImageLayer(
-                      await loadPublicImage(AssetFace.subtitle),
-                      new ImageTransform({ scale: 2, x: 160, y: 82 })
-                  )
-                : null
+            face.subtitle ? new CanvasImageLayer(await loadPublicImage(AssetFace.subtitle), new ImageTransform({ scale: 2, x: 160, y: 82 })) : null
         );
     }, [face.subtitle]);
 
@@ -117,7 +103,7 @@ export default function AssetFaceCanvas({ face, cardSet, setIllustrationTransfor
                 new CanvasTextConfig()
                     .withText(face.cost)
                     .withX(76)
-                    .withY(face.cost === "-" ? 84 : 80)
+                    .withY(30)
                     .withFontSize(face.cost === "-" ? 60 : 64)
                     .withFontFamily(face.cost === "-" ? "AHCardTextSymbols" : "Teutonic")
                     .withColor("white")
@@ -133,7 +119,7 @@ export default function AssetFaceCanvas({ face, cardSet, setIllustrationTransfor
                 new CanvasTextConfig()
                     .withText(face.cardType.toUpperCase())
                     .withX(76)
-                    .withY(140)
+                    .withY(128)
                     .withFontSize(19)
                     .withAlign(TEXTALIGN.CENTER)
                     .withBold()
@@ -147,7 +133,7 @@ export default function AssetFaceCanvas({ face, cardSet, setIllustrationTransfor
                 new CanvasTextConfig()
                     .withText(face.title)
                     .withX(374)
-                    .withY(66)
+                    .withY(26)
                     .withFontSize(52)
                     .withFontFamily("Teutonic")
                     .withAlign(TEXTALIGN.CENTER)
@@ -158,13 +144,7 @@ export default function AssetFaceCanvas({ face, cardSet, setIllustrationTransfor
     useEffect(() => {
         setSubtitleLayer(
             new CanvasTextLayer(
-                new CanvasTextConfig()
-                    .withText(face.subtitle)
-                    .withX(374)
-                    .withY(110)
-                    .withFontSize(28)
-                    .withAlign(TEXTALIGN.CENTER)
-                    .withBold()
+                new CanvasTextConfig().withText(face.subtitle).withX(374).withY(90).withFontSize(28).withAlign(TEXTALIGN.CENTER).withBold()
             )
         );
     }, [face.subtitle]);
@@ -172,11 +152,7 @@ export default function AssetFaceCanvas({ face, cardSet, setIllustrationTransfor
     useEffect(async () => {
         const image = await loadFileSystemImage(face.encounterSetSymbol || cardSet.symbol);
         const transform = isSvgPath(face.encounterSetSymbol || cardSet.symbol)
-            ? transformSvgOnCanvas(
-                  { h: CARD_PORTRAIT_HEIGHT, w: CARD_PORTRAIT_WIDTH },
-                  { h: image.height, w: image.width },
-                  58
-              )
+            ? transformSvgOnCanvas({ h: CARD_PORTRAIT_HEIGHT, w: CARD_PORTRAIT_WIDTH }, { h: image.height, w: image.width }, 58)
             : null;
         setEncounterSetSymbolLayer(
             image
@@ -185,9 +161,7 @@ export default function AssetFaceCanvas({ face, cardSet, setIllustrationTransfor
                       new ImageTransform({
                           x: 658 + (transform ? transform.xNudge : 0),
                           y: 20 + (transform ? transform.yNudge : 0),
-                          scale:
-                              (transform && transform.scale) ||
-                              58 / Math.max(image.height, image.width),
+                          scale: (transform && transform.scale) || 58 / Math.max(image.height, image.width),
                       })
                   )
                 : null
@@ -197,18 +171,12 @@ export default function AssetFaceCanvas({ face, cardSet, setIllustrationTransfor
     useEffect(async () => {
         setSkillIcon1FrameLayer(
             skillIcons[face.skillIcon1]
-                ? new CanvasImageLayer(
-                      await loadPublicImage(skillIconFrame),
-                      new ImageTransform({ scale: 2, x: 0, y: 160 })
-                  )
+                ? new CanvasImageLayer(await loadPublicImage(skillIconFrame), new ImageTransform({ scale: 2, x: 0, y: 160 }))
                 : null
         );
         setSkillIcon1Layer(
             skillIcons[face.skillIcon1]
-                ? new CanvasImageLayer(
-                      await loadPublicImage(skillIcons[face.skillIcon1]),
-                      new ImageTransform({ scale: 2, x: 30, y: 174 })
-                  )
+                ? new CanvasImageLayer(await loadPublicImage(skillIcons[face.skillIcon1]), new ImageTransform({ scale: 2, x: 30, y: 174 }))
                 : null
         );
     }, [face.skillIcon1]);
@@ -216,18 +184,12 @@ export default function AssetFaceCanvas({ face, cardSet, setIllustrationTransfor
     useEffect(async () => {
         setSkillIcon2FrameLayer(
             skillIcons[face.skillIcon2]
-                ? new CanvasImageLayer(
-                      await loadPublicImage(skillIconFrame),
-                      new ImageTransform({ scale: 2, x: 0, y: 242 })
-                  )
+                ? new CanvasImageLayer(await loadPublicImage(skillIconFrame), new ImageTransform({ scale: 2, x: 0, y: 242 }))
                 : null
         );
         setSkillIcon2Layer(
             skillIcons[face.skillIcon2]
-                ? new CanvasImageLayer(
-                      await loadPublicImage(skillIcons[face.skillIcon2]),
-                      new ImageTransform({ scale: 2, x: 30, y: 256 })
-                  )
+                ? new CanvasImageLayer(await loadPublicImage(skillIcons[face.skillIcon2]), new ImageTransform({ scale: 2, x: 30, y: 256 }))
                 : null
         );
     }, [face.skillIcon2]);
@@ -235,18 +197,12 @@ export default function AssetFaceCanvas({ face, cardSet, setIllustrationTransfor
     useEffect(async () => {
         setSkillIcon3FrameLayer(
             skillIcons[face.skillIcon3]
-                ? new CanvasImageLayer(
-                      await loadPublicImage(skillIconFrame),
-                      new ImageTransform({ scale: 2, x: 0, y: 324 })
-                  )
+                ? new CanvasImageLayer(await loadPublicImage(skillIconFrame), new ImageTransform({ scale: 2, x: 0, y: 324 }))
                 : null
         );
         setSkillIcon3Layer(
             skillIcons[face.skillIcon3]
-                ? new CanvasImageLayer(
-                      await loadPublicImage(skillIcons[face.skillIcon3]),
-                      new ImageTransform({ scale: 2, x: 30, y: 338 })
-                  )
+                ? new CanvasImageLayer(await loadPublicImage(skillIcons[face.skillIcon3]), new ImageTransform({ scale: 2, x: 30, y: 338 }))
                 : null
         );
     }, [face.skillIcon3]);
@@ -254,18 +210,12 @@ export default function AssetFaceCanvas({ face, cardSet, setIllustrationTransfor
     useEffect(async () => {
         setSkillIcon4FrameLayer(
             skillIcons[face.skillIcon4]
-                ? new CanvasImageLayer(
-                      await loadPublicImage(skillIconFrame),
-                      new ImageTransform({ scale: 2, x: 0, y: 406 })
-                  )
+                ? new CanvasImageLayer(await loadPublicImage(skillIconFrame), new ImageTransform({ scale: 2, x: 0, y: 406 }))
                 : null
         );
         setSkillIcon4Layer(
             skillIcons[face.skillIcon4]
-                ? new CanvasImageLayer(
-                      await loadPublicImage(skillIcons[face.skillIcon4]),
-                      new ImageTransform({ scale: 2, x: 30, y: 420 })
-                  )
+                ? new CanvasImageLayer(await loadPublicImage(skillIcons[face.skillIcon4]), new ImageTransform({ scale: 2, x: 30, y: 420 }))
                 : null
         );
     }, [face.skillIcon4]);
@@ -273,18 +223,12 @@ export default function AssetFaceCanvas({ face, cardSet, setIllustrationTransfor
     useEffect(async () => {
         setSkillIcon5FrameLayer(
             skillIcons[face.skillIcon5]
-                ? new CanvasImageLayer(
-                      await loadPublicImage(skillIconFrame),
-                      new ImageTransform({ scale: 2, x: 0, y: 488 })
-                  )
+                ? new CanvasImageLayer(await loadPublicImage(skillIconFrame), new ImageTransform({ scale: 2, x: 0, y: 488 }))
                 : null
         );
         setSkillIcon5Layer(
             skillIcons[face.skillIcon5]
-                ? new CanvasImageLayer(
-                      await loadPublicImage(skillIcons[face.skillIcon5]),
-                      new ImageTransform({ scale: 2, x: 30, y: 502 })
-                  )
+                ? new CanvasImageLayer(await loadPublicImage(skillIcons[face.skillIcon5]), new ImageTransform({ scale: 2, x: 30, y: 502 }))
                 : null
         );
     }, [face.skillIcon5]);
@@ -295,7 +239,7 @@ export default function AssetFaceCanvas({ face, cardSet, setIllustrationTransfor
                 new CanvasTextConfig()
                     .withText(face.traits)
                     .withX(374)
-                    .withY(664)
+                    .withY(644)
                     .withFontSize(30)
                     .withAlign(TEXTALIGN.CENTER)
                     .withBold()
@@ -310,7 +254,7 @@ export default function AssetFaceCanvas({ face, cardSet, setIllustrationTransfor
                 new CanvasTextConfig()
                     .withText(face.text)
                     .withX(36)
-                    .withY(702)
+                    .withY(684)
                     .withWidth(678)
                     .withFontSize(face.textFontSize)
                     .withCardTitle(face.title)
@@ -323,11 +267,7 @@ export default function AssetFaceCanvas({ face, cardSet, setIllustrationTransfor
         setHealthLayer(
             face.health
                 ? new CanvasImageLayer(
-                      await loadPublicImage(
-                          face.health === "-"
-                              ? healthIcons[0]
-                              : healthIcons[Number.parseInt(face.health)]
-                      ),
+                      await loadPublicImage(face.health === "-" ? healthIcons[0] : healthIcons[Number.parseInt(face.health)]),
                       new ImageTransform({ scale: 1.8, x: 298, y: 936 })
                   )
                 : null
@@ -338,11 +278,7 @@ export default function AssetFaceCanvas({ face, cardSet, setIllustrationTransfor
         setSanityLayer(
             face.sanity
                 ? new CanvasImageLayer(
-                      await loadPublicImage(
-                          face.sanity === "-"
-                              ? sanityIcons[0]
-                              : sanityIcons[Number.parseInt(face.sanity)]
-                      ),
+                      await loadPublicImage(face.sanity === "-" ? sanityIcons[0] : sanityIcons[Number.parseInt(face.sanity)]),
                       new ImageTransform({ scale: 1.8, x: 396, y: 942 })
                   )
                 : null
@@ -363,10 +299,7 @@ export default function AssetFaceCanvas({ face, cardSet, setIllustrationTransfor
     useEffect(async () => {
         setSlot2Layer(
             slotIcons[face.slot2]
-                ? new CanvasImageLayer(
-                      await loadPublicImage(slotIcons[face.slot2]),
-                      new ImageTransform({ scale: 1.7, x: 620, y: 912 })
-                  )
+                ? new CanvasImageLayer(await loadPublicImage(slotIcons[face.slot2]), new ImageTransform({ scale: 1.7, x: 620, y: 912 }))
                 : null
         );
     }, [face.slot2]);
@@ -377,7 +310,7 @@ export default function AssetFaceCanvas({ face, cardSet, setIllustrationTransfor
                 new CanvasTextConfig()
                     .withText(face.illustrator ? "Illus. " + face.illustrator : "")
                     .withX(36)
-                    .withY(1042)
+                    .withY(1026)
                     .withFontSize(18)
                     .withColor("white")
             )
@@ -390,7 +323,7 @@ export default function AssetFaceCanvas({ face, cardSet, setIllustrationTransfor
                 new CanvasTextConfig()
                     .withText(face.copyrightInformation)
                     .withX(374)
-                    .withY(1042)
+                    .withY(1026)
                     .withFontSize(18)
                     .withAlign(TEXTALIGN.CENTER)
                     .withColor("white")
@@ -401,21 +334,11 @@ export default function AssetFaceCanvas({ face, cardSet, setIllustrationTransfor
     useEffect(() => {
         const text =
             face.encounterSetId || face.encounterSetMaxId
-                ? face.encounterSetId +
-                  String.fromCharCode(8202) +
-                  "/" +
-                  String.fromCharCode(8202) +
-                  face.encounterSetMaxId
+                ? face.encounterSetId + String.fromCharCode(8202) + "/" + String.fromCharCode(8202) + face.encounterSetMaxId
                 : "";
         setEncounterSetIdLayer(
             new CanvasTextLayer(
-                new CanvasTextConfig()
-                    .withText(text)
-                    .withX(602)
-                    .withY(1042)
-                    .withFontSize(18)
-                    .withAlign(TEXTALIGN.RIGHT)
-                    .withColor("white")
+                new CanvasTextConfig().withText(text).withX(602).withY(1026).withFontSize(18).withAlign(TEXTALIGN.RIGHT).withColor("white")
             )
         );
     }, [face.encounterSetId, face.encounterSetMaxId]);
@@ -423,11 +346,7 @@ export default function AssetFaceCanvas({ face, cardSet, setIllustrationTransfor
     useEffect(async () => {
         const image = await loadFileSystemImage(face.campaignSymbol || campaign.symbol);
         const transform = isSvgPath(face.campaignSymbol || campaign.symbol)
-            ? transformSvgOnCanvas(
-                  { h: CARD_PORTRAIT_HEIGHT, w: CARD_PORTRAIT_WIDTH },
-                  { h: image.height, w: image.width },
-                  28
-              )
+            ? transformSvgOnCanvas({ h: CARD_PORTRAIT_HEIGHT, w: CARD_PORTRAIT_WIDTH }, { h: image.height, w: image.width }, 28)
             : null;
         setCampaignSymbolLayer(
             image
@@ -436,9 +355,7 @@ export default function AssetFaceCanvas({ face, cardSet, setIllustrationTransfor
                       new ImageTransform({
                           x: 639 + (transform ? transform.xNudge : 0),
                           y: 1020 + (transform ? transform.yNudge : 0),
-                          scale:
-                              (transform && transform.scale) ||
-                              28 / Math.max(image.height, image.width),
+                          scale: (transform && transform.scale) || 28 / Math.max(image.height, image.width),
                       }),
                       true
                   )
@@ -452,7 +369,7 @@ export default function AssetFaceCanvas({ face, cardSet, setIllustrationTransfor
                 new CanvasTextConfig()
                     .withText(face.campaignSetId)
                     .withX(716)
-                    .withY(1042)
+                    .withY(1026)
                     .withFontSize(18)
                     .withAlign(TEXTALIGN.RIGHT)
                     .withColor("white")

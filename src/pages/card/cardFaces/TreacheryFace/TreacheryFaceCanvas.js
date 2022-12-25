@@ -45,25 +45,17 @@ export default function TreacheryFaceCanvas({ face, cardSet, setIllustrationTran
 
     useEffect(async () => {
         const image = await loadFileSystemImage(face.illustration);
-        setIllustrationLayer(
-            image ? new CanvasImageLayer(image, new ImageTransform(face.illustrationTransform)) : null
-        );
+        setIllustrationLayer(image ? new CanvasImageLayer(image, new ImageTransform(face.illustrationTransform)) : null);
     }, [face.illustration, ...Object.values(face.illustrationTransform)]);
 
     useEffect(async () => {
-        setFrameLayer(
-            new CanvasImageLayer(await loadPublicImage(TreacheryFace.frame), new ImageTransform({ scale: 2 }))
-        );
+        setFrameLayer(new CanvasImageLayer(await loadPublicImage(TreacheryFace.frame), new ImageTransform({ scale: 2 })));
     }, []);
 
     useEffect(async () => {
         const image = await loadFileSystemImage(face.encounterSetSymbol || cardSet.symbol);
         const transform = isSvgPath(face.encounterSetSymbol || cardSet.symbol)
-            ? transformSvgOnCanvas(
-                  { h: CARD_PORTRAIT_HEIGHT, w: CARD_PORTRAIT_WIDTH },
-                  { h: image.height, w: image.width },
-                  58
-              )
+            ? transformSvgOnCanvas({ h: CARD_PORTRAIT_HEIGHT, w: CARD_PORTRAIT_WIDTH }, { h: image.height, w: image.width }, 58)
             : null;
         setEncounterSetSymbolLayer(
             image
@@ -85,7 +77,7 @@ export default function TreacheryFaceCanvas({ face, cardSet, setIllustrationTran
                 new CanvasTextConfig()
                     .withText(face.cardType.toUpperCase().split("").join(String.fromCharCode(8202)))
                     .withX(374)
-                    .withY(590)
+                    .withY(574)
                     .withFontSize(24)
                     .withAlign(TEXTALIGN.CENTER)
                     .withBold()
@@ -99,7 +91,7 @@ export default function TreacheryFaceCanvas({ face, cardSet, setIllustrationTran
                 new CanvasTextConfig()
                     .withText(face.title)
                     .withX(374)
-                    .withY(652)
+                    .withY(616)
                     .withFontSize(46)
                     .withFontFamily("Teutonic")
                     .withAlign(TEXTALIGN.CENTER)
@@ -113,7 +105,7 @@ export default function TreacheryFaceCanvas({ face, cardSet, setIllustrationTran
                 new CanvasTextConfig()
                     .withText(face.traits)
                     .withX(374)
-                    .withY(701)
+                    .withY(682)
                     .withFontSize(30)
                     .withAlign(TEXTALIGN.CENTER)
                     .withBold()
@@ -128,7 +120,7 @@ export default function TreacheryFaceCanvas({ face, cardSet, setIllustrationTran
                 new CanvasTextConfig()
                     .withText(face.text)
                     .withX(62)
-                    .withY(743)
+                    .withY(720)
                     .withWidth(626)
                     .withFontSize(face.textFontSize)
                     .withCardTitle(face.title)
@@ -143,7 +135,7 @@ export default function TreacheryFaceCanvas({ face, cardSet, setIllustrationTran
                 new CanvasTextConfig()
                     .withText(face.illustrator ? "Illus. " + face.illustrator : "")
                     .withX(36)
-                    .withY(1042)
+                    .withY(1026)
                     .withFontSize(18)
                     .withColor("white")
             )
@@ -156,7 +148,7 @@ export default function TreacheryFaceCanvas({ face, cardSet, setIllustrationTran
                 new CanvasTextConfig()
                     .withText(face.copyrightInformation)
                     .withX(374)
-                    .withY(1042)
+                    .withY(1026)
                     .withFontSize(18)
                     .withAlign(TEXTALIGN.CENTER)
                     .withColor("white")
@@ -167,21 +159,11 @@ export default function TreacheryFaceCanvas({ face, cardSet, setIllustrationTran
     useEffect(() => {
         const text =
             face.encounterSetId || face.encounterSetMaxId
-                ? face.encounterSetId +
-                  String.fromCharCode(8202) +
-                  "/" +
-                  String.fromCharCode(8202) +
-                  face.encounterSetMaxId
+                ? face.encounterSetId + String.fromCharCode(8202) + "/" + String.fromCharCode(8202) + face.encounterSetMaxId
                 : "";
         setEncounterSetIdLayer(
             new CanvasTextLayer(
-                new CanvasTextConfig()
-                    .withText(text)
-                    .withX(602)
-                    .withY(1042)
-                    .withFontSize(18)
-                    .withAlign(TEXTALIGN.RIGHT)
-                    .withColor("white")
+                new CanvasTextConfig().withText(text).withX(602).withY(1026).withFontSize(18).withAlign(TEXTALIGN.RIGHT).withColor("white")
             )
         );
     }, [face.encounterSetId, face.encounterSetMaxId]);
@@ -189,11 +171,7 @@ export default function TreacheryFaceCanvas({ face, cardSet, setIllustrationTran
     useEffect(async () => {
         const image = await loadFileSystemImage(face.campaignSymbol || campaign.symbol);
         const transform = isSvgPath(face.campaignSymbol || campaign.symbol)
-            ? transformSvgOnCanvas(
-                  { h: CARD_PORTRAIT_HEIGHT, w: CARD_PORTRAIT_WIDTH },
-                  { h: image.height, w: image.width },
-                  28
-              )
+            ? transformSvgOnCanvas({ h: CARD_PORTRAIT_HEIGHT, w: CARD_PORTRAIT_WIDTH }, { h: image.height, w: image.width }, 28)
             : null;
         setCampaignSymbolLayer(
             image
@@ -216,7 +194,7 @@ export default function TreacheryFaceCanvas({ face, cardSet, setIllustrationTran
                 new CanvasTextConfig()
                     .withText(face.campaignSetId)
                     .withX(716)
-                    .withY(1042)
+                    .withY(1026)
                     .withFontSize(18)
                     .withAlign(TEXTALIGN.RIGHT)
                     .withColor("white")

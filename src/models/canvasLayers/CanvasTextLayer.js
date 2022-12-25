@@ -10,7 +10,7 @@ export default class CanvasTextLayer extends CanvasLayer {
 
     draw(context, prevY) {
         const startY = this.canvasTextConfig.y + (this.usePrevY ? prevY : 0);
-        
+
         let { y, w } = new CanvasTextWriter(context, {
             ...Object.assign({}, this.canvasTextConfig),
             y: startY,
@@ -27,7 +27,7 @@ export default class CanvasTextLayer extends CanvasLayer {
             context.save();
             context.fillStyle = "black";
 
-            y = Math.round(y + this.canvasTextConfig.fontSize / 9);
+            y = Math.round(y - this.canvasTextConfig.fontSize / 9);
             context.fillRect(x, y, w, 1);
 
             if (this.canvasTextConfig.underline === UNDERLINE.DOUBLE) {

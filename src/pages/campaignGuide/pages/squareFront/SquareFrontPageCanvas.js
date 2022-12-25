@@ -5,7 +5,7 @@ import CanvasImageLayer from "../../../../models/canvasLayers/CanvasImageLayer";
 import CanvasTextLayer from "../../../../models/canvasLayers/CanvasTextLayer";
 import CanvasTextConfig, { TEXTALIGN } from "../../../../models/CanvasTextConfig";
 import ImageTransform from "../../../../models/ImageTransform";
-import { FRONT_PAGE_TITLE_FONT_SIZE, SQUARE } from "../../campaignGuideConstants";
+import { FRONT_PAGE_TITLE_FONT_SIZE, INTER_WIDGET_MARGIN, SQUARE } from "../../campaignGuideConstants";
 
 export default function SquareFrontPageCanvas({ page }) {
     const { campaign } = useContext(CampaignContext);
@@ -23,9 +23,7 @@ export default function SquareFrontPageCanvas({ page }) {
     }, [backgroundLayer, titleLayer, campaign]);
 
     useEffect(async () => {
-        setBackgroundLayer(
-            new CanvasImageLayer(await loadPublicImage(page.background), new ImageTransform({ scale: 2 }))
-        );
+        setBackgroundLayer(new CanvasImageLayer(await loadPublicImage(page.background), new ImageTransform({ scale: 2 })));
     }, []);
 
     useEffect(() => {
@@ -45,13 +43,7 @@ export default function SquareFrontPageCanvas({ page }) {
 
     return (
         <div className="canvas-container">
-            <canvas
-                ref={canvasRef}
-                className="preview square"
-                width={SQUARE.WIDTH}
-                height={SQUARE.HEIGHT}
-                onLoad={() => refreshCanvas()}
-            />
+            <canvas ref={canvasRef} className="preview square" width={SQUARE.WIDTH} height={SQUARE.HEIGHT} onLoad={() => refreshCanvas()} />
             <div className="loaded-images">{loadedImages}</div>
         </div>
     );
@@ -66,13 +58,13 @@ export default function SquareFrontPageCanvas({ page }) {
         const leftWidgets = page.leftColumnWidgets;
         let y = SQUARE.FRONT_PAGE_TOP_MARGIN;
         for (let i = 0; i < leftWidgets.length; i++) {
-            y = leftWidgets[i].draw(context, SQUARE.LEFT_COLUMN_X, y, i === 0, campaign.campaignGuide, SQUARE).y;
+            y = leftWidgets[i].draw(context, SQUARE.LEFT_COLUMN_X, y, i === 0, campaign.campaignGuide, SQUARE).y + INTER_WIDGET_MARGIN;
         }
 
         const rightWidgets = page.rightColumnWidgets;
         y = SQUARE.FRONT_PAGE_TOP_MARGIN;
         for (let i = 0; i < rightWidgets.length; i++) {
-            y = rightWidgets[i].draw(context, SQUARE.RIGHT_COLUMN_X, y, i === 0, campaign.campaignGuide, SQUARE).y;
+            y = rightWidgets[i].draw(context, SQUARE.RIGHT_COLUMN_X, y, i === 0, campaign.campaignGuide, SQUARE).y + INTER_WIDGET_MARGIN;
         }
     }
 }

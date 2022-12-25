@@ -21,14 +21,7 @@ export default function AgendaActBackFaceCanvas({ face, cardSet, word }) {
     const [titleLayer, setTitleLayer] = useState(null);
     const [textLayer, setTextLayer] = useState(null);
 
-    const canvasLayers = [
-        frameLayer,
-        agendaActWordLayer,
-        agendaActNumberLayer,
-        encounterSetSymbolLayer,
-        titleLayer,
-        textLayer,
-    ];
+    const canvasLayers = [frameLayer, agendaActWordLayer, agendaActNumberLayer, encounterSetSymbolLayer, titleLayer, textLayer];
 
     useEffect(async () => {
         setFrameLayer(new CanvasImageLayer(await loadPublicImage(face.frame), new ImageTransform({ scale: 2 })));
@@ -40,7 +33,7 @@ export default function AgendaActBackFaceCanvas({ face, cardSet, word }) {
                 new CanvasTextConfig()
                     .withText(face.number ? word : "")
                     .withX(88)
-                    .withY(76)
+                    .withY(64)
                     .withFontSize(20)
                     .withAlign(TEXTALIGN.CENTER)
                     .withBold()
@@ -51,13 +44,7 @@ export default function AgendaActBackFaceCanvas({ face, cardSet, word }) {
     useEffect(() => {
         setAgendaActNumberLayer(
             new CanvasTextLayer(
-                new CanvasTextConfig()
-                    .withText(face.number)
-                    .withX(88)
-                    .withY(94)
-                    .withFontSize(20)
-                    .withAlign(TEXTALIGN.CENTER)
-                    .withBold()
+                new CanvasTextConfig().withText(face.number).withX(88).withY(78).withFontSize(20).withAlign(TEXTALIGN.CENTER).withBold()
             )
         );
     }, [face.number]);
@@ -65,11 +52,7 @@ export default function AgendaActBackFaceCanvas({ face, cardSet, word }) {
     useEffect(async () => {
         const image = await loadFileSystemImage(face.encounterSetSymbol || cardSet.symbol);
         const transform = isSvgPath(face.encounterSetSymbol || cardSet.symbol)
-            ? transformSvgOnCanvas(
-                  { h: CARD_PORTRAIT_WIDTH, w: CARD_PORTRAIT_HEIGHT },
-                  { h: image.height, w: image.width },
-                  76
-              )
+            ? transformSvgOnCanvas({ h: CARD_PORTRAIT_WIDTH, w: CARD_PORTRAIT_HEIGHT }, { h: image.height, w: image.width }, 76)
             : null;
         setEncounterSetSymbolLayer(
             image
@@ -91,7 +74,7 @@ export default function AgendaActBackFaceCanvas({ face, cardSet, word }) {
                 new CanvasTextConfig()
                     .withText(face.title)
                     .withX(-440)
-                    .withY(102)
+                    .withY(68)
                     .withFontSize(46)
                     .withFontFamily("Teutonic")
                     .withAlign(TEXTALIGN.CENTER)
@@ -114,7 +97,7 @@ export default function AgendaActBackFaceCanvas({ face, cardSet, word }) {
                     .withStory3(face.story3)
                     .withText3(face.text3)
                     .withX(226)
-                    .withY(86)
+                    .withY(84)
                     .withWidth(750)
                     .withFontSize(face.textFontSize)
                     .withLineHeight(1.1)

@@ -54,19 +54,13 @@ export default function ChaosTokenEffectsFaceCanvas({ face, cardSet }) {
     }, []);
 
     useEffect(async () => {
-        setFrameLayer(
-            new CanvasImageLayer(await loadPublicImage(ChaosTokenEffectsFace.frame), new ImageTransform({ scale: 2 }))
-        );
+        setFrameLayer(new CanvasImageLayer(await loadPublicImage(ChaosTokenEffectsFace.frame), new ImageTransform({ scale: 2 })));
     }, []);
 
     useEffect(async () => {
         const image = await loadFileSystemImage(face.encounterSetSymbol || cardSet.symbol);
         const transform = isSvgPath(face.encounterSetSymbol || cardSet.symbol)
-            ? transformSvgOnCanvas(
-                  { h: CARD_PORTRAIT_HEIGHT, w: CARD_PORTRAIT_WIDTH },
-                  { h: image.height, w: image.width },
-                  60
-              )
+            ? transformSvgOnCanvas({ h: CARD_PORTRAIT_HEIGHT, w: CARD_PORTRAIT_WIDTH }, { h: image.height, w: image.width }, 60)
             : null;
         setEncounterSetSymbolLayer(
             image
@@ -88,7 +82,7 @@ export default function ChaosTokenEffectsFaceCanvas({ face, cardSet }) {
                 new CanvasTextConfig()
                     .withText(face.title)
                     .withX(374)
-                    .withY(226)
+                    .withY(182)
                     .withFontSize(58)
                     .withFontFamily("Teutonic")
                     .withAlign(TEXTALIGN.CENTER)
@@ -103,7 +97,7 @@ export default function ChaosTokenEffectsFaceCanvas({ face, cardSet }) {
                 new CanvasTextConfig()
                     .withText(face.difficulty.toUpperCase())
                     .withX(374)
-                    .withY(268)
+                    .withY(254)
                     .withFontSize(24)
                     .withAlign(TEXTALIGN.CENTER)
                     .withBold()
@@ -131,35 +125,18 @@ export default function ChaosTokenEffectsFaceCanvas({ face, cardSet }) {
 
     useEffect(() => {
         setCopyrightInformationLayer(
-            new CanvasTextLayer(
-                new CanvasTextConfig()
-                    .withText(face.copyrightInformation)
-                    .withX(36)
-                    .withY(1042)
-                    .withFontSize(18)
-                    .withColor("white")
-            )
+            new CanvasTextLayer(new CanvasTextConfig().withText(face.copyrightInformation).withX(36).withY(1042).withFontSize(18).withColor("white"))
         );
     }, [face.copyrightInformation]);
 
     useEffect(() => {
         const text =
             face.encounterSetId || face.encounterSetMaxId
-                ? face.encounterSetId +
-                  String.fromCharCode(8202) +
-                  "/" +
-                  String.fromCharCode(8202) +
-                  face.encounterSetMaxId
+                ? face.encounterSetId + String.fromCharCode(8202) + "/" + String.fromCharCode(8202) + face.encounterSetMaxId
                 : "";
         setEncounterSetIdLayer(
             new CanvasTextLayer(
-                new CanvasTextConfig()
-                    .withText(text)
-                    .withX(602)
-                    .withY(1042)
-                    .withFontSize(18)
-                    .withAlign(TEXTALIGN.RIGHT)
-                    .withColor("white")
+                new CanvasTextConfig().withText(text).withX(602).withY(1042).withFontSize(18).withAlign(TEXTALIGN.RIGHT).withColor("white")
             )
         );
     }, [face.encounterSetId, face.encounterSetMaxId]);
@@ -167,11 +144,7 @@ export default function ChaosTokenEffectsFaceCanvas({ face, cardSet }) {
     useEffect(async () => {
         const image = await loadFileSystemImage(face.campaignSymbol || campaign.symbol);
         const transform = isSvgPath(face.campaignSymbol || campaign.symbol)
-            ? transformSvgOnCanvas(
-                  { h: CARD_PORTRAIT_HEIGHT, w: CARD_PORTRAIT_WIDTH },
-                  { h: image.height, w: image.width },
-                  28
-              )
+            ? transformSvgOnCanvas({ h: CARD_PORTRAIT_HEIGHT, w: CARD_PORTRAIT_WIDTH }, { h: image.height, w: image.width }, 28)
             : null;
         setCampaignSymbolLayer(
             image
