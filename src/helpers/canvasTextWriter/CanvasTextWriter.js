@@ -22,7 +22,7 @@ export class CanvasTextWriter {
         this.bold = canvasTextConfig.bold;
         this.strokeStyle = canvasTextConfig.strokeStyle;
         this.strokeWidth = canvasTextConfig.strokeWidth;
-        this.indent = 0;
+        this.indent = null;
         this.fontSize = this.configFontSize;
         this.color = this.configColor;
         this.x = this.boxX;
@@ -104,7 +104,7 @@ export class CanvasTextWriter {
 
     alignLine(lineWidth) {
         const alignmentIndent = this.align !== TEXTALIGN.LEFT ? (this.boxW - lineWidth) * (this.align === TEXTALIGN.RIGHT ? 1 : 0.5) : 0;
-        this.x = this.boxX + alignmentIndent + (TEXTALIGN.LEFT ? this.indent : 0);
+        this.x = this.align === TEXTALIGN.LEFT && this.indent !== null ? this.indent : this.boxX + alignmentIndent;
     }
 
     writeAtom(atom) {
@@ -139,11 +139,11 @@ export class CanvasTextWriter {
     }
 
     startIndent() {
-        this.indent = this.x - this.boxX;
+        this.indent = this.x;
     }
 
     endIndent() {
-        this.indent = 0;
+        this.indent = null;
     }
 
     setFontSize(value) {

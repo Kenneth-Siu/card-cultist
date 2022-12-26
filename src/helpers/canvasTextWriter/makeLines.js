@@ -1,12 +1,12 @@
 import { TEXTALIGN } from "../../models/CanvasTextConfig";
 
-export default function makeLines(atoms, context, { width, fontSize, fontFamily, align }) {
+export default function makeLines(atoms, context, { x, width, fontSize, fontFamily, align }) {
     const lines = [];
     let line = [];
-    let lineWidth = 0;
+    let currentX = x;
     let italic = false;
     let bold = false;
-    let indent = 0;
+    let indent = null;
     let currentFontSize = fontSize;
 
     atoms.forEach((atom) => {
@@ -40,7 +40,7 @@ export default function makeLines(atoms, context, { width, fontSize, fontFamily,
     function makeNewLine() {
         lines.push(line);
         line = [];
-        lineWidth = indent;
+        currentX = indent !== null ? indent : x;
     }
 
     function getTextWidth(atom) {
@@ -54,15 +54,15 @@ export default function makeLines(atoms, context, { width, fontSize, fontFamily,
     }
 
     function wouldMakeNewLine(atomWidth) {
-        if (lineWidth === 0 || width === 0) {
+        if (currentX === x || width === 0) {
             return false;
         }
-        return lineWidth + atomWidth > width;
+        return currentX + atomWidth > x + width;
     }
 
     function addAtomToLine(atom, width) {
         line.push(atom);
-        lineWidth += width;
+        currentX += width;
     }
 
     function setItalic(value) {
@@ -75,12 +75,12 @@ export default function makeLines(atoms, context, { width, fontSize, fontFamily,
 
     function startIndent() {
         if (align === TEXTALIGN.LEFT) {
-            indent = lineWidth;
+            indent = currentX;
         }
     }
 
     function endIndent() {
-        indent = 0;
+        indent = null;
     }
 
     function setFontSize(value) {
