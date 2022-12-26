@@ -1,8 +1,8 @@
 import { TEXTALIGN, TEXTDIRECTION, VERTICAL_TEXTALIGN } from "../../models/CanvasTextConfig";
+import { PARAGRAPH_SPACING } from "./config";
 import makeLines from "./makeLines";
 import splitIntoAtoms from "./splitIntoAtoms";
 
-export const PARAGRAPH_SPACING = 0.3;
 
 export class CanvasTextWriter {
     constructor(canvasContext, canvasTextConfig) {
@@ -25,7 +25,7 @@ export class CanvasTextWriter {
         this.indent = null;
         this.fontSize = this.configFontSize;
         this.color = this.configColor;
-        this.x = this.boxX;
+        this.x = this.boxX(0);
         this.y = this.boxY;
         this.textDirection = canvasTextConfig.textDirection;
         this.raisedBy = 0;
@@ -104,7 +104,7 @@ export class CanvasTextWriter {
 
     alignLine(lineWidth) {
         const alignmentIndent = this.align !== TEXTALIGN.LEFT ? (this.boxW - lineWidth) * (this.align === TEXTALIGN.RIGHT ? 1 : 0.5) : 0;
-        this.x = this.align === TEXTALIGN.LEFT && this.indent !== null ? this.indent : this.boxX + alignmentIndent;
+        this.x = this.align === TEXTALIGN.LEFT && this.indent !== null ? this.indent : this.boxX(this.y - this.boxY) + alignmentIndent;
     }
 
     writeAtom(atom) {

@@ -125,7 +125,7 @@ export default function ChaosTokenEffectsFaceCanvas({ face, cardSet }) {
 
     useEffect(() => {
         setCopyrightInformationLayer(
-            new CanvasTextLayer(new CanvasTextConfig().withText(face.copyrightInformation).withX(36).withY(1042).withFontSize(18).withColor("white"))
+            new CanvasTextLayer(new CanvasTextConfig().withText(face.copyrightInformation).withX(36).withY(1026).withFontSize(18).withColor("white"))
         );
     }, [face.copyrightInformation]);
 
@@ -136,7 +136,7 @@ export default function ChaosTokenEffectsFaceCanvas({ face, cardSet }) {
                 : "";
         setEncounterSetIdLayer(
             new CanvasTextLayer(
-                new CanvasTextConfig().withText(text).withX(602).withY(1042).withFontSize(18).withAlign(TEXTALIGN.RIGHT).withColor("white")
+                new CanvasTextConfig().withText(text).withX(602).withY(1026).withFontSize(18).withAlign(TEXTALIGN.RIGHT).withColor("white")
             )
         );
     }, [face.encounterSetId, face.encounterSetMaxId]);
@@ -167,7 +167,7 @@ export default function ChaosTokenEffectsFaceCanvas({ face, cardSet }) {
                 new CanvasTextConfig()
                     .withText(face.campaignSetId)
                     .withX(716)
-                    .withY(1042)
+                    .withY(1026)
                     .withFontSize(18)
                     .withAlign(TEXTALIGN.RIGHT)
                     .withColor("white")

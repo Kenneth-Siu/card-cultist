@@ -172,7 +172,7 @@ export default function EnemyFaceCanvas({ face, cardSet, setIllustrationTransfor
             new CanvasTextLayer(
                 new CanvasTextConfig()
                     .withText(face.text)
-                    .withX(38)
+                    .withX((dy) => Math.max(38, 90 - 4 * dy, 1.05 * dy - 134))
                     .withY(250)
                     .withWidth(674)
                     .withFontSize(face.textFontSize)

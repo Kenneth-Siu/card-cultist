@@ -1,9 +1,11 @@
 import { TEXTALIGN } from "../../models/CanvasTextConfig";
+import { PARAGRAPH_SPACING } from "./config";
 
-export default function makeLines(atoms, context, { x, width, fontSize, fontFamily, align }) {
+export default function makeLines(atoms, context, { x, width, fontSize, fontFamily, align, lineHeight }) {
     const lines = [];
     let line = [];
-    let currentX = x;
+    let currentX = x(0);
+    let dy = 0;
     let italic = false;
     let bold = false;
     let indent = null;
@@ -40,7 +42,12 @@ export default function makeLines(atoms, context, { x, width, fontSize, fontFami
     function makeNewLine() {
         lines.push(line);
         line = [];
-        currentX = indent !== null ? indent : x;
+        if (line.length === 0) {
+            dy += currentFontSize * lineHeight * PARAGRAPH_SPACING;
+        } else {
+            dy += currentFontSize * lineHeight;
+        }
+        currentX = indent !== null ? indent : x(dy);
     }
 
     function getTextWidth(atom) {
@@ -54,10 +61,10 @@ export default function makeLines(atoms, context, { x, width, fontSize, fontFami
     }
 
     function wouldMakeNewLine(atomWidth) {
-        if (currentX === x || width === 0) {
+        if (currentX === x(dy) || (indent !== null && currentX === indent) || width === 0) {
             return false;
         }
-        return currentX + atomWidth > x + width;
+        return currentX + atomWidth > x(dy) + width;
     }
 
     function addAtomToLine(atom, width) {

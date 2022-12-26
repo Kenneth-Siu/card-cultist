@@ -11,17 +11,17 @@ export default class CanvasTextLayer extends CanvasLayer {
     draw(context, prevY) {
         const startY = this.canvasTextConfig.y + (this.usePrevY ? prevY : 0);
 
-        let { y, w } = new CanvasTextWriter(context, {
-            ...Object.assign({}, this.canvasTextConfig),
-            y: startY,
-        }).write();
+        let { y, w } = new CanvasTextWriter(
+            context,
+            Object.create(Object.getPrototypeOf(this.canvasTextConfig), Object.getOwnPropertyDescriptors(this.canvasTextConfig)).withY(startY)
+        ).write();
 
         const x =
             this.canvasTextConfig.align === TEXTALIGN.LEFT
-                ? this.canvasTextConfig.x
+                ? this.canvasTextConfig.x(0)
                 : this.canvasTextConfig.align === TEXTALIGN.CENTER
-                ? this.canvasTextConfig.x + (this.canvasTextConfig.width - w) / 2
-                : this.canvasTextConfig.x + this.canvasTextConfig.width - w;
+                ? this.canvasTextConfig.x(0) + (this.canvasTextConfig.width - w) / 2
+                : this.canvasTextConfig.x(0) + this.canvasTextConfig.width - w;
 
         if (this.canvasTextConfig.underline !== UNDERLINE.NONE) {
             context.save();

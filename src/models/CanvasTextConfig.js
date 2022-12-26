@@ -23,7 +23,7 @@ export const TEXTDIRECTION = {
 export default class CanvasTextConfig {
     constructor() {
         this.text = "";
-        this.x = 0;
+        this._x = 0;
         this.y = 0;
         this.width = 0;
         this.height = 0;
@@ -42,6 +42,14 @@ export default class CanvasTextConfig {
         this.strokeStyle = "black";
         this.strokeWidth = 0;
         this.textDirection = TEXTDIRECTION.RIGHT;
+    }
+
+    get x() {
+        return (dy) => (typeof this._x === "function" ? this._x(dy) : this._x);
+    }
+
+    set x(value) {
+        this._x = value;
     }
 
     withText(text) {

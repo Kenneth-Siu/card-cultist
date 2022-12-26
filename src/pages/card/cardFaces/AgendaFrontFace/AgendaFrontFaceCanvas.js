@@ -105,7 +105,7 @@ export default function AgendaFrontFaceCanvas({ face, cardSet, setIllustrationTr
             new CanvasTextLayer(
                 new CanvasTextConfig()
                     .withText(face.text)
-                    .withX(510)
+                    .withX((dy) => (dy > 356 ? 590 : 510))
                     .withY(200)
                     .withWidth(510)
                     .withFontSize(face.textFontSize)

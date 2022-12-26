@@ -206,8 +206,8 @@ export default function LocationFrontFaceCanvas({ face, cardSet, setIllustration
             new CanvasTextLayer(
                 new CanvasTextConfig()
                     .withText(face.text)
-                    .withX(40)
-                    .withY(638 - (face.traits ? 0 : 6))
+                    .withX((dy) => Math.max(40, 80 - 4 * dy))
+                    .withY(638)
                     .withWidth(670)
                     .withFontSize(face.textFontSize)
                     .withCardTitle(face.title)
