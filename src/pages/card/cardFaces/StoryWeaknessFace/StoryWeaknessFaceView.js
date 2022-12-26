@@ -33,6 +33,18 @@ export default function StoryWeaknessFaceView({ faceDirection, listOfCardFaces, 
                     <InputContainer label="Text">
                         <textarea value={face.text} onChange={(event) => set("text")(event.target.value)} />
                     </InputContainer>
+                    <InputContainer label="Flavor">
+                        <textarea value={face.flavor} onChange={(event) => set("flavor")(event.target.value)} />
+                        <label className="v-centered">
+                            Nudge down
+                            <input
+                                type="number"
+                                value={face.flavorNudgeDown.toFixed(0)}
+                                step="1"
+                                onChange={(event) => set("flavorNudgeDown")(parseInt(event.target.value))}
+                            />
+                        </label>
+                    </InputContainer>
 
                     <Illustration face={face} setIllustrationTransform={setIllustrationTransform} />
                 </>

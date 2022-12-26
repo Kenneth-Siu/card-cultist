@@ -40,6 +40,7 @@ export default function AssetFaceCanvas({ face, cardSet, setIllustrationTransfor
     const [skillIcon5Layer, setSkillIcon5Layer] = useState(null);
     const [traitsLayer, setTraitsLayer] = useState(null);
     const [textLayer, setTextLayer] = useState(null);
+    const [flavorLayer, setFlavorLayer] = useState(null);
     const [healthLayer, setHealthLayer] = useState(null);
     const [sanityLayer, setSanityLayer] = useState(null);
     const [slot1Layer, setSlot1Layer] = useState(null);
@@ -71,6 +72,7 @@ export default function AssetFaceCanvas({ face, cardSet, setIllustrationTransfor
         skillIcon5Layer,
         traitsLayer,
         textLayer,
+        flavorLayer,
         healthLayer,
         sanityLayer,
         slot1Layer,
@@ -258,10 +260,28 @@ export default function AssetFaceCanvas({ face, cardSet, setIllustrationTransfor
                     .withWidth(678)
                     .withFontSize(face.textFontSize)
                     .withCardTitle(face.title)
+                    .withCardSubtitle(face.subtitle)
                     .withLineHeight(1.05)
             )
         );
-    }, [face.title, face.text, face.textFontSize]);
+    }, [face.title, face.subtitle, face.text, face.textFontSize]);
+
+    useEffect(() => {
+        setFlavorLayer(
+            new CanvasTextLayer(
+                new CanvasTextConfig()
+                    .withText(face.flavor)
+                    .withX(40)
+                    .withY(face.flavorNudgeDown)
+                    .withWidth(670)
+                    .withFontSize(face.textFontSize)
+                    .withCardTitle(face.title)
+                    .withCardSubtitle(face.subtitle)
+                    .withItalic()
+                    .withAlign(TEXTALIGN.CENTER)
+            ).withPrevY()
+        );
+    }, [face.title, face.subtitle, face.text, face.textFontSize, face.flavor, face.flavorNudgeDown]);
 
     useEffect(async () => {
         setHealthLayer(

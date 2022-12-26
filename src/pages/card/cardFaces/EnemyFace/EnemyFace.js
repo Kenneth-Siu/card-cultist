@@ -30,6 +30,8 @@ export default class EnemyFace extends CardFace {
         this.traits = face.traits || "";
         this.text = face.text || "";
         this.textFontSize = face.textFontSize || 34;
+        this.flavor = face.flavor || "";
+        this.flavorNudgeDown = face.flavorNudgeDown || 0;
         this.victory = face.victory || "";
         this.damage = face.damage || 0;
         this.horror = face.horror || 0;

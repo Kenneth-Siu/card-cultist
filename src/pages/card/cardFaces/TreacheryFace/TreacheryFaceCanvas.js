@@ -22,6 +22,7 @@ export default function TreacheryFaceCanvas({ face, cardSet, setIllustrationTran
     const [titleLayer, setTitleLayer] = useState(null);
     const [traitsLayer, setTraitsLayer] = useState(null);
     const [textLayer, setTextLayer] = useState(null);
+    const [flavorLayer, setFlavorLayer] = useState(null);
     const [illustratorLayer, setIllustratorLayer] = useState(null);
     const [copyrightInformationLayer, setCopyrightInformationLayer] = useState(null);
     const [encounterSetIdLayer, setEncounterSetIdLayer] = useState(null);
@@ -36,6 +37,7 @@ export default function TreacheryFaceCanvas({ face, cardSet, setIllustrationTran
         titleLayer,
         traitsLayer,
         textLayer,
+        flavorLayer,
         illustratorLayer,
         copyrightInformationLayer,
         encounterSetIdLayer,
@@ -45,17 +47,25 @@ export default function TreacheryFaceCanvas({ face, cardSet, setIllustrationTran
 
     useEffect(async () => {
         const image = await loadFileSystemImage(face.illustration);
-        setIllustrationLayer(image ? new CanvasImageLayer(image, new ImageTransform(face.illustrationTransform)) : null);
+        setIllustrationLayer(
+            image ? new CanvasImageLayer(image, new ImageTransform(face.illustrationTransform)) : null
+        );
     }, [face.illustration, ...Object.values(face.illustrationTransform)]);
 
     useEffect(async () => {
-        setFrameLayer(new CanvasImageLayer(await loadPublicImage(TreacheryFace.frame), new ImageTransform({ scale: 2 })));
+        setFrameLayer(
+            new CanvasImageLayer(await loadPublicImage(TreacheryFace.frame), new ImageTransform({ scale: 2 }))
+        );
     }, []);
 
     useEffect(async () => {
         const image = await loadFileSystemImage(face.encounterSetSymbol || cardSet.symbol);
         const transform = isSvgPath(face.encounterSetSymbol || cardSet.symbol)
-            ? transformSvgOnCanvas({ h: CARD_PORTRAIT_HEIGHT, w: CARD_PORTRAIT_WIDTH }, { h: image.height, w: image.width }, 58)
+            ? transformSvgOnCanvas(
+                  { h: CARD_PORTRAIT_HEIGHT, w: CARD_PORTRAIT_WIDTH },
+                  { h: image.height, w: image.width },
+                  58
+              )
             : null;
         setEncounterSetSymbolLayer(
             image
@@ -130,6 +140,22 @@ export default function TreacheryFaceCanvas({ face, cardSet, setIllustrationTran
     }, [face.title, face.text, face.textFontSize]);
 
     useEffect(() => {
+        setFlavorLayer(
+            new CanvasTextLayer(
+                new CanvasTextConfig()
+                    .withText(face.flavor)
+                    .withX(40)
+                    .withY(face.flavorNudgeDown)
+                    .withWidth(670)
+                    .withFontSize(face.textFontSize)
+                    .withCardTitle(face.title)
+                    .withItalic()
+                    .withAlign(TEXTALIGN.CENTER)
+            ).withPrevY()
+        );
+    }, [face.title, face.text, face.textFontSize, face.flavor, face.flavorNudgeDown]);
+
+    useEffect(() => {
         setIllustratorLayer(
             new CanvasTextLayer(
                 new CanvasTextConfig()
@@ -159,11 +185,21 @@ export default function TreacheryFaceCanvas({ face, cardSet, setIllustrationTran
     useEffect(() => {
         const text =
             face.encounterSetId || face.encounterSetMaxId
-                ? face.encounterSetId + String.fromCharCode(8202) + "/" + String.fromCharCode(8202) + face.encounterSetMaxId
+                ? face.encounterSetId +
+                  String.fromCharCode(8202) +
+                  "/" +
+                  String.fromCharCode(8202) +
+                  face.encounterSetMaxId
                 : "";
         setEncounterSetIdLayer(
             new CanvasTextLayer(
-                new CanvasTextConfig().withText(text).withX(602).withY(1026).withFontSize(18).withAlign(TEXTALIGN.RIGHT).withColor("white")
+                new CanvasTextConfig()
+                    .withText(text)
+                    .withX(602)
+                    .withY(1026)
+                    .withFontSize(18)
+                    .withAlign(TEXTALIGN.RIGHT)
+                    .withColor("white")
             )
         );
     }, [face.encounterSetId, face.encounterSetMaxId]);
@@ -171,7 +207,11 @@ export default function TreacheryFaceCanvas({ face, cardSet, setIllustrationTran
     useEffect(async () => {
         const image = await loadFileSystemImage(face.campaignSymbol || campaign.symbol);
         const transform = isSvgPath(face.campaignSymbol || campaign.symbol)
-            ? transformSvgOnCanvas({ h: CARD_PORTRAIT_HEIGHT, w: CARD_PORTRAIT_WIDTH }, { h: image.height, w: image.width }, 28)
+            ? transformSvgOnCanvas(
+                  { h: CARD_PORTRAIT_HEIGHT, w: CARD_PORTRAIT_WIDTH },
+                  { h: image.height, w: image.width },
+                  28
+              )
             : null;
         setCampaignSymbolLayer(
             image

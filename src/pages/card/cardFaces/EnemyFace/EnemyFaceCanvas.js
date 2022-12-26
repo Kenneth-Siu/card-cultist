@@ -26,6 +26,7 @@ export default function EnemyFaceCanvas({ face, cardSet, setIllustrationTransfor
     const [evadeLayer, setEvadeLayer] = useState(null);
     const [traitsLayer, setTraitsLayer] = useState(null);
     const [textLayer, setTextLayer] = useState(null);
+    const [flavorLayer, setFlavorLayer] = useState(null);
     const [victoryLayer, setVictoryLayer] = useState(null);
     const [damageLayer, setDamageLayer] = useState(null);
     const [horrorLayer, setHorrorLayer] = useState(null);
@@ -47,6 +48,7 @@ export default function EnemyFaceCanvas({ face, cardSet, setIllustrationTransfor
         evadeLayer,
         traitsLayer,
         textLayer,
+        flavorLayer,
         victoryLayer,
         damageLayer,
         horrorLayer,
@@ -189,9 +191,27 @@ export default function EnemyFaceCanvas({ face, cardSet, setIllustrationTransfor
                     .withWidth((dy) => Math.min(674, 570 + 8 * dy, 1018 - 2.1 * dy))
                     .withFontSize(face.textFontSize)
                     .withCardTitle(face.title)
+                    .withCardSubtitle(face.subtitle)
             )
         );
-    }, [face.title, face.text, face.textFontSize]);
+    }, [face.title, face.subtitle, face.text, face.textFontSize]);
+
+    useEffect(() => {
+        setFlavorLayer(
+            new CanvasTextLayer(
+                new CanvasTextConfig()
+                    .withText(face.flavor)
+                    .withX(40)
+                    .withY(face.flavorNudgeDown)
+                    .withWidth(670)
+                    .withFontSize(face.textFontSize)
+                    .withCardTitle(face.title)
+                    .withCardSubtitle(face.subtitle)
+                    .withItalic()
+                    .withAlign(TEXTALIGN.CENTER)
+            ).withPrevY()
+        );
+    }, [face.title, face.subtitle, face.text, face.textFontSize, face.flavor, face.flavorNudgeDown]);
 
     useEffect(() => {
         setVictoryLayer(

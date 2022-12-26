@@ -33,6 +33,7 @@ export default function LocationFrontFaceCanvas({ face, cardSet, setIllustration
     const [subtitleLayer, setSubtitleLayer] = useState(null);
     const [traitsLayer, setTraitsLayer] = useState(null);
     const [textLayer, setTextLayer] = useState(null);
+    const [flavorLayer, setFlavorLayer] = useState(null);
     const [victoryLayer, setVictoryLayer] = useState(null);
     const [connectionSymbolLayer, setConnectionSymbolLayer] = useState(null);
     const [connection1Layer, setConnection1Layer] = useState(null);
@@ -59,6 +60,7 @@ export default function LocationFrontFaceCanvas({ face, cardSet, setIllustration
         cluesLayer,
         traitsLayer,
         textLayer,
+        flavorLayer,
         victoryLayer,
         connectionSymbolLayer,
         connection1Layer,
@@ -239,7 +241,24 @@ export default function LocationFrontFaceCanvas({ face, cardSet, setIllustration
                     .withCardSubtitle(face.subtitle)
             )
         );
-    }, [face.title, face.subtitle, face.traits, face.text, face.textFontSize]);
+    }, [face.title, face.subtitle, face.text, face.textFontSize]);
+
+    useEffect(() => {
+        setFlavorLayer(
+            new CanvasTextLayer(
+                new CanvasTextConfig()
+                    .withText(face.flavor)
+                    .withX(40)
+                    .withY(face.flavorNudgeDown)
+                    .withWidth(670)
+                    .withFontSize(face.textFontSize)
+                    .withCardTitle(face.title)
+                    .withCardSubtitle(face.subtitle)
+                    .withItalic()
+                    .withAlign(TEXTALIGN.CENTER)
+            ).withPrevY()
+        );
+    }, [face.title, face.subtitle, face.text, face.textFontSize, face.flavor, face.flavorNudgeDown]);
 
     useEffect(() => {
         setVictoryLayer(

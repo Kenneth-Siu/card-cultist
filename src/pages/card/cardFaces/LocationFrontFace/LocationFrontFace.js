@@ -28,6 +28,8 @@ export default class LocationFrontFace extends CardFace {
         this.cluesIsPer = face.cluesIsPer || false;
         this.traits = face.traits || "";
         this.text = face.text || "";
+        this.flavor = face.flavor || "";
+        this.flavorNudgeDown = face.flavorNudgeDown || 0;
         this.victory = face.victory || "";
         this.textFontSize = face.textFontSize || 34;
         this.connectionSymbol = face.connectionSymbol || noConnectionSymbol.name;

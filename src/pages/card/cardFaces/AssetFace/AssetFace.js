@@ -29,6 +29,8 @@ export default class AssetFace extends CardFace {
         this.traits = face.traits || "";
         this.text = face.text || "";
         this.textFontSize = face.textFontSize || 34;
+        this.flavor = face.flavor || "";
+        this.flavorNudgeDown = face.flavorNudgeDown || 0;
         this.health = face.health || "";
         this.sanity = face.sanity || "";
         this.slot1 = face.slot1 || "";

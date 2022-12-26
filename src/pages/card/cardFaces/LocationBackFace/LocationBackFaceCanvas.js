@@ -31,6 +31,7 @@ export default function LocationBackFaceCanvas({ face, cardSet, setIllustrationT
     const [subtitleLayer, setSubtitleLayer] = useState(null);
     const [traitsLayer, setTraitsLayer] = useState(null);
     const [textLayer, setTextLayer] = useState(null);
+    const [flavorLayer, setFlavorLayer] = useState(null);
     const [connectionSymbolLayer, setConnectionSymbolLayer] = useState(null);
     const [connection1Layer, setConnection1Layer] = useState(null);
     const [connection2Layer, setConnection2Layer] = useState(null);
@@ -52,6 +53,7 @@ export default function LocationBackFaceCanvas({ face, cardSet, setIllustrationT
         cardTypeLayer,
         traitsLayer,
         textLayer,
+        flavorLayer,
         connectionSymbolLayer,
         connection1Layer,
         connection2Layer,
@@ -198,6 +200,23 @@ export default function LocationBackFaceCanvas({ face, cardSet, setIllustrationT
             )
         );
     }, [face.title, face.subtitle, face.traits, face.text, face.textFontSize]);
+
+    useEffect(() => {
+        setFlavorLayer(
+            new CanvasTextLayer(
+                new CanvasTextConfig()
+                    .withText(face.flavor)
+                    .withX(40)
+                    .withY(face.flavorNudgeDown)
+                    .withWidth(670)
+                    .withFontSize(face.textFontSize)
+                    .withCardTitle(face.title)
+                    .withCardSubtitle(face.subtitle)
+                    .withItalic()
+                    .withAlign(TEXTALIGN.CENTER)
+            ).withPrevY()
+        );
+    }, [face.title, face.subtitle, face.text, face.textFontSize, face.flavor, face.flavorNudgeDown]);
 
     useEffect(async () => {
         setConnectionSymbolLayer(

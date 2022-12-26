@@ -17,7 +17,13 @@ export default function LocationFrontFaceView({ faceDirection, listOfCardFaces, 
             listOfCardFaces={listOfCardFaces}
             face={face}
             otherFace={otherFace}
-            canvas={<LocationFrontFaceCanvas face={face} cardSet={cardSet} setIllustrationTransform={setIllustrationTransform} />}
+            canvas={
+                <LocationFrontFaceCanvas
+                    face={face}
+                    cardSet={cardSet}
+                    setIllustrationTransform={setIllustrationTransform}
+                />
+            }
             fields={
                 <>
                     <InputContainer label="Title" type="text" value={face.title} setValue={set("title")} />
@@ -43,8 +49,24 @@ export default function LocationFrontFaceView({ faceDirection, listOfCardFaces, 
                     <InputContainer label="Text">
                         <textarea value={face.text} onChange={(event) => set("text")(event.target.value)} />
                     </InputContainer>
+                    <InputContainer label="Flavor">
+                        <textarea value={face.flavor} onChange={(event) => set("flavor")(event.target.value)} />
+                        <label className="v-centered">
+                            Nudge down
+                            <input
+                                type="number"
+                                value={face.flavorNudgeDown.toFixed(0)}
+                                step="1"
+                                onChange={(event) => set("flavorNudgeDown")(parseInt(event.target.value))}
+                            />
+                        </label>
+                    </InputContainer>
                     <InputContainer label="Victory">
-                        <textarea className="small" value={face.victory} onChange={(event) => set("victory")(event.target.value)} />
+                        <textarea
+                            className="small"
+                            value={face.victory}
+                            onChange={(event) => set("victory")(event.target.value)}
+                        />
                     </InputContainer>
                     <InputContainer label="Connection Symbol" vCentered>
                         <ConnectionPicker connection={face.connectionSymbol} setConnection={set("connectionSymbol")} />
@@ -68,16 +90,34 @@ export default function LocationFrontFaceView({ faceDirection, listOfCardFaces, 
                         <button onClick={() => setEncounterSetSymbol()}>Load Image</button>
                     </InputContainer>
                     <InputContainer label="Card Type" type="text" value={face.cardType} setValue={set("cardType")} />
-                    <InputContainer label="Copyright Information" type="text" value={face.copyrightInformation} setValue={set("copyrightInformation")} />
+                    <InputContainer
+                        label="Copyright Information"
+                        type="text"
+                        value={face.copyrightInformation}
+                        setValue={set("copyrightInformation")}
+                    />
                     <InputContainer label="Encounter Set ID" childId="set-id">
-                        <input type="text" value={face.encounterSetId} onChange={(event) => set("encounterSetId")(event.target.value)} />
+                        <input
+                            type="text"
+                            value={face.encounterSetId}
+                            onChange={(event) => set("encounterSetId")(event.target.value)}
+                        />
                         /
-                        <input type="text" value={face.encounterSetMaxId} onChange={(event) => set("encounterSetMaxId")(event.target.value)} />
+                        <input
+                            type="text"
+                            value={face.encounterSetMaxId}
+                            onChange={(event) => set("encounterSetMaxId")(event.target.value)}
+                        />
                     </InputContainer>
                     <InputContainer label="Campaign Symbol">
                         <button onClick={() => setCampaignSymbol()}>Load Image</button>
                     </InputContainer>
-                    <InputContainer label="Campaign Set ID" type="text" value={face.campaignSetId} setValue={set("campaignSetId")} />
+                    <InputContainer
+                        label="Campaign Set ID"
+                        type="text"
+                        value={face.campaignSetId}
+                        setValue={set("campaignSetId")}
+                    />
                 </>
             }
         />

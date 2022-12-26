@@ -35,6 +35,18 @@ export default function AssetFaceView({ faceDirection, listOfCardFaces, otherFac
                     <InputContainer label="Text">
                         <textarea value={face.text} onChange={(event) => set("text")(event.target.value)} />
                     </InputContainer>
+                    <InputContainer label="Flavor">
+                        <textarea value={face.flavor} onChange={(event) => set("flavor")(event.target.value)} />
+                        <label className="v-centered">
+                            Nudge down
+                            <input
+                                type="number"
+                                value={face.flavorNudgeDown.toFixed(0)}
+                                step="1"
+                                onChange={(event) => set("flavorNudgeDown")(parseInt(event.target.value))}
+                            />
+                        </label>
+                    </InputContainer>
                     <InputContainer label="Skill Icon 1">
                         <select value={face.skillIcon1} onChange={(event) => set("skillIcon1")(event.target.value)}>
                             <option value="">None</option>

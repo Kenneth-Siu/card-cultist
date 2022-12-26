@@ -26,6 +26,8 @@ export default class LocationBackFace extends CardFace {
         this.traits = face.traits || "";
         this.text = face.text || "";
         this.textFontSize = face.textFontSize || 34;
+        this.flavor = face.flavor || "";
+        this.flavorNudgeDown = face.flavorNudgeDown || 0;
         this.connectionSymbol = face.connectionSymbol || noConnectionSymbol.name;
         this.connection1 = face.connection1 || noConnectionSymbol.name;
         this.connection2 = face.connection2 || noConnectionSymbol.name;

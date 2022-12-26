@@ -25,6 +25,8 @@ export default class StoryWeaknessFace extends CardFace {
         this.traits = face.traits || "";
         this.text = face.text || "";
         this.textFontSize = face.textFontSize || 34;
+        this.flavor = face.flavor || "";
+        this.flavorNudgeDown = face.flavorNudgeDown || 0;
         this.illustrator = face.illustrator || "";
         this.copyrightInformation = face.copyrightInformation || "";
         this.encounterSetId = face.encounterSetId || "";
