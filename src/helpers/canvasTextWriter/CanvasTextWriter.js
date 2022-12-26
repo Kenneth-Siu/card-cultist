@@ -3,7 +3,6 @@ import { PARAGRAPH_SPACING } from "./config";
 import makeLines from "./makeLines";
 import splitIntoAtoms from "./splitIntoAtoms";
 
-
 export class CanvasTextWriter {
     constructor(canvasContext, canvasTextConfig) {
         this.canvasContext = canvasContext;
@@ -103,8 +102,14 @@ export class CanvasTextWriter {
     }
 
     alignLine(lineWidth) {
-        const alignmentIndent = this.align !== TEXTALIGN.LEFT ? (this.boxW - lineWidth) * (this.align === TEXTALIGN.RIGHT ? 1 : 0.5) : 0;
-        this.x = this.align === TEXTALIGN.LEFT && this.indent !== null ? this.indent : this.boxX(this.y - this.boxY) + alignmentIndent;
+        const alignmentIndent =
+            this.align !== TEXTALIGN.LEFT
+                ? (this.boxW(this.y - this.boxY) - lineWidth) * (this.align === TEXTALIGN.RIGHT ? 1 : 0.5)
+                : 0;
+        this.x =
+            this.align === TEXTALIGN.LEFT && this.indent !== null
+                ? this.indent
+                : this.boxX(this.y - this.boxY) + alignmentIndent;
     }
 
     writeAtom(atom) {
@@ -129,7 +134,9 @@ export class CanvasTextWriter {
     }
 
     getTextWidth(text) {
-        this.canvasContext.font = `${this.italic ? "italic " : ""}${this.bold ? "bold " : ""}${this.fontSize}px ${this.fontFamily}`;
+        this.canvasContext.font = `${this.italic ? "italic " : ""}${this.bold ? "bold " : ""}${this.fontSize}px ${
+            this.fontFamily
+        }`;
         return this.canvasContext.measureText(text).width;
     }
 
@@ -181,7 +188,9 @@ export class CanvasTextWriter {
     }
 
     writeText(text) {
-        this.canvasContext.font = `${this.italic ? "italic " : ""}${this.bold ? "bold " : ""}${this.fontSize}px ${this.fontFamily}`;
+        this.canvasContext.font = `${this.italic ? "italic " : ""}${this.bold ? "bold " : ""}${this.fontSize}px ${
+            this.fontFamily
+        }`;
         if (this.strokeWidth > 0) {
             this.canvasContext.strokeStyle = this.strokeStyle;
             this.canvasContext.lineWidth = this.strokeWidth;
@@ -195,8 +204,15 @@ export class CanvasTextWriter {
     writeSymbols(text, nudgeFactorSize, nudgeFactorX, nudgeFactorY, nudgeFactorWidth) {
         this.canvasContext.font = `${this.fontSize + this.fontSize * nudgeFactorSize}px AHCardTextSymbols`;
         this.canvasContext.fillStyle = this.color;
-        this.canvasContext.fillText(text, this.x + this.fontSize * nudgeFactorX, this.y - this.raisedBy + this.fontSize * nudgeFactorY);
-        this.x += this.canvasContext.measureText(text).width + 2 * (this.fontSize * nudgeFactorX) + this.fontSize * nudgeFactorWidth;
+        this.canvasContext.fillText(
+            text,
+            this.x + this.fontSize * nudgeFactorX,
+            this.y - this.raisedBy + this.fontSize * nudgeFactorY
+        );
+        this.x +=
+            this.canvasContext.measureText(text).width +
+            2 * (this.fontSize * nudgeFactorX) +
+            this.fontSize * nudgeFactorWidth;
     }
 
     allFutureLinesEmpty(currentLineIndex) {

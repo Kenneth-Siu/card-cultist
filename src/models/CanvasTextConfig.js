@@ -25,7 +25,7 @@ export default class CanvasTextConfig {
         this.text = "";
         this._x = 0;
         this.y = 0;
-        this.width = 0;
+        this._width = 0;
         this.height = 0;
         this.fontSize = 34;
         this.fontFamily = "Arno";
@@ -50,6 +50,14 @@ export default class CanvasTextConfig {
 
     set x(value) {
         this._x = value;
+    }
+
+    get width() {
+        return (dy) => (typeof this._width === "function" ? this._width(dy) : this._width);
+    }
+
+    set width(value) {
+        this._width = value;
     }
 
     withText(text) {

@@ -46,11 +46,15 @@ export default function AgendaFrontFaceCanvas({ face, cardSet, setIllustrationTr
 
     useEffect(async () => {
         const image = await loadFileSystemImage(face.illustration);
-        setIllustrationLayer(image ? new CanvasImageLayer(image, new ImageTransform(face.illustrationTransform)) : null);
+        setIllustrationLayer(
+            image ? new CanvasImageLayer(image, new ImageTransform(face.illustrationTransform)) : null
+        );
     }, [face.illustration, ...Object.values(face.illustrationTransform)]);
 
     useEffect(async () => {
-        setFrameLayer(new CanvasImageLayer(await loadPublicImage(AgendaFrontFace.frame), new ImageTransform({ scale: 2 })));
+        setFrameLayer(
+            new CanvasImageLayer(await loadPublicImage(AgendaFrontFace.frame), new ImageTransform({ scale: 2 }))
+        );
     }, []);
 
     useEffect(() => {
@@ -70,7 +74,11 @@ export default function AgendaFrontFaceCanvas({ face, cardSet, setIllustrationTr
     useEffect(async () => {
         const image = await loadFileSystemImage(face.encounterSetSymbol || cardSet.symbol);
         const transform = isSvgPath(face.encounterSetSymbol || cardSet.symbol)
-            ? transformSvgOnCanvas({ h: CARD_PORTRAIT_WIDTH, w: CARD_PORTRAIT_HEIGHT }, { h: image.height, w: image.width }, 58)
+            ? transformSvgOnCanvas(
+                  { h: CARD_PORTRAIT_WIDTH, w: CARD_PORTRAIT_HEIGHT },
+                  { h: image.height, w: image.width },
+                  58
+              )
             : null;
         setEncounterSetSymbolLayer(
             image
@@ -105,9 +113,9 @@ export default function AgendaFrontFaceCanvas({ face, cardSet, setIllustrationTr
             new CanvasTextLayer(
                 new CanvasTextConfig()
                     .withText(face.text)
-                    .withX((dy) => (dy > 356 ? 590 : 510))
+                    .withX((dy) => 510 + (dy > 356 ? 74 : 0))
                     .withY(200)
-                    .withWidth(510)
+                    .withWidth((dy) => 510 + (dy > 356 ? -74 : 0))
                     .withFontSize(face.textFontSize)
                     .withLineHeight(1.1)
                     .withCardTitle(face.title)
@@ -118,7 +126,9 @@ export default function AgendaFrontFaceCanvas({ face, cardSet, setIllustrationTr
     useEffect(async () => {
         if (face.threshold === "-") {
             const image = await loadPublicImage(hyphen);
-            setDoomThresholdLayer(image ? new CanvasImageLayer(image, new ImageTransform({ x: 492, y: 634, scale: 2 })) : null);
+            setDoomThresholdLayer(
+                image ? new CanvasImageLayer(image, new ImageTransform({ x: 492, y: 634, scale: 2 })) : null
+            );
         } else {
             setDoomThresholdLayer(
                 new CanvasTextLayer(
@@ -167,11 +177,21 @@ export default function AgendaFrontFaceCanvas({ face, cardSet, setIllustrationTr
     useEffect(() => {
         const text =
             face.encounterSetId || face.encounterSetMaxId
-                ? face.encounterSetId + String.fromCharCode(8202) + "/" + String.fromCharCode(8202) + face.encounterSetMaxId
+                ? face.encounterSetId +
+                  String.fromCharCode(8202) +
+                  "/" +
+                  String.fromCharCode(8202) +
+                  face.encounterSetMaxId
                 : "";
         setEncounterSetIdLayer(
             new CanvasTextLayer(
-                new CanvasTextConfig().withText(text).withX(916).withY(720).withFontSize(18).withAlign(TEXTALIGN.RIGHT).withColor("white")
+                new CanvasTextConfig()
+                    .withText(text)
+                    .withX(916)
+                    .withY(720)
+                    .withFontSize(18)
+                    .withAlign(TEXTALIGN.RIGHT)
+                    .withColor("white")
             )
         );
     }, [face.encounterSetId, face.encounterSetMaxId]);
@@ -179,7 +199,11 @@ export default function AgendaFrontFaceCanvas({ face, cardSet, setIllustrationTr
     useEffect(async () => {
         const image = await loadFileSystemImage(face.campaignSymbol || campaign.symbol);
         const transform = isSvgPath(face.campaignSymbol || campaign.symbol)
-            ? transformSvgOnCanvas({ h: CARD_PORTRAIT_WIDTH, w: CARD_PORTRAIT_HEIGHT }, { h: image.height, w: image.width }, 28)
+            ? transformSvgOnCanvas(
+                  { h: CARD_PORTRAIT_WIDTH, w: CARD_PORTRAIT_HEIGHT },
+                  { h: image.height, w: image.width },
+                  28
+              )
             : null;
         setCampaignSymbolLayer(
             image

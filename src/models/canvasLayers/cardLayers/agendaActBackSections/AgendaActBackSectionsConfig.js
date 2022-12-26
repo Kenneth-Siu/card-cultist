@@ -22,6 +22,14 @@ export default class AgendaActBackSectionsConfig extends CanvasTextConfig {
         this._x = value;
     }
 
+    get width() {
+        return this._width;
+    }
+
+    set width(value) {
+        this._width = value;
+    }
+
     withHeader1(header1) {
         this.header1 = header1;
         return this;

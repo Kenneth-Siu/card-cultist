@@ -41,12 +41,12 @@ export default function makeLines(atoms, context, { x, width, fontSize, fontFami
 
     function makeNewLine() {
         lines.push(line);
-        line = [];
         if (line.length === 0) {
             dy += currentFontSize * lineHeight * PARAGRAPH_SPACING;
         } else {
             dy += currentFontSize * lineHeight;
         }
+        line = [];
         currentX = indent !== null ? indent : x(dy);
     }
 
@@ -61,15 +61,15 @@ export default function makeLines(atoms, context, { x, width, fontSize, fontFami
     }
 
     function wouldMakeNewLine(atomWidth) {
-        if (currentX === x(dy) || (indent !== null && currentX === indent) || width === 0) {
+        if (currentX === x(dy) || (indent !== null && currentX === indent) || width(dy) === 0) {
             return false;
         }
-        return currentX + atomWidth > x(dy) + width;
+        return currentX + atomWidth > x(dy) + width(dy);
     }
 
-    function addAtomToLine(atom, width) {
+    function addAtomToLine(atom, atomWidth) {
         line.push(atom);
-        currentX += width;
+        currentX += atomWidth;
     }
 
     function setItalic(value) {

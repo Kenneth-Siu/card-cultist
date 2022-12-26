@@ -17,6 +17,14 @@ export default class ChaosTokenEffectsConfig extends CanvasTextConfig {
         this._x = value;
     }
 
+    get width() {
+        return this._width;
+    }
+
+    set width(value) {
+        this._width = value;
+    }
+
     withSkullText(skullText) {
         this.skullText = skullText;
         return this;

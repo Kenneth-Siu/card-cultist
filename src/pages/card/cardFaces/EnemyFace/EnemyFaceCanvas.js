@@ -67,14 +67,20 @@ export default function EnemyFaceCanvas({ face, cardSet, setIllustrationTransfor
 
     useEffect(async () => {
         const image = await loadFileSystemImage(face.illustration);
-        setIllustrationLayer(image ? new CanvasImageLayer(image, new ImageTransform(face.illustrationTransform)) : null);
+        setIllustrationLayer(
+            image ? new CanvasImageLayer(image, new ImageTransform(face.illustrationTransform)) : null
+        );
     }, [face.illustration, ...Object.values(face.illustrationTransform)]);
 
     useEffect(async () => {
         if (face.subtitle) {
-            setFrameLayer(new CanvasImageLayer(await loadPublicImage(EnemyFace.frameSubtitle), new ImageTransform({ scale: 2 })));
+            setFrameLayer(
+                new CanvasImageLayer(await loadPublicImage(EnemyFace.frameSubtitle), new ImageTransform({ scale: 2 }))
+            );
         } else {
-            setFrameLayer(new CanvasImageLayer(await loadPublicImage(EnemyFace.frame), new ImageTransform({ scale: 2 })));
+            setFrameLayer(
+                new CanvasImageLayer(await loadPublicImage(EnemyFace.frame), new ImageTransform({ scale: 2 }))
+            );
         }
     }, [!!face.subtitle]);
 
@@ -96,7 +102,13 @@ export default function EnemyFaceCanvas({ face, cardSet, setIllustrationTransfor
     useEffect(() => {
         setSubtitleLayer(
             new CanvasTextLayer(
-                new CanvasTextConfig().withText(face.subtitle).withX(374).withY(70).withFontSize(28).withAlign(TEXTALIGN.CENTER).withBold()
+                new CanvasTextConfig()
+                    .withText(face.subtitle)
+                    .withX(374)
+                    .withY(70)
+                    .withFontSize(28)
+                    .withAlign(TEXTALIGN.CENTER)
+                    .withBold()
             )
         );
     }, [face.subtitle]);
@@ -174,7 +186,7 @@ export default function EnemyFaceCanvas({ face, cardSet, setIllustrationTransfor
                     .withText(face.text)
                     .withX((dy) => Math.max(38, 90 - 4 * dy, 1.05 * dy - 134))
                     .withY(250)
-                    .withWidth(674)
+                    .withWidth((dy) => Math.min(674, 570 + 8 * dy, 1018 - 2.1 * dy))
                     .withFontSize(face.textFontSize)
                     .withCardTitle(face.title)
             )
@@ -209,7 +221,11 @@ export default function EnemyFaceCanvas({ face, cardSet, setIllustrationTransfor
     useEffect(async () => {
         const image = await loadFileSystemImage(face.encounterSetSymbol || cardSet.symbol);
         const transform = isSvgPath(face.encounterSetSymbol || cardSet.symbol)
-            ? transformSvgOnCanvas({ h: CARD_PORTRAIT_HEIGHT, w: CARD_PORTRAIT_WIDTH }, { h: image.height, w: image.width }, 58)
+            ? transformSvgOnCanvas(
+                  { h: CARD_PORTRAIT_HEIGHT, w: CARD_PORTRAIT_WIDTH },
+                  { h: image.height, w: image.width },
+                  58
+              )
             : null;
         setEncounterSetSymbolLayer(
             image
@@ -269,11 +285,21 @@ export default function EnemyFaceCanvas({ face, cardSet, setIllustrationTransfor
     useEffect(() => {
         const text =
             face.encounterSetId || face.encounterSetMaxId
-                ? face.encounterSetId + String.fromCharCode(8202) + "/" + String.fromCharCode(8202) + face.encounterSetMaxId
+                ? face.encounterSetId +
+                  String.fromCharCode(8202) +
+                  "/" +
+                  String.fromCharCode(8202) +
+                  face.encounterSetMaxId
                 : "";
         setEncounterSetIdLayer(
             new CanvasTextLayer(
-                new CanvasTextConfig().withText(text).withX(602).withY(1026).withFontSize(18).withAlign(TEXTALIGN.RIGHT).withColor("white")
+                new CanvasTextConfig()
+                    .withText(text)
+                    .withX(602)
+                    .withY(1026)
+                    .withFontSize(18)
+                    .withAlign(TEXTALIGN.RIGHT)
+                    .withColor("white")
             )
         );
     }, [face.encounterSetId, face.encounterSetMaxId]);
@@ -281,7 +307,11 @@ export default function EnemyFaceCanvas({ face, cardSet, setIllustrationTransfor
     useEffect(async () => {
         const image = await loadFileSystemImage(face.campaignSymbol || campaign.symbol);
         const transform = isSvgPath(face.campaignSymbol || campaign.symbol)
-            ? transformSvgOnCanvas({ h: CARD_PORTRAIT_HEIGHT, w: CARD_PORTRAIT_WIDTH }, { h: image.height, w: image.width }, 28)
+            ? transformSvgOnCanvas(
+                  { h: CARD_PORTRAIT_HEIGHT, w: CARD_PORTRAIT_WIDTH },
+                  { h: image.height, w: image.width },
+                  28
+              )
             : null;
         setCampaignSymbolLayer(
             image

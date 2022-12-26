@@ -15,6 +15,14 @@ export default class ConnectionSymbolConfig extends CanvasTextConfig {
         this._x = value;
     }
 
+    get width() {
+        return this._width;
+    }
+
+    set width(value) {
+        this._width = value;
+    }
+
     isNone() {
         return this.symbol.name === noConnectionSymbol.name;
     }
