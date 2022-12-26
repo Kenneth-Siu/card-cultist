@@ -130,7 +130,7 @@ export default function CardSet() {
         document.querySelectorAll(".export-card-front-canvases-container canvas").forEach((canvas, index) => {
             frontContext.save();
             frontContext.translate((index % ttsMaxColumns) * 750, Math.floor(index / ttsMaxColumns) * 1050);
-            if (canvas.classList.contains("landscape")) {
+            if (canvas?.classList.contains("landscape")) {
                 frontContext.translate(750, 0);
                 frontContext.rotate(Math.PI / 2);
             }
