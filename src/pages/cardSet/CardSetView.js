@@ -128,7 +128,14 @@ export default function CardSet() {
 
         const frontContext = ttsFrontCanvas.current.getContext("2d");
         document.querySelectorAll(".export-card-front-canvases-container canvas").forEach((canvas, index) => {
-            frontContext.drawImage(canvas, (index % ttsMaxColumns) * 750, Math.floor(index / ttsMaxColumns) * 1050);
+            frontContext.save();
+            frontContext.translate((index % ttsMaxColumns) * 750, Math.floor(index / ttsMaxColumns) * 1050);
+            if (canvas.classList.contains("landscape")) {
+                frontContext.translate(750, 0);
+                frontContext.rotate(Math.PI / 2);
+            }
+            frontContext.drawImage(canvas, 0, 0);
+            frontContext.restore();
         });
         ttsFrontCanvas.current.toBlob(
             (canvasBlob) => {

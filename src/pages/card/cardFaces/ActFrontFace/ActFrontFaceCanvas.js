@@ -133,7 +133,7 @@ export default function ActFrontFaceCanvas({ face, cardSet, setIllustrationTrans
             setClueThresholdLayer(
                 new CanvasTextLayer(
                     new CanvasTextConfig()
-                        .withText(face.threshold + (face.isPer ? "<raised=10><size=30>r</size></raised>" : ""))
+                        .withText(face.threshold + (face.isPer ? "<raised=-6><size=30>r</size></raised>" : ""))
                         .withX(528 + (face.threshold.includes("*") ? 4 : 0) + (face.isPer ? 4 : 0))
                         .withY(614)
                         .withFontSize(52)

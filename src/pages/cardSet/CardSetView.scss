@@ -19,8 +19,19 @@
         display: flex;
         flex-wrap: wrap;
 
+        div {
+            width: 100px;
+        }
+
         canvas {
             width: 100px;
+
+            &.landscape {
+                transform-origin: 50px 50px;
+                transform: rotate(90deg);
+                width: auto;
+                height: 100px;
+            }
         }
     }
 
