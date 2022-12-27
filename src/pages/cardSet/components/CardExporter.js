@@ -1,5 +1,6 @@
 import React, { useContext, useRef } from "react";
 import { CampaignContext } from "../../../components/CampaignContext";
+import Container from "../../../components/container/Container";
 import "./CardExporter.scss";
 
 const ttsMaxRows = 7;
@@ -13,7 +14,7 @@ export default function CardExporter({ cardSet }) {
     const ttsBackCanvas = useRef(null);
 
     return (
-        <div className="export-container">
+        <Container className="export-container">
             <button onClick={() => exportAllCards("image/png", "png")}>Export all cards (PNG)</button>
             <button onClick={() => exportAllCards("image/jpeg", "jpg", 0.9)}>Export all cards (JPG)</button>
             <button onClick={() => exportForTts()}>Export for TTS (JPG)</button>
@@ -27,7 +28,7 @@ export default function CardExporter({ cardSet }) {
                 <canvas ref={ttsFrontCanvas} />
                 <canvas ref={ttsBackCanvas} />
             </div>
-        </div>
+        </Container>
     );
 
     function exportAllCards(imageType, extension, quality) {

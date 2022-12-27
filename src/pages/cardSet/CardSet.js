@@ -53,4 +53,26 @@ export default class CardSet {
             return aIndex - bIndex;
         });
     }
+
+    generateEncounterSetCardNumbers() {
+        let encounterSetMaxId;
+        this.cards.reduce((cardNumber, card) => {
+            if (card.frontFace.encounterSetId !== null) {
+                card.frontFace.encounterSetId = cardNumber;
+            }
+            if (card.backFace.encounterSetId !== null) {
+                card.backFace.encounterSetId = cardNumber;
+            }
+            encounterSetMaxId = cardNumber + card.numOfCopies - 1;
+            return cardNumber + card.numOfCopies;
+        }, 1);
+        this.cards.forEach((card) => {
+            if (card.frontFace.encounterSetMaxId !== null) {
+                card.frontFace.encounterSetMaxId = encounterSetMaxId;
+            }
+            if (card.backFace.encounterSetMaxId !== null) {
+                card.backFace.encounterSetMaxId = encounterSetMaxId;
+            }
+        });
+    }
 }

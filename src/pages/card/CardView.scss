@@ -10,6 +10,21 @@
         gap: 0.5rem;
         padding: 0.3rem;
 
+        .num-of-copies {
+            padding-left: 0.5rem;
+            display: flex;
+            align-items: center;
+
+            input {
+                margin-left: 0.5rem;
+                width: 2.5rem;
+            }
+        }
+
+        .buffer {
+            flex-grow: 1;
+        }
+
         .icon-button {
             gap: 0.3rem;
         }

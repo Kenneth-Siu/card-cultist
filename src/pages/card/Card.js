@@ -6,10 +6,12 @@ export default class Card {
             this.id = idOrCard;
             this.frontFace = null;
             this.backFace = null;
+            this.numOfCopies = 1;
         }
         Object.assign(this, idOrCard);
         this.frontFace = getCardFaceClassInstance(idOrCard.frontFace);
         this.backFace = getCardFaceClassInstance(idOrCard.backFace);
+        this.numOfCopies = idOrCard.numOfCopies || 1;
     }
 
     getTitle() {

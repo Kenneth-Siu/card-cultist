@@ -1,22 +1,37 @@
 import React, { useContext } from "react";
 import { CampaignContext } from "../../../components/CampaignContext";
+import DragIndicator from "@mui/icons-material/DragIndicator";
+import Container from "../../../components/container/Container";
 import "./SortableCardList.scss";
 
 export default function SortableCardList({ cardSet }) {
     const { refreshCampaign } = useContext(CampaignContext);
 
     return (
-        <div className="sortable-card-list-container">
+        <Container className="sortable-card-list-container">
             <button onClick={orderCardSet}>Order cards by type</button>
-            <button>Generate encounter set card numbers WIP</button>
+            <button onClick={generateEncounterSetCardNumbers}>Generate encounter set card numbers</button>
             <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Title</th>
+                        <th>Type</th>
+                        <th># of copies</th>
+                        <th>Encounter set card number</th>
+                    </tr>
+                </thead>
                 <tbody>
                     {cardSet.cards.map((card) => (
                         <tr key={card.id}>
+                            <td className="drag-indicator">
+                                <DragIndicator />
+                            </td>
                             <td>{card.getTitle()}</td>
                             <td>
                                 <span className="emoji">{card.getEmoji()}</span> {card.frontFace.type}
                             </td>
+                            <td>{card.numOfCopies}</td>
                             <td>
                                 {card.frontFace.encounterSetId || card.frontFace.encounterSetMaxId
                                     ? card.frontFace.encounterSetId +
@@ -38,11 +53,16 @@ export default function SortableCardList({ cardSet }) {
                     ))}
                 </tbody>
             </table>
-        </div>
+        </Container>
     );
 
     function orderCardSet() {
         cardSet.orderCards();
+        refreshCampaign();
+    }
+
+    function generateEncounterSetCardNumbers() {
+        cardSet.generateEncounterSetCardNumbers();
         refreshCampaign();
     }
 }

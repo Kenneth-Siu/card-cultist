@@ -30,6 +30,20 @@ export default function CardView() {
     return (
         <main className="card-page">
             <Container className="toolbar">
+                <label className="num-of-copies">
+                    # of copies
+                    <input
+                        type="number"
+                        value={card.numOfCopies}
+                        step="1"
+                        min="1"
+                        onChange={(event) => {
+                            card.numOfCopies = parseInt(event.target.value);
+                            refreshCampaign();
+                        }}
+                    />
+                </label>
+                <div className="buffer" />
                 <IconButton onClick={() => exportCard("image/png", "png")}>
                     <span className="emoji">💾</span> Export PNG
                 </IconButton>
