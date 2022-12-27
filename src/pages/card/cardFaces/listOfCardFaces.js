@@ -23,13 +23,31 @@ const listOfCardFaces = [
     ActBackFace,
     LocationFrontFace,
     LocationBackFace,
-    EnemyFace,
-    TreacheryFace,
     StoryFace,
     StoryWeaknessFace,
+    AssetFace,
+    EnemyFace,
+    TreacheryFace,
     MythosFace,
     PlayerFace,
-    AssetFace,
 ];
 
 export default listOfCardFaces;
+
+export const cardFacesInEncounterOrder = [
+    CardFace,
+    ChaosTokenEffectsFace,
+    AgendaFrontFace,
+    AgendaBackFace,
+    ActFrontFace,
+    ActBackFace,
+    LocationFrontFace,
+    LocationBackFace,
+    StoryFace,
+    StoryWeaknessFace,
+    AssetFace,
+    EnemyFace,
+    TreacheryFace,
+    MythosFace,
+    PlayerFace,
+];

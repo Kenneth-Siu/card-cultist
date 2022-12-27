@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
+import { CampaignContext } from "../../../components/CampaignContext";
 import "./SortableCardList.scss";
 
 export default function SortableCardList({ cardSet }) {
+    const { refreshCampaign } = useContext(CampaignContext);
+
     return (
         <div className="sortable-card-list-container">
-            <button>Auto-order WIP</button>
+            <button onClick={orderCardSet}>Order cards by type</button>
             <button>Generate encounter set card numbers WIP</button>
             <table>
                 <tbody>
@@ -37,6 +40,11 @@ export default function SortableCardList({ cardSet }) {
             </table>
         </div>
     );
+
+    function orderCardSet() {
+        cardSet.orderCards();
+        refreshCampaign();
+    }
 }
 
 function hasInconsistentEncounterSetIds(card) {

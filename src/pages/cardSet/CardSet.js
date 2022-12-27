@@ -1,6 +1,7 @@
 import remove from "lodash.remove";
 import generateId from "../../helpers/generateId";
 import Card from "../card/Card";
+import { cardFacesInEncounterOrder } from "../card/cardFaces/listOfCardFaces";
 
 export default class CardSet {
     constructor(idOrCardSet) {
@@ -34,5 +35,22 @@ export default class CardSet {
 
     deleteCard(id) {
         remove(this.cards, (card) => card.id === id);
+    }
+
+    orderCards() {
+        this.cards.sort((a, b) => {
+            const aIndex = cardFacesInEncounterOrder.findIndex((t) => t.type === a.frontFace.type);
+            const bIndex = cardFacesInEncounterOrder.findIndex((t) => t.type === b.frontFace.type);
+            if (aIndex === -1 && bIndex === -1) {
+                return 0;
+            }
+            if (aIndex === -1) {
+                return 1;
+            }
+            if (bIndex === -1) {
+                return -1;
+            }
+            return aIndex - bIndex;
+        });
     }
 }
