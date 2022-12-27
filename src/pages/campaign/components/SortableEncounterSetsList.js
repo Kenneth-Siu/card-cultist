@@ -12,7 +12,7 @@ export default function SortableEncounterSetsList() {
 
     return (
         <Container className="encounter-sets-list-container">
-            <button>Generate campaign card numbers</button>
+            <button onClick={generateCampaignCardNumbers}>Generate campaign card numbers</button>
             <table>
                 <tbody>
                     <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
@@ -36,6 +36,14 @@ export default function SortableEncounterSetsList() {
             campaign.cardSets = arrayMove(campaign.cardSets, oldIndex, newIndex);
             refreshCampaign();
         }
+    }
+
+    function generateCampaignCardNumbers() {
+        campaign.cardSets.reduce(
+            (startingNumber, cardSet) => cardSet.generateCampaignCardNumbers(startingNumber) + 1,
+            1
+        );
+        refreshCampaign();
     }
 }
 

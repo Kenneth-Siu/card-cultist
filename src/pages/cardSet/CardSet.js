@@ -58,21 +58,33 @@ export default class CardSet {
         let encounterSetMaxId;
         this.cards.reduce((cardNumber, card) => {
             if (card.frontFace.encounterSetId !== null) {
-                card.frontFace.encounterSetId = cardNumber;
+                card.frontFace.encounterSetId = cardNumber.toString();
             }
             if (card.backFace.encounterSetId !== null) {
-                card.backFace.encounterSetId = cardNumber;
+                card.backFace.encounterSetId = cardNumber.toString();
             }
             encounterSetMaxId = cardNumber + card.numOfCopies - 1;
             return cardNumber + card.numOfCopies;
         }, 1);
         this.cards.forEach((card) => {
             if (card.frontFace.encounterSetMaxId !== null) {
-                card.frontFace.encounterSetMaxId = encounterSetMaxId;
+                card.frontFace.encounterSetMaxId = encounterSetMaxId.toString();
             }
             if (card.backFace.encounterSetMaxId !== null) {
-                card.backFace.encounterSetMaxId = encounterSetMaxId;
+                card.backFace.encounterSetMaxId = encounterSetMaxId.toString();
             }
         });
+    }
+
+    generateCampaignCardNumbers(startingNumber) {
+        this.cards.forEach((card, index) => {
+            if (card.frontFace.campaignSetId !== null) {
+                card.frontFace.campaignSetId = (startingNumber + index).toString();
+            }
+            if (card.backFace.campaignSetId !== null) {
+                card.backFace.campaignSetId = (startingNumber + index).toString();
+            }
+        });
+        return startingNumber + this.cards.length - 1;
     }
 }
