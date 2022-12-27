@@ -5,6 +5,7 @@ import useLoadedImages from "../../helpers/useLoadedImages";
 import CardExporter from "./components/CardExporter";
 import "./CardSetView.scss";
 import SortableCardList from "./components/SortableCardList";
+import Container from "../../components/container/Container";
 
 // TODO can export all cards in set individually with bleed (MPC friendly)
 // TODO can export all front/back faces of cards in set with bleed (printer-friendly)
@@ -32,11 +33,11 @@ export default function CardSet() {
 
     return (
         <main className="card-set-page">
-            <div className="set-details-container">
+            <Container className="set-details-container">
                 {cardSet.symbol && loadedImages.length > 0 ? loadedImages[loadedImages.length - 1] : ""}
                 <input type="text" value={cardSet.title} onChange={(event) => setTitle(event.target.value)} />
                 <button onClick={() => setSetSymbol()}>Choose set symbol</button>
-            </div>
+            </Container>
             <SortableCardList cardSet={cardSet} />
             <CardExporter cardSet={cardSet} />
             <button onClick={() => deleteSet()}>Delete Set</button>

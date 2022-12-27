@@ -54,7 +54,6 @@ export default function SortableCardList({ cardSet }) {
         if (active.id !== over.id) {
             const oldIndex = cardSet.cards.findIndex((card) => card.id === active.id);
             const newIndex = cardSet.cards.findIndex((card) => card.id === over.id);
-            console.log(oldIndex, newIndex);
             cardSet.cards = arrayMove(cardSet.cards, oldIndex, newIndex);
             refreshCampaign();
         }

@@ -10,4 +10,30 @@
             background-color: $grayscale-9;
         }
     }
+
+    .encounter-sets-list-container {
+        tbody tr {
+            position: relative;
+            cursor: grab;
+            &:hover {
+                background-color: $grayscale-3;
+            }
+            &[aria-pressed="true"] {
+                z-index: 1;
+            }
+        }
+        th {
+            padding: 0.2rem;
+            vertical-align: middle;
+        }
+        td {
+            padding: 0.2rem;
+            user-select: none;
+            vertical-align: middle;
+            line-height: 0;
+        }
+        .drag-indicator {
+            color: $grayscale-7;
+        }
+    }
 }
