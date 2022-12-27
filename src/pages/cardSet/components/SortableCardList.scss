@@ -2,9 +2,13 @@
 
 .sortable-card-list-container {
     tbody tr {
+        position: relative;
         cursor: grab;
         &:hover {
             background-color: $grayscale-3;
+        }
+        &[aria-pressed="true"] {
+            z-index: 1;
         }
     }
     th {
