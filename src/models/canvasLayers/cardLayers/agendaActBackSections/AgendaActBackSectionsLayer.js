@@ -20,7 +20,7 @@ export default class AgendaActBackSectionsLayer extends CanvasLayer {
     draw(context) {
         const STORY_INDENT = Math.round(this.config.fontSize * 0.66);
         this.ACTUAL_LINE_HEIGHT = 0.57 * this.config.lineHeight;
-        this.PADDING = Math.round(this.config.fontSize * 0.8);
+        this.PADDING = Math.round(this.config.fontSize * 0.6);
 
         this.context = context;
         this.headerConfig = new CanvasTextConfig()
@@ -52,9 +52,9 @@ export default class AgendaActBackSectionsLayer extends CanvasLayer {
         if (useSeparator && (header || story || text)) {
             this.context.save();
             this.context.fillStyle = "black";
-            this.context.fillRect(this.config.x, currentY + Math.round(this.config.fontSize * 0.7), this.config.width, 1);
+            this.context.fillRect(this.config.x, currentY + Math.round(this.config.fontSize * 0.6), this.config.width, 1);
             this.context.restore();
-            currentY += 2 * Math.round(this.config.fontSize * 0.7) + 1;
+            currentY += 2.3 * this.PADDING + 1;
         }
         if (header) {
             currentY = new CanvasTextLayer(this.headerConfig.withText(header).withY(currentY)).draw(this.context).y;

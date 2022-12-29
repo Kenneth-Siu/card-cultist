@@ -75,12 +75,12 @@ const instructionDictionary = {
 };
 
 const textReplacementDictionary = {
-    "<rev>": "<b>Revelation – </b>",
-    "<for>": "<b>Forced – </b>",
-    "<obj>": "<b>Objective – </b>",
-    "<pre>": "<b>Prey – </b>",
-    "<spa>": "<b>Spawn – </b>",
-    "<hau>": "<b>Haunted – </b>",
+    "<rev>": "<b>Revelation –</b>",
+    "<for>": "<b>Forced –</b>",
+    "<obj>": "<b>Objective –</b>",
+    "<pre>": "<b>Prey –</b>",
+    "<spa>": "<b>Spawn –</b>",
+    "<hau>": "<b>Haunted –</b>",
     "<res>": "<b>(→R",
     "</res>": ")</b>",
 };

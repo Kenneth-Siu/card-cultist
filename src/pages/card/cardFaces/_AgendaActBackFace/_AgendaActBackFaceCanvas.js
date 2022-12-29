@@ -98,7 +98,7 @@ export default function AgendaActBackFaceCanvas({ face, cardSet, word }) {
                     .withText3(face.text3)
                     .withX(226)
                     .withY(84)
-                    .withWidth(750)
+                    .withWidth(700)
                     .withFontSize(face.textFontSize)
                     .withLineHeight(1.1)
                     .withCardTitle(face.title)

@@ -14,7 +14,7 @@ const shorthands = {
     "->": "→",
     "Revelation -- ": "<b>Revelation</b> – ",
     "Revelation - ": "<b>Revelation</b> – ",
-    "Forced -- ": "<b>Forced</b> – ",
+    "Forced -- ": "<b>Forced – </b>",
     "Forced - ": "<b>Forced – </b>",
     "Objective -- ": "<b>Objective</b> – ",
     "Objective - ": "<b>Objective</b> – ",
