@@ -1,13 +1,11 @@
 import { TEXTALIGN } from "../../models/CanvasTextConfig";
 import { PARAGRAPH_SPACING } from "./config";
 
-export default function makeLines(atoms, context, { x, width, fontSize, fontFamily, align, lineHeight }) {
+export default function makeLines(atoms, context, { x, width, bold, italic, fontSize, fontFamily, align, lineHeight }) {
     const lines = [];
     let line = [];
     let currentX = x(0);
     let dy = 0;
-    let italic = false;
-    let bold = false;
     let indent = null;
     let currentFontSize = fontSize;
 
@@ -52,6 +50,9 @@ export default function makeLines(atoms, context, { x, width, fontSize, fontFami
 
     function getTextWidth(atom) {
         context.font = `${italic ? "italic " : ""}${bold ? "bold " : ""}${currentFontSize}px ${fontFamily}`;
+        if (atom === "Campaign") {
+            console.log(atom, bold, context.measureText(atom).width);
+        }
         return context.measureText(atom).width;
     }
 
