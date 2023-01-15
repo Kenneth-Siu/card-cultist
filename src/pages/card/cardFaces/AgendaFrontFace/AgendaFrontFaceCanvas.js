@@ -100,7 +100,7 @@ export default function AgendaFrontFaceCanvas({ face, cardSet, setIllustrationTr
                 new CanvasTextConfig()
                     .withText(face.title)
                     .withX(764)
-                    .withY(138)
+                    .withY(136)
                     .withFontSize(46)
                     .withFontFamily("Teutonic")
                     .withAlign(TEXTALIGN.CENTER)

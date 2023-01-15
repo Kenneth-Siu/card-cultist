@@ -100,7 +100,7 @@ export default function ActFrontFaceCanvas({ face, cardSet, setIllustrationTrans
                 new CanvasTextConfig()
                     .withText(face.title)
                     .withX(270)
-                    .withY(138)
+                    .withY(136)
                     .withFontSize(46)
                     .withFontFamily("Teutonic")
                     .withAlign(TEXTALIGN.CENTER)
