@@ -54,13 +54,19 @@ export default function ChaosTokenEffectsFaceCanvas({ face, cardSet }) {
     }, []);
 
     useEffect(async () => {
-        setFrameLayer(new CanvasImageLayer(await loadPublicImage(ChaosTokenEffectsFace.frame), new ImageTransform({ scale: 2 })));
+        setFrameLayer(
+            new CanvasImageLayer(await loadPublicImage(ChaosTokenEffectsFace.frame), new ImageTransform({ scale: 2 }))
+        );
     }, []);
 
     useEffect(async () => {
         const image = await loadFileSystemImage(face.encounterSetSymbol || cardSet.symbol);
         const transform = isSvgPath(face.encounterSetSymbol || cardSet.symbol)
-            ? transformSvgOnCanvas({ h: CARD_PORTRAIT_HEIGHT, w: CARD_PORTRAIT_WIDTH }, { h: image.height, w: image.width }, 60)
+            ? transformSvgOnCanvas(
+                  { h: CARD_PORTRAIT_HEIGHT, w: CARD_PORTRAIT_WIDTH },
+                  { h: image.height, w: image.width },
+                  60
+              )
             : null;
         setEncounterSetSymbolLayer(
             image
@@ -109,6 +115,7 @@ export default function ChaosTokenEffectsFaceCanvas({ face, cardSet }) {
         setChaosTokenEffectsLayer(
             new ChaosTokenEffectsLayer(
                 new ChaosTokenEffectsConfig()
+                    .withText(face.text)
                     .withSkullText(face.skullText)
                     .withCultistText(face.cultistText)
                     .withTabletText(face.tabletText)
@@ -121,22 +128,48 @@ export default function ChaosTokenEffectsFaceCanvas({ face, cardSet }) {
                     .withCardTitle(face.title)
             )
         );
-    }, [loadedImages, face.title, face.textFontSize, face.skullText, face.cultistText, face.tabletText, face.elderThingText]);
+    }, [
+        loadedImages,
+        face.title,
+        face.textFontSize,
+        face.text,
+        face.skullText,
+        face.cultistText,
+        face.tabletText,
+        face.elderThingText,
+    ]);
 
     useEffect(() => {
         setCopyrightInformationLayer(
-            new CanvasTextLayer(new CanvasTextConfig().withText(face.copyrightInformation).withX(36).withY(1026).withFontSize(18).withColor("white"))
+            new CanvasTextLayer(
+                new CanvasTextConfig()
+                    .withText(face.copyrightInformation)
+                    .withX(36)
+                    .withY(1026)
+                    .withFontSize(18)
+                    .withColor("white")
+            )
         );
     }, [face.copyrightInformation]);
 
     useEffect(() => {
         const text =
             face.encounterSetId || face.encounterSetMaxId
-                ? face.encounterSetId + String.fromCharCode(8202) + "/" + String.fromCharCode(8202) + face.encounterSetMaxId
+                ? face.encounterSetId +
+                  String.fromCharCode(8202) +
+                  "/" +
+                  String.fromCharCode(8202) +
+                  face.encounterSetMaxId
                 : "";
         setEncounterSetIdLayer(
             new CanvasTextLayer(
-                new CanvasTextConfig().withText(text).withX(602).withY(1026).withFontSize(18).withAlign(TEXTALIGN.RIGHT).withColor("white")
+                new CanvasTextConfig()
+                    .withText(text)
+                    .withX(602)
+                    .withY(1026)
+                    .withFontSize(18)
+                    .withAlign(TEXTALIGN.RIGHT)
+                    .withColor("white")
             )
         );
     }, [face.encounterSetId, face.encounterSetMaxId]);
@@ -144,7 +177,11 @@ export default function ChaosTokenEffectsFaceCanvas({ face, cardSet }) {
     useEffect(async () => {
         const image = await loadFileSystemImage(face.campaignSymbol || campaign.symbol);
         const transform = isSvgPath(face.campaignSymbol || campaign.symbol)
-            ? transformSvgOnCanvas({ h: CARD_PORTRAIT_HEIGHT, w: CARD_PORTRAIT_WIDTH }, { h: image.height, w: image.width }, 28)
+            ? transformSvgOnCanvas(
+                  { h: CARD_PORTRAIT_HEIGHT, w: CARD_PORTRAIT_WIDTH },
+                  { h: image.height, w: image.width },
+                  28
+              )
             : null;
         setCampaignSymbolLayer(
             image

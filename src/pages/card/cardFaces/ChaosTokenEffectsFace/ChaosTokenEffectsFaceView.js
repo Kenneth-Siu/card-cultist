@@ -38,10 +38,23 @@ export default function ChaosTokenEffectsFaceView({ faceDirection, listOfCardFac
                             onChange={(event) => set("textFontSize")(parseFloat(event.target.value))}
                         />
                     </InputContainer>
+                    <InputContainer label="Text">
+                        <textarea value={face.text} onChange={(event) => set("text")(event.target.value)} />
+                    </InputContainer>
                     <InputContainer label="Skull" type="text" value={face.skullText} setValue={set("skullText")} />
-                    <InputContainer label="Cultist" type="text" value={face.cultistText} setValue={set("cultistText")} />
+                    <InputContainer
+                        label="Cultist"
+                        type="text"
+                        value={face.cultistText}
+                        setValue={set("cultistText")}
+                    />
                     <InputContainer label="Tablet" type="text" value={face.tabletText} setValue={set("tabletText")} />
-                    <InputContainer label="Elder Thing" type="text" value={face.elderThingText} setValue={set("elderThingText")} />
+                    <InputContainer
+                        label="Elder Thing"
+                        type="text"
+                        value={face.elderThingText}
+                        setValue={set("elderThingText")}
+                    />
                 </>
             }
             expandableHeight="8rem"
@@ -57,14 +70,27 @@ export default function ChaosTokenEffectsFaceView({ faceDirection, listOfCardFac
                         setValue={set("copyrightInformation")}
                     />
                     <InputContainer label="Encounter Set ID" childId="set-id">
-                        <input type="text" value={face.encounterSetId} onChange={(event) => set("encounterSetId")(event.target.value)} />
+                        <input
+                            type="text"
+                            value={face.encounterSetId}
+                            onChange={(event) => set("encounterSetId")(event.target.value)}
+                        />
                         /
-                        <input type="text" value={face.encounterSetMaxId} onChange={(event) => set("encounterSetMaxId")(event.target.value)} />
+                        <input
+                            type="text"
+                            value={face.encounterSetMaxId}
+                            onChange={(event) => set("encounterSetMaxId")(event.target.value)}
+                        />
                     </InputContainer>
                     <InputContainer label="Campaign Symbol">
                         <button onClick={() => setCampaignSymbol()}>Load Image</button>
                     </InputContainer>
-                    <InputContainer label="Campaign Set ID" type="text" value={face.campaignSetId} setValue={set("campaignSetId")} />
+                    <InputContainer
+                        label="Campaign Set ID"
+                        type="text"
+                        value={face.campaignSetId}
+                        setValue={set("campaignSetId")}
+                    />
                 </>
             }
         />

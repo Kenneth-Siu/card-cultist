@@ -15,7 +15,7 @@ export default class ChaosTokenEffectsFace extends CardFace {
     static cultistTokenImage = cultistTokenImage;
     static tabletTokenImage = tabletTokenImage;
     static elderThingTokenImage = elderThingTokenImage;
-    static DIFFICULTY = ["Easy / Standard", "Hard / Expert"];
+    static DIFFICULTY = ["", "Easy / Standard", "Hard / Expert"];
 
     constructor(face) {
         super(face, ChaosTokenEffectsFace.type);
@@ -26,6 +26,7 @@ export default class ChaosTokenEffectsFace extends CardFace {
         this.title = face.title || "";
         this.difficulty = face.difficulty || ChaosTokenEffectsFace.DIFFICULTY[0];
         this.textFontSize = face.textFontSize || 32;
+        this.text = face.text || "";
         this.skullText = face.skullText || "";
         this.cultistText = face.cultistText || "";
         this.tabletText = face.tabletText || "";

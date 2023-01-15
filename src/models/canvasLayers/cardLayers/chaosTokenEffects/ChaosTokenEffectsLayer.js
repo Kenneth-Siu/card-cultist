@@ -1,4 +1,4 @@
-import CanvasTextConfig from "../../../CanvasTextConfig";
+import CanvasTextConfig, { TEXTALIGN } from "../../../CanvasTextConfig";
 import ImageTransform from "../../../ImageTransform";
 import CanvasImageLayer from "../../CanvasImageLayer";
 import CanvasLayer from "../../CanvasLayer";
@@ -22,7 +22,21 @@ export default class ChaosTokenEffectsLayer extends CanvasLayer {
     }
 
     draw(context, prevY) {
-        const startY = this.config.y + (this.usePrevY ? prevY : 0);
+        const boxY = this.config.y + (this.usePrevY ? prevY : 0);
+
+        const tokenEffectsStartY = this.config.text
+            ? new CanvasTextLayer(
+                  new CanvasTextConfig()
+                      .withText(this.config.text)
+                      .withAlign(TEXTALIGN.CENTER)
+                      .withX(this.config.x)
+                      .withY(boxY)
+                      .withWidth(this.config.width)
+                      .withItalic()
+                      .withFontSize(this.config.fontSize)
+                      .withLineHeight(this.config.lineHeight)
+              ).draw(context).y
+            : boxY;
 
         const numberOfSections =
             Math.min(1, this.skullText.length) +
@@ -31,24 +45,29 @@ export default class ChaosTokenEffectsLayer extends CanvasLayer {
             Math.min(1, this.elderThingText.length);
 
         if (numberOfSections === 0) {
-            return { y: startY, w: 0 };
+            return { y: tokenEffectsStartY, w: 0 };
         }
 
-        let currentY = startY;
+        let currentY = tokenEffectsStartY;
         const TOKEN_WIDTH = 96;
         const GUTTER_WIDTH = 14;
         const textX = this.config.x + TOKEN_WIDTH + GUTTER_WIDTH;
         const textW = this.config.width - TOKEN_WIDTH - GUTTER_WIDTH;
+        const height = this.config.height - (tokenEffectsStartY - boxY);
 
         const centerPoints = [
-            [startY + this.config.height / 2],
-            [startY + this.config.height / 3, startY + (2 * this.config.height) / 3],
-            [startY + this.config.height / 7, startY + (3 * this.config.height) / 7, startY + (5 * this.config.height) / 7],
+            [tokenEffectsStartY + height / 2],
+            [tokenEffectsStartY + height / 3, tokenEffectsStartY + (2 * height) / 3],
             [
-                startY + this.config.height / 8,
-                startY + (3 * this.config.height) / 8,
-                startY + (5 * this.config.height) / 8,
-                startY + (7 * this.config.height) / 8,
+                tokenEffectsStartY + height / 7,
+                tokenEffectsStartY + (3 * height) / 7,
+                tokenEffectsStartY + (5 * height) / 7,
+            ],
+            [
+                tokenEffectsStartY + height / 8,
+                tokenEffectsStartY + (3 * height) / 8,
+                tokenEffectsStartY + (5 * height) / 8,
+                tokenEffectsStartY + (7 * height) / 8,
             ],
         ];
 
@@ -59,22 +78,30 @@ export default class ChaosTokenEffectsLayer extends CanvasLayer {
             .withLineHeight(this.config.lineHeight)
             .withColor("transparent");
 
-        const skullHeight = this.skullText && new CanvasTextLayer(textConfig.withText(this.skullText).withY(currentY)).draw(context).y - currentY;
+        const skullHeight =
+            this.skullText &&
+            new CanvasTextLayer(textConfig.withText(this.skullText).withY(currentY)).draw(context).y - currentY;
 
         const cultistHeight =
-            this.cultistText && new CanvasTextLayer(textConfig.withText(this.cultistText).withY(currentY)).draw(context).y - currentY;
+            this.cultistText &&
+            new CanvasTextLayer(textConfig.withText(this.cultistText).withY(currentY)).draw(context).y - currentY;
 
-        const tabletHeight = this.tabletText && new CanvasTextLayer(textConfig.withText(this.tabletText).withY(currentY)).draw(context).y - currentY;
+        const tabletHeight =
+            this.tabletText &&
+            new CanvasTextLayer(textConfig.withText(this.tabletText).withY(currentY)).draw(context).y - currentY;
 
         const elderThingHeight =
-            this.elderThingText && new CanvasTextLayer(textConfig.withText(this.elderThingText).withY(currentY)).draw(context).y - currentY;
+            this.elderThingText &&
+            new CanvasTextLayer(textConfig.withText(this.elderThingText).withY(currentY)).draw(context).y - currentY;
 
         textConfig.withColor("black");
         const centerPointsToUse = centerPoints[numberOfSections - 1];
 
         if (this.skullText && ChaosTokenEffectsLayer.skullTokenImage) {
             const center = centerPointsToUse.shift();
-            new CanvasTextLayer(textConfig.withText(this.skullText).withY(Math.round(center - skullHeight / 2))).draw(context);
+            new CanvasTextLayer(textConfig.withText(this.skullText).withY(Math.round(center - skullHeight / 2))).draw(
+                context
+            );
             new CanvasImageLayer(
                 ChaosTokenEffectsLayer.skullTokenImage,
                 new ImageTransform()
@@ -85,7 +112,9 @@ export default class ChaosTokenEffectsLayer extends CanvasLayer {
         }
         if (this.cultistText && ChaosTokenEffectsLayer.cultistTokenImage) {
             const center = centerPointsToUse.shift();
-            new CanvasTextLayer(textConfig.withText(this.cultistText).withY(Math.round(center - cultistHeight / 2))).draw(context);
+            new CanvasTextLayer(
+                textConfig.withText(this.cultistText).withY(Math.round(center - cultistHeight / 2))
+            ).draw(context);
             new CanvasImageLayer(
                 ChaosTokenEffectsLayer.cultistTokenImage,
                 new ImageTransform()
@@ -96,7 +125,9 @@ export default class ChaosTokenEffectsLayer extends CanvasLayer {
         }
         if (this.tabletText && ChaosTokenEffectsLayer.tabletTokenImage) {
             const center = centerPointsToUse.shift();
-            new CanvasTextLayer(textConfig.withText(this.tabletText).withY(Math.round(center - tabletHeight / 2))).draw(context);
+            new CanvasTextLayer(textConfig.withText(this.tabletText).withY(Math.round(center - tabletHeight / 2))).draw(
+                context
+            );
             new CanvasImageLayer(
                 ChaosTokenEffectsLayer.tabletTokenImage,
                 new ImageTransform()
@@ -107,7 +138,9 @@ export default class ChaosTokenEffectsLayer extends CanvasLayer {
         }
         if (this.elderThingText && ChaosTokenEffectsLayer.elderThingTokenImage) {
             const center = centerPointsToUse.shift();
-            new CanvasTextLayer(textConfig.withText(this.elderThingText).withY(Math.round(center - elderThingHeight / 2))).draw(context);
+            new CanvasTextLayer(
+                textConfig.withText(this.elderThingText).withY(Math.round(center - elderThingHeight / 2))
+            ).draw(context);
             new CanvasImageLayer(
                 ChaosTokenEffectsLayer.elderThingTokenImage,
                 new ImageTransform()
@@ -117,6 +150,6 @@ export default class ChaosTokenEffectsLayer extends CanvasLayer {
             ).draw(context);
         }
 
-        return { y: startY + this.config.height, w: this.config.width };
+        return { y: tokenEffectsStartY + height, w: this.config.width };
     }
 }
