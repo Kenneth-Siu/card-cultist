@@ -50,9 +50,6 @@ export default function makeLines(atoms, context, { x, width, bold, italic, font
 
     function getTextWidth(atom) {
         context.font = `${italic ? "italic " : ""}${bold ? "bold " : ""}${currentFontSize}px ${fontFamily}`;
-        if (atom === "Campaign") {
-            console.log(atom, bold, context.measureText(atom).width);
-        }
         return context.measureText(atom).width;
     }
 

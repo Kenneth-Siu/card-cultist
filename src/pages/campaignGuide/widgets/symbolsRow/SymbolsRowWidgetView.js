@@ -27,7 +27,7 @@ export default function SymbolsRowWidgetView({ widget, page }) {
                 <label>Spacing</label>
                 <input type="number" step="1" min="0" value={widget.spacing} onChange={(event) => setSpacing(parseInt(event.target.value))} />
             </div>
-            <div className="input-container">
+            <div className="input-container symbols-list">
                 {widget.paths.map((path) => (
                     <div key={path}>
                         <label>{path}</label>

@@ -7,7 +7,7 @@ import Campaign from "./Campaign";
 import "./CampaignView.scss";
 
 export default function CampaignView() {
-    const { campaign, refreshCampaign } = useContext(CampaignContext);
+    const { campaign, setNewCampaign, refreshCampaign } = useContext(CampaignContext);
     const [newCampaignTitle, setNewCampaignTitle] = useState("");
 
     const [loadedImages, loadPublicImage, loadFileSystemImage] = useLoadedImages();
@@ -38,9 +38,7 @@ export default function CampaignView() {
                     />
                     <button
                         onClick={async () => {
-                            campaign = new Campaign();
-                            campaign.title = newCampaignTitle;
-                            refreshCampaign();
+                            setNewCampaign(newCampaignTitle);
                         }}
                     >
                         New campaign

@@ -40,11 +40,17 @@ export default function NavBar() {
         function clickCallback(event) {
             if (
                 !(event.target.classList.contains("selectable") && event.target.classList.contains("nav-link")) &&
-                !(event.target.parentElement.classList.contains("selectable") && event.target.parentElement.classList.contains("nav-link"))
+                !(
+                    event.target.parentElement.classList.contains("selectable") &&
+                    event.target.parentElement.classList.contains("nav-link")
+                )
             ) {
                 setSelectedEntity(null);
 
-                if (!event.target.classList.contains("nav-link") && !event.target.parentElement.classList.contains("nav-link")) {
+                if (
+                    !event.target.classList.contains("nav-link") &&
+                    !event.target.parentElement.classList.contains("nav-link")
+                ) {
                     setDeselected(true);
                 }
             }
@@ -109,7 +115,9 @@ export default function NavBar() {
                             exact
                             to={`/card-set/${cardSet.id}`}
                             activeClassName={`active ${deselected ? "deselected" : ""}`}
-                            className={`nav-link selectable ${selectedEntity?.cardSetId === cardSet.id && !selectedEntity?.cardId ? "selected" : ""}`}
+                            className={`nav-link selectable ${
+                                selectedEntity?.cardSetId === cardSet.id && !selectedEntity?.cardId ? "selected" : ""
+                            }`}
                             onClick={() => setSelectedEntity({ cardSetId: cardSet.id })}
                         >
                             <img src={cardSetSymbolSrcs[cardSet.id]} />
@@ -123,7 +131,10 @@ export default function NavBar() {
                                         to={`/card-set/${cardSet.id}/card/${card.id}`}
                                         activeClassName={`active ${deselected ? "deselected" : ""}`}
                                         className={`nav-link selectable ${
-                                            selectedEntity?.cardSetId === cardSet.id && selectedEntity?.cardId === card.id ? "selected" : ""
+                                            selectedEntity?.cardSetId === cardSet.id &&
+                                            selectedEntity?.cardId === card.id
+                                                ? "selected"
+                                                : ""
                                         }`}
                                         onClick={() => setSelectedEntity({ cardSetId: cardSet.id, cardId: card.id })}
                                     >

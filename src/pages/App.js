@@ -27,11 +27,19 @@ export default function App() {
     }, []);
 
     return (
-        <CampaignContext.Provider value={{ campaign, refreshCampaign: () => setCampaign(campaign.clone()) }}>
+        <CampaignContext.Provider
+            value={{
+                campaign,
+                setNewCampaign: (title) => setCampaign(new Campaign({ title })),
+                refreshCampaign: () => setCampaign(campaign.clone()),
+            }}
+        >
             <title>{campaign ? `${campaign.title} · ` : ""}Card Cultist</title>
             {campaign && <NavBar />}
             <p style={{ fontFamily: "AHCardTextSymbols", color: "transparent", position: "fixed", top: "-100px" }}>a</p>
-            <p style={{ fontFamily: "NotoColorEmoji-Regular", color: "transparent", position: "fixed", top: "-100px" }}>📚</p>
+            <p style={{ fontFamily: "NotoColorEmoji-Regular", color: "transparent", position: "fixed", top: "-100px" }}>
+                📚
+            </p>
             <p style={{ fontFamily: "Arno", color: "transparent", position: "fixed", top: "-100px" }}>a</p>
             <p style={{ fontFamily: "Teutonic", color: "transparent", position: "fixed", top: "-100px" }}>a</p>
             <Switch>

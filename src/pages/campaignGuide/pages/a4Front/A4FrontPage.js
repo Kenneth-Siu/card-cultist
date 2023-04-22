@@ -9,6 +9,8 @@ export default class A4FrontPage extends Page {
 
     constructor(pageOrId) {
         super(pageOrId, A4FrontPage.type, A4FrontPage.background);
+        const page = typeof pageOrId === "number" || !pageOrId ? {} : pageOrId;
+        this.title = page.title || "";
     }
 
     getView(pageNumber) {
