@@ -42,6 +42,7 @@ export default function App() {
             </p>
             <p style={{ fontFamily: "Arno", color: "transparent", position: "fixed", top: "-100px" }}>a</p>
             <p style={{ fontFamily: "Teutonic", color: "transparent", position: "fixed", top: "-100px" }}>a</p>
+            <p style={{ fontFamily: "Baudot", color: "transparent", position: "fixed", top: "-100px" }}>a</p>
             <Switch>
                 <Route exact={true} path="/campaign-guide">
                     <CampaignGuideView />

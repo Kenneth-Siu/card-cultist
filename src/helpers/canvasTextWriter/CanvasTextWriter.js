@@ -10,7 +10,7 @@ export class CanvasTextWriter {
         this.align = canvasTextConfig.align;
         this.verticalAlign = canvasTextConfig.verticalAlign;
         this.configFontSize = canvasTextConfig.fontSize;
-        this.fontFamily = canvasTextConfig.fontFamily;
+        this.configFontFamily = canvasTextConfig.fontFamily;
         this.boxX = canvasTextConfig.x;
         this.boxY = canvasTextConfig.y;
         this.boxW = canvasTextConfig.width;
@@ -23,6 +23,7 @@ export class CanvasTextWriter {
         this.strokeWidth = canvasTextConfig.strokeWidth;
         this.indent = null;
         this.fontSize = this.configFontSize;
+        this.fontFamily = this.configFontFamily
         this.color = this.configColor;
         this.x = this.boxX(0);
         this.y = this.boxY;
@@ -69,6 +70,7 @@ export class CanvasTextWriter {
         const startingBold = this.bold;
         const startingIndent = this.indent;
         const startingFontSize = this.fontSize;
+        const startingFontFamily = this.fontFamily;
         const startingRaisedBy = this.raisedBy;
         const lineWidth = line.reduce((currentLineWidth, atom) => {
             if (typeof atom === "string") {
@@ -87,6 +89,8 @@ export class CanvasTextWriter {
                         endFontSize: () => this.endFontSize(),
                         setColor: (value) => this.setColor(value),
                         endColor: () => this.endColor(),
+                        setFontFamily: (value) => this.setFontFamily(value),
+                        endFontFamily: () => this.endFontFamily(),
                         setRaised: (value) => this.setRaised(value),
                         endRaised: () => this.endRaised(),
                     })
@@ -97,6 +101,7 @@ export class CanvasTextWriter {
         this.bold = startingBold;
         this.indent = startingIndent;
         this.fontSize = startingFontSize;
+        this.fontFamily = startingFontFamily;
         this.raisedBy = startingRaisedBy;
         return lineWidth;
     }
@@ -127,6 +132,8 @@ export class CanvasTextWriter {
                 endFontSize: () => this.endFontSize(),
                 setColor: (value) => this.setColor(value),
                 endColor: () => this.endColor(),
+                setFontFamily: (value) => this.setFontFamily(value),
+                endFontFamily: () => this.endFontFamily(),
                 setRaised: (value) => this.setRaised(value),
                 endRaised: () => this.endRaised(),
             });
@@ -159,6 +166,14 @@ export class CanvasTextWriter {
 
     endFontSize() {
         this.fontSize = this.configFontSize;
+    }
+
+    setFontFamily(value) {
+        this.fontFamily = value;
+    }
+
+    endFontFamily() {
+        this.fontFamily = this.configFontFamily;
     }
 
     setItalic(value) {

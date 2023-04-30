@@ -8,6 +8,7 @@ export default function makeLines(atoms, context, { x, width, bold, italic, font
     let dy = 0;
     let indent = null;
     let currentFontSize = fontSize;
+    let currentFontFamily = fontFamily;
 
     atoms.forEach((atom) => {
         atom.addToLine({
@@ -22,6 +23,8 @@ export default function makeLines(atoms, context, { x, width, bold, italic, font
             endIndent,
             setFontSize,
             endFontSize,
+            setFontFamily,
+            endFontFamily,
             setColor: () => {},
             endColor: () => {},
             setRaised: () => {},
@@ -49,7 +52,7 @@ export default function makeLines(atoms, context, { x, width, bold, italic, font
     }
 
     function getTextWidth(atom) {
-        context.font = `${italic ? "italic " : ""}${bold ? "bold " : ""}${currentFontSize}px ${fontFamily}`;
+        context.font = `${italic ? "italic " : ""}${bold ? "bold " : ""}${currentFontSize}px ${currentFontFamily}`;
         return context.measureText(atom).width;
     }
 
@@ -94,5 +97,13 @@ export default function makeLines(atoms, context, { x, width, bold, italic, font
 
     function endFontSize() {
         currentFontSize = fontSize;
+    }
+
+    function setFontFamily(value) {
+        currentFontFamily = value;
+    }
+
+    function endFontFamily() {
+        currentFontFamily = fontFamily;
     }
 }
