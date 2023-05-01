@@ -24,6 +24,24 @@ export default class CampaignGuide {
         }
     }
 
+    swapPageUp(page) {
+        const index = this.pages.findIndex((p) => p === page);
+        if (index > 0) {
+            this.swapPages(index - 1, index);
+        }
+    }
+
+    swapPageDown(page) {
+        const index = this.pages.findIndex((p) => p === page);
+        if (index > -1 && index < this.pages.length - 1) {
+            this.swapPages(index + 1, index);
+        }
+    }
+
+    swapPages(index1, index2) {
+        [this.pages[index1], this.pages[index2]] = [this.pages[index2], this.pages[index1]];
+    }
+
     deletePage(page) {
         remove(this.pages, (p) => p === page);
     }

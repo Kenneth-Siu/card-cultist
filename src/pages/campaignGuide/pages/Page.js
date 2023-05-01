@@ -60,12 +60,12 @@ export default class Page {
 
     swapWidgetDown(widget) {
         const leftColumnIndex = this.leftColumnWidgets.findIndex((leftWidget) => leftWidget === widget);
-        if (leftColumnIndex > 0) {
+        if (leftColumnIndex > -1 && leftColumnIndex < this.leftColumnWidgets.length - 1) {
             this.swapWidgets(this.leftColumnWidgets, leftColumnIndex + 1, leftColumnIndex);
             return;
         }
         const rightColumnIndex = this.rightColumnWidgets.findIndex((rightWidget) => rightWidget === widget);
-        if (rightColumnIndex > 0) {
+        if (rightColumnIndex > -1 && rightColumnIndex < this.rightColumnWidgets.length - 1) {
             this.swapWidgets(this.rightColumnWidgets, rightColumnIndex + 1, rightColumnIndex);
         }
     }
