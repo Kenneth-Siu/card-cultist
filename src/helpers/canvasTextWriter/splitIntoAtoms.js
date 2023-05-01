@@ -67,11 +67,6 @@ export default function splitIntoAtoms(text, canvasTextConfig) {
     let indentStarted = false;
 
     while (text.length > 0) {
-        if (text.startsWith(" ")) {
-            atoms.push(new Space());
-            text = text.substring(1);
-            continue;
-        }
         if (text.startsWith("\r\n")) {
             if (indentStarted) {
                 atoms.push(new EndIndent());
@@ -125,6 +120,23 @@ export default function splitIntoAtoms(text, canvasTextConfig) {
             atoms.push(new StartIndent());
             indentStarted = true;
             text = text.substring(3);
+            continue;
+        }
+        if ((atoms.length === 0 || atoms[atoms.length - 1] instanceof NewLine) && text.startsWith("  * ")) {
+            for (let i = 0; i < 8; i++) {
+                atoms.push(new Space());
+            }
+            atoms.push(bulletAHSymbol);
+            atoms.push(new Space());
+            atoms.push(new StartIndent());
+            indentStarted = true;
+            text = text.substring(4);
+            continue;
+        }
+
+        if (text.startsWith(" ")) {
+            atoms.push(new Space());
+            text = text.substring(1);
             continue;
         }
 
