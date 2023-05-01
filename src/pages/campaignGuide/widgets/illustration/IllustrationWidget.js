@@ -19,10 +19,10 @@ export default class IllustrationWidget extends Widget {
     }
 
     draw(context, x, y) {
-        if (!this.path || !IllustrationWidget.dictionary[this.id]) {
+        if (!this.path || !IllustrationWidget.dictionary[this.path]) {
             return { y, w: 0 };
         }
-        const layer = new CanvasImageLayer(IllustrationWidget.dictionary[this.id], this.transform.withX(x + this.xNudge).withY(y + this.yNudge));
+        const layer = new CanvasImageLayer(IllustrationWidget.dictionary[this.path], this.transform.withX(x + this.xNudge).withY(y + this.yNudge));
         return layer.draw(context);
     }
 }

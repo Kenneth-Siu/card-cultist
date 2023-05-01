@@ -11,7 +11,7 @@ export default function IllustrationWidgetView({ widget, page }) {
     useEffect(async () => {
         if (widget.path) {
             const image = await loadFileSystemImage(widget.path);
-            IllustrationWidget.dictionary[widget.id] = image;
+            IllustrationWidget.dictionary[widget.path] = image;
             refreshCampaign();
         }
     }, []);
@@ -48,7 +48,7 @@ export default function IllustrationWidgetView({ widget, page }) {
         const path = await window.fs.chooseImage();
         widget.path = path;
         const image = await loadFileSystemImage(path);
-        IllustrationWidget.dictionary[widget.id] = image;
+        IllustrationWidget.dictionary[widget.path] = image;
         refreshCampaign();
     }
 
