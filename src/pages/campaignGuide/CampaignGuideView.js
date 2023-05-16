@@ -39,6 +39,7 @@ export default function CampaignGuide() {
             unit: "px",
             hotfixes: ["px_scaling"],
             format: [document.querySelector(".campaign-guide-page canvas").width, document.querySelector(".campaign-guide-page canvas").height],
+            compress: true
         });
         document.querySelectorAll(".campaign-guide-page canvas").forEach((page, index) => {
             if (index !== 0) {
