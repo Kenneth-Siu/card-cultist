@@ -47,6 +47,6 @@ export default function CampaignGuide() {
             }
             pdf.addImage(page, "PNG", 0, 0);
         });
-        pdf.save("campaignGuide.pdf");
+        pdf.save("campaignGuide");
     }
 }
