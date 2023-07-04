@@ -5,6 +5,7 @@ import TextWidget from "./text/TextWidget";
 import Header1Widget from "./header1/Header1Widget";
 import ResolutionBoxWidget from "./resolutionBox/ResolutionBoxWidget";
 import SymbolsRowWidget from "./symbolsRow/SymbolsRowWidget";
+import InterludeBoxWidget from "./interludeBox/InterludeBoxWidget";
 
 const listOfWidgetTypes = [
     TextWidget,
@@ -14,6 +15,7 @@ const listOfWidgetTypes = [
     SymbolsRowWidget,
     ResolutionBoxWidget,
     DecoBoxWidget,
+    InterludeBoxWidget,
 ];
 
 export default listOfWidgetTypes;

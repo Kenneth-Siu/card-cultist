@@ -54,6 +54,19 @@ export const DECO_BOX = Object.freeze({
         RIGHT: 180,
     }),
 });
+
+export const INTERLUDE_BOX = Object.freeze({
+    BACKGROUND_ALPHA: 0.175,
+    TOP_MARGIN: 44,
+    BOTTOM_MARGIN: 44,
+    HORIZONTAL_MARGIN: 4,
+    BLUR_DISTANCE: 50,
+    PARAGRAPH_INTER_MARGIN: 40,
+    PADDING: 50,
+    STROKE_WIDTH: 9,
+    CORNER_RADIUS: 104,
+});
+
 export const DEFAULT_CAMPAIGN_GUIDE_COLOR_THEME = "rgb(38,73,59)";
 
 export const PAGE_NUMBER_FONT_SIZE = 50;
