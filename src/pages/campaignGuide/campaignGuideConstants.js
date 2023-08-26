@@ -63,7 +63,7 @@ export const INTERLUDE_BOX = Object.freeze({
     BLUR_DISTANCE: 50,
     PARAGRAPH_INTER_MARGIN: 40,
     PADDING: 50,
-    STROKE_WIDTH: 9,
+    STROKE_WIDTH: 8,
     CORNER_RADIUS: 104,
 });
 

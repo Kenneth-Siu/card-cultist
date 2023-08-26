@@ -25,7 +25,10 @@ contextBridge.exposeInMainWorld("fs", {
     openImage: (path) => {
         return ipcRenderer.invoke("fs:openImage", path);
     },
-    exportCardImage: (campaignPath, cardSetName, fileName, dataView) => {
-        return ipcRenderer.invoke("fs:exportCardImage", campaignPath, cardSetName, fileName, dataView);
+    exportFile: (campaignPath, cardSetName, fileName, dataView) => {
+        return ipcRenderer.invoke("fs:exportFile", campaignPath, cardSetName, fileName, dataView);
     },
+    exportTtsSaveObject: (campaignPath, cardSetName, fileName, ttsSaveObject) => {
+        return ipcRenderer.invoke("fs:exportTtsSaveObject", campaignPath, cardSetName, fileName, ttsSaveObject);
+    }
 });

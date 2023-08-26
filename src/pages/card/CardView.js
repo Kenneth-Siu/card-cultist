@@ -63,7 +63,7 @@ export default function CardView() {
         document.querySelector(".face-view:nth-child(2) canvas").toBlob(
             (canvasBlob) => {
                 return canvasBlob.arrayBuffer().then((arrayBuffer) => {
-                    return window.fs.exportCardImage(
+                    return window.fs.exportFile(
                         campaign.path,
                         cardSet.getTitle(),
                         `${card.getTitle()} (Front).${extension}`,
@@ -77,7 +77,7 @@ export default function CardView() {
         document.querySelector(".face-view:nth-child(3) canvas").toBlob(
             (canvasBlob) => {
                 return canvasBlob.arrayBuffer().then((arrayBuffer) => {
-                    return window.fs.exportCardImage(
+                    return window.fs.exportFile(
                         campaign.path,
                         cardSet.getTitle(),
                         `${card.getTitle()} (Back).${extension}`,

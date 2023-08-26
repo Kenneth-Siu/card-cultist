@@ -81,7 +81,7 @@ async function openImage(event, path) {
     return await readFile(path);
 }
 
-async function exportCardImage(event, campaignPath, cardSetName, fileName, dataView) {
+async function exportFile(event, campaignPath, cardSetName, fileName, dataView) {
     const exportsFolderPath = path.join(campaignPath, "..", "Exports");
     try {
         await mkdir(exportsFolderPath);
@@ -104,6 +104,27 @@ async function exportCardImage(event, campaignPath, cardSetName, fileName, dataV
     await writeFile(path.join(exportsFolderPath, cardSetName, fileName), dataView);
 }
 
+async function exportTtsSaveObject(event, campaignPath, fileName, ttsSaveObject) {
+    const exportsFolderPath = path.join(campaignPath, "..", "Exports");
+    try {
+        await mkdir(exportsFolderPath);
+    } catch (exception) {
+        if (exception.code !== "EEXIST") {
+            // TODO proper error handling...
+            console.log(exception);
+        }
+    }
+    try {
+        await mkdir(path.join(exportsFolderPath, "ttsSaveObjects"));
+    } catch (exception) {
+        if (exception.code !== "EEXIST") {
+            // TODO proper error handling...
+            console.log(exception);
+        }
+    }
+    await writeFile(path.join(exportsFolderPath, "ttsSaveObjects", fileName), JSON.stringify(ttsSaveObject), { encoding: "utf-8" });
+}
+
 function initFileSystemIpc() {
     ipcMain.handle("fs:openCampaign", openCampaign);
     ipcMain.handle("fs:saveCampaign", saveCampaign);
@@ -113,7 +134,8 @@ function initFileSystemIpc() {
     ipcMain.handle("fs:chooseIcon", chooseIcon);
     ipcMain.handle("fs:chooseImage", chooseImage);
     ipcMain.handle("fs:openImage", openImage);
-    ipcMain.handle("fs:exportCardImage", exportCardImage);
+    ipcMain.handle("fs:exportFile", exportFile);
+    ipcMain.handle("fs:exportTtsSaveObject", exportTtsSaveObject);
 }
 
 module.exports = { initFileSystemIpc };
