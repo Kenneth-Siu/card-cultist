@@ -7,7 +7,7 @@ import Campaign from "./Campaign";
 import "./CampaignView.scss";
 
 export default function CampaignView() {
-    const { campaign, setNewCampaign, refreshCampaign } = useContext(CampaignContext);
+    let { campaign, setNewCampaign, loadCampaign, refreshCampaign } = useContext(CampaignContext);
     const [newCampaignTitle, setNewCampaignTitle] = useState("");
 
     const [loadedImages, loadPublicImage, loadFileSystemImage] = useLoadedImages();
@@ -48,8 +48,7 @@ export default function CampaignView() {
                             // TODO Failure handling
                             const openedCampaign = await window.fs.openCampaign();
                             if (openedCampaign) {
-                                campaign = new Campaign(openedCampaign);
-                                refreshCampaign();
+                                loadCampaign(new Campaign(openedCampaign));
                             }
                         }}
                     >

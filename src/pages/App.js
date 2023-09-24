@@ -31,6 +31,7 @@ export default function App() {
             value={{
                 campaign,
                 setNewCampaign: (title) => setCampaign(new Campaign({ title })),
+                loadCampaign: (campaign) => setCampaign(campaign),
                 refreshCampaign: () => setCampaign(campaign.clone()),
             }}
         >
