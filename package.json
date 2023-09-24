@@ -27,6 +27,7 @@
         "express": "^4.17.1",
         "file-saver": "^2.0.5",
         "jspdf": "^2.5.1",
+        "lodash.debounce": "^4.0.8",
         "lodash.remove": "^4.1.1",
         "lodash.throttle": "^4.1.1",
         "react": "^17.0.1",
