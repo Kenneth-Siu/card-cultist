@@ -36,13 +36,6 @@ export default function App() {
         >
             <title>{campaign ? `${campaign.title} · ` : ""}Card Cultist</title>
             {campaign && <NavBar />}
-            <p style={{ fontFamily: "AHCardTextSymbols", color: "transparent", position: "fixed", top: "-100px" }}>a</p>
-            <p style={{ fontFamily: "NotoColorEmoji-Regular", color: "transparent", position: "fixed", top: "-100px" }}>
-                📚
-            </p>
-            <p style={{ fontFamily: "Arno", color: "transparent", position: "fixed", top: "-100px" }}>a</p>
-            <p style={{ fontFamily: "Teutonic", color: "transparent", position: "fixed", top: "-100px" }}>a</p>
-            <p style={{ fontFamily: "Baudot", color: "transparent", position: "fixed", top: "-100px" }}>a</p>
             <Switch>
                 <Route exact={true} path="/campaign-guide">
                     <CampaignGuideView />

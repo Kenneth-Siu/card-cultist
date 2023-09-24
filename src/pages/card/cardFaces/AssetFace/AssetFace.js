@@ -69,7 +69,7 @@ export default class AssetFace extends CardFace {
     }
 
     getEmoji() {
-        return "🔦";
+        return "🔍";
     }
 
     autofill(other) {
