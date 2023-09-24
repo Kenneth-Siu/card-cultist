@@ -6,6 +6,7 @@ import CanvasTextLayer from "../../../../models/canvasLayers/CanvasTextLayer";
 import CanvasTextConfig, { TEXTALIGN } from "../../../../models/CanvasTextConfig";
 import ImageTransform from "../../../../models/ImageTransform";
 import { PAGE_NUMBER_FONT_SIZE, A4, INTER_WIDGET_MARGIN } from "../../campaignGuideConstants";
+import A4Page from "./A4Page";
 
 // TODO update page numbers to use number font for cards
 
@@ -25,7 +26,8 @@ export default function A4PageCanvas({ page, pageNumber }) {
     }, [backgroundLayer, pageNumberLayer, campaign]);
 
     useEffect(async () => {
-        setBackgroundLayer(new CanvasImageLayer(await loadPublicImage(page.background), new ImageTransform({ scale: 2 })));
+        console.log(A4Page.background);
+        setBackgroundLayer(new CanvasImageLayer(await loadPublicImage(A4Page.background), new ImageTransform({ scale: 2 })));
     }, []);
 
     useEffect(() => {

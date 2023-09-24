@@ -6,6 +6,7 @@ import CanvasTextLayer from "../../../../models/canvasLayers/CanvasTextLayer";
 import CanvasTextConfig, { TEXTALIGN } from "../../../../models/CanvasTextConfig";
 import ImageTransform from "../../../../models/ImageTransform";
 import { A4, FRONT_PAGE_TITLE_FONT_SIZE, INTER_WIDGET_MARGIN } from "../../campaignGuideConstants";
+import A4FrontPage from "./A4FrontPage";
 
 // TODO update page numbers to use number font for cards
 
@@ -25,7 +26,7 @@ export default function A4FrontPageCanvas({ page, pageNumber }) {
     }, [backgroundLayer, titleLayer, campaign]);
 
     useEffect(async () => {
-        setBackgroundLayer(new CanvasImageLayer(await loadPublicImage(page.background), new ImageTransform({ scale: 2 })));
+        setBackgroundLayer(new CanvasImageLayer(await loadPublicImage(A4FrontPage.background), new ImageTransform({ scale: 2 })));
     }, []);
 
     useEffect(() => {

@@ -6,6 +6,7 @@ import CanvasTextLayer from "../../../../models/canvasLayers/CanvasTextLayer";
 import CanvasTextConfig, { TEXTALIGN } from "../../../../models/CanvasTextConfig";
 import ImageTransform from "../../../../models/ImageTransform";
 import { FRONT_PAGE_TITLE_FONT_SIZE, INTER_WIDGET_MARGIN, SQUARE } from "../../campaignGuideConstants";
+import SquareFrontPage from "./SquareFrontPage";
 
 export default function SquareFrontPageCanvas({ page }) {
     const { campaign } = useContext(CampaignContext);
@@ -23,7 +24,7 @@ export default function SquareFrontPageCanvas({ page }) {
     }, [backgroundLayer, titleLayer, campaign]);
 
     useEffect(async () => {
-        setBackgroundLayer(new CanvasImageLayer(await loadPublicImage(page.background), new ImageTransform({ scale: 2 })));
+        setBackgroundLayer(new CanvasImageLayer(await loadPublicImage(SquareFrontPage.background), new ImageTransform({ scale: 2 })));
     }, []);
 
     useEffect(() => {

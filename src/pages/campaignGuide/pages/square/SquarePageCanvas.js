@@ -6,6 +6,7 @@ import CanvasTextLayer from "../../../../models/canvasLayers/CanvasTextLayer";
 import CanvasTextConfig, { TEXTALIGN } from "../../../../models/CanvasTextConfig";
 import ImageTransform from "../../../../models/ImageTransform";
 import { INTER_WIDGET_MARGIN, PAGE_NUMBER_FONT_SIZE, SQUARE } from "../../campaignGuideConstants";
+import SquarePage from "./SquarePage";
 
 // TODO update page numbers to use number font for cards
 
@@ -25,7 +26,7 @@ export default function SquarePageCanvas({ page, pageNumber }) {
     }, [backgroundLayer, pageNumberLayer, campaign]);
 
     useEffect(async () => {
-        setBackgroundLayer(new CanvasImageLayer(await loadPublicImage(page.background), new ImageTransform({ scale: 2 })));
+        setBackgroundLayer(new CanvasImageLayer(await loadPublicImage(SquarePage.background), new ImageTransform({ scale: 2 })));
     }, []);
 
     useEffect(() => {
