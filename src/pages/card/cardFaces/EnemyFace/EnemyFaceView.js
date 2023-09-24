@@ -27,7 +27,13 @@ export default function EnemyFaceView({ faceDirection, listOfCardFaces, otherFac
                         </label>
                     </InputContainer>
                     <InputContainer label="Subtitle" type="text" value={face.subtitle} setValue={set("subtitle")} />
-                    <InputContainer label="Fight" type="text" value={face.fight} setValue={set("fight")} />
+                    <InputContainer label="Fight">
+                        <input type="text" value={face.fight} onChange={(event) => set("fight")(event.target.value)} />
+                        <label>
+                            Per investigator?
+                            <input type="checkbox" checked={face.fightIsPer} onChange={() => toggleFightIsPer()} />
+                        </label>
+                    </InputContainer>
                     <InputContainer label="Health">
                         <input type="text" value={face.health} onChange={(event) => set("health")(event.target.value)} />
                         <label>
@@ -35,7 +41,13 @@ export default function EnemyFaceView({ faceDirection, listOfCardFaces, otherFac
                             <input type="checkbox" checked={face.healthIsPer} onChange={() => toggleHealthIsPer()} />
                         </label>
                     </InputContainer>
-                    <InputContainer label="Evade" type="text" value={face.evade} setValue={set("evade")} />
+                    <InputContainer label="Evade">
+                        <input type="text" value={face.evade} onChange={(event) => set("evade")(event.target.value)} />
+                        <label>
+                            Per investigator?
+                            <input type="checkbox" checked={face.evadeIsPer} onChange={() => toggleEvadeIsPer()} />
+                        </label>
+                    </InputContainer>
                     <InputContainer label="Traits" type="text" value={face.traits} setValue={set("traits")} />
                     <InputContainer label="Font Size">
                         <input
@@ -120,8 +132,18 @@ export default function EnemyFaceView({ faceDirection, listOfCardFaces, otherFac
         refreshCampaign();
     }
 
+    function toggleFightIsPer() {
+        face.fightIsPer = !face.fightIsPer;
+        refreshCampaign();
+    }
+
     function toggleHealthIsPer() {
         face.healthIsPer = !face.healthIsPer;
+        refreshCampaign();
+    }
+
+    function toggleEvadeIsPer() {
+        face.evadeIsPer = !face.evadeIsPer;
         refreshCampaign();
     }
 

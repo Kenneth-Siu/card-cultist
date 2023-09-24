@@ -24,9 +24,11 @@ export default class EnemyFace extends CardFace {
         this.title = face.title || "";
         this.subtitle = face.subtitle || "";
         this.fight = face.fight || "";
+        this.fightIsPer = face.fightIsPer || false;
         this.health = face.health || "";
-        this.healthIsPer = face.healthIsPer || "";
+        this.healthIsPer = face.healthIsPer || false;
         this.evade = face.evade || "";
+        this.evadeIsPer = face.evadeIsPer || false;
         this.traits = face.traits || "";
         this.text = face.text || "";
         this.textFontSize = face.textFontSize || 34;
@@ -79,9 +81,11 @@ export default class EnemyFace extends CardFace {
         this.autofillField("title", other);
         this.autofillField("subtitle", other);
         this.autofillField("fight", other);
+        this.autofillField("fightIsPer", other);
         this.autofillField("health", other);
         this.autofillField("healthIsPer", other);
         this.autofillField("evade", other);
+        this.autofillField("evadeIsPer", other);
         this.autofillField("traits", other);
         this.autofillField("text", other);
         this.autofillField("victory", other);

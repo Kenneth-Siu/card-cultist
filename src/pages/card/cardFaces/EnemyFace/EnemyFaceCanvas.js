@@ -119,8 +119,8 @@ export default function EnemyFaceCanvas({ face, cardSet, setIllustrationTransfor
         setFightLayer(
             new CanvasTextLayer(
                 new CanvasTextConfig()
-                    .withText(face.fight)
-                    .withX(240)
+                    .withText(face.fight + (face.fightIsPer ? "<raised=2><size=30>r</size></raised>" : ""))
+                    .withX(240 + (face.fightIsPer ? 5 : 0))
                     .withY(120)
                     .withFontSize(38)
                     .withFontFamily("AHCardTextSymbols")
@@ -130,7 +130,7 @@ export default function EnemyFaceCanvas({ face, cardSet, setIllustrationTransfor
                     .withStrokeWidth(3)
             )
         );
-    }, [face.fight]);
+    }, [face.fight, face.fightIsPer]);
 
     useEffect(async () => {
         setHealthLayer(
@@ -153,8 +153,8 @@ export default function EnemyFaceCanvas({ face, cardSet, setIllustrationTransfor
         setEvadeLayer(
             new CanvasTextLayer(
                 new CanvasTextConfig()
-                    .withText(face.evade)
-                    .withX(520)
+                    .withText(face.evade + (face.evadeIsPer ? "<raised=2><size=30>r</size></raised>" : ""))
+                    .withX(520 + (face.evadeIsPer ? 5 : 0))
                     .withY(120)
                     .withFontSize(38)
                     .withFontFamily("AHCardTextSymbols")
@@ -164,7 +164,7 @@ export default function EnemyFaceCanvas({ face, cardSet, setIllustrationTransfor
                     .withStrokeWidth(3)
             )
         );
-    }, [face.evade]);
+    }, [face.evade, face.evadeIsPer]);
 
     useEffect(() => {
         setTraitsLayer(
