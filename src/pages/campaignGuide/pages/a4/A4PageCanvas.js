@@ -26,7 +26,6 @@ export default function A4PageCanvas({ page, pageNumber }) {
     }, [backgroundLayer, pageNumberLayer, campaign]);
 
     useEffect(async () => {
-        console.log(A4Page.background);
         setBackgroundLayer(new CanvasImageLayer(await loadPublicImage(A4Page.background), new ImageTransform({ scale: 2 })));
     }, []);
 
