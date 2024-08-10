@@ -16,10 +16,10 @@ export default class CampaignGuide {
             : [];
     }
 
-    addPage(pageType) {
+    addPage(pageType, index) {
         for (let i = 0; i < listOfPageTypes.length; i++) {
             if (listOfPageTypes[i].type === pageType) {
-                this.pages.push(new listOfPageTypes[i](generateId(this.pages)));
+                this.pages.splice(index, 0, new listOfPageTypes[i](generateId(this.pages)));
             }
         }
     }

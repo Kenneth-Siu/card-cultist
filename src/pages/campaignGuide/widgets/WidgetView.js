@@ -8,21 +8,47 @@ export default function WidgetView({ widget, page, children, className }) {
             <div className="heading-container">
                 <label>{widget.type}</label>
                 <div className="widget-toolbar">
-                    <button onClick={() => swapUp()}>⬆</button>
-                    <button onClick={() => swapDown()}>⬇</button>
+                    <button onClick={() => swapUp()} title="Swap widget up">⬆</button>
+                    <button onClick={() => swapDown()} title="Swap widget down">⬇</button>
                     <button
                         onClick={() => {
                             setXNudge(0);
                             setYNudge(0);
                         }}
+                        title="Reset widget to default position"
                     >
                         🔄
                     </button>
-                    <button onClick={(event) => setXNudge(widget.xNudge - getNudge(event))}>👈</button>
-                    <button onClick={(event) => setXNudge(widget.xNudge + getNudge(event))}>👉</button>
-                    <button onClick={(event) => setYNudge(widget.yNudge - getNudge(event))}>👆</button>
-                    <button onClick={(event) => setYNudge(widget.yNudge + getNudge(event))}>👇</button>
-                    <button onClick={() => deleteWidget()}>❌</button>
+                    <button
+                        onClick={(event) => setXNudge(widget.xNudge - getNudge(event))}
+                        title="Nudge widget left"
+                    >
+                        👈
+                    </button>
+                    <button
+                        onClick={(event) => setXNudge(widget.xNudge + getNudge(event))}
+                        title="Nudge widget right"
+                    >
+                        👉
+                    </button>
+                    <button
+                        onClick={(event) => setYNudge(widget.yNudge - getNudge(event))}
+                        title="Nudge widget up"
+                    >
+                        👆
+                    </button>
+                    <button
+                        onClick={(event) => setYNudge(widget.yNudge + getNudge(event))}
+                        title="Nudge widget down"
+                    >
+                        👇
+                    </button>
+                    <button
+                        onClick={() => deleteWidget()}
+                        title="Delete widget"
+                    >
+                        ❌
+                    </button>
                 </div>
             </div>
             {children}

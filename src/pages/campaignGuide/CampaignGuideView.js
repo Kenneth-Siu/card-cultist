@@ -3,6 +3,7 @@ import { jsPDF } from "jspdf";
 import listOfPageTypes from "./pages/listOfPageTypes";
 import "./CampaignGuideView.scss";
 import { CampaignContext } from "../../components/CampaignContext";
+import IconButton from "../../components/iconButton/IconButton";
 
 export default function CampaignGuide() {
     const { campaign, refreshCampaign } = useContext(CampaignContext);
@@ -11,9 +12,8 @@ export default function CampaignGuide() {
 
     return (
         <main className="campaign-guide-page">
-            <div>
-                <button onClick={() => downloadPDF()}>Export as PDF</button>
-                <div>
+            <div className="toolbar">
+                <div className="page-navigation">
                     <label>Page {currentPageIndex + 1}</label>
                     <input
                         type={"range"}
@@ -23,9 +23,6 @@ export default function CampaignGuide() {
                         onChange={(event) => setCurrentPageIndex(event.target.value - 1)}
                     />
                 </div>
-            </div>
-            <div>
-                {campaign.campaignGuide.pages[currentPageIndex].getView(currentPageIndex + 1)}
                 <select value={newPageType} onChange={(event) => setNewPageType(event.target.value)}>
                     {listOfPageTypes.map((pageType) => (
                         <option key={pageType.type} value={pageType.type}>
@@ -33,15 +30,21 @@ export default function CampaignGuide() {
                         </option>
                     ))}
                 </select>
-                <button className="add-page-button" onClick={() => addPage()}>
-                    + Page
-                </button>
+                <IconButton onClick={() => addPage()}>
+                    <span className="emoji">➕</span> Add page after this
+                </IconButton>
+                <IconButton onClick={() => downloadPDF()}>
+                    <span className="emoji">💾</span> Export entire campaign guide as PDF
+                </IconButton>
+            </div>
+            <div>
+                {campaign.campaignGuide.pages[currentPageIndex].getView(currentPageIndex + 1)}
             </div>
         </main>
     );
 
     function addPage() {
-        campaign.campaignGuide.addPage(newPageType);
+        campaign.campaignGuide.addPage(newPageType, currentPageIndex + 1);
         refreshCampaign();
     }
 

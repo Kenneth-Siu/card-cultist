@@ -1,7 +1,23 @@
 .campaign-guide-page {
     padding: 0.5rem;
 
-    .page-view:not(:last-child) {
+    .toolbar {
+        display: flex;
+        margin-bottom: 0.5rem;
+
+        .page-navigation {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+
+            label {
+                flex-shrink: 0;
+                margin-right: 0.5rem;
+            }
+        }
+    }
+
+    .page-view {
         margin-bottom: 0.5rem;
     }
 

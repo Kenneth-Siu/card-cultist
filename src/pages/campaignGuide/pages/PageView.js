@@ -15,13 +15,13 @@ export default function PageView({ page, pageNumber, toolbarExtras, canvas }) {
         <Container className={`page-view page-${pageNumber}`}>
             <Container className="toolbar">
                 <IconButton onClick={() => downloadPDF()}>
-                    <span className="emoji">💾</span> Export PDF
+                    <span className="emoji">💾</span> Export page as PDF
                 </IconButton>
                 <IconButton onClick={() => swapPageUp()}>
-                    <span className="emoji">⬆</span> Swap up
+                    <span className="emoji">⬆</span> Swap page up
                 </IconButton>
                 <IconButton onClick={() => swapPageDown()}>
-                    <span className="emoji">⬇</span> Swap down
+                    <span className="emoji">⬇</span> Swap page down
                 </IconButton>
                 <IconButton onClick={() => deletePage()}>
                     <span className="emoji">🗑</span> Delete page
@@ -44,7 +44,7 @@ export default function PageView({ page, pageNumber, toolbarExtras, canvas }) {
                             ))}
                         </select>
                         <button onClick={() => addWidgetToLeftColumn()} className="add-widget-button">
-                            + Widget
+                            Add Widget
                         </button>
                     </div>
                     <div className="right-column">
@@ -60,7 +60,7 @@ export default function PageView({ page, pageNumber, toolbarExtras, canvas }) {
                             ))}
                         </select>
                         <button onClick={() => addWidgetToRightColumn()} className="add-widget-button">
-                            + Widget
+                            Add Widget
                         </button>
                     </div>
                 </div>
