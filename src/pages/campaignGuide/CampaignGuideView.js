@@ -7,14 +7,25 @@ import { CampaignContext } from "../../components/CampaignContext";
 export default function CampaignGuide() {
     const { campaign, refreshCampaign } = useContext(CampaignContext);
     const [newPageType, setNewPageType] = useState(listOfPageTypes[0].type);
+    const [currentPageIndex, setCurrentPageIndex] = useState(0);
 
     return (
         <main className="campaign-guide-page">
             <div>
                 <button onClick={() => downloadPDF()}>Export as PDF</button>
+                <div>
+                    <label>Page {currentPageIndex + 1}</label>
+                    <input
+                        type={"range"}
+                        min={1}
+                        max={campaign.campaignGuide.pages.length}
+                        value={currentPageIndex + 1}
+                        onChange={(event) => setCurrentPageIndex(event.target.value - 1)}
+                    />
+                </div>
             </div>
             <div>
-                {campaign.campaignGuide.pages.map((page, index) => page.getView(index + 1))}
+                {campaign.campaignGuide.pages[currentPageIndex].getView(currentPageIndex + 1)}
                 <select value={newPageType} onChange={(event) => setNewPageType(event.target.value)}>
                     {listOfPageTypes.map((pageType) => (
                         <option key={pageType.type} value={pageType.type}>
