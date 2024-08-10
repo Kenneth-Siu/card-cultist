@@ -23,6 +23,7 @@ export default function PageView({ page, pageNumber, toolbarExtras, canvas }) {
                 <IconButton onClick={() => swapPageDown()}>
                     <span className="emoji">⬇</span> Swap page down
                 </IconButton>
+                {/* TODO: Deleting the last page crashes the app */}
                 <IconButton onClick={() => deletePage()}>
                     <span className="emoji">🗑</span> Delete page
                 </IconButton>

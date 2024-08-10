@@ -28,7 +28,7 @@ export default function CardView() {
     }
 
     return (
-        <main className="card-page">
+        <main className="card-page" key={id}>
             <Container className="toolbar">
                 <label className="num-of-copies">
                     # of copies
