@@ -29,9 +29,7 @@ export default function AgendaActFrontFaceView({ faceDirection, listOfCardFaces,
                             onChange={(event) => set("textFontSize")(parseFloat(event.target.value))}
                         />
                     </InputContainer>
-                    <InputContainer label="Text">
-                        <textarea value={face.text} onChange={(event) => set("text")(event.target.value)} />
-                    </InputContainer>
+                    <InputContainer label="Text" type="textarea" value={face.text} setValue={set("text")} />
                     <InputContainer label="Threshold">
                         <input type="text" value={face.threshold} onChange={(event) => set("threshold")(event.target.value)} />
                         <label>

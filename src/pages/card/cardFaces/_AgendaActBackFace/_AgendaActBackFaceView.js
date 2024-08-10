@@ -29,26 +29,14 @@ export default function AgendaActBackFaceView({ faceDirection, listOfCardFaces, 
                         />
                     </InputContainer>
                     <InputContainer label="Header 1" type="text" value={face.header1} setValue={set("header1")} />
-                    <InputContainer label="Story 1">
-                        <textarea value={face.story1} onChange={(event) => set("story1")(event.target.value)} />
-                    </InputContainer>
-                    <InputContainer label="Text 1">
-                        <textarea value={face.text1} onChange={(event) => set("text1")(event.target.value)} />
-                    </InputContainer>
+                    <InputContainer label="Story 1" type="textarea" value={face.story1} setValue={set("story1")} />
+                    <InputContainer label="Text 1" type="textarea" value={face.text1} setValue={set("text1")} />
                     <InputContainer label="Header 2" type="text" value={face.header2} setValue={set("header2")} />
-                    <InputContainer label="Story 2">
-                        <textarea value={face.story2} onChange={(event) => set("story2")(event.target.value)} />
-                    </InputContainer>
-                    <InputContainer label="Text 2">
-                        <textarea value={face.text2} onChange={(event) => set("text2")(event.target.value)} />
-                    </InputContainer>
+                    <InputContainer label="Story 2" type="textarea" value={face.story2} setValue={set("story2")} />
+                    <InputContainer label="Text 2" type="textarea" value={face.text2} setValue={set("text2")} />
                     <InputContainer label="Header 3" type="text" value={face.header3} setValue={set("header3")} />
-                    <InputContainer label="Story 3">
-                        <textarea value={face.story3} onChange={(event) => set("story3")(event.target.value)} />
-                    </InputContainer>
-                    <InputContainer label="Text 3">
-                        <textarea value={face.text3} onChange={(event) => set("text3")(event.target.value)} />
-                    </InputContainer>
+                    <InputContainer label="Story 3" type="textarea" value={face.story3} setValue={set("story3")} />
+                    <InputContainer label="Text 3" type="textarea" value={face.text3} setValue={set("text3")} />
                 </>
             }
             expandableHeight="3rem"

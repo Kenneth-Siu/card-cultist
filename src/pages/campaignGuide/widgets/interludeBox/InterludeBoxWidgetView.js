@@ -1,13 +1,16 @@
 import React, { useContext } from "react";
 import { CampaignContext } from "../../../../components/CampaignContext";
 import WidgetView from "../WidgetView";
+import DebouncedTextareaInput from "../../../../components/debouncedInputs/DebouncedTextareaInput";
+import DebouncedTextInput from "../../../../components/debouncedInputs/DebouncedTextInput";
 
 export default function InterludeBoxWidgetView({ widget, page }) {
     const { refreshCampaign } = useContext(CampaignContext);
+
     return (
         <WidgetView widget={widget} page={page} className="interlude-box-widget-view">
-            <input type="text" value={widget.color} onChange={(event) => setColor(event.target.value)} />
-            <textarea value={widget.text} onChange={(event) => setText(event.target.value)} />
+            <DebouncedTextInput value={widget.color} setValue={setColor} />
+            <DebouncedTextareaInput value={widget.text} setValue={setText} />
         </WidgetView>
     );
 
@@ -16,8 +19,8 @@ export default function InterludeBoxWidgetView({ widget, page }) {
         refreshCampaign();
     }
 
-    function setText(text) {
-        widget.text = text;
+    function setText(value) {
+        widget.text = value;
         refreshCampaign();
     }
 }

@@ -38,9 +38,7 @@ export default function ChaosTokenEffectsFaceView({ faceDirection, listOfCardFac
                             onChange={(event) => set("textFontSize")(parseFloat(event.target.value))}
                         />
                     </InputContainer>
-                    <InputContainer label="Text">
-                        <textarea value={face.text} onChange={(event) => set("text")(event.target.value)} />
-                    </InputContainer>
+                    <InputContainer label="Text" type="textarea" value={face.text} setValue={set("text")} />
                     <InputContainer label="Skull" type="text" value={face.skullText} setValue={set("skullText")} />
                     <InputContainer
                         label="Cultist"

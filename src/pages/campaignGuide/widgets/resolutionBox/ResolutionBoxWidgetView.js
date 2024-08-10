@@ -1,15 +1,17 @@
 import React, { useContext } from "react";
 import { CampaignContext } from "../../../../components/CampaignContext";
 import WidgetView from "../WidgetView";
+import DebouncedTextareaInput from "../../../../components/debouncedInputs/DebouncedTextareaInput";
 
 export default function ResolutionBoxWidgetView({ widget, page }) {
     const { refreshCampaign } = useContext(CampaignContext);
+
     return (
         <WidgetView widget={widget} page={page} className="deco-box-widget-view">
             <label>
                 Top bracket: <input type="checkbox" checked={widget.topBracket} onChange={() => toggleTopBracket()} />
             </label>
-            <textarea value={widget.text} onChange={(event) => setText(event.target.value)} />
+            <DebouncedTextareaInput value={widget.text} setValue={setText} />
             <label>
                 Bottom bracket: <input type="checkbox" checked={widget.bottomBracket} onChange={() => toggleBottomBracket()} />
             </label>
@@ -21,8 +23,8 @@ export default function ResolutionBoxWidgetView({ widget, page }) {
         refreshCampaign();
     }
 
-    function setText(text) {
-        widget.text = text;
+    function setText(value) {
+        widget.text = value;
         refreshCampaign();
     }
 

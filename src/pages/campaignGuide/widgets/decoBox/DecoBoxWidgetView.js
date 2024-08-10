@@ -1,18 +1,21 @@
 import React, { useContext } from "react";
 import { CampaignContext } from "../../../../components/CampaignContext";
 import WidgetView from "../WidgetView";
+import DebouncedTextInput from "../../../../components/debouncedInputs/DebouncedTextInput";
+import DebouncedTextareaInput from "../../../../components/debouncedInputs/DebouncedTextareaInput";
 
 export default function DecoBoxWidgetView({ widget, page }) {
     const { refreshCampaign } = useContext(CampaignContext);
+
     return (
         <WidgetView widget={widget} page={page} className="deco-box-widget-view">
             <label>
                 Top bracket: <input type="checkbox" checked={widget.topBracket} onChange={() => toggleTopBracket()} />
             </label>
-            <input type="text" value={widget.color} onChange={(event) => setColor(event.target.value)} />
-            <input type="text" value={widget.title} onChange={(event) => setTitle(event.target.value)} />
-            <input type="text" value={widget.subtitle} onChange={(event) => setSubtitle(event.target.value)} />
-            <textarea value={widget.text} onChange={(event) => setText(event.target.value)} />
+            <DebouncedTextInput value={widget.color} setValue={setColor} />
+            <DebouncedTextInput value={widget.title} setValue={setTitle} />
+            <DebouncedTextInput value={widget.subtitle} setValue={setSubtitle} />
+            <DebouncedTextareaInput value={widget.text} setValue={setText} />
             <label>
                 Bottom bracket: <input type="checkbox" checked={widget.bottomBracket} onChange={() => toggleBottomBracket()} />
             </label>
@@ -24,23 +27,23 @@ export default function DecoBoxWidgetView({ widget, page }) {
         refreshCampaign();
     }
 
-    function setColor(color) {
-        widget.color = color;
+    function setColor(value) {
+        widget.color = value;
         refreshCampaign();
     }
 
-    function setTitle(title) {
-        widget.title = title;
+    function setTitle(value) {
+        widget.title = value;
         refreshCampaign();
     }
 
-    function setSubtitle(subtitle) {
-        widget.subtitle = subtitle;
+    function setSubtitle(value) {
+        widget.subtitle = value;
         refreshCampaign();
     }
 
-    function setText(text) {
-        widget.text = text;
+    function setText(value) {
+        widget.text = value;
         refreshCampaign();
     }
 

@@ -6,6 +6,7 @@ import BaseFaceView from "../BaseFaceView";
 import "../FaceView.scss";
 import { CampaignContext } from "../../../../components/CampaignContext";
 import useViewPropertySetter from "../../components/useViewPropertySetter";
+import DebouncedTextareaInput from "../../../../components/debouncedInputs/DebouncedTextareaInput";
 
 export default function StoryWeaknessEventFaceView({ faceDirection, listOfCardFaces, otherFace, face, cardSet }) {
     const { refreshCampaign } = useContext(CampaignContext);
@@ -31,11 +32,9 @@ export default function StoryWeaknessEventFaceView({ faceDirection, listOfCardFa
                             onChange={(event) => set("textFontSize")(parseFloat(event.target.value))}
                         />
                     </InputContainer>
-                    <InputContainer label="Text">
-                        <textarea value={face.text} onChange={(event) => set("text")(event.target.value)} />
-                    </InputContainer>
+                    <InputContainer label="Text" type="textarea" value={face.text} setValue={set("text")} />
                     <InputContainer label="Flavor">
-                        <textarea value={face.flavor} onChange={(event) => set("flavor")(event.target.value)} />
+                        <DebouncedTextareaInput value={face.flavor} setValue={set("flavor")} />
                         <label className="v-centered">
                             Nudge down
                             <input
