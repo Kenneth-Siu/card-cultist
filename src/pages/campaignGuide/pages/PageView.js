@@ -4,15 +4,19 @@ import Container from "../../../components/container/Container";
 import { CampaignContext } from "../../../components/CampaignContext";
 import IconButton from "../../../components/iconButton/IconButton";
 import "./PageView.scss";
+import jsPDF from "jspdf";
 
-export default function PageView({ page, toolbarExtras, canvas }) {
+export default function PageView({ page, pageNumber, toolbarExtras, canvas }) {
     const { campaign, refreshCampaign } = useContext(CampaignContext);
     const [newLeftWidgetType, setNewLeftWidgetType] = useState(listOfWidgetTypes[0].type);
     const [newRightWidgetType, setNewRightWidgetType] = useState(listOfWidgetTypes[0].type);
 
     return (
-        <Container className="page-view">
+        <Container className={`page-view page-${pageNumber}`}>
             <Container className="toolbar">
+                <IconButton onClick={() => downloadPDF()}>
+                    <span className="emoji">💾</span> Export PDF
+                </IconButton>
                 <IconButton onClick={() => swapPageUp()}>
                     <span className="emoji">⬆</span> Swap up
                 </IconButton>
@@ -87,5 +91,23 @@ export default function PageView({ page, toolbarExtras, canvas }) {
     function addWidgetToRightColumn() {
         page.addWidgetToRightColumn(newRightWidgetType, campaign.campaignGuide);
         refreshCampaign();
+    }
+
+    // TODO: EXTRACT THIS INTO A COMMON THING
+    function downloadPDF() {
+        const canvasSelector = `.campaign-guide-page .page-${pageNumber} canvas`;
+        const pdf = new jsPDF({
+            unit: "px",
+            hotfixes: ["px_scaling"],
+            format: [document.querySelector(canvasSelector).width, document.querySelector(canvasSelector).height],
+            compress: true
+        });
+        document.querySelectorAll(canvasSelector).forEach((page, index) => {
+            if (index !== 0) {
+                pdf.addPage([page.width, page.height]);
+            }
+            pdf.addImage(page, "PNG", 0, 0);
+        });
+        pdf.save(`campaignGuidePage${pageNumber}`);
     }
 }

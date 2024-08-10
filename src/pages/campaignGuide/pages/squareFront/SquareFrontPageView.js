@@ -6,6 +6,7 @@ export default function SquareFrontPageView({ page, pageNumber }) {
     return (
         <PageView
             page={page}
+            pageNumber={pageNumber}
             toolbarExtras={<input type="text" value={page.title} onChange={(event) => setTitle(event.target.value)} />}
             canvas={<SquareFrontPageCanvas page={page} pageNumber={pageNumber} />}
         />
