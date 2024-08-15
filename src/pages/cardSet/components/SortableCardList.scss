@@ -1,23 +1,17 @@
 @import "../../../helpers/scss/colors.scss";
 
 .sortable-card-list-container {
-    tbody tr {
-        position: relative;
-        cursor: grab;
-        &:hover {
-            background-color: $grayscale-3;
-        }
-        &[aria-pressed="true"] {
-            z-index: 1;
-        }
-    }
-    th {
+    .sortable-th {
         padding: 0.2rem;
         vertical-align: middle;
     }
-    td {
+    .sortable-tbody .sortable-tr {
+        &:hover {
+            background-color: $grayscale-3;
+        }
+    }
+    .sortable-td {
         padding: 0.2rem;
-        user-select: none;
         vertical-align: middle;
         line-height: 0;
     }

@@ -2,41 +2,45 @@ import React, { useContext } from "react";
 import { CampaignContext } from "../../../components/CampaignContext";
 import DragIndicator from "@mui/icons-material/DragIndicator";
 import Container from "../../../components/container/Container";
-import { CSS } from "@dnd-kit/utilities";
 import "./SortableCardList.scss";
-import { DndContext, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
-import { arrayMove, SortableContext, useSortable, verticalListSortingStrategy } from "@dnd-kit/sortable";
+import SortableTable from "../../../components/sortableTable/sortableTable";
+import SortableThead from "../../../components/sortableTable/SortableThead";
+import SortableTr from "../../../components/sortableTable/SortableTheadTr";
+import SortableTh from "../../../components/sortableTable/SortableTh";
+import SortableTbody from "../../../components/sortableTable/SortableTbody";
+import SortableTbodyTr from "../../../components/sortableTable/SortableTbodyTr";
+import SortableTd from "../../../components/sortableTable/SortableTd";
 
 export default function SortableCardList({ cardSet }) {
     const { refreshCampaign } = useContext(CampaignContext);
-    const sensors = useSensors(useSensor(PointerSensor));
 
     return (
         <Container className="sortable-card-list-container">
             <button onClick={orderCardSet}>Order cards by type</button>
             <button onClick={generateEncounterSetCardNumbers}>Generate encounter set card numbers</button>
-            <table>
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Title</th>
-                        <th>Type</th>
-                        <th># of copies</th>
-                        <th>Encounter set card number</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
-                        <SortableContext items={cardSet.cards} strategy={verticalListSortingStrategy}>
-                            {cardSet.cards.map((card) => (
-                                <SortableCardRow card={card} key={card.id} id={card.id} />
-                            ))}
-                        </SortableContext>
-                    </DndContext>
-                </tbody>
-            </table>
+            <SortableTable>
+                <SortableThead>
+                    <SortableTr>
+                        <SortableTh></SortableTh>
+                        <SortableTh>Title</SortableTh>
+                        <SortableTh>Type</SortableTh>
+                        <SortableTh># of copies</SortableTh>
+                        <SortableTh>Encounter set card number</SortableTh>
+                    </SortableTr>
+                </SortableThead>
+                <SortableTbody items={cardSet.cards} setItems={setCards}>
+                    {cardSet.cards.map((card) => (
+                        <SortableCardRow card={card} key={card.id} id={card.id} />
+                    ))}
+                </SortableTbody>
+            </SortableTable>
         </Container>
     );
+
+    function setCards(cards) {
+        cardSet.cards = cards;
+        refreshCampaign();
+    }
 
     function orderCardSet() {
         cardSet.orderCards();
@@ -47,50 +51,34 @@ export default function SortableCardList({ cardSet }) {
         cardSet.generateEncounterSetCardNumbers();
         refreshCampaign();
     }
-
-    function handleDragEnd(event) {
-        const { active, over } = event;
-
-        if (active.id !== over.id) {
-            const oldIndex = cardSet.cards.findIndex((card) => card.id === active.id);
-            const newIndex = cardSet.cards.findIndex((card) => card.id === over.id);
-            cardSet.cards = arrayMove(cardSet.cards, oldIndex, newIndex);
-            refreshCampaign();
-        }
-    }
 }
 
 function SortableCardRow({ card, id }) {
-    const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });
-    const style = {
-        transform: CSS.Transform.toString(transform),
-        transition,
-    };
     return (
-        <tr ref={setNodeRef} style={style} {...attributes} {...listeners}>
-            <td className="drag-indicator">
+        <SortableTbodyTr id={id}>
+            <SortableTd className="drag-indicator">
                 <DragIndicator />
-            </td>
-            <td>{card.getTitle()}</td>
-            <td>
+            </SortableTd>
+            <SortableTd>{card.getTitle()}</SortableTd>
+            <SortableTd>
                 <span className="emoji">{card.getEmoji()}</span> {card.frontFace.type}
-            </td>
-            <td>{card.numOfCopies}</td>
-            <td>
+            </SortableTd>
+            <SortableTd>{card.numOfCopies}</SortableTd>
+            <SortableTd>
                 {card.frontFace.encounterSetId || card.frontFace.encounterSetMaxId
                     ? card.frontFace.encounterSetId +
-                      String.fromCharCode(8202) +
-                      "/" +
-                      String.fromCharCode(8202) +
-                      card.frontFace.encounterSetMaxId
+                    String.fromCharCode(8202) +
+                    "/" +
+                    String.fromCharCode(8202) +
+                    card.frontFace.encounterSetMaxId
                     : ""}{" "}
                 {hasInconsistentEncounterSetIds(card) && (
                     <span className="emoji" title="Front and back faces have different encounter set card numbers">
                         ⚠
                     </span>
                 )}
-            </td>
-        </tr>
+            </SortableTd>
+        </SortableTbodyTr>
     );
 }
 

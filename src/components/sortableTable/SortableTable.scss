@@ -1,0 +1,28 @@
+.sortable-table {
+    display: table;
+
+    .sortable-thead {
+        display: table-header-group;
+    }
+    .sortable-th {
+        display: table-cell;
+    }
+    .sortable-tbody {
+        display: table-row-group;
+    }
+    .sortable-tr {
+        display: table-row;
+    }
+    .sortable-td {
+        display: table-cell;
+        user-select: none;
+    }
+
+    .sortable-tbody .sortable-tr {
+        position: relative;
+        cursor: grab;
+        &[aria-pressed="true"] {
+            z-index: 1;
+        }
+    }
+}

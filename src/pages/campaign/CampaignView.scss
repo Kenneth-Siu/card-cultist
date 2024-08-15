@@ -12,23 +12,17 @@
     }
 
     .encounter-sets-list-container {
-        tbody tr {
-            position: relative;
-            cursor: grab;
+        .sortable-tbody .sortable-tr {
             &:hover {
                 background-color: $grayscale-3;
             }
-            &[aria-pressed="true"] {
-                z-index: 1;
-            }
         }
-        th {
+        .sortable-th {
             padding: 0.2rem;
             vertical-align: middle;
         }
-        td {
+        .sortable-td {
             padding: 0.2rem;
-            user-select: none;
             vertical-align: middle;
             line-height: 0;
         }
