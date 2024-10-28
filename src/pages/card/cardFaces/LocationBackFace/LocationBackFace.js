@@ -12,8 +12,8 @@ export default class LocationBackFace extends CardFace {
     static frame = location;
     static frameSubtitle = locationSubtitle;
 
-    constructor(face) {
-        super(face, LocationBackFace.type);
+    constructor(face, type) {
+        super(face, type || LocationBackFace.type);
         if (!face) {
             face = {};
         }
@@ -38,6 +38,8 @@ export default class LocationBackFace extends CardFace {
         this.illustrator = face.illustrator || "";
         this.copyrightInformation = face.copyrightInformation || "";
         this.campaignSymbol = face.campaignSymbol || null;
+        this.frame = location;
+        this.frameSubtitle = locationSubtitle;
     }
 
     getView(faceDirection, listOfCardFaces, otherFace, cardSet) {

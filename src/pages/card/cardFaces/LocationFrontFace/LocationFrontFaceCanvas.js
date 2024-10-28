@@ -4,7 +4,6 @@ import CanvasImageLayer from "../../../../models/canvasLayers/CanvasImageLayer";
 import CanvasTextLayer from "../../../../models/canvasLayers/CanvasTextLayer";
 import CanvasTextConfig, { TEXTALIGN, VERTICAL_TEXTALIGN } from "../../../../models/CanvasTextConfig";
 import ImageTransform from "../../../../models/ImageTransform";
-import LocationFrontFace from "./LocationFrontFace";
 import CardCanvas from "../CardCanvas";
 import { isSvgPath } from "../../../../helpers/isSvgPath";
 import { transformSvgOnCanvas } from "../../../../helpers/transformSvgOnCanvas";
@@ -94,16 +93,16 @@ export default function LocationFrontFaceCanvas({ face, cardSet, setIllustration
         if (face.subtitle) {
             setFrameLayer(
                 new CanvasImageLayer(
-                    await loadPublicImage(LocationFrontFace.frameSubtitle),
+                    await loadPublicImage(face.frameSubtitle),
                     new ImageTransform({ scale: 2 })
                 )
             );
         } else {
             setFrameLayer(
-                new CanvasImageLayer(await loadPublicImage(LocationFrontFace.frame), new ImageTransform({ scale: 2 }))
+                new CanvasImageLayer(await loadPublicImage(face.frame), new ImageTransform({ scale: 2 }))
             );
         }
-    }, [!!face.subtitle]);
+    }, [!!face.subtitle, face.frame, face.frameSubtitle]);
 
     useEffect(async () => {
         setConnectionSymbolBackgroundLayer(

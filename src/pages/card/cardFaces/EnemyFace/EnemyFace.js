@@ -15,8 +15,8 @@ export default class EnemyFace extends CardFace {
     static damageImage = damage;
     static horrorImage = horror;
 
-    constructor(face) {
-        super(face, EnemyFace.type);
+    constructor(face, type) {
+        super(face, type || EnemyFace.type);
         if (!face) {
             face = {};
         }
@@ -47,6 +47,8 @@ export default class EnemyFace extends CardFace {
         this.encounterSetMaxId = face.encounterSetMaxId || "";
         this.campaignSymbol = face.campaignSymbol || null;
         this.campaignSetId = face.campaignSetId || "";
+        this.frame = enemy;
+        this.frameSubtitle = enemySubtitle;
     }
 
     getView(faceDirection, listOfCardFaces, otherFace, cardSet) {

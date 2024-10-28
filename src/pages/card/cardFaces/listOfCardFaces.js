@@ -5,6 +5,9 @@ import AgendaFrontFace from "./AgendaFrontFace/AgendaFrontFace";
 import AssetFace from "./AssetFace/AssetFace";
 import CardFace from "./BlankFace/CardFace";
 import ChaosTokenEffectsFace from "./ChaosTokenEffectsFace/ChaosTokenEffectsFace";
+import CyberspaceEnemyFace from "./CyberspaceEnemy/CyberspaceEnemyFace";
+import CyberspaceLocationBackFace from "./CyberspaceLocationBackFace/CyberspaceLocationBackFace";
+import CyberspaceLocationFrontFace from "./CyberspaceLocationFrontFace/CyberspaceLocationFrontFace";
 import EnemyFace from "./EnemyFace/EnemyFace";
 import LocationBackFace from "./LocationBackFace/LocationBackFace";
 import LocationFrontFace from "./LocationFrontFace/LocationFrontFace";
@@ -25,12 +28,15 @@ const listOfCardFaces = [
     ActBackFace,
     LocationFrontFace,
     LocationBackFace,
+    CyberspaceLocationFrontFace,
+    CyberspaceLocationBackFace,
     StoryFace,
     StoryWeaknessAssetFace,
     StoryWeaknessEventFace,
     StoryWeaknessFace,
     AssetFace,
     EnemyFace,
+    CyberspaceEnemyFace,
     TreacheryFace,
     MythosFace,
     PlayerFace,
@@ -47,12 +53,15 @@ export const cardFacesInEncounterOrder = [
     ActBackFace,
     LocationFrontFace,
     LocationBackFace,
+    CyberspaceLocationFrontFace,
+    CyberspaceLocationBackFace,
     StoryFace,
     StoryWeaknessAssetFace,
     StoryWeaknessEventFace,
     StoryWeaknessFace,
     AssetFace,
     EnemyFace,
+    CyberspaceEnemyFace,
     TreacheryFace,
     MythosFace,
     PlayerFace,

@@ -77,14 +77,14 @@ export default function EnemyFaceCanvas({ face, cardSet, setIllustrationTransfor
     useEffect(async () => {
         if (face.subtitle) {
             setFrameLayer(
-                new CanvasImageLayer(await loadPublicImage(EnemyFace.frameSubtitle), new ImageTransform({ scale: 2 }))
+                new CanvasImageLayer(await loadPublicImage(face.frameSubtitle), new ImageTransform({ scale: 2 }))
             );
         } else {
             setFrameLayer(
-                new CanvasImageLayer(await loadPublicImage(EnemyFace.frame), new ImageTransform({ scale: 2 }))
+                new CanvasImageLayer(await loadPublicImage(face.frame), new ImageTransform({ scale: 2 }))
             );
         }
-    }, [!!face.subtitle]);
+    }, [!!face.subtitle, face.frame, face.framSubtitle]);
 
     useEffect(() => {
         // TODO Do proper unique star

@@ -84,16 +84,16 @@ export default function LocationBackFaceCanvas({ face, cardSet, setIllustrationT
         if (face.subtitle) {
             setFrameLayer(
                 new CanvasImageLayer(
-                    await loadPublicImage(LocationBackFace.frameSubtitle),
+                    await loadPublicImage(face.frameSubtitle),
                     new ImageTransform({ scale: 2 })
                 )
             );
         } else {
             setFrameLayer(
-                new CanvasImageLayer(await loadPublicImage(LocationBackFace.frame), new ImageTransform({ scale: 2 }))
+                new CanvasImageLayer(await loadPublicImage(face.frame), new ImageTransform({ scale: 2 }))
             );
         }
-    }, [!!face.subtitle]);
+    }, [!!face.subtitle, face.frame, face.frameSubtitle]);
 
     useEffect(async () => {
         setConnectionSymbolBackgroundLayer(
