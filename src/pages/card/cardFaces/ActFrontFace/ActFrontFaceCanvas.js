@@ -211,7 +211,7 @@ export default function ActFrontFaceCanvas({ face, cardSet, setIllustrationTrans
                       image,
                       new ImageTransform({
                           x: 538 + (transform ? transform.xNudge : 0),
-                          y: 710 + (transform ? transform.yNudge : 0),
+                          y: 713 + (transform ? transform.yNudge : 0),
                           scale: (transform && transform.scale) || 28 / Math.max(image.height, image.width),
                       }),
                       true

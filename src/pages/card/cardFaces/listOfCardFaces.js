@@ -1,5 +1,6 @@
 import ActBackFace from "./ActBackFace/ActBackFace";
 import ActFrontFace from "./ActFrontFace/ActFrontFace";
+import AgendaActFullArtBackFace from "./AgendaActFullArtBackFace/AgendaActFullArtBackFace";
 import AgendaBackFace from "./AgendaBackFace/AgendaBackFace";
 import AgendaFrontFace from "./AgendaFrontFace/AgendaFrontFace";
 import AssetFace from "./AssetFace/AssetFace";
@@ -26,6 +27,7 @@ const listOfCardFaces = [
     AgendaBackFace,
     ActFrontFace,
     ActBackFace,
+    AgendaActFullArtBackFace,
     LocationFrontFace,
     LocationBackFace,
     CyberspaceLocationFrontFace,
@@ -51,6 +53,7 @@ export const cardFacesInEncounterOrder = [
     AgendaBackFace,
     ActFrontFace,
     ActBackFace,
+    AgendaActFullArtBackFace,
     LocationFrontFace,
     LocationBackFace,
     CyberspaceLocationFrontFace,

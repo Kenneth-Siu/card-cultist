@@ -4,25 +4,21 @@ import CanvasImageLayer from "../../../../models/canvasLayers/CanvasImageLayer";
 import CanvasTextLayer from "../../../../models/canvasLayers/CanvasTextLayer";
 import CanvasTextConfig, { TEXTALIGN } from "../../../../models/CanvasTextConfig";
 import ImageTransform from "../../../../models/ImageTransform";
-import AgendaFrontFace from "./AgendaFrontFace";
 import CardCanvas, { ORIENTATION } from "../CardCanvas";
 import { isSvgPath } from "../../../../helpers/isSvgPath";
 import { transformSvgOnCanvas } from "../../../../helpers/transformSvgOnCanvas";
 import { CARD_PORTRAIT_HEIGHT, CARD_PORTRAIT_WIDTH } from "../../cardConstants";
-import hyphen from "../../../../../public/overlays/AHLCG-Cost--.png";
 import { CampaignContext } from "../../../../components/CampaignContext";
 
-export default function AgendaFrontFaceCanvas({ face, cardSet, setIllustrationTransform }) {
+export default function AgendaActFullArtBackFaceCanvas({ face, cardSet, setIllustrationTransform }) {
     const { campaign } = useContext(CampaignContext);
     const [loadedImages, loadPublicImage, loadFileSystemImage] = useLoadedImages();
 
     const [illustrationLayer, setIllustrationLayer] = useState(null);
     const [frameLayer, setFrameLayer] = useState(null);
-    const [agendaNumberLayer, setAgendaNumberLayer] = useState(null);
     const [encounterSetSymbolLayer, setEncounterSetSymbolLayer] = useState(null);
     const [titleLayer, setTitleLayer] = useState(null);
     const [textLayer, setTextLayer] = useState(null);
-    const [doomThresholdLayer, setDoomThresholdLayer] = useState(null);
     const [illustratorLayer, setIllustratorLayer] = useState(null);
     const [copyrightInformationLayer, setCopyrightInformationLayer] = useState(null);
     const [encounterSetIdLayer, setEncounterSetIdLayer] = useState(null);
@@ -32,11 +28,9 @@ export default function AgendaFrontFaceCanvas({ face, cardSet, setIllustrationTr
     const canvasLayers = [
         illustrationLayer,
         frameLayer,
-        agendaNumberLayer,
         encounterSetSymbolLayer,
         titleLayer,
         textLayer,
-        doomThresholdLayer,
         illustratorLayer,
         copyrightInformationLayer,
         encounterSetIdLayer,
@@ -53,23 +47,9 @@ export default function AgendaFrontFaceCanvas({ face, cardSet, setIllustrationTr
 
     useEffect(async () => {
         setFrameLayer(
-            new CanvasImageLayer(await loadPublicImage(AgendaFrontFace.frame), new ImageTransform({ scale: 2 }))
+            new CanvasImageLayer(await loadPublicImage(face.frame), new ImageTransform({ scale: 2 }))
         );
     }, []);
-
-    useEffect(() => {
-        setAgendaNumberLayer(
-            new CanvasTextLayer(
-                new CanvasTextConfig()
-                    .withText(face.number ? `Agenda ${face.number}` : "")
-                    .withX(764)
-                    .withY(24)
-                    .withFontSize(30)
-                    .withAlign(TEXTALIGN.CENTER)
-                    .withBold()
-            )
-        );
-    }, [face.number]);
 
     useEffect(async () => {
         const image = await loadFileSystemImage(face.encounterSetSymbol || cardSet.symbol);
@@ -85,8 +65,8 @@ export default function AgendaFrontFaceCanvas({ face, cardSet, setIllustrationTr
                 ? new CanvasImageLayer(
                       image,
                       new ImageTransform({
-                          x: 734 + (transform ? transform.xNudge : 0),
-                          y: 52 + (transform ? transform.yNudge : 0),
+                          x: 75 + (transform ? transform.xNudge : 0),
+                          y: 477 + (transform ? transform.yNudge : 0),
                           scale: (transform && transform.scale) || 58 / Math.max(image.height, image.width),
                       })
                   )
@@ -99,8 +79,8 @@ export default function AgendaFrontFaceCanvas({ face, cardSet, setIllustrationTr
             new CanvasTextLayer(
                 new CanvasTextConfig()
                     .withText(face.title)
-                    .withX(764)
-                    .withY(136)
+                    .withX(525)
+                    .withY(504)
                     .withFontSize(46)
                     .withFontFamily("Teutonic")
                     .withAlign(TEXTALIGN.CENTER)
@@ -113,9 +93,9 @@ export default function AgendaFrontFaceCanvas({ face, cardSet, setIllustrationTr
             new CanvasTextLayer(
                 new CanvasTextConfig()
                     .withText(face.text)
-                    .withX((dy) => 510 + (dy > 356 ? 74 : 0))
-                    .withY(200)
-                    .withWidth((dy) => 510 + (dy > 356 ? -74 : 0))
+                    .withX(36)
+                    .withY(574)
+                    .withWidth(978)
                     .withFontSize(face.textFontSize)
                     .withLineHeight(1.1)
                     .withCardTitle(face.title)
@@ -123,36 +103,12 @@ export default function AgendaFrontFaceCanvas({ face, cardSet, setIllustrationTr
         );
     }, [face.title, face.text, face.textFontSize]);
 
-    useEffect(async () => {
-        if (face.threshold === "-") {
-            const image = await loadPublicImage(hyphen);
-            setDoomThresholdLayer(
-                image ? new CanvasImageLayer(image, new ImageTransform({ x: 492, y: 634, scale: 2 })) : null
-            );
-        } else {
-            setDoomThresholdLayer(
-                new CanvasTextLayer(
-                    new CanvasTextConfig()
-                        .withText(face.threshold + (face.isPer ? "<raised=-8><size=30>r</size></raised>" : ""))
-                        .withX(516 + (face.threshold.includes("*") ? 4 : 0) + (face.isPer ? 4 : 0))
-                        .withY(614)
-                        .withFontSize(52)
-                        .withFontFamily("AHCardTextSymbols")
-                        .withColor("white")
-                        .withAlign(TEXTALIGN.CENTER)
-                        .withStrokeStyle("black")
-                        .withStrokeWidth(4)
-                )
-            );
-        }
-    }, [face.threshold, face.isPer]);
-
     useEffect(() => {
         setIllustratorLayer(
             new CanvasTextLayer(
                 new CanvasTextConfig()
                     .withText(face.illustrator ? "Illus. " + face.illustrator : "")
-                    .withX(442)
+                    .withX(20)
                     .withY(720)
                     .withFontSize(18)
                     .withColor("white")
@@ -165,7 +121,7 @@ export default function AgendaFrontFaceCanvas({ face, cardSet, setIllustrationTr
             new CanvasTextLayer(
                 new CanvasTextConfig()
                     .withText(face.copyrightInformation)
-                    .withX(764)
+                    .withX(525)
                     .withY(720)
                     .withFontSize(18)
                     .withAlign(TEXTALIGN.CENTER)
