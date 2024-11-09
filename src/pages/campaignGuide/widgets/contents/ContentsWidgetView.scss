@@ -1,0 +1,14 @@
+.contents-widget-view {
+    .sections-list {
+        font-size: 0.8rem;
+        flex-direction: column;
+    }
+    .section-row {
+        display: flex;
+        flex-direction: row;
+
+        input[type=number] {
+            width: 3rem;
+        }
+    }
+}

@@ -67,6 +67,12 @@ export const INTERLUDE_BOX = Object.freeze({
     CORNER_RADIUS: 104,
 });
 
+export const CONTENTS = Object.freeze({
+    HORIZONTAL_MARGIN: 60,
+    DOTTED_LINE_OFFSET: 23,
+    DOTTED_LINE_HORIZONTAL_PADDING: 4
+});
+
 export const DEFAULT_CAMPAIGN_GUIDE_COLOR_THEME = "rgb(38,73,59)";
 
 export const PAGE_NUMBER_FONT_SIZE = 50;
