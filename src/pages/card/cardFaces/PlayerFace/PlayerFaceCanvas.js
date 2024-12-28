@@ -12,7 +12,7 @@ export default function PlayerFaceCanvas() {
     const canvasLayers = [frameLayer];
 
     useEffect(async () => {
-        setFrameLayer(new CanvasImageLayer(await loadPublicImage(PlayerFace.frame), new ImageTransform({ scale: 2 })));
+        setFrameLayer(new CanvasImageLayer(await loadPublicImage(PlayerFace.frame)));
     }, []);
 
     return <CardCanvas loadedImages={loadedImages} canvasLayers={canvasLayers} />;

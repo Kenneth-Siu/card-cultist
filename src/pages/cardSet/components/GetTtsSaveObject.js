@@ -33,8 +33,6 @@ function getCard(cardName, campaignPath, cardSet, frontImageName, backImageName,
 }
 
 function getCustomDeck(cardIndexesToUse, campaignPath, cardSet, frontImageName, backImageName, isLandscape) {
-    // TODO: If all card backs are mythos faces, use that.
-    // Same for player faces
     const singleCardBack = getSingleCardBackIfRelevant(cardSet, cardIndexesToUse);
 
     const [numberOfColumns, numberOfRows] = getTtsDimensions(cardIndexesToUse.length);
@@ -56,10 +54,10 @@ function getCustomDeck(cardIndexesToUse, campaignPath, cardSet, frontImageName, 
 function getSingleCardBackIfRelevant(cardSet, cardIndexesToUse) {
     const cards = cardSet.cards.filter((card, index) => cardIndexesToUse.includes(index))
     if (cards.every(card => card.backFace?.type === MythosFace.type)) {
-        return "https://i.imgur.com/sRsWiSG.jpg";
+        return "https://steamusercontent-a.akamaihd.net/ugc/2342503777940351785/F64D8EFB75A9E15446D24343DA0A6EEF5B3E43DB/";
     }
     if (cards.every(card => card.backFace?.type === PlayerFace.type)) {
-        return "https://i.imgur.com/EcbhVuh.jpg";
+        return "https://steamusercontent-a.akamaihd.net/ugc/2342503777940352139/A2D42E7E5C43D045D72CE5CFC907E4F886C8C690/";
     }
     return null;
 }

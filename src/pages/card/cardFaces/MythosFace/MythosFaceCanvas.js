@@ -12,7 +12,7 @@ export default function MythosFaceCanvas() {
     const canvasLayers = [frameLayer];
 
     useEffect(async () => {
-        setFrameLayer(new CanvasImageLayer(await loadPublicImage(MythosFace.frame), new ImageTransform({ scale: 2 })));
+        setFrameLayer(new CanvasImageLayer(await loadPublicImage(MythosFace.frame)));
     }, []);
 
     return <CardCanvas loadedImages={loadedImages} canvasLayers={canvasLayers} />;
