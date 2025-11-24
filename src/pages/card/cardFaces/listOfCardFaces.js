@@ -27,6 +27,7 @@ import SurvivorFrontFace from "./InvestigatorFrontFace/SurvivorFrontFace";
 import InvestigatorWeaknessFace from "./InvestigatorWeaknessFace/InvestigatorWeaknessFace";
 import LocationBackFace from "./LocationBackFace/LocationBackFace";
 import LocationFrontFace from "./LocationFrontFace/LocationFrontFace";
+import MeatspaceCyberspaceLocationFrontFace from "./MeatspaceCyberspaceLocationFrontFace/MeatspaceCyberspaceLocationFrontFace";
 import MythosFace from "./MythosFace/MythosFace";
 import LandscapePlayerFace from "./PlayerFace/LandscapePlayerFace";
 import PlayerFace from "./PlayerFace/PlayerFace";
@@ -48,6 +49,7 @@ const listOfCardFaces = [
     LocationBackFace,
     CyberspaceLocationFrontFace,
     CyberspaceLocationBackFace,
+    MeatspaceCyberspaceLocationFrontFace,
     StoryFace,
     StoryWeaknessAssetFace,
     StoryWeaknessEventFace,
@@ -90,6 +92,7 @@ export const cardFacesInEncounterOrder = [
     LocationBackFace,
     CyberspaceLocationFrontFace,
     CyberspaceLocationBackFace,
+    MeatspaceCyberspaceLocationFrontFace,
     StoryFace,
     StoryWeaknessAssetFace,
     StoryWeaknessEventFace,

@@ -11,6 +11,7 @@ import InvestigatorEnemyWeaknessFace from "../../card/cardFaces/InvestigatorEnem
 import InvestigatorWeaknessFace from "../../card/cardFaces/InvestigatorWeaknessFace/InvestigatorWeaknessFace";
 import LocationBackFace from "../../card/cardFaces/LocationBackFace/LocationBackFace";
 import LocationFrontFace from "../../card/cardFaces/LocationFrontFace/LocationFrontFace";
+import MeatspaceCyberspaceLocationFrontFace from "../../card/cardFaces/MeatspaceCyberspaceLocationFrontFace/MeatspaceCyberspaceLocationFrontFace";
 import StoryFace from "../../card/cardFaces/StoryFace/StoryFace";
 import StoryWeaknessAssetFace from "../../card/cardFaces/storyWeaknessAssetFace/StoryWeaknessAssetFace";
 import StoryWeaknessEventFace from "../../card/cardFaces/StoryWeaknessEventFace/StoryWeaknessEventFace";
@@ -174,6 +175,7 @@ function getGMNotesObj(card, cardID) {
             });
         case LocationFrontFace.type:
         case CyberspaceLocationFrontFace.type:
+        case MeatspaceCyberspaceLocationFrontFace.type:
             let fields = {
                 "type": "Location",
                 "locationFront": {

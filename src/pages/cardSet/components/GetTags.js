@@ -9,6 +9,7 @@ import NeutralEventFace from "../../card/cardFaces/EventFace/NeutralEventFace";
 import InvestigatorEnemyWeaknessFace from "../../card/cardFaces/InvestigatorEnemyWeaknessFace/InvestigatorEnemyWeaknessFace";
 import InvestigatorWeaknessFace from "../../card/cardFaces/InvestigatorWeaknessFace/InvestigatorWeaknessFace";
 import LocationFrontFace from "../../card/cardFaces/LocationFrontFace/LocationFrontFace";
+import MeatspaceCyberspaceLocationFrontFace from "../../card/cardFaces/MeatspaceCyberspaceLocationFrontFace/MeatspaceCyberspaceLocationFrontFace";
 import StoryFace from "../../card/cardFaces/StoryFace/StoryFace";
 import StoryWeaknessAssetFace from "../../card/cardFaces/storyWeaknessAssetFace/StoryWeaknessAssetFace";
 import StoryWeaknessEventFace from "../../card/cardFaces/StoryWeaknessEventFace/StoryWeaknessEventFace";
@@ -41,6 +42,7 @@ export default function getTags(card) {
             return ["ScenarioCard"];
         case LocationFrontFace.type:
         case CyberspaceLocationFrontFace.type:
+        case MeatspaceCyberspaceLocationFrontFace.type:
             return ["ScenarioCard", "Location"]
         case StoryFace.type:
             return [];
