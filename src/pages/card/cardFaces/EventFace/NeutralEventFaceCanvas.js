@@ -4,32 +4,26 @@ import CanvasImageLayer from "../../../../models/canvasLayers/CanvasImageLayer";
 import CanvasTextLayer from "../../../../models/canvasLayers/CanvasTextLayer";
 import CanvasTextConfig, { TEXTALIGN } from "../../../../models/CanvasTextConfig";
 import ImageTransform from "../../../../models/ImageTransform";
-import AssetFace from "./AssetFace";
 import CardCanvas from "../CardCanvas";
 import { isSvgPath } from "../../../../helpers/isSvgPath";
 import { transformSvgOnCanvas } from "../../../../helpers/transformSvgOnCanvas";
 import { CARD_PORTRAIT_HEIGHT, CARD_PORTRAIT_WIDTH } from "../../cardConstants";
-import healthIcons from "../../../../../public/templates/health/health";
-import sanityIcons from "../../../../../public/templates/sanity/sanity";
-import slotIcons from "../../../../../public/templates/slots/slots";
+import { CampaignContext } from "../../../../components/CampaignContext";
+import NeutralEventFace from "./NeutralEventFace";
 import skillIcons from "../../../../../public/templates/skillIcons/skillIcons";
 import skillIconFrame from "../../../../../public/templates/skillBoxes/neutral.png";
-import { CampaignContext } from "../../../../components/CampaignContext";
 import levelOverlays from "../../../../../public/overlays/levelOverlays";
 
-export default function AssetFaceCanvas({ face, cardSet, setIllustrationTransform }) {
+export default function NeutralEventFaceCanvas({ face, cardSet, setIllustrationTransform }) {
     const { campaign } = useContext(CampaignContext);
     const [loadedImages, loadPublicImage, loadFileSystemImage] = useLoadedImages();
 
     const [illustrationLayer, setIllustrationLayer] = useState(null);
     const [frameLayer, setFrameLayer] = useState(null);
     const [levelLayer, setLevelLayer] = useState(null);
-    const [subtitleFrameLayer, setSubtitleFrameLayer] = useState(null);
     const [costLayer, setCostLayer] = useState(null);
     const [cardTypeLayer, setCardTypeLayer] = useState(null);
     const [titleLayer, setTitleLayer] = useState(null);
-    const [subtitleLayer, setSubtitleLayer] = useState(null);
-    const [encounterSetSymbolLayer, setEncounterSetSymbolLayer] = useState(null);
     const [skillIcon1FrameLayer, setSkillIcon1FrameLayer] = useState(null);
     const [skillIcon2FrameLayer, setSkillIcon2FrameLayer] = useState(null);
     const [skillIcon3FrameLayer, setSkillIcon3FrameLayer] = useState(null);
@@ -43,13 +37,8 @@ export default function AssetFaceCanvas({ face, cardSet, setIllustrationTransfor
     const [traitsLayer, setTraitsLayer] = useState(null);
     const [textLayer, setTextLayer] = useState(null);
     const [flavorLayer, setFlavorLayer] = useState(null);
-    const [healthLayer, setHealthLayer] = useState(null);
-    const [sanityLayer, setSanityLayer] = useState(null);
-    const [slot1Layer, setSlot1Layer] = useState(null);
-    const [slot2Layer, setSlot2Layer] = useState(null);
     const [illustratorLayer, setIllustratorLayer] = useState(null);
     const [copyrightInformationLayer, setCopyrightInformationLayer] = useState(null);
-    const [encounterSetIdLayer, setEncounterSetIdLayer] = useState(null);
     const [campaignSymbolLayer, setCampaignSymbolLayer] = useState(null);
     const [campaignSetIdLayer, setCampaignSetIdLayer] = useState(null);
 
@@ -57,12 +46,9 @@ export default function AssetFaceCanvas({ face, cardSet, setIllustrationTransfor
         illustrationLayer,
         frameLayer,
         levelLayer,
-        subtitleFrameLayer,
         costLayer,
         cardTypeLayer,
         titleLayer,
-        subtitleLayer,
-        encounterSetSymbolLayer,
         skillIcon1FrameLayer,
         skillIcon2FrameLayer,
         skillIcon3FrameLayer,
@@ -76,46 +62,36 @@ export default function AssetFaceCanvas({ face, cardSet, setIllustrationTransfor
         traitsLayer,
         textLayer,
         flavorLayer,
-        healthLayer,
-        sanityLayer,
-        slot1Layer,
-        slot2Layer,
         illustratorLayer,
         copyrightInformationLayer,
-        encounterSetIdLayer,
         campaignSymbolLayer,
         campaignSetIdLayer,
     ];
 
     useEffect(async () => {
         const image = await loadFileSystemImage(face.illustration);
-        setIllustrationLayer(image ? new CanvasImageLayer(image, new ImageTransform(face.illustrationTransform)) : null);
+        setIllustrationLayer(
+            image ? new CanvasImageLayer(image, new ImageTransform(face.illustrationTransform)) : null
+        );
     }, [face.illustration, ...Object.values(face.illustrationTransform)]);
 
     useEffect(async () => {
         setFrameLayer(
-            new CanvasImageLayer(
-                await loadPublicImage(face.hideEncounterSetSymbol ? AssetFace.noEncounterSetSymbolFrame : AssetFace.frame),
-                new ImageTransform({ scale: 2 })
-            )
+            new CanvasImageLayer(await loadPublicImage(NeutralEventFace.frame), new ImageTransform({ scale: 2 }))
         );
-    }, [face.hideEncounterSetSymbol]);
+    }, []);
 
     useEffect(async () => {
         setLevelLayer(
-            face.hideEncounterSetSymbol ? new CanvasImageLayer(await loadPublicImage(levelOverlays[""]), new ImageTransform({
-                scale: 2,
-                x: 16,
-                y: 8
-            })) : null
+            levelOverlays[face.level]
+                ? new CanvasImageLayer(await loadPublicImage(levelOverlays[face.level]), new ImageTransform({
+                    scale: 2,
+                    x: face.level === "" ? 16 : 28,
+                    y: face.level === "" ? 8 : 70
+                }))
+                : null
         );
-    }, [face.hideEncounterSetSymbol]);
-
-    useEffect(async () => {
-        setSubtitleFrameLayer(
-            face.subtitle ? new CanvasImageLayer(await loadPublicImage(AssetFace.subtitle), new ImageTransform({ scale: 2, x: 160, y: 82 })) : null
-        );
-    }, [face.subtitle]);
+    }, [face.level]);
 
     useEffect(async () => {
         setCostLayer(
@@ -153,40 +129,13 @@ export default function AssetFaceCanvas({ face, cardSet, setIllustrationTransfor
                 new CanvasTextConfig()
                     .withText(face.title)
                     .withX(374)
-                    .withY(26)
-                    .withFontSize(52)
+                    .withY(607)
+                    .withFontSize(50)
                     .withFontFamily("Teutonic")
                     .withAlign(TEXTALIGN.CENTER)
             )
         );
     }, [face.title]);
-
-    useEffect(() => {
-        setSubtitleLayer(
-            new CanvasTextLayer(
-                new CanvasTextConfig().withText(face.subtitle).withX(374).withY(90).withFontSize(28).withAlign(TEXTALIGN.CENTER).withBold()
-            )
-        );
-    }, [face.subtitle]);
-
-    useEffect(async () => {
-        const image = await loadFileSystemImage(face.encounterSetSymbol || cardSet.symbol);
-        const transform = isSvgPath(face.encounterSetSymbol || cardSet.symbol)
-            ? transformSvgOnCanvas({ h: CARD_PORTRAIT_HEIGHT, w: CARD_PORTRAIT_WIDTH }, { h: image.height, w: image.width }, 58)
-            : null;
-        setEncounterSetSymbolLayer(
-            image && !face.hideEncounterSetSymbol
-                ? new CanvasImageLayer(
-                    image,
-                    new ImageTransform({
-                        x: 658 + (transform ? transform.xNudge : 0),
-                        y: 20 + (transform ? transform.yNudge : 0),
-                        scale: (transform && transform.scale) || 58 / Math.max(image.height, image.width),
-                    })
-                )
-                : null
-        );
-    }, [face.encounterSetSymbol, face.hideEncounterSetSymbol, cardSet.symbol]);
 
     useEffect(async () => {
         setSkillIcon1FrameLayer(
@@ -259,7 +208,7 @@ export default function AssetFaceCanvas({ face, cardSet, setIllustrationTransfor
                 new CanvasTextConfig()
                     .withText(face.traits)
                     .withX(374)
-                    .withY(644)
+                    .withY(676)
                     .withFontSize(30)
                     .withAlign(TEXTALIGN.CENTER)
                     .withBold()
@@ -273,74 +222,31 @@ export default function AssetFaceCanvas({ face, cardSet, setIllustrationTransfor
             new CanvasTextLayer(
                 new CanvasTextConfig()
                     .withText(face.text)
-                    .withX(36)
-                    .withY(684)
-                    .withWidth(678)
+                    .withX((dy) => Math.max(50, 66 - 0.25 * dy, Math.min(84, 42 + 0.25 * dy)))
+                    .withY(710)
+                    .withWidth((dy) => Math.min(636, 620 + 0.5 * dy, Math.max(576, 650 - 0.5 * dy)))
                     .withFontSize(face.textFontSize)
                     .withCardTitle(face.title)
-                    .withCardSubtitle(face.subtitle)
                     .withLineHeight(1.05)
             )
         );
-    }, [face.title, face.subtitle, face.text, face.textFontSize]);
+    }, [face.title, face.text, face.textFontSize]);
 
     useEffect(() => {
         setFlavorLayer(
             new CanvasTextLayer(
                 new CanvasTextConfig()
                     .withText(face.flavor)
-                    .withX(40)
+                    .withX(88)
                     .withY(face.flavorNudgeDown)
-                    .withWidth(670)
+                    .withWidth(576)
                     .withFontSize(face.textFontSize)
                     .withCardTitle(face.title)
-                    .withCardSubtitle(face.subtitle)
                     .withItalic()
                     .withAlign(TEXTALIGN.CENTER)
             ).withPrevY()
         );
-    }, [face.title, face.subtitle, face.text, face.textFontSize, face.flavor, face.flavorNudgeDown]);
-
-    useEffect(async () => {
-        setHealthLayer(
-            face.health
-                ? new CanvasImageLayer(
-                    await loadPublicImage(face.health === "-" ? healthIcons[0] : healthIcons[Number.parseInt(face.health)]),
-                    new ImageTransform({ scale: 1.8, x: 298, y: 936 })
-                )
-                : null
-        );
-    }, [face.health]);
-
-    useEffect(async () => {
-        setSanityLayer(
-            face.sanity
-                ? new CanvasImageLayer(
-                    await loadPublicImage(face.sanity === "-" ? sanityIcons[0] : sanityIcons[Number.parseInt(face.sanity)]),
-                    new ImageTransform({ scale: 1.8, x: 396, y: 942 })
-                )
-                : null
-        );
-    }, [face.sanity]);
-
-    useEffect(async () => {
-        setSlot1Layer(
-            slotIcons[face.slot1]
-                ? new CanvasImageLayer(
-                    await loadPublicImage(slotIcons[face.slot1]),
-                    new ImageTransform({ scale: 1.7, x: face.slot2 ? 516 : 620, y: 912 })
-                )
-                : null
-        );
-    }, [face.slot1, face.slot2]);
-
-    useEffect(async () => {
-        setSlot2Layer(
-            slotIcons[face.slot2]
-                ? new CanvasImageLayer(await loadPublicImage(slotIcons[face.slot2]), new ImageTransform({ scale: 1.7, x: 620, y: 912 }))
-                : null
-        );
-    }, [face.slot2]);
+    }, [face.title, face.text, face.textFontSize, face.flavor, face.flavorNudgeDown]);
 
     useEffect(() => {
         setIllustratorLayer(
@@ -369,22 +275,14 @@ export default function AssetFaceCanvas({ face, cardSet, setIllustrationTransfor
         );
     }, [face.copyrightInformation]);
 
-    useEffect(() => {
-        const text =
-            face.encounterSetId || face.encounterSetMaxId
-                ? face.encounterSetId + String.fromCharCode(8202) + "/" + String.fromCharCode(8202) + face.encounterSetMaxId
-                : "";
-        setEncounterSetIdLayer(
-            new CanvasTextLayer(
-                new CanvasTextConfig().withText(text).withX(602).withY(1026).withFontSize(18).withAlign(TEXTALIGN.RIGHT).withColor("white")
-            )
-        );
-    }, [face.encounterSetId, face.encounterSetMaxId]);
-
     useEffect(async () => {
         const image = await loadFileSystemImage(face.campaignSymbol || campaign.symbol);
         const transform = isSvgPath(face.campaignSymbol || campaign.symbol)
-            ? transformSvgOnCanvas({ h: CARD_PORTRAIT_HEIGHT, w: CARD_PORTRAIT_WIDTH }, { h: image.height, w: image.width }, 28)
+            ? transformSvgOnCanvas(
+                { h: CARD_PORTRAIT_HEIGHT, w: CARD_PORTRAIT_WIDTH },
+                { h: image.height, w: image.width },
+                28
+            )
             : null;
         setCampaignSymbolLayer(
             image

@@ -4,6 +4,7 @@ import Container from "../../../components/container/Container";
 import "./CardExporter.scss";
 import getTtsSaveObject from "./GetTtsSaveObject";
 import { getTtsDimensions, ttsMaxColumns } from "./TtsHelperFunctions";
+import cleanFileName from "../../../helpers/cleanFileName";
 
 export default function CardExporter({ cardSet }) {
     const { campaign } = useContext(CampaignContext);
@@ -33,8 +34,8 @@ export default function CardExporter({ cardSet }) {
                     return canvasBlob.arrayBuffer().then((arrayBuffer) => {
                         return window.fs.exportFile(
                             campaign.path,
-                            cardSet.getTitle(),
-                            `${cardSet.cards[index].getTitle()} (Front).${extension}`,
+                            cleanFileName(cardSet.getTitle()),
+                            `${cleanFileName(cardSet.cards[index].getTitle())} (Front).${extension}`,
                             new DataView(arrayBuffer)
                         );
                     });
@@ -49,8 +50,8 @@ export default function CardExporter({ cardSet }) {
                     return canvasBlob.arrayBuffer().then((arrayBuffer) => {
                         return window.fs.exportFile(
                             campaign.path,
-                            cardSet.getTitle(),
-                            `${cardSet.cards[index].getTitle()} (Back).${extension}`,
+                            cleanFileName(cardSet.getTitle()),
+                            `${cleanFileName(cardSet.cards[index].getTitle())} (Back).${extension}`,
                             new DataView(arrayBuffer)
                         );
                     });
@@ -82,7 +83,7 @@ export default function CardExporter({ cardSet }) {
             });
 
         if (frontPortraitCanvases.length > 0) {
-            await exportForTtsOnce(frontPortraitCanvases, `${cardSet.getTitle()} (Front).jpg`);
+            await exportForTtsOnce(frontPortraitCanvases, `${cleanFileName(cardSet.getTitle())} (Front).jpg`);
         }
 
         const backPortraitCanvases = Array.from(
@@ -100,14 +101,14 @@ export default function CardExporter({ cardSet }) {
             });
 
         if (backPortraitCanvases.length > 0) {
-            await exportForTtsOnce(backPortraitCanvases, `${cardSet.getTitle()} (Back).jpg`);
+            await exportForTtsOnce(backPortraitCanvases, `${cleanFileName(cardSet.getTitle())} (Back).jpg`);
         }
 
         if (frontPortraitCanvases.length > 0) {
             window.fs.exportTtsSaveObject(
                 campaign.path,
                 `${cardSet.getTitle()}.json`,
-                getTtsSaveObject(campaign.path, cardSet, frontPortraitCanvases.map(o => o.cardIndex), `${cardSet.getTitle()} (Front).jpg`, `${cardSet.getTitle()} (Back).jpg`)
+                getTtsSaveObject(campaign.path, cardSet, frontPortraitCanvases.map(o => o.cardIndex), `${cleanFileName(cardSet.getTitle())} (Front).jpg`, `${cleanFileName(cardSet.getTitle())} (Back).jpg`)
             );
         }
     }
@@ -128,7 +129,7 @@ export default function CardExporter({ cardSet }) {
             });
 
         if (frontPortraitCanvases.length > 0) {
-            await exportForTtsOnce(frontPortraitCanvases, `${cardSet.getTitle()} (Front, Landscape).jpg`);
+            await exportForTtsOnce(frontPortraitCanvases, `${cleanFileName(cardSet.getTitle())} (Front, Landscape).jpg`);
         }
 
         const backPortraitCanvases = Array.from(
@@ -146,14 +147,14 @@ export default function CardExporter({ cardSet }) {
             });
 
         if (backPortraitCanvases.length > 0) {
-            await exportForTtsOnce(backPortraitCanvases, `${cardSet.getTitle()} (Back, Landscape).jpg`);
+            await exportForTtsOnce(backPortraitCanvases, `${cleanFileName(cardSet.getTitle())} (Back, Landscape).jpg`);
         }
 
         if (frontPortraitCanvases.length > 0) {
             window.fs.exportTtsSaveObject(
                 campaign.path,
-                `${cardSet.getTitle()} (Landscape).json`,
-                getTtsSaveObject(campaign.path, cardSet, frontPortraitCanvases.map(o => o.cardIndex), `${cardSet.getTitle()} (Front, Landscape).jpg`, `${cardSet.getTitle()} (Back, Landscape).jpg`, true)
+                `${cleanFileName(cardSet.getTitle())} (Landscape).json`,
+                getTtsSaveObject(campaign.path, cardSet, frontPortraitCanvases.map(o => o.cardIndex), `${cleanFileName(cardSet.getTitle())} (Front, Landscape).jpg`, `${cleanFileName(cardSet.getTitle())} (Back, Landscape).jpg`, true)
             );
         }
     }
@@ -184,7 +185,7 @@ export default function CardExporter({ cardSet }) {
                         .then((arrayBuffer) => {
                             return window.fs.exportFile(
                                 campaign.path,
-                                cardSet.getTitle(),
+                                cleanFileName(cardSet.getTitle()),
                                 exportedImageName,
                                 new DataView(arrayBuffer)
                             );

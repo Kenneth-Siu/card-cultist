@@ -16,12 +16,22 @@ export default class Card {
 
     getTitle() {
         if (this.frontFace && this.frontFace.title) {
-            return this.frontFace.title;
+            return this.frontFace.title.replace(/<[^>]*>/g, "");
         }
         if (this.backFace && this.backFace.title) {
-            return this.backFace.title;
+            return this.backFace.title.replace(/<[^>]*>/g, "");
         }
         return "CARD_ID#" + this.id;
+    }
+
+    getSubtitle() {
+        if (this.frontFace && this.frontFace.subtitle) {
+            return this.frontFace.subtitle;
+        }
+        if (this.backFace && this.backFace.subtitle) {
+            return this.backFace.subtitle;
+        }
+        return "";
     }
 
     getEmoji() {

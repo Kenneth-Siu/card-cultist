@@ -6,6 +6,7 @@ import IconButton from "../../components/iconButton/IconButton";
 import { FACE_DIRECTION } from "./cardConstants";
 import listOfCardFaces from "./cardFaces/listOfCardFaces";
 import "./CardView.scss";
+import cleanFileName from "../../helpers/cleanFileName";
 
 export default function CardView() {
     const { campaign, refreshCampaign } = useContext(CampaignContext);
@@ -65,8 +66,8 @@ export default function CardView() {
                 return canvasBlob.arrayBuffer().then((arrayBuffer) => {
                     return window.fs.exportFile(
                         campaign.path,
-                        cardSet.getTitle(),
-                        `${card.getTitle()} (Front).${extension}`,
+                        cleanFileName(cardSet.getTitle()),
+                        `${cleanFileName(card.getTitle())} (Front).${extension}`,
                         new DataView(arrayBuffer)
                     );
                 });
@@ -79,8 +80,8 @@ export default function CardView() {
                 return canvasBlob.arrayBuffer().then((arrayBuffer) => {
                     return window.fs.exportFile(
                         campaign.path,
-                        cardSet.getTitle(),
-                        `${card.getTitle()} (Back).${extension}`,
+                        cleanFileName(cardSet.getTitle()),
+                        `${cleanFileName(card.getTitle())} (Back).${extension}`,
                         new DataView(arrayBuffer)
                     );
                 });

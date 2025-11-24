@@ -1,29 +1,23 @@
 import React from "react";
 import CardFace from "../BlankFace/CardFace";
-import asset from "../../../../../public/templates/assets/assetStory.png";
-import noEncounterSetSymbolFramePath from "../../../../../public/templates/assets/assetNeutral.png";
-import AssetFaceView from "./AssetFaceView";
+import neutralEvent from "../../../../../public/templates/events/eventNeutral.png";
+import NeutralEventFaceView from "./NeutralEventFaceView";
 import ImageTransform from "../../../../models/ImageTransform";
-import AssetFaceCanvas from "./AssetFaceCanvas";
-import subtitle from "../../../../../public/templates/subtitles/neutral.png";
+import NeutralEventFaceCanvas from "./NeutralEventFaceCanvas";
 
-export default class AssetFace extends CardFace {
-    static type = "Asset";
-    static frame = asset;
-    static noEncounterSetSymbolFrame = noEncounterSetSymbolFramePath;
-    static subtitle = subtitle;
+export default class NeutralEventFace extends CardFace {
+    static type = "Event (Neutral)";
+    static frame = neutralEvent;
 
     constructor(face) {
-        super(face, AssetFace.type);
+        super(face, NeutralEventFace.type);
         if (!face) {
             face = {};
         }
         this.cost = face.cost || "";
-        this.cardType = face.cardType === null ? "Asset" : face.cardType || "";
+        this.level = face.level || "";
+        this.cardType = face.cardType === null ? "Event" : face.cardType || "";
         this.title = face.title || "";
-        this.subtitle = face.subtitle || "";
-        this.encounterSetSymbol = face.encounterSetSymbol || null;
-        this.hideEncounterSetSymbol = face.hideEncounterSetSymbol || false;
         this.skillIcon1 = face.skillIcon1 || "";
         this.skillIcon2 = face.skillIcon2 || "";
         this.skillIcon3 = face.skillIcon3 || "";
@@ -34,14 +28,8 @@ export default class AssetFace extends CardFace {
         this.textFontSize = face.textFontSize || 34;
         this.flavor = face.flavor || "";
         this.flavorNudgeDown = face.flavorNudgeDown || 0;
-        this.health = face.health || "";
-        this.sanity = face.sanity || "";
-        this.slot1 = face.slot1 || "";
-        this.slot2 = face.slot2 || "";
         this.campaignSymbol = face.campaignSymbol || null;
         this.copyrightInformation = face.copyrightInformation || "";
-        this.encounterSetId = face.encounterSetId || "";
-        this.encounterSetMaxId = face.encounterSetMaxId || "";
         this.campaignSetId = face.campaignSetId || "";
         this.illustration = face.illustration || null;
         this.illustrationTransform = new ImageTransform(face.illustrationTransform);
@@ -50,7 +38,7 @@ export default class AssetFace extends CardFace {
 
     getView(faceDirection, listOfCardFaces, otherFace, cardSet) {
         return (
-            <AssetFaceView
+            <NeutralEventFaceView
                 faceDirection={faceDirection}
                 listOfCardFaces={listOfCardFaces}
                 face={this}
@@ -62,7 +50,7 @@ export default class AssetFace extends CardFace {
 
     getCanvas(cardId, cardSet, setIllustrationTransform) {
         return (
-            <AssetFaceCanvas
+            <NeutralEventFaceCanvas
                 face={this}
                 cardSet={cardSet}
                 setIllustrationTransform={setIllustrationTransform}
@@ -72,7 +60,7 @@ export default class AssetFace extends CardFace {
     }
 
     getEmoji() {
-        return "🔍";
+        return "🧪";
     }
 
     autofill(other) {

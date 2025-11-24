@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import useLoadedImages from "../../../../helpers/useLoadedImages";
 import CanvasImageLayer from "../../../../models/canvasLayers/CanvasImageLayer";
-import PlayerFace from "./PlayerFace";
-import CardCanvas from "../CardCanvas";
+import LandscapePlayerFace from "./LandscapePlayerFace";
+import CardCanvas, { ORIENTATION } from "../CardCanvas";
 
-export default function PlayerFaceCanvas() {
+export default function LandscapePlayerFaceCanvas() {
     const [loadedImages, loadPublicImage] = useLoadedImages();
     const [frameLayer, setFrameLayer] = useState(null);
 
     const canvasLayers = [frameLayer];
 
     useEffect(async () => {
-        setFrameLayer(new CanvasImageLayer(await loadPublicImage(PlayerFace.frame)));
+        setFrameLayer(new CanvasImageLayer(await loadPublicImage(LandscapePlayerFace.frame)));
     }, []);
 
-    return <CardCanvas loadedImages={loadedImages} canvasLayers={canvasLayers} />;
+    return <CardCanvas loadedImages={loadedImages} canvasLayers={canvasLayers} orientation={ORIENTATION.LANDSCAPE} />;
 }

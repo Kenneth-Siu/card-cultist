@@ -22,6 +22,9 @@ export default function AssetFaceView({ faceDirection, listOfCardFaces, otherFac
                 <>
                     <InputContainer label="Title" type="text" value={face.title} setValue={set("title")} />
                     <InputContainer label="Subtitle" type="text" value={face.subtitle} setValue={set("subtitle")} />
+                    <InputContainer label="Hide Encounter Set Symbol?">
+                        <input type="checkbox" checked={face.hideEncounterSetSymbol} onChange={() => toggleHideEncounterSetSymbol()} />
+                    </InputContainer>
                     <InputContainer label="Cost" type="text" value={face.cost} setValue={set("cost")} />
                     <InputContainer label="Traits" type="text" value={face.traits} setValue={set("traits")} />
                     <InputContainer label="Font Size">
@@ -194,6 +197,11 @@ export default function AssetFaceView({ faceDirection, listOfCardFaces, otherFac
             }
         />
     );
+
+    function toggleHideEncounterSetSymbol() {
+        face.hideEncounterSetSymbol = !face.hideEncounterSetSymbol;
+        refreshCampaign();
+    }
 
     async function setEncounterSetSymbol() {
         const path = await window.fs.chooseIcon();

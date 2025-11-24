@@ -1,5 +1,8 @@
+import cleanFileName from "../../../helpers/cleanFileName";
 import MythosFace from "../../card/cardFaces/MythosFace/MythosFace";
 import PlayerFace from "../../card/cardFaces/PlayerFace/PlayerFace";
+import getGMNotes from "./GetGMNotes";
+import getTags from "./GetTags";
 import { getTtsDimensions } from "./TtsHelperFunctions";
 import path from "path";
 
@@ -11,7 +14,7 @@ export default function getTtsSaveObject(campaignPath, cardSet, cardIndexesToUse
 
     cardIndexesToUse.forEach(cardIndex => {
         const card = cardSet.cards[cardIndex];
-        const ttsCard = getCard(card.getTitle(), campaignPath, cardSet, frontImageName, backImageName, cardIndexesToUse, cardIndex, isLandscape);
+        const ttsCard = getCard(card, campaignPath, cardSet, frontImageName, backImageName, cardIndexesToUse, cardIndex, isLandscape);
         for (let i = 0; i < card.numOfCopies; i++) {
             deck.ObjectStates[0].DeckIDs.push(ttsCard.CardID);
             deck.ObjectStates[0].ContainedObjects.push(ttsCard);
@@ -23,12 +26,15 @@ export default function getTtsSaveObject(campaignPath, cardSet, cardIndexesToUse
     return deck;
 }
 
-function getCard(cardName, campaignPath, cardSet, frontImageName, backImageName, cardIndexesToUse, cardIndex, isLandscape) {
+function getCard(cardObj, campaignPath, cardSet, frontImageName, backImageName, cardIndexesToUse, cardIndex, isLandscape) {
     const card = JSON.parse(JSON.stringify(cardTemplate));
-    card.NickName = cardName;
-    card.CardID = (88000 + cardSet.id + (isLandscape ? 1000 : 0)) * 100 + cardIndexesToUse.indexOf(cardIndex);
+    card.NickName = cardObj.getTitle();
+    card.Description = cardObj.getSubtitle() || "";
+    card.CardID = (20252000 + cardSet.id + (isLandscape ? 1000 : 0)) * 100 + cardIndexesToUse.indexOf(cardIndex);
     card.CustomDeck = getCustomDeck(cardIndexesToUse, campaignPath, cardSet, frontImageName, backImageName, isLandscape);
     card.SidewaysCard = isLandscape;
+    card.GMNotes = getGMNotes(cardObj, card.CardID);
+    card.Tags = getTags(cardObj);
     return card;
 }
 
@@ -39,9 +45,9 @@ function getCustomDeck(cardIndexesToUse, campaignPath, cardSet, frontImageName, 
     const normalizedCampaignPath = path.normalize(campaignPath);
     const campaignFolder = normalizedCampaignPath.substring(0, normalizedCampaignPath.lastIndexOf("\\"));
     const returnedObject = {};
-    returnedObject[88000 + cardSet.id + (isLandscape ? 1000 : 0)] = {
-        "FaceURL": `file:///${campaignFolder}\\Exports\\${cardSet.getTitle()}\\${frontImageName}`,
-        "BackURL": singleCardBack || `file:///${campaignFolder}\\Exports\\${cardSet.getTitle()}\\${backImageName}`,
+    returnedObject[20252000 + cardSet.id + (isLandscape ? 1000 : 0)] = {
+        "FaceURL": `file:///${campaignFolder}\\Exports\\${cleanFileName(cardSet.getTitle())}\\${frontImageName}`,
+        "BackURL": singleCardBack || `file:///${campaignFolder}\\Exports\\${cleanFileName(cardSet.getTitle())}\\${backImageName}`,
         "NumWidth": numberOfColumns,
         "NumHeight": numberOfRows,
         "BackIsHidden": true,
@@ -69,7 +75,7 @@ const cardTemplate = {
         "posY": 0,
         "posZ": 0,
         "rotX": 0,
-        "rotY": 270,
+        "rotY": 0,
         "rotZ": 0,
         "scaleX": 1.0,
         "scaleY": 1.0,
@@ -123,7 +129,6 @@ const deckTemplate = {
     "Sky": "",
     "Note": "",
     "TabStates": {},
-    "CustomDeck": null,
     "LuaScript": "",
     "LuaScriptState": "",
     "XmlUI": "",
@@ -135,7 +140,7 @@ const deckTemplate = {
                 "posY": 0,
                 "posZ": 0,
                 "rotX": 0,
-                "rotY": 270,
+                "rotY": 0,
                 "rotZ": 0,
                 "scaleX": 1.0,
                 "scaleY": 1.0,
@@ -154,6 +159,7 @@ const deckTemplate = {
                 "g": 0.713235259,
                 "b": 0.713235259
             },
+            "Tags": [],
             "LayoutGroupSortIndex": 0,
             "Value": 0,
             "Locked": false,
