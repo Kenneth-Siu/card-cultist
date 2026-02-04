@@ -30,7 +30,7 @@ function getCard(cardObj, campaignPath, cardSet, frontImageName, backImageName, 
     const card = JSON.parse(JSON.stringify(cardTemplate));
     card.NickName = cardObj.getTitle();
     card.Description = cardObj.getSubtitle() || "";
-    card.CardID = (20252000 + cardSet.id + (isLandscape ? 1000 : 0)) * 100 + cardIndexesToUse.indexOf(cardIndex);
+    card.CardID = (cardSet.id + (isLandscape ? 10000 : 0)) * 100 + cardIndexesToUse.indexOf(cardIndex);
     card.CustomDeck = getCustomDeck(cardIndexesToUse, campaignPath, cardSet, frontImageName, backImageName, isLandscape);
     card.SidewaysCard = isLandscape;
     card.GMNotes = getGMNotes(cardObj, card.CardID);
@@ -45,7 +45,7 @@ function getCustomDeck(cardIndexesToUse, campaignPath, cardSet, frontImageName, 
     const normalizedCampaignPath = path.normalize(campaignPath);
     const campaignFolder = normalizedCampaignPath.substring(0, normalizedCampaignPath.lastIndexOf("\\"));
     const returnedObject = {};
-    returnedObject[20252000 + cardSet.id + (isLandscape ? 1000 : 0)] = {
+    returnedObject[cardSet.id + (isLandscape ? 10000 : 0)] = {
         "FaceURL": `file:///${campaignFolder}\\Exports\\${cleanFileName(cardSet.getTitle())}\\${frontImageName}`,
         "BackURL": singleCardBack || `file:///${campaignFolder}\\Exports\\${cleanFileName(cardSet.getTitle())}\\${backImageName}`,
         "NumWidth": numberOfColumns,

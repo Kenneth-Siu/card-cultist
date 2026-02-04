@@ -27,7 +27,7 @@ function getGMNotesObj(card, cardID) {
         return "";
     }
     let notes = {
-        "id": "twoa" + cardID.toString(),
+        "id": "twoa2205" + cardID.toString(),
         "traits": card.frontFace.traits,
         "cost": card.frontFace.cost,
         "cycle": "The Worlds of Android"
