@@ -5,6 +5,9 @@
   "version": "4.2.15",
   "main": "src/main.js",
   "license": "MIT",
+  "engines": {
+    "node": "16"
+  },
   "scripts": {
     "start": "electron-forge start",
     "razzle-start": "razzle start",
