@@ -5,6 +5,7 @@ import "./CardExporter.scss";
 import getTtsSaveObject from "./GetTtsSaveObject";
 import { getTtsDimensions, ttsMaxColumns } from "./TtsHelperFunctions";
 import cleanFileName from "../../../helpers/cleanFileName";
+import PdfExportButton from "./PdfExportButton";
 
 export default function CardExporter({ cardSet }) {
     const { campaign } = useContext(CampaignContext);
@@ -15,6 +16,7 @@ export default function CardExporter({ cardSet }) {
             <button onClick={() => exportAllCards("image/png", "png")}>Export all cards (PNG)</button>
             <button onClick={() => exportAllCards("image/jpeg", "jpg", 0.9)}>Export all cards (JPG)</button>
             <button onClick={() => exportForTts()}>Export for TTS (JPG)</button>
+            <PdfExportButton cardSet={cardSet} />
             <div className="export-card-front-canvases-container">
                 {cardSet.cards.map((card) => card.frontFace.getCanvas(card.id, cardSet, campaign))}
             </div>
