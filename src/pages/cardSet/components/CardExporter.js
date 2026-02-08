@@ -6,6 +6,9 @@ import getTtsSaveObject from "./GetTtsSaveObject";
 import { getTtsDimensions, ttsMaxColumns } from "./TtsHelperFunctions";
 import cleanFileName from "../../../helpers/cleanFileName";
 import PdfExportButton from "./PdfExportButton";
+import createBleedCanvas from "../../../helpers/pdfExport/createBleedCanvas";
+import rotateLandscapeToPortrait from "../../../helpers/pdfExport/rotateLandscapeToPortrait";
+import { BLEED_PX } from "../../../helpers/pdfExport/pdfExportConfig";
 
 export default function CardExporter({ cardSet }) {
     const { campaign } = useContext(CampaignContext);
@@ -15,6 +18,7 @@ export default function CardExporter({ cardSet }) {
         <Container className="export-container">
             <button onClick={() => exportAllCards("image/png", "png")}>Export all cards (PNG)</button>
             <button onClick={() => exportAllCards("image/jpeg", "jpg", 0.9)}>Export all cards (JPG)</button>
+            <button onClick={() => exportAllCardsWithBleed()}>Export all cards with bleed (PNG)</button>
             <button onClick={() => exportForTts()}>Export for TTS (JPG)</button>
             <PdfExportButton cardSet={cardSet} />
             <div className="export-card-front-canvases-container">
@@ -60,6 +64,52 @@ export default function CardExporter({ cardSet }) {
                 },
                 imageType,
                 quality
+            );
+        });
+    }
+
+    function exportAllCardsWithBleed() {
+        const bleedSubfolder = `${cleanFileName(cardSet.getTitle())}/bleed`;
+
+        document.querySelectorAll(".export-card-front-canvases-container canvas").forEach((canvas, index) => {
+            let sourceCanvas = canvas;
+            if (canvas.classList.contains("landscape")) {
+                sourceCanvas = rotateLandscapeToPortrait(canvas);
+            }
+            const bleedCanvas = createBleedCanvas(sourceCanvas, BLEED_PX);
+            bleedCanvas.toBlob(
+                (canvasBlob) => {
+                    return canvasBlob.arrayBuffer().then((arrayBuffer) => {
+                        return window.fs.exportFile(
+                            campaign.path,
+                            bleedSubfolder,
+                            `${cleanFileName(cardSet.cards[index].getTitle())} (Front).png`,
+                            new DataView(arrayBuffer)
+                        );
+                    });
+                },
+                "image/png"
+            );
+        });
+
+        document.querySelectorAll(".export-card-back-canvases-container canvas").forEach((canvas, index) => {
+            let sourceCanvas = canvas;
+            if (canvas.classList.contains("landscape")) {
+                sourceCanvas = rotateLandscapeToPortrait(canvas);
+            }
+            const bleedCanvas = createBleedCanvas(sourceCanvas, BLEED_PX);
+            bleedCanvas.toBlob(
+                (canvasBlob) => {
+                    return canvasBlob.arrayBuffer().then((arrayBuffer) => {
+                        return window.fs.exportFile(
+                            campaign.path,
+                            bleedSubfolder,
+                            `${cleanFileName(cardSet.cards[index].getTitle())} (Back).png`,
+                            new DataView(arrayBuffer)
+                        );
+                    });
+                },
+                "image/png"
             );
         });
     }

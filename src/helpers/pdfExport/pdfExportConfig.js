@@ -27,9 +27,6 @@ export const PAPER_CONFIGS = {
 
 // Back face types to exclude from PDF export
 export const EXCLUDED_BACK_TYPES = [
-    "Mythos",
-    "Player",
-    "Player (Landscape)"
 ];
 
 // Crop mark settings

@@ -89,8 +89,8 @@ export default function createBleedCanvas(sourceCanvas, bleedPx) {
 
     // Top-right corner
     ctx.save();
-    ctx.translate(newWidth - bleedPx, bleedPx);
-    ctx.scale(1, -1);
+    ctx.translate(newWidth, bleedPx);
+    ctx.scale(-1, -1);
     ctx.drawImage(
         sourceCanvas,
         width - bleedPx, 0, bleedPx, bleedPx,
@@ -100,8 +100,8 @@ export default function createBleedCanvas(sourceCanvas, bleedPx) {
 
     // Bottom-left corner
     ctx.save();
-    ctx.translate(bleedPx, newHeight - bleedPx);
-    ctx.scale(-1, 1);
+    ctx.translate(bleedPx, newHeight);
+    ctx.scale(-1, -1);
     ctx.drawImage(
         sourceCanvas,
         0, height - bleedPx, bleedPx, bleedPx,
@@ -111,8 +111,8 @@ export default function createBleedCanvas(sourceCanvas, bleedPx) {
 
     // Bottom-right corner
     ctx.save();
-    ctx.translate(newWidth - bleedPx, newHeight - bleedPx);
-    ctx.scale(1, 1);
+    ctx.translate(newWidth, newHeight);
+    ctx.scale(-1, -1);
     ctx.drawImage(
         sourceCanvas,
         width - bleedPx, height - bleedPx, bleedPx, bleedPx,

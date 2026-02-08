@@ -93,7 +93,7 @@ async function exportFile(event, campaignPath, cardSetName, fileName, dataView) 
     }
     if (cardSetName) {
         try {
-            await mkdir(path.join(exportsFolderPath, cardSetName));
+            await mkdir(path.join(exportsFolderPath, cardSetName), { recursive: true });
         } catch (exception) {
             if (exception.code !== "EEXIST") {
                 // TODO proper error handling...
