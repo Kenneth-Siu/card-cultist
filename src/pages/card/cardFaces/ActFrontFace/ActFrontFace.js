@@ -3,6 +3,7 @@ import actFront from "../../../../../public/templates/scenario/actFront.png";
 import ActFrontFaceView from "./ActFrontFaceView";
 import ActFrontFaceCanvas from "./ActFrontFaceCanvas";
 import AgendaActFrontFace from "../_AgendaActFrontFace/_AgendaActFrontFace";
+import { noConnectionSymbol } from "../../../../models/canvasLayers/cardLayers/connectionSymbol/connectionSymbols";
 
 export default class ActFrontFace extends AgendaActFrontFace {
     static type = "Act Front";
@@ -10,6 +11,12 @@ export default class ActFrontFace extends AgendaActFrontFace {
 
     constructor(face) {
         super(face, ActFrontFace.type, ActFrontFace.frame);
+        if (!face) {
+            face = {};
+        }
+        this.connectionSymbol = face.connectionSymbol || noConnectionSymbol.name;
+        this.connectionSymbolX = face.connectionSymbolX ?? 0;
+        this.connectionSymbolY = face.connectionSymbolY ?? 0;
     }
 
     getView(faceDirection, listOfCardFaces, otherFace, cardSet) {

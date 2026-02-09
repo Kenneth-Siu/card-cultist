@@ -11,6 +11,9 @@ import { CARD_PORTRAIT_HEIGHT, CARD_PORTRAIT_WIDTH } from "../../cardConstants";
 import ActFrontFace from "./ActFrontFace";
 import hyphen from "../../../../../public/overlays/AHLCG-Cost--.png";
 import { CampaignContext } from "../../../../components/CampaignContext";
+import { connectionSymbols, noConnectionSymbol } from "../../../../models/canvasLayers/cardLayers/connectionSymbol/connectionSymbols";
+import ConnectionSymbolLayer from "../../../../models/canvasLayers/cardLayers/connectionSymbol/ConnectionSymbolLayer";
+import ConnectionSymbolConfig from "../../../../models/canvasLayers/cardLayers/connectionSymbol/ConnectionSymbolConfig";
 
 export default function ActFrontFaceCanvas({ face, cardSet, setIllustrationTransform }) {
     const { campaign } = useContext(CampaignContext);
@@ -22,6 +25,7 @@ export default function ActFrontFaceCanvas({ face, cardSet, setIllustrationTrans
     const [encounterSetSymbolLayer, setEncounterSetSymbolLayer] = useState(null);
     const [titleLayer, setTitleLayer] = useState(null);
     const [textLayer, setTextLayer] = useState(null);
+    const [connectionSymbolLayer, setConnectionSymbolLayer] = useState(null);
     const [clueThresholdLayer, setClueThresholdLayer] = useState(null);
     const [illustratorLayer, setIllustratorLayer] = useState(null);
     const [copyrightInformationLayer, setCopyrightInformationLayer] = useState(null);
@@ -36,6 +40,7 @@ export default function ActFrontFaceCanvas({ face, cardSet, setIllustrationTrans
         encounterSetSymbolLayer,
         titleLayer,
         textLayer,
+        connectionSymbolLayer,
         clueThresholdLayer,
         illustratorLayer,
         copyrightInformationLayer,
@@ -43,6 +48,12 @@ export default function ActFrontFaceCanvas({ face, cardSet, setIllustrationTrans
         campaignSymbolLayer,
         campaignSetIdLayer,
     ];
+
+    useEffect(async () => {
+        connectionSymbols.map(async (symbol) => {
+            symbol.image = await loadPublicImage(symbol.icon);
+        });
+    }, []);
 
     useEffect(async () => {
         const image = await loadFileSystemImage(face.illustration);
@@ -122,6 +133,17 @@ export default function ActFrontFaceCanvas({ face, cardSet, setIllustrationTrans
             )
         );
     }, [face.title, face.text, face.textFontSize]);
+
+    useEffect(() => {
+        const config = new ConnectionSymbolConfig(face.connectionSymbol);
+        if (!config.isNone()) {
+            setConnectionSymbolLayer(
+                new ConnectionSymbolLayer(config.withX(face.connectionSymbolX).withY(face.connectionSymbolY))
+            );
+        } else {
+            setConnectionSymbolLayer(null);
+        }
+    }, [face.connectionSymbol, face.connectionSymbolX, face.connectionSymbolY]);
 
     useEffect(async () => {
         if (face.threshold === "-") {

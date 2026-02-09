@@ -6,7 +6,7 @@ import useViewPropertySetter from "../../components/useViewPropertySetter";
 import BaseFaceView from "../BaseFaceView";
 import "../FaceView.scss";
 
-export default function AgendaActFrontFaceView({ faceDirection, listOfCardFaces, otherFace, canvas, face }) {
+export default function AgendaActFrontFaceView({ faceDirection, listOfCardFaces, otherFace, canvas, face, additionalFields }) {
     const { refreshCampaign } = useContext(CampaignContext);
     const set = useViewPropertySetter(face, refreshCampaign);
     return (
@@ -39,6 +39,7 @@ export default function AgendaActFrontFaceView({ faceDirection, listOfCardFaces,
                     </InputContainer>
 
                     <Illustration face={face} setIllustrationTransform={setIllustrationTransform} />
+                    {additionalFields}
                 </>
             }
             expandableHeight="7rem"
