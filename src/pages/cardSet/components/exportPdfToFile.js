@@ -12,13 +12,17 @@ import rotateLandscapeToPortrait from "../../../helpers/pdfExport/rotateLandscap
 import cleanFileName from "../../../helpers/cleanFileName";
 
 /**
- * Exports a card set to a printable PDF with bleed and crop marks.
+ * Exports a card set to a printable PDF file in the filesystem.
+ * Similar to exportPdf but saves to a file instead of triggering browser download.
  *
  * @param {CardSet} cardSet - The card set to export
  * @param {string} paperSize - "a4" or "letter"
+ * @param {string} campaignPath - Path to the campaign folder
+ * @param {string} subfolder - Subfolder to save in (e.g., "print-and-play-a4")
+ * @param {string|null} cardSetId - Optional card set ID to scope canvas query (for multi-set exports)
  * @returns {Promise<void>}
  */
-export default async function exportPdf(cardSet, paperSize) {
+export default async function exportPdfToFile(cardSet, paperSize, campaignPath, subfolder, cardSetId = null) {
     const config = PAPER_CONFIGS[paperSize];
     if (!config) {
         throw new Error(`Unknown paper size: ${paperSize}`);
@@ -28,17 +32,23 @@ export default async function exportPdf(cardSet, paperSize) {
     const { fronts, backs } = collectPrintFacesGrouped(cardSet);
 
     if (fronts.length === 0) {
-        alert("No cards to export.");
-        return;
+        return; // Skip empty card sets silently
     }
 
     // Get canvas elements from the DOM
-    // These are rendered in hidden containers by CardExporter
+    // Query within the specific card set's container if ID provided
+    const containerSelector = cardSetId
+        ? `[data-cardset-id="${cardSetId}"]`
+        : null;
+    const rootElement = containerSelector
+        ? document.querySelector(containerSelector)
+        : document;
+
     const frontCanvases = Array.from(
-        document.querySelectorAll(".export-card-front-canvases-container canvas")
+        rootElement.querySelectorAll(".export-card-front-canvases-container canvas")
     );
     const backCanvases = Array.from(
-        document.querySelectorAll(".export-card-back-canvases-container canvas")
+        rootElement.querySelectorAll(".export-card-back-canvases-container canvas")
     );
 
     // Helper to get canvas for a face entry
@@ -141,7 +151,15 @@ export default async function exportPdf(cardSet, paperSize) {
         pdf.addImage(pageCanvas, "PNG", 0, 0);
     }
 
-    // Save PDF
-    const fileName = `${cleanFileName(cardSet.getTitle())}_print.pdf`;
-    pdf.save(fileName);
+    // Get PDF as array buffer
+    const pdfData = pdf.output("arraybuffer");
+
+    // Save to filesystem
+    const fileName = `${cleanFileName(cardSet.getTitle())}.pdf`;
+    await window.fs.exportFile(
+        campaignPath,
+        subfolder,
+        fileName,
+        new DataView(pdfData)
+    );
 }

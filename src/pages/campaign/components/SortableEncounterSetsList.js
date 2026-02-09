@@ -6,6 +6,7 @@ import SortableTable from "../../../components/sortableTable/sortableTable";
 import SortableTbody from "../../../components/sortableTable/SortableTbody";
 import SortableTbodyTr from "../../../components/sortableTable/SortableTbodyTr";
 import SortableTd from "../../../components/sortableTable/SortableTd";
+import CampaignPdfExportButton from "./CampaignPdfExportButton";
 
 export default function SortableEncounterSetsList() {
     const { campaign, refreshCampaign } = useContext(CampaignContext);
@@ -13,6 +14,7 @@ export default function SortableEncounterSetsList() {
     return (
         <Container className="encounter-sets-list-container">
             <button onClick={generateCampaignCardNumbers}>Generate campaign card numbers</button>
+            <CampaignPdfExportButton campaign={campaign} />
             <SortableTable>
                 <SortableTbody items={campaign.cardSets} setItems={setCardSets}>
                     {campaign.cardSets.map((cardSet) => (

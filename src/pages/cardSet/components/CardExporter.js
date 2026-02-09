@@ -69,48 +69,70 @@ export default function CardExporter({ cardSet }) {
     }
 
     function exportAllCardsWithBleed() {
-        const bleedSubfolder = `${cleanFileName(cardSet.getTitle())}/bleed`;
+        const bleedSubfolder = `bleed`;
 
         document.querySelectorAll(".export-card-front-canvases-container canvas").forEach((canvas, index) => {
+            const card = cardSet.cards[index];
+            const numOfCopies = card.numOfCopies || 1;
+            const cardSetId = card.frontFace.campaignSetId || card.frontFace.encounterSetId || cardSet.id;
+
             let sourceCanvas = canvas;
             if (canvas.classList.contains("landscape")) {
                 sourceCanvas = rotateLandscapeToPortrait(canvas);
             }
             const bleedCanvas = createBleedCanvas(sourceCanvas, BLEED_PX);
-            bleedCanvas.toBlob(
-                (canvasBlob) => {
-                    return canvasBlob.arrayBuffer().then((arrayBuffer) => {
-                        return window.fs.exportFile(
-                            campaign.path,
-                            bleedSubfolder,
-                            `${cleanFileName(cardSet.cards[index].getTitle())} (Front).png`,
-                            new DataView(arrayBuffer)
-                        );
-                    });
-                },
-                "image/png"
-            );
+
+            // Export a copy for each numOfCopies
+            for (let copyNum = 1; copyNum <= numOfCopies; copyNum++) {
+                bleedCanvas.toBlob(
+                    (canvasBlob) => {
+                        return canvasBlob.arrayBuffer().then((arrayBuffer) => {
+                            const fileName = numOfCopies > 1
+                                ? `${cardSetId}-${cleanFileName(card.getTitle())}-${copyNum} (Front).png`
+                                : `${cardSetId}-${cleanFileName(card.getTitle())} (Front).png`;
+                            return window.fs.exportFile(
+                                campaign.path,
+                                bleedSubfolder,
+                                fileName,
+                                new DataView(arrayBuffer)
+                            );
+                        });
+                    },
+                    "image/png"
+                );
+            }
         });
 
         document.querySelectorAll(".export-card-back-canvases-container canvas").forEach((canvas, index) => {
+            const card = cardSet.cards[index];
+            const numOfCopies = card.numOfCopies || 1;
+            const cardSetId = card.backFace.campaignSetId || card.backFace.encounterSetId || cardSet.id;
+
             let sourceCanvas = canvas;
             if (canvas.classList.contains("landscape")) {
                 sourceCanvas = rotateLandscapeToPortrait(canvas);
             }
             const bleedCanvas = createBleedCanvas(sourceCanvas, BLEED_PX);
-            bleedCanvas.toBlob(
-                (canvasBlob) => {
-                    return canvasBlob.arrayBuffer().then((arrayBuffer) => {
-                        return window.fs.exportFile(
-                            campaign.path,
-                            bleedSubfolder,
-                            `${cleanFileName(cardSet.cards[index].getTitle())} (Back).png`,
-                            new DataView(arrayBuffer)
-                        );
-                    });
-                },
-                "image/png"
-            );
+
+            // Export a copy for each numOfCopies
+            for (let copyNum = 1; copyNum <= numOfCopies; copyNum++) {
+                bleedCanvas.toBlob(
+                    (canvasBlob) => {
+                        return canvasBlob.arrayBuffer().then((arrayBuffer) => {
+                            const fileName = numOfCopies > 1
+                                ? `${cardSetId}-${cleanFileName(card.getTitle())}-${copyNum} (Back).png`
+                                : `${cardSetId}-${cleanFileName(card.getTitle())} (Back).png`;
+                            return window.fs.exportFile(
+                                campaign.path,
+                                bleedSubfolder,
+                                fileName,
+                                new DataView(arrayBuffer)
+                            );
+                        });
+                    },
+                    "image/png"
+                );
+            }
         });
     }
 

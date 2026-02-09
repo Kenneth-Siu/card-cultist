@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Route, Switch } from "react-router-dom";
 import { CampaignContext } from "../components/CampaignContext";
 import CampaignView from "./campaign/CampaignView";
+import CampaignExportPage from "./campaign/CampaignExportPage";
 import CampaignGuideView from "./campaignGuide/CampaignGuideView";
 import NavBar from "./navBar/NavBar";
 import CardSetView from "./cardSet/CardSetView";
@@ -40,6 +41,9 @@ export default function App() {
             <Switch>
                 <Route exact={true} path="/campaign-guide">
                     <CampaignGuideView />
+                </Route>
+                <Route exact={true} path="/campaign-export">
+                    <CampaignExportPage />
                 </Route>
                 <Route exact={true} path="/card-set/:id">
                     <CardSetView />
