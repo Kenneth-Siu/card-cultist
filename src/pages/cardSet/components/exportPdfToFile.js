@@ -72,20 +72,18 @@ export default async function exportPdfToFile(cardSet, paperSize, campaignPath, 
     const cardsPerPage = config.cols * config.rows;
     const gridWidth = config.cols * CARD_WITH_BLEED_WIDTH;
     const gridHeight = config.rows * CARD_WITH_BLEED_HEIGHT;
-    const marginX = (config.width - gridWidth) / 2;
-    const marginY = (config.height - gridHeight) / 2;
 
-    // Create PDF using points (native PDF unit)
+    // Create PDF sized exactly to the card grid (no margins)
     const pdf = new jsPDF({
         unit: "pt",
-        format: [config.width * pxToPt, config.height * pxToPt],
+        format: [gridWidth * pxToPt, gridHeight * pxToPt],
         compress: true
     });
 
-    // Create page canvas for compositing (still use pixels for rendering)
+    // Create page canvas sized exactly to the card grid
     const pageCanvas = document.createElement("canvas");
-    pageCanvas.width = config.width;
-    pageCanvas.height = config.height;
+    pageCanvas.width = gridWidth;
+    pageCanvas.height = gridHeight;
     const pageCtx = pageCanvas.getContext("2d");
 
     // Process fronts and backs in alternating pages for double-sided printing
@@ -100,11 +98,11 @@ export default async function exportPdfToFile(cardSet, paperSize, campaignPath, 
 
         // Start new page
         if (pageNum > 0) {
-            pdf.addPage([config.width * pxToPt, config.height * pxToPt]);
+            pdf.addPage([gridWidth * pxToPt, gridHeight * pxToPt]);
         }
         // Clear page canvas
         pageCtx.fillStyle = "white";
-        pageCtx.fillRect(0, 0, config.width, config.height);
+        pageCtx.fillRect(0, 0, gridWidth, gridHeight);
 
         // Render cards on this page
         for (let i = 0; i < cardsPerPage; i++) {
@@ -119,7 +117,7 @@ export default async function exportPdfToFile(cardSet, paperSize, campaignPath, 
                 continue;
             }
 
-            // Calculate position on page
+            // Calculate position on page (no margins, cards fill entire page)
             let col = i % config.cols;
             const row = Math.floor(i / config.cols);
 
@@ -128,8 +126,8 @@ export default async function exportPdfToFile(cardSet, paperSize, campaignPath, 
                 col = config.cols - 1 - col;
             }
 
-            const x = marginX + col * CARD_WITH_BLEED_WIDTH;
-            const y = marginY + row * CARD_WITH_BLEED_HEIGHT;
+            const x = col * CARD_WITH_BLEED_WIDTH;
+            const y = row * CARD_WITH_BLEED_HEIGHT;
 
             // Get source canvas
             let sourceCanvas = faceCanvas.canvas;
@@ -150,7 +148,7 @@ export default async function exportPdfToFile(cardSet, paperSize, campaignPath, 
         }
 
         // Add page to PDF with dimensions converted to points
-        pdf.addImage(pageCanvas, "PNG", 0, 0, config.width * pxToPt, config.height * pxToPt);
+        pdf.addImage(pageCanvas, "PNG", 0, 0, gridWidth * pxToPt, gridHeight * pxToPt);
     }
 
     // Get PDF as array buffer
