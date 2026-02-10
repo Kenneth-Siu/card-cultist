@@ -34,3 +34,9 @@ export const CROP_MARK_LENGTH = 30;
 export const CROP_MARK_OFFSET = 10;
 export const CROP_MARK_COLOR = "#FF0000";
 export const CROP_MARK_LINE_WIDTH = 2;
+
+// No-bleed export configuration (3x3 grid at native card size)
+export const NO_BLEED_COLS = 3;
+export const NO_BLEED_ROWS = 3;
+export const NO_BLEED_PAGE_WIDTH = NO_BLEED_COLS * CARD_PORTRAIT_WIDTH;   // 2250
+export const NO_BLEED_PAGE_HEIGHT = NO_BLEED_ROWS * CARD_PORTRAIT_HEIGHT; // 3150

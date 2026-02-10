@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { CampaignContext } from "../../components/CampaignContext";
 import Container from "../../components/container/Container";
 import exportPdfToFile from "../cardSet/components/exportPdfToFile";
+import exportPdfNoCropToFile from "../cardSet/components/exportPdfNoCropToFile";
 import collectPrintFaces from "../../helpers/pdfExport/collectPrintFaces";
 import { PAPER_CONFIGS } from "../../helpers/pdfExport/pdfExportConfig";
 import "./CampaignExportPage.scss";
@@ -114,6 +115,45 @@ export default function CampaignExportPage() {
         history.push("/");
     }
 
+    async function handleExportNoCrop() {
+        setExporting(true);
+        setProgress({ current: 0, total: cardSetsToExport.length });
+
+        const results = { success: 0, failed: 0 };
+        const subfolder = "print-and-play-no-crop";
+
+        for (let i = 0; i < cardSetsToExport.length; i++) {
+            const cardSet = cardSetsToExport[i];
+            setCurrentSetTitle(cardSet.getTitle());
+            setProgress({ current: i + 1, total: cardSetsToExport.length });
+
+            try {
+                // Export to PDF with scoped canvas query
+                await exportPdfNoCropToFile(cardSet, campaign.path, subfolder, cardSet.id);
+                results.success++;
+            } catch (error) {
+                console.error(`Failed to export ${cardSet.getTitle()}:`, error);
+                results.failed++;
+            }
+
+            await delay(100);
+        }
+
+        setExporting(false);
+
+        // Show results
+        if (results.failed === 0 && results.success > 0) {
+            alert(`Exported ${results.success} PDF${results.success > 1 ? 's' : ''} successfully!\n\nSaved to: Exports/${subfolder}/`);
+        } else if (results.success > 0) {
+            alert(`Exported ${results.success} of ${results.success + results.failed} PDFs (${results.failed} failed - see console)\n\nSaved to: Exports/${subfolder}/`);
+        } else {
+            alert("Export failed - see console for details");
+        }
+
+        // Navigate back to campaign view
+        history.push("/");
+    }
+
     function delay(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
@@ -146,13 +186,22 @@ export default function CampaignExportPage() {
                     </div>
 
                     {imagesLoaded ? (
-                        <button
-                            onClick={handleExport}
-                            disabled={exporting || cardSetsToExport.length === 0}
-                            className="export-button"
-                        >
-                            {exporting ? "Exporting..." : `Export ${cardSetsToExport.length} Card Set${cardSetsToExport.length !== 1 ? 's' : ''}`}
-                        </button>
+                        <>
+                            <button
+                                onClick={handleExport}
+                                disabled={exporting || cardSetsToExport.length === 0}
+                                className="export-button"
+                            >
+                                {exporting ? "Exporting..." : `Export ${cardSetsToExport.length} Card Set${cardSetsToExport.length !== 1 ? 's' : ''}`}
+                            </button>
+                            <button
+                                onClick={handleExportNoCrop}
+                                disabled={exporting || cardSetsToExport.length === 0}
+                                className="export-button"
+                            >
+                                {exporting ? "Exporting..." : `Export ${cardSetsToExport.length} Card Set${cardSetsToExport.length !== 1 ? 's' : ''} (No Crop)`}
+                            </button>
+                        </>
                     ) : (
                         <div className="loading-message">Loading images... Please wait.</div>
                     )}
