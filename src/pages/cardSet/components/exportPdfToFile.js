@@ -65,6 +65,9 @@ export default async function exportPdfToFile(cardSet, paperSize, campaignPath, 
         };
     };
 
+    // Convert pixels to points (72 points = 1 inch, 300 DPI)
+    const pxToPt = 72 / 300;
+
     // Calculate layout
     const cardsPerPage = config.cols * config.rows;
     const gridWidth = config.cols * CARD_WITH_BLEED_WIDTH;
@@ -72,15 +75,14 @@ export default async function exportPdfToFile(cardSet, paperSize, campaignPath, 
     const marginX = (config.width - gridWidth) / 2;
     const marginY = (config.height - gridHeight) / 2;
 
-    // Create PDF
+    // Create PDF using points (native PDF unit)
     const pdf = new jsPDF({
-        unit: "px",
-        hotfixes: ["px_scaling"],
-        format: [config.width, config.height],
+        unit: "pt",
+        format: [config.width * pxToPt, config.height * pxToPt],
         compress: true
     });
 
-    // Create page canvas for compositing
+    // Create page canvas for compositing (still use pixels for rendering)
     const pageCanvas = document.createElement("canvas");
     pageCanvas.width = config.width;
     pageCanvas.height = config.height;
@@ -98,7 +100,7 @@ export default async function exportPdfToFile(cardSet, paperSize, campaignPath, 
 
         // Start new page
         if (pageNum > 0) {
-            pdf.addPage([config.width, config.height]);
+            pdf.addPage([config.width * pxToPt, config.height * pxToPt]);
         }
         // Clear page canvas
         pageCtx.fillStyle = "white";
@@ -147,8 +149,8 @@ export default async function exportPdfToFile(cardSet, paperSize, campaignPath, 
             drawCropMarks(pageCtx, x, y);
         }
 
-        // Add page to PDF
-        pdf.addImage(pageCanvas, "PNG", 0, 0);
+        // Add page to PDF with dimensions converted to points
+        pdf.addImage(pageCanvas, "PNG", 0, 0, config.width * pxToPt, config.height * pxToPt);
     }
 
     // Get PDF as array buffer

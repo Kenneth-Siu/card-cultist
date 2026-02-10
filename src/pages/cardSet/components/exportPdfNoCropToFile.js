@@ -59,18 +59,20 @@ export default async function exportPdfNoCropToFile(cardSet, campaignPath, subfo
         };
     };
 
+    // Convert pixels to points (72 points = 1 inch, 300 DPI)
+    const pxToPt = 72 / 300;
+
     // Calculate layout (no margins, cards at native size)
     const cardsPerPage = NO_BLEED_COLS * NO_BLEED_ROWS;
 
-    // Create PDF
+    // Create PDF using points (native PDF unit)
     const pdf = new jsPDF({
-        unit: "px",
-        hotfixes: ["px_scaling"],
-        format: [NO_BLEED_PAGE_WIDTH, NO_BLEED_PAGE_HEIGHT],
+        unit: "pt",
+        format: [NO_BLEED_PAGE_WIDTH * pxToPt, NO_BLEED_PAGE_HEIGHT * pxToPt],
         compress: true
     });
 
-    // Create page canvas for compositing
+    // Create page canvas for compositing (still use pixels for rendering)
     const pageCanvas = document.createElement("canvas");
     pageCanvas.width = NO_BLEED_PAGE_WIDTH;
     pageCanvas.height = NO_BLEED_PAGE_HEIGHT;
@@ -88,7 +90,7 @@ export default async function exportPdfNoCropToFile(cardSet, campaignPath, subfo
 
         // Start new page
         if (pageNum > 0) {
-            pdf.addPage([NO_BLEED_PAGE_WIDTH, NO_BLEED_PAGE_HEIGHT]);
+            pdf.addPage([NO_BLEED_PAGE_WIDTH * pxToPt, NO_BLEED_PAGE_HEIGHT * pxToPt]);
         }
         // Clear page canvas
         pageCtx.fillStyle = "white";
@@ -131,8 +133,8 @@ export default async function exportPdfNoCropToFile(cardSet, campaignPath, subfo
             pageCtx.drawImage(sourceCanvas, x, y);
         }
 
-        // Add page to PDF
-        pdf.addImage(pageCanvas, "PNG", 0, 0);
+        // Add page to PDF with dimensions converted to points
+        pdf.addImage(pageCanvas, "PNG", 0, 0, NO_BLEED_PAGE_WIDTH * pxToPt, NO_BLEED_PAGE_HEIGHT * pxToPt);
     }
 
     // Get PDF as array buffer
