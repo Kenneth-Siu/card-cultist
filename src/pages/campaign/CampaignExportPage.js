@@ -5,7 +5,10 @@ import Container from "../../components/container/Container";
 import exportPdfToFile from "../cardSet/components/exportPdfToFile";
 import exportPdfNoCropToFile from "../cardSet/components/exportPdfNoCropToFile";
 import collectPrintFaces from "../../helpers/pdfExport/collectPrintFaces";
-import { PAPER_CONFIGS } from "../../helpers/pdfExport/pdfExportConfig";
+import { PAPER_CONFIGS, BLEED_PX } from "../../helpers/pdfExport/pdfExportConfig";
+import createBleedCanvas from "../../helpers/pdfExport/createBleedCanvas";
+import rotateLandscapeToPortrait from "../../helpers/pdfExport/rotateLandscapeToPortrait";
+import cleanFileName from "../../helpers/cleanFileName";
 import "./CampaignExportPage.scss";
 
 /**
@@ -154,6 +157,124 @@ export default function CampaignExportPage() {
         history.push("/");
     }
 
+    async function handleExportBleed() {
+        setExporting(true);
+        setProgress({ current: 0, total: cardSetsToExport.length });
+
+        const results = { success: 0, failed: 0, totalCards: 0 };
+        const subfolder = "bleed";
+
+        for (let i = 0; i < cardSetsToExport.length; i++) {
+            const cardSet = cardSetsToExport[i];
+            setCurrentSetTitle(cardSet.getTitle());
+            setProgress({ current: i + 1, total: cardSetsToExport.length });
+
+            try {
+                // Query canvases scoped to this card set
+                const frontCanvases = document.querySelectorAll(
+                    `[data-cardset-id="${cardSet.id}"] .export-card-front-canvases-container canvas`
+                );
+                const backCanvases = document.querySelectorAll(
+                    `[data-cardset-id="${cardSet.id}"] .export-card-back-canvases-container canvas`
+                );
+
+                // Export front faces
+                for (let index = 0; index < frontCanvases.length; index++) {
+                    const canvas = frontCanvases[index];
+                    const card = cardSet.cards[index];
+                    const numOfCopies = card.numOfCopies || 1;
+                    const cardSetId = card.frontFace.campaignSetId || card.frontFace.encounterSetId || cardSet.id;
+
+                    let sourceCanvas = canvas;
+                    if (canvas.classList.contains("landscape")) {
+                        sourceCanvas = rotateLandscapeToPortrait(canvas);
+                    }
+                    const bleedCanvas = createBleedCanvas(sourceCanvas, BLEED_PX);
+
+                    // Export a copy for each numOfCopies
+                    for (let copyNum = 1; copyNum <= numOfCopies; copyNum++) {
+                        await new Promise((resolve, reject) => {
+                            bleedCanvas.toBlob(
+                                (canvasBlob) => {
+                                    canvasBlob.arrayBuffer().then((arrayBuffer) => {
+                                        const fileName = numOfCopies > 1
+                                            ? `${cardSetId}-${cleanFileName(card.getTitle())}-${copyNum} (Front).png`
+                                            : `${cardSetId}-${cleanFileName(card.getTitle())} (Front).png`;
+                                        return window.fs.exportFile(
+                                            campaign.path,
+                                            subfolder,
+                                            fileName,
+                                            new DataView(arrayBuffer)
+                                        );
+                                    }).then(resolve).catch(reject);
+                                },
+                                "image/png"
+                            );
+                        });
+                    }
+                }
+
+                // Export back faces
+                for (let index = 0; index < backCanvases.length; index++) {
+                    const canvas = backCanvases[index];
+                    const card = cardSet.cards[index];
+                    const numOfCopies = card.numOfCopies || 1;
+                    const cardSetId = card.backFace.campaignSetId || card.backFace.encounterSetId || cardSet.id;
+
+                    let sourceCanvas = canvas;
+                    if (canvas.classList.contains("landscape")) {
+                        sourceCanvas = rotateLandscapeToPortrait(canvas);
+                    }
+                    const bleedCanvas = createBleedCanvas(sourceCanvas, BLEED_PX);
+
+                    // Export a copy for each numOfCopies
+                    for (let copyNum = 1; copyNum <= numOfCopies; copyNum++) {
+                        await new Promise((resolve, reject) => {
+                            bleedCanvas.toBlob(
+                                (canvasBlob) => {
+                                    canvasBlob.arrayBuffer().then((arrayBuffer) => {
+                                        const fileName = numOfCopies > 1
+                                            ? `${cardSetId}-${cleanFileName(card.getTitle())}-${copyNum} (Back).png`
+                                            : `${cardSetId}-${cleanFileName(card.getTitle())} (Back).png`;
+                                        return window.fs.exportFile(
+                                            campaign.path,
+                                            subfolder,
+                                            fileName,
+                                            new DataView(arrayBuffer)
+                                        );
+                                    }).then(resolve).catch(reject);
+                                },
+                                "image/png"
+                            );
+                        });
+                    }
+                }
+
+                results.success++;
+                results.totalCards += cardSet.cards.length;
+            } catch (error) {
+                console.error(`Failed to export ${cardSet.getTitle()}:`, error);
+                results.failed++;
+            }
+
+            await delay(100);
+        }
+
+        setExporting(false);
+
+        // Show results
+        if (results.failed === 0 && results.success > 0) {
+            alert(`Exported ${results.totalCards} cards from ${results.success} card set${results.success > 1 ? 's' : ''} successfully!\n\nSaved to: Exports/${subfolder}/`);
+        } else if (results.success > 0) {
+            alert(`Exported ${results.success} of ${results.success + results.failed} card sets (${results.failed} failed - see console)\n\nSaved to: Exports/${subfolder}/`);
+        } else {
+            alert("Export failed - see console for details");
+        }
+
+        // Navigate back to campaign view
+        history.push("/");
+    }
+
     function delay(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
@@ -200,6 +321,13 @@ export default function CampaignExportPage() {
                                 className="export-button"
                             >
                                 {exporting ? "Exporting..." : `Export ${cardSetsToExport.length} Card Set${cardSetsToExport.length !== 1 ? 's' : ''} (No Crop)`}
+                            </button>
+                            <button
+                                onClick={handleExportBleed}
+                                disabled={exporting || cardSetsToExport.length === 0}
+                                className="export-button"
+                            >
+                                {exporting ? "Exporting..." : `Export All Cards with Bleed (PNG)`}
                             </button>
                         </>
                     ) : (

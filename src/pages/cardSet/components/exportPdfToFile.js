@@ -73,8 +73,24 @@ export default async function exportPdfToFile(cardSet, paperSize, campaignPath, 
     const gridWidth = config.cols * CARD_WITH_BLEED_WIDTH;
     const gridHeight = config.rows * CARD_WITH_BLEED_HEIGHT;
 
+    console.log('=== PDF Export Debug ===');
+    console.log('paperSize:', paperSize);
+    console.log('cols:', config.cols);
+    console.log('rows:', config.rows);
+    console.log('CARD_WITH_BLEED_WIDTH:', CARD_WITH_BLEED_WIDTH);
+    console.log('CARD_WITH_BLEED_HEIGHT:', CARD_WITH_BLEED_HEIGHT);
+    console.log('gridWidth:', gridWidth);
+    console.log('gridHeight:', gridHeight);
+    console.log('pdfWidth (pt):', gridWidth * pxToPt);
+    console.log('pdfHeight (pt):', gridHeight * pxToPt);
+    console.log('pdfWidth (inches):', (gridWidth * pxToPt) / 72);
+    console.log('pdfHeight (inches):', (gridHeight * pxToPt) / 72);
+    console.log('=======================');
+
     // Create PDF sized exactly to the card grid (no margins)
+    // Note: orientation must match format dimensions (landscape if width > height)
     const pdf = new jsPDF({
+        orientation: gridWidth > gridHeight ? 'landscape' : 'portrait',
         unit: "pt",
         format: [gridWidth * pxToPt, gridHeight * pxToPt],
         compress: true
