@@ -21,6 +21,7 @@ export default function CardExporter({ cardSet }) {
             <button onClick={() => exportAllCardsWithBleed()}>Export all cards with bleed (PNG)</button>
             <button onClick={() => exportAllCardsNoBleed()}>Export all cards without bleed (PNG)</button>
             <button onClick={() => exportForTts()}>Export for TTS (JPG)</button>
+            <button onClick={() => exportThumbnails()}>Export thumbnails (JPG)</button>
             <PdfExportButton cardSet={cardSet} />
             <div className="export-card-front-canvases-container">
                 {cardSet.cards.map((card) => card.frontFace.getCanvas(card.id, cardSet, campaign))}
@@ -343,5 +344,52 @@ export default function CardExporter({ cardSet }) {
             );
         });
         context.clearRect(0, 0, ttsCanvas.current.width, ttsCanvas.current.height);
+    }
+
+    function exportThumbnails() {
+        const thumbnailSize = 160;
+        const sourceSize = 480;
+        const subfolder = `${cleanFileName(cardSet.getTitle())}/thumbnails`;
+
+        document.querySelectorAll(".export-card-front-canvases-container canvas").forEach((canvas, index) => {
+            const card = cardSet.cards[index];
+            const isLandscape = canvas.classList.contains("landscape");
+            const faceType = card.frontFace.constructor.type;
+            const isBottomHalf = faceType === "Investigator Weakness (Enemy)";
+            const nudgedTypes = new Set(["Asset", "Event (Neutral)", "Investigator Weakness (Enemy)"]);
+            const yNudge = nudgedTypes.has(faceType) ? 60 : 0;
+            const cardSourceSize = faceType === "Investigator Weakness (Enemy)" ? 320 : sourceSize;
+
+            let sx, sy;
+            if (isLandscape) {
+                // Landscape (1050×750): centre of left half
+                sx = Math.round((canvas.width / 2 - cardSourceSize) / 2);
+                sy = Math.round((canvas.height - cardSourceSize) / 2);
+            } else if (isBottomHalf) {
+                // Portrait (750×1050): centre of bottom half
+                sx = Math.round((canvas.width - cardSourceSize) / 2);
+                sy = Math.round(canvas.height * 3 / 4 - cardSourceSize / 2) + yNudge;
+            } else {
+                // Portrait (750×1050): centre of upper half
+                sx = Math.round((canvas.width - cardSourceSize) / 2);
+                sy = Math.round((canvas.height / 2 - cardSourceSize) / 2) + yNudge;
+            }
+
+            const thumbCanvas = document.createElement("canvas");
+            thumbCanvas.width = thumbnailSize;
+            thumbCanvas.height = thumbnailSize;
+            thumbCanvas.getContext("2d").drawImage(canvas, sx, sy, cardSourceSize, cardSourceSize, 0, 0, thumbnailSize, thumbnailSize);
+
+            const fileName = `${String(index + 1).padStart(3, "0")}-${cleanFileName(card.getTitle())}.jpg`;
+            thumbCanvas.toBlob(
+                (canvasBlob) => {
+                    canvasBlob.arrayBuffer().then((arrayBuffer) => {
+                        window.fs.exportFile(campaign.path, subfolder, fileName, new DataView(arrayBuffer));
+                    });
+                },
+                "image/jpeg",
+                0.9
+            );
+        });
     }
 }
