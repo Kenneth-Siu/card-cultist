@@ -19,6 +19,7 @@ export default function CardExporter({ cardSet }) {
             <button onClick={() => exportAllCards("image/png", "png")}>Export all cards (PNG)</button>
             <button onClick={() => exportAllCards("image/jpeg", "jpg", 0.9)}>Export all cards (JPG)</button>
             <button onClick={() => exportAllCardsWithBleed()}>Export all cards with bleed (PNG)</button>
+            <button onClick={() => exportAllCardsNoBleed()}>Export all cards without bleed (PNG)</button>
             <button onClick={() => exportForTts()}>Export for TTS (JPG)</button>
             <PdfExportButton cardSet={cardSet} />
             <div className="export-card-front-canvases-container">
@@ -125,6 +126,72 @@ export default function CardExporter({ cardSet }) {
                             return window.fs.exportFile(
                                 campaign.path,
                                 bleedSubfolder,
+                                fileName,
+                                new DataView(arrayBuffer)
+                            );
+                        });
+                    },
+                    "image/png"
+                );
+            }
+        });
+    }
+
+    function exportAllCardsNoBleed() {
+        const subfolder = `no-bleed`;
+
+        document.querySelectorAll(".export-card-front-canvases-container canvas").forEach((canvas, index) => {
+            const card = cardSet.cards[index];
+            const numOfCopies = card.numOfCopies || 1;
+            const cardSetId = card.frontFace.campaignSetId || card.frontFace.encounterSetId || cardSet.id;
+
+            let sourceCanvas = canvas;
+            if (canvas.classList.contains("landscape")) {
+                sourceCanvas = rotateLandscapeToPortrait(canvas);
+            }
+
+            // Export a copy for each numOfCopies
+            for (let copyNum = 1; copyNum <= numOfCopies; copyNum++) {
+                sourceCanvas.toBlob(
+                    (canvasBlob) => {
+                        return canvasBlob.arrayBuffer().then((arrayBuffer) => {
+                            const fileName = numOfCopies > 1
+                                ? `${cardSetId}-${cleanFileName(card.getTitle())}-${copyNum} (Front).png`
+                                : `${cardSetId}-${cleanFileName(card.getTitle())} (Front).png`;
+                            return window.fs.exportFile(
+                                campaign.path,
+                                subfolder,
+                                fileName,
+                                new DataView(arrayBuffer)
+                            );
+                        });
+                    },
+                    "image/png"
+                );
+            }
+        });
+
+        document.querySelectorAll(".export-card-back-canvases-container canvas").forEach((canvas, index) => {
+            const card = cardSet.cards[index];
+            const numOfCopies = card.numOfCopies || 1;
+            const cardSetId = card.backFace.campaignSetId || card.backFace.encounterSetId || cardSet.id;
+
+            let sourceCanvas = canvas;
+            if (canvas.classList.contains("landscape")) {
+                sourceCanvas = rotateLandscapeToPortrait(canvas);
+            }
+
+            // Export a copy for each numOfCopies
+            for (let copyNum = 1; copyNum <= numOfCopies; copyNum++) {
+                sourceCanvas.toBlob(
+                    (canvasBlob) => {
+                        return canvasBlob.arrayBuffer().then((arrayBuffer) => {
+                            const fileName = numOfCopies > 1
+                                ? `${cardSetId}-${cleanFileName(card.getTitle())}-${copyNum} (Back).png`
+                                : `${cardSetId}-${cleanFileName(card.getTitle())} (Back).png`;
+                            return window.fs.exportFile(
+                                campaign.path,
+                                subfolder,
                                 fileName,
                                 new DataView(arrayBuffer)
                             );
