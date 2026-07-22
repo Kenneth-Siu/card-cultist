@@ -1,0 +1,34 @@
+MIT License
+
+Copyright (c) 2022-2026 Kenneth Siu
+
+SCOPE: This licence applies to the source code in this repository (the contents of
+`src/`) and to nothing else. It does NOT apply to the third-party assets bundled in
+`public/` -- specifically the card frame images in `public/templates/`, the overlay
+images in `public/overlays/`, the encounter set symbols in `public/icons/`, and the
+Arno Pro and Teutonic fonts in `public/fonts/`. Those assets are the property of
+Fantasy Flight Games and other rights holders. They are included so that this
+unofficial fan tool can render cards resembling the printed game; no licence to them
+is granted or implied here. (Atkinson Hyperlegible, also in `public/fonts/`, is
+licensed separately by the Braille Institute under the SIL Open Font License.)
+
+This project is not affiliated with, endorsed, sponsored or approved by Fantasy
+Flight Games.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
